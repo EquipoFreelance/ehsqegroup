@@ -15,11 +15,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::resource('v1/user', 'UserController', ['only' => [ 'index', 'store', 'update', 'destroy', 'show' ] ]  );
 
+/* Sistema de Autenficación */
+
+// Inicio de sesión
 Route::post('v1/login', 'LoginController@login');
 
+// Logou de Sesión
 Route::post('v1/logout', 'LoginController@logout');
+
+
+/* Sistema de Registro */
+
+
+//Route::resource('v1/user', 'UserController', ['only' => [ 'index', 'store', 'update', 'destroy', 'show' ] ]  );
+
 
 //Route::auth();
 

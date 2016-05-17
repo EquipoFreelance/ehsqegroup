@@ -8,6 +8,8 @@ use Validator;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Http\Response;
+
 use App\Http\Requests;
 
 use Auth;
@@ -32,6 +34,7 @@ class LoginController extends Controller
     }
 
   }
+
   /**
    * Permite Cerrar la sesión de un usuario
    *
@@ -39,6 +42,10 @@ class LoginController extends Controller
    */
   public function logout(){
     Auth::logout();
-    return '';
+
+    $url = 'https://localhost.com';
+
+    return response()->json(['url_redirect' => $url]);
+
   }
 }
