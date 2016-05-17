@@ -29,8 +29,13 @@ class LoginController extends Controller
     Auth::attempt($user);
 
     if(Auth::check()){
+
       $user_info = Auth::user();
-      return $user_info->toJson();
+
+      $url = 'v1/user/'.$user_info['id'];
+
+      return response()->json(['url_redirect' => $url]);
+
     }
 
   }

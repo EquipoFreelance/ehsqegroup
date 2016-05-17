@@ -4,7 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Http\Response;
+
 use App\Http\Requests;
+
+use App\User;
+
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -29,25 +35,40 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Registro de usuarios
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+
+        $user = new User;
+        $user->username     = $request->get("username");
+        $user->email        = $request->get("email");
+        $user->password     = bcrypt($request->get("password"));
+        $user->created_at   = Carbon::now();
+        $user->id_user_type = $request->get("type_user");
+        $user->bloqueado    = 0;
+        $user->activo       = 1;
+
+        if($user->save()){
+            return response()->json(['message' => "Usuario creado en el sistema"]);
+        }
+
+
     }
 
     /**
-     * Display the specified resource.
+     * Detalle de la cuenta de usuario.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        return response()->json(['message' => $user]);
     }
 
     /**
