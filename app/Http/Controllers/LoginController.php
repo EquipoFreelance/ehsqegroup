@@ -40,7 +40,7 @@ class LoginController extends Controller
    *
    * @return false
    */
-  public function logout(){
+  public function logout(Request $request){
     Auth::logout();
 
     $url = 'https://localhost.com';
