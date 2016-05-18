@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return "";
 });
 
 
@@ -24,9 +24,8 @@ Route::post('v1/login', 'LoginController@login');
 // Logou de Sesión
 Route::post('v1/logout', 'LoginController@logout');
 
-
 /* Sistema de Registro */
-Route::resource('v1/user', 'UserController', ['only' => ['store', 'show'] ] );
+Route::resource('v1/user', 'UserController', ['only' => ['store', 'show', 'update'] ] );
 
 
 //Route::resource('v1/user', 'UserController', ['only' => [ 'index', 'store', 'update', 'destroy', 'show' ] ]  );

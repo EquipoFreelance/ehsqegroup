@@ -32,9 +32,13 @@ class LoginController extends Controller
 
       $user_info = Auth::user();
 
-      $url = 'v1/user/'.$user_info['id'];
+      $url = 'v1/user/'.$user_info['id']; // Preparando la ruta para ser enviado a su Dashboard
 
-      return response()->json(['url_redirect' => $url]);
+      return response()->json(['message' => 'Bienvenido '.$user_info['username'], 'url_redirect' => $url]);
+
+    } else {
+
+      return response()->json(['message' => 'Usuario no encontrado con los parametros enviados']);
 
     }
 

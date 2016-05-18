@@ -83,7 +83,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza la información del Usuario
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -91,7 +91,18 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->username     = $request->get("username");
+        $user->email        = $request->get("email");
+        $user->password     = bcrypt($request->get("password"));
+        $user->updated_at   = Carbon::now();
+        $user->bloqueado    = 0;
+        $user->activo       = 1;
+
+        if($user->save()){
+            return response()->json(['message' => "Usuario actualizado"]);
+        }
+
     }
 
     /**
