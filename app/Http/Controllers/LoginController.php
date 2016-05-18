@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
+
   /**
    * Permite iniciar sesión
    *
@@ -52,8 +53,11 @@ class LoginController extends Controller
       // Existe en la base de datos
       if($count > 0){
 
-        $user = array("email" => $request->get("email"), "password" => $request->get("password"));
-
+        // Enviando los parametros necesarios para la autenficación
+        $user = array(
+                      "email"     => $request->get("email"),
+                      "password"  => $request->get("password")
+                  );
         Auth::attempt($user);
 
         // Verificando que la autenficación fue correcta
@@ -63,22 +67,24 @@ class LoginController extends Controller
 
           $url = 'v1/user/'.$user_info['id']; // Preparando la ruta para ser enviado a su Dashboard
 
+          //Enviando mensaje
           return response()->json(['message' => 'Bienvenido '.$user_info['username'], 'url_redirect' => $url]);
 
         } else {
 
+          //Enviando mensaje
           return response()->json(['message' => 'Usuario no encontrado con los parametros enviados']);
 
         }
       // Caso contrario mostramos mensaje al sistema
       } else {
 
+        //Enviando mensaje
         return response()->json(['message' => 'El correo electrónico no existe en el sistema']);
 
       }
 
     }
-
 
 
   }
@@ -89,6 +95,7 @@ class LoginController extends Controller
    * @return false
    */
   public function logout(Request $request){
+
     Auth::logout();
 
     $url = 'https://localhost.com';
