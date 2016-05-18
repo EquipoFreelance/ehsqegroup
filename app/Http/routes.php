@@ -11,26 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return "";
-});
-
-
 /* Sistema de Autenficación */
 
 // Inicio de sesión
 Route::post('v1/login', 'LoginController@login');
 
-// Logou de Sesión
+// Cierre de sesión
 Route::post('v1/logout', 'LoginController@logout');
 
 /* Sistema de Registro */
+
 Route::resource('v1/user', 'UserController', ['only' => ['store', 'show', 'update'] ] );
-
-
-//Route::resource('v1/user', 'UserController', ['only' => [ 'index', 'store', 'update', 'destroy', 'show' ] ]  );
-
-
-//Route::auth();
-
-//Route::get('/home', 'HomeController@index');
