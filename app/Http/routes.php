@@ -23,4 +23,4 @@ Route::post('v1/logout', 'LoginController@logout');
 
 Route::resource('v1/user', 'UserController', ['only' => ['store', 'show', 'update', 'index'] ] );
 
-Route::resource('v1/usertype', 'UserTypeController', ['only' => ['index'] ] );
+Route::resource('v1/usertype', 'UserTypeController', ['only' => ['index', 'store'] ] );

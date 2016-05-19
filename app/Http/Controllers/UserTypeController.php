@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Http\Requests;
-
 use App\UserType;
+use App\Http\Controllers\Controller;
+use Validator;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Carbon\Carbon;
 
 class UserTypeController extends Controller
 {
@@ -28,13 +30,14 @@ class UserTypeController extends Controller
 
       // Reglas de validación
       $rules = [
-          'nom_user_type' => 'required',
+          'nom_user_type' => 'required|string',
           'activo'        => 'required|integer|min:0'
       ];
 
       // Mensaje Personalizado
       $messages = [
           'nom_user_type.required'  => 'Campo Obligatorio',
+          'nom_user_type.string'    => 'Solo esta permitido strings',
           'activo.required'         => 'Campo Obligatorio',
           'activo.integer'          => 'Solo esta permitido que sea números enteros',
           'activo.min'              => 'Solo esta permitido valor enteros +'
@@ -45,7 +48,9 @@ class UserTypeController extends Controller
 
       // Si existen errores el Sistema muestra un mensaje
       if ($validator->fails()){
+
           return response()->json(['message' => $validator->messages()]);
+
       }else{
 
           // Registramos al nuevo usuario
