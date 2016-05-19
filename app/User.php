@@ -8,14 +8,14 @@ class User extends Authenticatable
 {
 
     protected $table = 'users';
-    
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password',
+        'username', 'email', 'password'
     ];
 
     /**
@@ -26,4 +26,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    // Relación de uno a muchos
+    public function usertype(){
+      return $this->belongsTo('App\UserType', 'id_user_type');
+    }
+
 }

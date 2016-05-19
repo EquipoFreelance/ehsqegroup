@@ -19,8 +19,21 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return response()->json(['message' => $users]);
+        //$users = User::all();//User::where('activo', '=', '1');
+        $users = User::with('usertype')->get();
+        //$users->load('nom_user_type');
+        return response()->json(['message' => $users ]);
+
+        //return response()->json(['message' => $users->user['nom_user_type'] ]);
+
+        //return response()->json(['message' => $users->user->nom_user_type ]);
+
+        /*foreach (User::all() as $user)
+        {
+            echo $user->email."-".$user->usertype->nom_user_type."<br>";
+
+        }*/
+
     }
 
     /**

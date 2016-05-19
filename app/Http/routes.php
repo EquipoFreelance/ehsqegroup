@@ -22,3 +22,5 @@ Route::post('v1/logout', 'LoginController@logout');
 /* Sistema de Registro */
 
 Route::resource('v1/user', 'UserController', ['only' => ['store', 'show', 'update', 'index'] ] );
+
+Route::resource('v1/usertype', 'UserTypeController', ['only' => ['index'] ] );
