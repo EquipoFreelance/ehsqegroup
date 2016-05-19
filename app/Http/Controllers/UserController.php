@@ -41,13 +41,29 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Permite activar usuarios
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function activate(Request $request, $id) { // Request $request,
+        $user = User::find($id);
+        $user->activo = $request->get('activo');
+        if($user->save()){
+            return response()->json(['message' => "Cambio realizado"]);
+        }
+    }
+
+    /**
+     * Permite bloquear usuarios
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function toblock(Request $request, $id) {
+        $user = User::find($id);
+        $user->bloqueado = $request->get("bloqueado");
+        if($user->save()){
+            return response()->json(['message' => "Cambio realizado"]);
+        }
     }
 
     /**
