@@ -20,7 +20,6 @@ Route::post('v1/login', 'LoginController@login');
 Route::post('v1/logout', 'LoginController@logout');
 
 /* Sistema de Registro */
-
 Route::resource('v1/user', 'UserController', ['only' => ['store', 'show', 'update', 'index'] ] );
 
 /* Crud de Tipo de usuarios */

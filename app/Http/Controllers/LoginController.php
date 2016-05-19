@@ -22,6 +22,15 @@ class LoginController extends Controller
   public function login(Request $request){
     /* Aplicando validación al Request */
 
+    /*
+      Listado de validaciones por jerarquias aplicada segun la regla de negocio:
+      - Validación de errores
+      - Validación de correo existente en el Sistema
+      - Validacuón de usuario bloqueado
+      - Validación de autentificación
+    */
+
+
     // Reglas de validación
     $rules = [
         'email'    => 'required|email',
@@ -53,29 +62,42 @@ class LoginController extends Controller
       // Existe en la base de datos
       if($count > 0){
 
-        // Enviando los parametros necesarios para la autenficación
-        $user = array(
-                      "email"     => $request->get("email"),
-                      "password"  => $request->get("password")
-                  );
-        Auth::attempt($user);
+        // Validación de usuario no bloqueados
+        $verificar = User::where('email', '=', $request->get("email"))->verificarbloqueo()->count();
 
-        // Verificando que la autenficación fue correcta
-        if(Auth::check()){
+        if($verificar == 0){
 
-          $user_info = Auth::user(); // Obtenido información del usuario logueado
+          // Enviando los parametros necesarios para la autenficación
+          $user = array(
+                        "email"     => $request->get("email"),
+                        "password"  => $request->get("password")
+                    );
+          Auth::attempt($user);
 
-          $url = 'v1/user/'.$user_info['id']; // Preparando la ruta para ser enviado a su Dashboard
+          // Verificando que la autenficación fue correcta
+          if(Auth::check()){
 
-          //Enviando mensaje
-          return response()->json(['message' => 'Bienvenido '.$user_info['username'], 'url_redirect' => $url]);
+            $user_info = Auth::user(); // Obtenido información del usuario logueado
+
+            $url = 'v1/user/'.$user_info['id']; // Preparando la ruta para ser enviado a su Dashboard
+
+            //Enviando mensaje
+            return response()->json(['message' => 'Bienvenido '.$user_info['username'], 'url_redirect' => $url]);
+
+          } else {
+
+            //Enviando mensaje
+            return response()->json(['message' => 'Usuario no encontrado con los parametros enviados']);
+
+          }
 
         } else {
 
           //Enviando mensaje
-          return response()->json(['message' => 'Usuario no encontrado con los parametros enviados']);
+          return response()->json(['message' => 'Usuario bloqueado']);
 
         }
+
       // Caso contrario mostramos mensaje al sistema
       } else {
 

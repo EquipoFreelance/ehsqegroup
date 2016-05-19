@@ -20,8 +20,12 @@ class UserController extends Controller
     public function index()
     {
         //$users = User::all();//User::where('activo', '=', '1');
-        $users = User::with('usertype')->get();
+
+        $users = User::find(8)->with('usertype')->get();
+
+        //$users = User::with('usertype')->get();
         //$users->load('nom_user_type');
+
         return response()->json(['message' => $users ]);
 
         //return response()->json(['message' => $users->user['nom_user_type'] ]);
@@ -216,6 +220,7 @@ class UserController extends Controller
             $user->username     = $request->get("username");
             $user->email        = $request->get("email");
             $user->password     = bcrypt($request->get("password"));
+            $user->id_user_type = $request->get("id_user_type");
             $user->bloqueado    = $request->get("bloqueado");
             $user->activo       = $request->get("activo");
             $user->updated_at   = Carbon::now();

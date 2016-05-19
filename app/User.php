@@ -32,4 +32,23 @@ class User extends Authenticatable
       return $this->belongsTo('App\UserType', 'id_user_type');
     }
 
+
+    /**
+     * Campo adicional.
+     *
+     * @param  string  $value
+     * @return string
+     */
+
+    public function getIdAttribute($value)
+    {
+        return 'user/'.$value;
+    }
+
+    /* Scopes */
+    public function scopeVerificarBloqueo($query){
+      return $query->where('bloqueado', 1);
+    }
+
+
 }
