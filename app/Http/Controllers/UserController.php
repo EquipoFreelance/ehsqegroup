@@ -247,6 +247,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->activo       = 0;
+        if($user->save()){
+            return response()->json(['message' => "Usuario actualizado satisfactoriamente"]);
+        }
     }
 }

@@ -13,17 +13,23 @@ use Carbon\Carbon;
 class UserTypeController extends Controller
 {
   /**
-   * Display a listing of the resource.
+   * Listado de Tipos de usuarios
    *
    * @return \Illuminate\Http\Response
-   */
-  public function index()
-  {
-      $users_type = UserType::find(5);//::all();
-      return response()->json(['message' => $users_type->users]);
+  */
+  public function index() {
+
+      $users_type = UserType::all();//::find(5);//::all();
+      return response()->json(['message' => $users_type]);
+
   }
 
-
+  /**
+   * Registro de tipo de usuarios
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
   public function store(Request $request){
 
       /* Aplicando validación al Request */
@@ -71,6 +77,13 @@ class UserTypeController extends Controller
 
   }
 
+ /**
+   * Actualización del tipo de usuario
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+  */
   public function update(Request $request, $id) {
 
     /* Aplicando validación al Request */
@@ -84,7 +97,7 @@ class UserTypeController extends Controller
     // Mensaje Personalizado
     $messages = [
         'nom_user_type.required'  => 'Campo Obligatorio',
-        'nom_user_type.alpha'    => 'Solo esta permitido letras',
+        'nom_user_type.alpha'     => 'Solo esta permitido letras',
         'activo.required'         => 'Campo Obligatorio',
         'activo.integer'          => 'Solo esta permitido que sea números enteros',
         'activo.min'              => 'Solo esta permitido valor enteros +',
@@ -105,12 +118,12 @@ class UserTypeController extends Controller
         $user_type = UserType::find($id);
         $user_type->nom_user_type  = $request->get("nom_user_type");
         $user_type->activo         = $request->get("activo");
-        $user_type->created_at     = Carbon::now();
+        $user_type->updated_at     = Carbon::now();
 
         if($user_type->save()){
 
             //Enviando mensaje
-            return response()->json(['message' => "Tipo de Usuario creado satisfactoriamente en el sistema"]);
+            return response()->json(['message' => "El registro fue actualizado"]);
 
         }
 
@@ -118,4 +131,29 @@ class UserTypeController extends Controller
 
   }
 
+  /**
+   * Muestra el detalle del tipo de usuario
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+  */
+  public function show($id){
+    $user_type = UserType::find($id);
+    return response()->json(['message' => $user_type]);
+  }
+
+  /**
+   * Eliminar el tipo de usuario
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function destroy($id)
+  {
+      $user_type = UserType::find($id);
+      $user_type->activo = 0;
+      if($user_type->save()){
+          return response()->json(['message' => "Eliminado"]);
+      }
+  }
 }
