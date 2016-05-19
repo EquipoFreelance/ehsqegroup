@@ -30,17 +30,18 @@ class UserTypeController extends Controller
 
       // Reglas de validación
       $rules = [
-          'nom_user_type' => 'required|string',
-          'activo'        => 'required|integer|min:0'
+          'nom_user_type' => 'required|alpha',
+          'activo'        => 'required|integer|min:0|max:1'
       ];
 
       // Mensaje Personalizado
       $messages = [
           'nom_user_type.required'  => 'Campo Obligatorio',
-          'nom_user_type.string'    => 'Solo esta permitido strings',
+          'nom_user_type.alpha'    => 'Solo esta permitido letras',
           'activo.required'         => 'Campo Obligatorio',
           'activo.integer'          => 'Solo esta permitido que sea números enteros',
-          'activo.min'              => 'Solo esta permitido valor enteros +'
+          'activo.min'              => 'Solo esta permitido valor enteros +',
+          'activo.max'              => 'Solo esta permitido valor enteros +'
       ];
 
       // Enviando los parametros necesarios para la validación
@@ -54,12 +55,12 @@ class UserTypeController extends Controller
       }else{
 
           // Registramos al nuevo usuario
-          $user = new UserType;
-          $user->nom_user_type  = $request->get("nom_user_type");
-          $user->activo         = $request->get("activo");
-          $user->created_at     = Carbon::now();
+          $user_type = new UserType;
+          $user_type->nom_user_type  = $request->get("nom_user_type");
+          $user_type->activo         = $request->get("activo");
+          $user_type->created_at     = Carbon::now();
 
-          if($user->save()){
+          if($user_type->save()){
 
               //Enviando mensaje
               return response()->json(['message' => "Tipo de Usuario creado satisfactoriamente en el sistema"]);
@@ -70,5 +71,51 @@ class UserTypeController extends Controller
 
   }
 
+  public function update(Request $request, $id) {
+
+    /* Aplicando validación al Request */
+
+    // Reglas de validación
+    $rules = [
+        'nom_user_type' => 'required|alpha',
+        'activo'        => 'required|integer|min:0|max:1'
+    ];
+
+    // Mensaje Personalizado
+    $messages = [
+        'nom_user_type.required'  => 'Campo Obligatorio',
+        'nom_user_type.alpha'    => 'Solo esta permitido letras',
+        'activo.required'         => 'Campo Obligatorio',
+        'activo.integer'          => 'Solo esta permitido que sea números enteros',
+        'activo.min'              => 'Solo esta permitido valor enteros +',
+        'activo.max'              => 'Solo esta permitido valor enteros +'
+    ];
+
+    // Enviando los parametros necesarios para la validación
+    $validator = Validator::make($request->all(), $rules, $messages);
+
+    // Si existen errores el Sistema muestra un mensaje
+    if ($validator->fails()){
+
+        return response()->json(['message' => $validator->messages()]);
+
+    }else{
+
+        // Registramos al nuevo usuario
+        $user_type = UserType::find($id);
+        $user_type->nom_user_type  = $request->get("nom_user_type");
+        $user_type->activo         = $request->get("activo");
+        $user_type->created_at     = Carbon::now();
+
+        if($user_type->save()){
+
+            //Enviando mensaje
+            return response()->json(['message' => "Tipo de Usuario creado satisfactoriamente en el sistema"]);
+
+        }
+
+    }
+
+  }
 
 }
