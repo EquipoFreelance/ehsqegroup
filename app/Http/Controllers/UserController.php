@@ -19,7 +19,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return 'Lista de usuarios';
+        $users = User::all();
+        return response()->json(['message' => $users]);
     }
 
     /**
