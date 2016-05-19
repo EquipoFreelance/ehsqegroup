@@ -150,17 +150,79 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
-        $user->username     = $request->get("username");
-        $user->email        = $request->get("email");
-        $user->password     = bcrypt($request->get("password"));
-        $user->updated_at   = Carbon::now();
-        $user->bloqueado    = 0;
-        $user->activo       = 1;
 
-        if($user->save()){
-            return response()->json(['message' => "Usuario actualizado"]);
+        /* Aplicando validación al Request */
+
+        // Reglas de validación
+        $rules = [
+            'username'      => 'required|alpha_num',
+            'email'         => 'required|email',
+            'password'      => 'required|min:8|alpha_num',
+            'id_user_type'  => 'required|integer|min:0',
+            'bloqueado'     => 'required|integer|min:0',
+            'activo'        => 'required|integer|min:0'
+        ];
+
+        // Mensaje Personalizado
+        $messages = [
+            'username.required'     => 'Es necesario ingresar un nombre de usuario',
+            'username.alpha_num'    => 'Se necesita que el nombre de usuario sea solo sean alfanumericos',
+            'email.required'        => 'Es necesario Ingresar un correo eléctronico',
+            'email.email'           => 'Es necesario Ingresar un correo eléctronico válido',
+            'password.required'     => 'Es necesario Ingresar un password',
+            'password.min'          => 'Es necesario Ingresar como mínimo 8 caractéres',
+            'password.alpha_num'    => 'Es necesario Ingresar un password alfanuméricos',
+            'id_user_type.required' => 'Es necesario indicar el tipo de usuario',
+            'id_user_type.integer'  => 'Solo esta permitido que sea números enteros',
+            'id_user_type.min'      => 'Solo esta permitido valor enteros +',
+            'bloqueado.required'    => 'Es necesario indicar si la cuenta será bloqueda o no',
+            'bloqueado.integer'     => 'Soo esta permitido que sea números enteros',
+            'bloqueado.min'         => 'Solo esta permitido valor enteros +',
+            'activo.required'       => 'Es necesario indicar si la cuenta será activa o no',
+            'activo.integer'        => 'Solo esta permitido que sea números enteros',
+            'activo.min'            => 'Solo esta permitido valor enteros +'
+        ];
+
+        // Enviando los parametros necesarios para la validación
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        // Si existen errores el Sistema muestra un mensaje
+        if ($validator->fails()){
+
+            return response()->json(['message' => $validator->messages()]);
+
+        }else{
+
+          // Validación de correos existentes en el Sistema
+          $count = User::where('email', '=', $request->get("email"))->count();
+
+          // No existe en la base de datos
+          if($count == 0){
+
+            $user = User::find($id);
+            $user->username     = $request->get("username");
+            $user->email        = $request->get("email");
+            $user->password     = bcrypt($request->get("password"));
+            $user->bloqueado    = $request->get("bloqueado");
+            $user->activo       = $request->get("activo");
+            $user->updated_at   = Carbon::now();
+
+            if($user->save()){
+                return response()->json(['message' => "Usuario actualizado satisfactoriamente"]);
+            }
+
+          } else {
+
+            //Enviando mensaje
+            return response()->json(['message' => 'El correo electrónico existe en el sistema']);
+
+          }
+
+
+
         }
+
+
 
     }
 
