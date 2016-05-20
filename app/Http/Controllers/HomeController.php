@@ -24,6 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        //return 'Estas en el dashboard';
         return view('home');
     }
 }

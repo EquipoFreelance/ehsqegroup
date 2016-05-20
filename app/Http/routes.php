@@ -10,6 +10,9 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::get('/', function () {
+    return view('welcome');
+});
 
 /* Sistema de Autenficación */
 
@@ -30,3 +33,9 @@ Route::put('v1/user/toblock/{id}', 'UserController@toblock');
 
 /* Crud de Tipo de usuarios */
 Route::resource('v1/usertype', 'UserTypeController', ['only' => ['store', 'show', 'update', 'index', 'destroy'] ] );
+
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+
+    Route::get('/home', 'HomeController@index');
+});

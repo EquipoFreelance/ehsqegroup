@@ -34,7 +34,7 @@ class LoginController extends Controller
     // Reglas de validación
     $rules = [
         'email'    => 'required|email',
-        'password' => 'required|min:8',
+        'password' => 'required|min:8'
     ];
 
     // Mensaje Personalizado
@@ -72,7 +72,7 @@ class LoginController extends Controller
                         "email"     => $request->get("email"),
                         "password"  => $request->get("password")
                     );
-          Auth::attempt($user);
+          Auth::attempt($user, $request->get("remember"));
 
           // Verificando que la autenficación fue correcta
           if(Auth::check()){

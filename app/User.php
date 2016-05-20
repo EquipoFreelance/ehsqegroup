@@ -40,10 +40,10 @@ class User extends Authenticatable
      * @return string
      */
 
-    public function getIdAttribute($value)
+    /*public function getIdAttribute($value)
     {
         return 'user/'.$value;
-    }
+    }*/
 
     /* Scopes */
     public function scopeVerificarBloqueo($query){

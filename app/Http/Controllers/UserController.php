@@ -252,10 +252,28 @@ class UserController extends Controller
         }else{
 
           // Validación de correos existentes en el Sistema
-          $count = User::where('email', '=', $request->get("email"))->count();
+          /*$count = User::where('email', '=', $request->get("email"))
+          ->where('id', '=', $id)
+          ->count();
+
+          // Se encontró que el usuario en consulta
+          // ya tenia registrado el correo electrónico
+          if($count == 1){
+
+            $user_get = User::where('email', '=', $request->get("email"))
+            ->where('id', '=', $id)->get();
+
+            // Procedemos
+            return response()->json(['message' => $user_get]);
+
+          } else {
+
+            return response()->json(['message' => "No existen usuario con este correo electrónico"]);
+
+          }*/
 
           // No existe en la base de datos
-          if($count == 0){
+          //if($count == 1){
 
             $user = User::find($id);
             $user->username     = $request->get("username");
@@ -270,12 +288,12 @@ class UserController extends Controller
                 return response()->json(['message' => "Usuario actualizado satisfactoriamente"]);
             }
 
-          } else {
+          //} else {
 
             //Enviando mensaje
-            return response()->json(['message' => 'El correo electrónico existe en el sistema']);
+            //return response()->json(['message' => 'El correo electrónico existe en el sistema']);
 
-          }
+          //}
 
 
 
