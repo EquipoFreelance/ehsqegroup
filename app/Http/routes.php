@@ -10,9 +10,8 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::get('/', function () {
-    return view('welcome');
-});
+
+
 
 /* Sistema de Autenficación */
 
@@ -36,6 +35,17 @@ Route::resource('v1/usertype', 'UserTypeController', ['only' => ['store', 'show'
 
 Route::auth();
 
-Route::group(['middleware' => 'web'], function () {
-    Route::get('/home', 'HomeController@index');
+Route::group(['middleware' => ['web']], function () {
+
+    Route::get('/', function () {
+        return view('welcome');
+    });
+
+});
+
+// Como Usuario Logueado
+Route::group(['middleware' => 'auth'], function () {
+
+    Route::get('/dashboard', 'DashBoardController@validateDashBoard');
+
 });
