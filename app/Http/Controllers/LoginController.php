@@ -25,7 +25,7 @@ class LoginController extends Controller
     /*
       Listado de validaciones por jerarquias aplicada segun la regla de negocio:
       - Validación de errores
-      - Validación de correo existente en el Sistema
+      - Validación de correo existente en el Sistema con validacion de activo o inactivo
       - Validacuón de usuario bloqueado
       - Validación de autentificación
     */
