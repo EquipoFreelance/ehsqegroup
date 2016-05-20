@@ -23,10 +23,10 @@ Route::post('v1/logout', 'LoginController@logout');
 Route::resource('v1/user', 'UserController', ['only' => ['store', 'show', 'update', 'index'] ] );
 
 // Admin - Activar usuarios
-Route::post('v1/user/activate/{id}', 'UserController@activate');
+Route::put('v1/user/activate/{id}', 'UserController@activate');
 
 // Admin - Bloquear usuarios
-Route::post('v1/user/toblock/{id}', 'UserController@toblock');
+Route::put('v1/user/toblock/{id}', 'UserController@toblock');
 
 /* Crud de Tipo de usuarios */
 Route::resource('v1/usertype', 'UserTypeController', ['only' => ['store', 'show', 'update', 'index', 'destroy'] ] );

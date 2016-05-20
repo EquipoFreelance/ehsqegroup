@@ -57,7 +57,7 @@ class LoginController extends Controller
     } else {
 
       // Validación de correos existentes en el Sistema
-      $count = User::where('email', '=', $request->get("email"))->count();
+      $count = User::where('email', '=', $request->get("email"))->verificaractivo()->count();
 
       // Existe en la base de datos
       if($count > 0){
@@ -102,7 +102,7 @@ class LoginController extends Controller
       } else {
 
         //Enviando mensaje
-        return response()->json(['message' => 'El correo electrónico no existe en el sistema']);
+        return response()->json(['message' => 'El correo electrónico no existe en el sistema o esta inactivo']);
 
       }
 

@@ -50,5 +50,9 @@ class User extends Authenticatable
       return $query->where('bloqueado', 1);
     }
 
+    public function scopeVerificarActivo($query){
+      return $query->where('activo', 1);
+    }
+
 
 }

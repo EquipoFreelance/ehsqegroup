@@ -45,12 +45,25 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function activate(Request $request, $id) { // Request $request,
+    public function activate(Request $request, $id) {
+
+        $param_activo = $request->get('activo');
+        $date_now     = Carbon::now();
+
         $user = User::find($id);
-        $user->activo = $request->get('activo');
+        $user->activo = $param_activo;
+
+        // Registrando fecha de eliminación
+        if($param_activo == 0){
+            $user->deleted_at = $date_now;
+        }else{
+            $user->updated_at = $date_now;
+        }
+
         if($user->save()){
             return response()->json(['message' => "Cambio realizado"]);
         }
+
     }
 
     /**
@@ -59,8 +72,20 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function toblock(Request $request, $id) {
+
+        $param_bloqueado  = $request->get('bloqueado');
+        $date_now         = Carbon::now();
+
         $user = User::find($id);
-        $user->bloqueado = $request->get("bloqueado");
+        $user->bloqueado = $param_bloqueado;
+
+        // Registrando fecha de bloqueo
+        if($param_bloqueado == 1){
+            $user->blocked_at = $date_now;
+        }else{
+            $user->updated_at = $date_now;
+        }
+
         if($user->save()){
             return response()->json(['message' => "Cambio realizado"]);
         }
