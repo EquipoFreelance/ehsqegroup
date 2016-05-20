@@ -34,8 +34,8 @@ Route::put('v1/user/toblock/{id}', 'UserController@toblock');
 /* Crud de Tipo de usuarios */
 Route::resource('v1/usertype', 'UserTypeController', ['only' => ['store', 'show', 'update', 'index', 'destroy'] ] );
 
-Route::group(['middleware' => 'web'], function () {
-    Route::auth();
+Route::auth();
 
+Route::group(['middleware' => 'web'], function () {
     Route::get('/home', 'HomeController@index');
 });
