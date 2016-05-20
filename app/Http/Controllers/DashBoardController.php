@@ -18,11 +18,8 @@ class DashBoardController extends Controller
 
       $user_info = Auth::user();
       $user_type = $user_info->id_user_type;
-      print $user_type;
+      return view('dashboard.dash_'.$user_type);
 
     }
 
-    public function alumno($id){
-
-    }
 }

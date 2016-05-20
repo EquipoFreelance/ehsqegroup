@@ -48,4 +48,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/dashboard', 'DashBoardController@validateDashBoard');
 
+    Route::resource('/dashboard/tesp', 'TipoEspecialidadController', ['only' => ['index'] ] );
+
 });
