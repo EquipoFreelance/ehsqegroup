@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\TipoEspecialidad;
+
 use App\Http\Requests;
 
 class TipoEspecialidadController extends Controller
@@ -16,7 +18,10 @@ class TipoEspecialidadController extends Controller
     public function index()
     {
         //
-        return 'Administrador de tipo de especialidades';
+        //return 'Administrador de tipo de especialidades';
+        $esps_types = TipoEspecialidad::all();
+        return view('dashboard.dash_esp_tipo', array('esps_types' => $esps_types));
+
     }
 
     /**
