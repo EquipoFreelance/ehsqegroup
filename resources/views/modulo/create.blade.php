@@ -20,7 +20,7 @@
 
   {!! Form::open(['route' => 'dashboard.modulo.store']) !!}
 
-    <input type="text" name="nombre"  value="{{ old('nombre') }}" >
+    Nombre:<input type="text" name="nombre"  value="{{ old('nombre') }}" >
     @if ($errors->has('nombre'))
         <span class="help-block">
             <strong>{{ $errors->first('nombre') }}</strong>
@@ -29,7 +29,10 @@
 
     <br>
 
-    <input type="text" name="nom_corto"  value="{{ old('nom_corto') }}" >
+    Especialización:{{ Form::select('cod_esp', $modulos) }}<br>
+
+    <br>
+    Nombre Corto:<input type="text" name="nom_corto"  value="{{ old('nom_corto') }}" >
     @if ($errors->has('nom_corto'))
         <span class="help-block">
             <strong>{{ $errors->first('nom_corto') }}</strong>
@@ -38,7 +41,7 @@
 
     <br>
 
-    <textarea name="descripcion" id="descripcion">{{ old('descripcion') }}</textarea>
+    Descripción:<textarea name="descripcion" id="descripcion">{{ old('descripcion') }}</textarea>
     @if ($errors->has('descripcion'))
         <span class="help-block">
             <strong>{{ $errors->first('descripcion') }}</strong>

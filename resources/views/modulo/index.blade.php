@@ -18,7 +18,7 @@
   @endif
   <ul>
     @foreach ($modulos as $modulo)
-        <li>{{ $modulo->nom_esp }} - {{ $modulo->id }} <a href="{{ route('dashboard.esp.edit', $modulo->id) }}">Editar</a></li>
+        <li>{{ $modulo->nombre }} - {{ $modulo->id }} <a href="{{ route('dashboard.modulo.edit', $modulo->id) }}">Editar</a></li>
     @endforeach
   </ul>
 @stop
