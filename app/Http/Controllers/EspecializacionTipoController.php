@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\TipoEspecializacion;
+use App\EspecializacionTipo;
 use App\Http\Requests;
 use Validator;
 
 use Illuminate\Http\Response;
 use Carbon\Carbon;
 
-class TipoEspecializacionController extends Controller
+class EspecializacionTipoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +20,7 @@ class TipoEspecializacionController extends Controller
     public function index()
     {
 
-        $esps_types = TipoEspecializacion::where("deleted", '=', 0)->get();
+        $esps_types = EspecializacionTipo::where("deleted", '=', 0)->get();
         return view('tipo_especializacion.index', array('esps_types' => $esps_types));
 
     }
@@ -73,7 +73,7 @@ class TipoEspecializacionController extends Controller
         } else {
 
           // Registramos el nuevo tipo de especialización
-          $te               = new TipoEspecializacion;
+          $te               = new EspecializacionTipo;
           $te->nom_esp_tipo = $request->get("nom_esp_tipo");
           $te->activo       = $request->get("activo");
           $te->created_at   = Carbon::now();
@@ -109,7 +109,7 @@ class TipoEspecializacionController extends Controller
      */
     public function edit($id)
     {
-        $te = TipoEspecializacion::find($id);
+        $te = EspecializacionTipo::find($id);
         return view('tipo_especializacion.edit', array("te" => $te ));
     }
 
@@ -151,7 +151,7 @@ class TipoEspecializacionController extends Controller
       } else {
 
         // Actualizando el tipo de especialización
-        $te               = TipoEspecializacion::find($id);
+        $te               = EspecializacionTipo::find($id);
         $te->nom_esp_tipo = $request->get("nom_esp_tipo");
         $te->activo       = $request->get("activo");
         $te->updated_at   = Carbon::now();
@@ -176,7 +176,7 @@ class TipoEspecializacionController extends Controller
      */
     public function destroy($id)
     {
-        $te             = TipoEspecializacion::find($id);
+        $te             = EspecializacionTipo::find($id);
         $te->deleted    = 1;
         $te->deleted_at = Carbon::now();
 

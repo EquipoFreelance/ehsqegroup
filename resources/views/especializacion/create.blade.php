@@ -28,6 +28,8 @@
     @endif
     <br>
 
+    {{ Form::select('cod_esp_tipo', $types) }}<br>
+
     <input type="text" name="nom_corto"  value="{{ old('nom_corto') }}" >
     @if ($errors->has('nom_corto'))
         <span class="help-block">

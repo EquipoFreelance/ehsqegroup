@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Especializacion;
+use App\EspecializacionTipo;
 use App\Http\Requests;
 use Validator;
 
@@ -30,7 +31,10 @@ class EspecializacionController extends Controller
      */
     public function create()
     {
-        return view('especializacion.create');
+
+        $data = ['types' => EspecializacionTipo::lists('nom_esp_tipo', 'id')];
+        return view('especializacion.create', $data);
+
     }
 
     /**
@@ -47,6 +51,7 @@ class EspecializacionController extends Controller
         $rules = [
             'nom_esp'     => 'required',
             'nom_corto'   => 'required',
+            'cod_esp_tipo'=> 'required',
             'descripcion' => 'required',
             'activo'      => 'required|integer'//|min:0|min:1
         ];
@@ -55,6 +60,7 @@ class EspecializacionController extends Controller
         $messages = [
             'nom_esp.required'     => 'Es necesario ingresar el nombre de la especialización',
             'nom_corto.required'   => 'Es necesario ingresar el nombre corto de la especialización',
+            'cod_esp_tipo.required'=> 'Es necesario indicar el tipo de especialización',
             'descripcion.required' => 'Es necesario ingresar una descripción breve de la especialización',
             'activo.required'      => 'Es necesario indicar si el tipo de especialización estará activo o inactivo',
             'activo.integer'       => 'Solo esta permitido que sea números enteros',
@@ -76,12 +82,13 @@ class EspecializacionController extends Controller
         } else {
 
           // Registramos la nueva especialización
-          $esp              = new Especializacion;
-          $esp->nom_esp     = $request->get("nom_esp");
-          $esp->nom_corto   = $request->get("nom_corto");
-          $esp->descripcion = $request->get("descripcion");
-          $esp->activo      = $request->get("activo");
-          $esp->created_at  = Carbon::now();
+          $esp               = new Especializacion;
+          $esp->nom_esp      = $request->get("nom_esp");
+          $esp->nom_corto    = $request->get("nom_corto");
+          $esp->cod_esp_tipo = $request->get("cod_esp_tipo");
+          $esp->descripcion  = $request->get("descripcion");
+          $esp->activo       = $request->get("activo");
+          $esp->created_at   = Carbon::now();
 
           if($esp->save()){
 
@@ -116,7 +123,11 @@ class EspecializacionController extends Controller
     public function edit($id)
     {
       $esp = Especializacion::find($id);
-      return view('especializacion.edit', array( "esp" => $esp ));
+      $data = [
+              "esp"   => $esp,
+              'types' => EspecializacionTipo::lists('nom_esp_tipo', 'id')
+          ];
+      return view('especializacion.edit', $data);
     }
 
     /**
@@ -133,10 +144,11 @@ class EspecializacionController extends Controller
 
       // Reglas de validación
       $rules = [
-          'nom_esp'     => 'required',
-          'nom_corto'   => 'required',
-          'descripcion' => 'required',
-          'activo'      => 'required|integer'//|min:0|min:1
+          'nom_esp'       => 'required',
+          'nom_corto'     => 'required',
+          'descripcion'   => 'required',
+          'cod_esp_tipo'  => 'required',
+          'activo'        => 'required|integer'//|min:0|min:1
       ];
 
       // Mensaje Personalizado
@@ -144,6 +156,7 @@ class EspecializacionController extends Controller
           'nom_esp.required'     => 'Es necesario ingresar el nombre de la especialización',
           'nom_corto.required'   => 'Es necesario ingresar el nombre corto de la especialización',
           'descripcion.required' => 'Es necesario ingresar una descripción breve de la especialización',
+          'cod_esp_tipo.required'=> 'Es necesario indicar el tipo de especialización',
           'activo.required'      => 'Es necesario indicar si el tipo de especialización estará activo o inactivo',
           'activo.integer'       => 'Solo esta permitido que sea números enteros',
           //'activo.min'           => 'Solo esta permitido valor enteros +',
@@ -167,12 +180,13 @@ class EspecializacionController extends Controller
       } else {
 
         // Actualizando la especialización seleccionada
-        $esp              = Especializacion::find($id);
-        $esp->nom_esp     = $request->get("nom_esp");
-        $esp->nom_corto   = $request->get("nom_corto");
-        $esp->descripcion = $request->get("descripcion");
-        $esp->activo      = $request->get("activo");
-        $esp->updated_at  = Carbon::now();
+        $esp                = Especializacion::find($id);
+        $esp->nom_esp       = $request->get("nom_esp");
+        $esp->nom_corto     = $request->get("nom_corto");
+        $esp->cod_esp_tipo  = $request->get("cod_esp_tipo");
+        $esp->descripcion   = $request->get("descripcion");
+        $esp->activo        = $request->get("activo");
+        $esp->updated_at    = Carbon::now();
 
         if($esp->save()){
 
