@@ -4,6 +4,8 @@
 
 @section('content')
 
+<!-- Seccion de bienvenida -->
+<img src="https://doktuz.com/icon_usuarios/b9c55ab7d80b70440fcceb2c69adea12.0ae92886072bdc4c1585ddc77e4eb7de.png">
 Bienvenido: {{ Auth::user()->username }}<br>
 
 <ul>
@@ -11,10 +13,5 @@ Bienvenido: {{ Auth::user()->username }}<br>
   <li><a href="#">Crear Tipo Especialidades</a></li>
   <li><a href="#">Crear Especialidades</a></li>
 </ul>
-
-<h1>Listado de Tipo de Especialidades</h1>
-  @foreach ($esps_types as $esp_type)
-      <p>Tipo Especialidad: {{ $esp_type->name }} con identificador: {{ $esp_type->id }}</p>
-  @endforeach
 
 @stop

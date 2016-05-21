@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TipoEspecialidad extends Model
+class TipoEspecializacion extends Model
 {
-    protected $table = 'especialidad_tipo';
-
+    protected $table = 'especializacion_tipo';
+    
     protected $fillable = [
         'nom_esp_type', 'activo'
     ];

@@ -48,6 +48,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/dashboard', 'DashBoardController@validateDashBoard');
 
-    Route::resource('/dashboard/tesp', 'TipoEspecialidadController', ['only' => ['index'] ] );
+    /* Administrador de Tipo de Especializacioón */
+    Route::resource('/dashboard/tesp', 'TipoEspecializacionController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
 });
