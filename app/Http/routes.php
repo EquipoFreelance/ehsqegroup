@@ -48,7 +48,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/dashboard', 'DashBoardController@validateDashBoard');
 
-    /* Administrador de Tipo de Especializacioón */
+    /* Administrador de Tipo de Especialización */
     Route::resource('/dashboard/tesp', 'TipoEspecializacionController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+
+    /* Administrador de Especialización */
+    Route::resource('/dashboard/esp', 'EspecializacionController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
 });
