@@ -32,6 +32,8 @@ class AuthController extends Controller
 
     protected $redirectAfterLogout = '/login';
 
+    //protected $layout = 'layouts.login_layout';
+
     /**
      * Create a new authentication controller instance.
      *

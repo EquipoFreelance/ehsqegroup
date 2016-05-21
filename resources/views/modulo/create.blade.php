@@ -29,7 +29,7 @@
 
     <br>
 
-    Especialización:{{ Form::select('cod_esp', $modulos) }}<br>
+    Especialización:{{ Form::select('cod_esp', $especializacion) }}<br>
 
     <br>
     Nombre Corto:<input type="text" name="nom_corto"  value="{{ old('nom_corto') }}" >

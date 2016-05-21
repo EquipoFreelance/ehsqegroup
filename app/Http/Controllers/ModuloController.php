@@ -160,7 +160,7 @@ class ModuloController extends Controller
       if ($validator->fails()){
 
         // Enviando Mensaje
-        return redirect()->route('dashboard.modulo.update')
+        return redirect()->route('dashboard.modulo.edit')
                                 ->withErrors($validator)
                                 ->withInput();
       } else {

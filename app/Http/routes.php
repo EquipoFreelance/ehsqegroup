@@ -37,15 +37,18 @@ Route::auth();
 
 Route::group(['middleware' => ['web']], function () {
 
-    Route::get('/', function () {
-        return view('welcome');
-    });
 
 });
 
 // Como Usuario Logueado
 Route::group(['middleware' => 'auth'], function () {
 
+    // Root
+    Route::get('/', function () {
+        return redirect()->to('/dashboard');
+    });
+
+    // Dashboard
     Route::get('/dashboard', 'DashBoardController@validateDashBoard');
 
     /* Administrador de Tipo de Especialización */
@@ -56,5 +59,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* Administrador de Módulos */
     Route::resource('/dashboard/modulo', 'ModuloController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+
+
 
 });
