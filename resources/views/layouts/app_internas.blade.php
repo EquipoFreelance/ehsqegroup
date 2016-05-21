@@ -1,80 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>@yield('title')</title>
-
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
-
-    <!-- Styles -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
-
-    
-
-    <style>
-        body {
-            font-family: 'Lato';
-        }
-
-        .fa-btn {
-            margin-right: 6px;
-        }
-    </style>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>@yield('title')</title>
+  <!-- Bootstrap core CSS -->
+  <link href="{{ URL::asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
+  <link href="{{ URL::asset('assets/fonts/css/font-awesome.min.css')}}" rel="stylesheet">
+  <link href="{{ URL::asset('assets/css/animate.min.css')}}" rel="stylesheet">
+  <!-- Custom styling plus plugins -->
+  <link href="{{ URL::asset('assets/css/custom.css') }}" rel="stylesheet">
+  <link href="{{ URL::asset('assets/css/icheck/flat/green.css') }}" rel="stylesheet">
+  <link href="{{ URL::asset('assets/js/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ URL::asset('assets/js/datatables/buttons.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ URL::asset('assets/js/datatables/fixedHeader.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ URL::asset('assets/js/datatables/responsive.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ URL::asset('assets/js/datatables/scroller.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ URL::asset('assets/css/freelanceteam/freelanceteam.css') }}" rel="stylesheet">
+  <!--[if lt IE 9]>
+  <script src="../assets/js/ie8-responsive-file-warning.js') }}"></script>
+  <![endif]-->
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js') }}"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js') }}"></script>
+  <![endif]-->
 </head>
-<body id="app-layout">
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
+<body class="nav-md">
+  <div class="container body">
+    <div class="main_container">
+      <div class="col-md-3 left_col">
+        <div class="left_col scroll-view md">
 
-                <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+          <div class="navbar nav_title" style="border: 0;">
+            <a href="index.html" class="site_title bmx"><img src="{{ URL::asset('assets/images/logos/cabe.png') }}"></a>
+          </div>
+          <div class="clearfix"></div>
 
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    EhsqeGroup
-                </a>
+
+          <!-- menu prile quick info -->
+          <div class="profile">
+            <div class="profile_pic">
+              <img src="{{ URL::asset('assets/images/users/img.jpg') }}" alt="..." class="img-circle profile_img">
             </div>
-
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
-
-                <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
-                    @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Inicio de sesión</a></li>
-                    @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->username }} <span class="caret"></span>
-                            </a>
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                            </ul>
-                        </li>
-                    @endif
-                </ul>
+            <div class="profile_info">
+              <h2>{{ Auth::user()->username }}</h2>
+              <span>Admin. Secretaría Academica</span>
             </div>
+          </div>
+          <!-- /menu prile quick info -->
+
+          @yield('sidebar_menu')
+
         </div>
-    </nav>
+      </div>
 
+      <!-- top navigation -->
+      <div class="top_nav">
+        <div class="nav_menu">
+          <nav role="navigation">
+            <!--<div class="navbar nav_title hidden_log">
+            <a href="index.html" class="site_title bmx"><img src="../../images/logos/cabe.png"></a>
+          </div>-->
+          <div class="nav toggle">
+            <a id="menu_toggle">
+              <div class="dev-page-sidebar-collapse-icon">
+                <span class="line-one"></span>
+                <span class="line-two"></span>
+                <span class="line-three"></span>
+              </div>
+            </a>
+          </div>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="">
+              <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <img src="{{ URL::asset('assets/images/users/img.jpg') }}" alt="">{{ Auth::user()->username }}
+                <span class=" fa fa-angle-down"></span>
+              </a>
+              <ul class="dropdown-menu dropdown-usermenu pull-right">
+                <li><a href="javascript:;">  Perfil</a>
+                </li>
+                <li>
+                  <a href="javascript:;">
+                    <span>Configuraciones</span>
+                  </a>
+                </li>
+                <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out pull-right"></i> Cerrar sesión</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <!-- /top navigation -->
 
+    <!-- page content -->
+    <div class="right_col" role="main">
     @yield('content')
+    </div>
+    <!-- /page content -->
 
-    <!-- JavaScripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+  </div>
+</div>
+
+<!-- JavaScripts -->
+{{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="{{ URL::asset('assets/js/bootstrap.min.js') }}"></script>
+
+<!-- bootstrap progress js -->
+<script src="{{ URL::asset('assets/js/progressbar/bootstrap-progressbar.min.js') }}"></script>
+
+<!-- icheck -->
+<script src="{{ URL::asset('assets/js/icheck/icheck.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/custom.js') }}"></script>
+
+<!-- Datatables -->
+<!-- <script src="{{ URL::asset('assets/js/datatables/js/jquery.dataTables.js') }}"></script>
+<script src="{{ URL::asset('assets/js/datatables/tools/js/dataTables.tableTools.js') }}"></script> -->
+<!-- Datatables-->
+
+<script src="{{ URL::asset('assets/js/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/datatables/dataTables.bootstrap.js') }}"></script>
+<script src="{{ URL::asset('assets/js/datatables/dataTables.buttons.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/datatables/buttons.bootstrap.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/datatables/jszip.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/datatables/pdfmake.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/datatables/vfs_fonts.js') }}"></script>
+<script src="{{ URL::asset('assets/js/datatables/buttons.html5.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/datatables/buttons.print.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/datatables/dataTables.fixedHeader.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/datatables/dataTables.keyTable.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/datatables/dataTables.responsive.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/datatables/responsive.bootstrap.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/datatables/dataTables.scroller.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/jquery.validated.js') }}"></script>
+
+<!-- pace -->
+<script src="{{ URL::asset('assets/js/pace/pace.min.js') }}"></script>
+<script>
+//DATATABE GENERADOR
+$('#datatable-responsive').DataTable({
+  "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+  "language":
+  {
+    "lengthMenu": "Mostrar _MENU_ registros por página",
+    "zeroRecords": "Sin resultados",
+    "info": "Mostrando _PAGE_ de _PAGES_",
+    "infoEmpty": "No hay registros Activos",
+    "infoFiltered": "(filtrada de _MAX_  entradas en total)",
+    "sSearch": "Buscar :",
+    "paginate": {
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "first": "Inicio",
+      "last": "Final"
+    }
+  },
+  dom: "Bfrtip",
+  buttons: [
+    {
+      extend: "excel",
+      className: "btn-sm"
+    }, {
+      extend: "pdf",
+      className: "btn-sm"
+    }, {
+      extend: "print",
+      text:"Imprimir",
+      className: "btn-sm"
+    }],
+  });
+
+  </script>
+
 </body>
 </html>

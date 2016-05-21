@@ -2,10 +2,10 @@
 
 @section('title', 'Dashboard - Secretaria Académica')
 
+@section('sidebar_menu')
+  @include('dashboard.dashboard_sa_menu')
+@stop
+
 @section('content')
-
-@include('dashboard.dash_welcome')
-
-@include('dashboard.dashboard_sa_menu')
-
+dasdasd
 @stop
