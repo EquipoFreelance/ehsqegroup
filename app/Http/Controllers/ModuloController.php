@@ -30,7 +30,7 @@ class ModuloController extends Controller
      */
     public function create()
     {
-        //
+        return view('modulo.create');
     }
 
     /**

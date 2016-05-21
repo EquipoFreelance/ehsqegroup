@@ -8,7 +8,7 @@
 
   @include('dashboard.dashboard_sa_menu')
 
-  <a href="{{ route('dashboard.esp.create') }}">Crear</a><br>
+  <a href="{{ route('dashboard.modulo.create') }}">Crear</a><br>
 
   <h1>Listado de Modulos</h1><br>
   @if(Session::has('message'))

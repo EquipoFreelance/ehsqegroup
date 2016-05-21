@@ -6,7 +6,7 @@
 
   @include('dashboard.dash_welcome')
 
-  @include('dashboard.sa_admin_menu')
+  @include('dashboard.dashboard_sa_menu')
 
   <a href="#">Retornar</a><br>
 
