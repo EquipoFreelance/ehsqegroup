@@ -54,4 +54,7 @@ Route::group(['middleware' => 'auth'], function () {
     /* Administrador de Especialización */
     Route::resource('/dashboard/esp', 'EspecializacionController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
+    /* Administrador de Módulos */
+    Route::resource('/dashboard/modulo', 'ModuloController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+
 });
