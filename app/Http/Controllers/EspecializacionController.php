@@ -202,7 +202,7 @@ class EspecializacionController extends Controller
 
           //Enviando mensaje
           return redirect()->route('dashboard.esp.index')
-                                  ->with('message', 'El Tipo de especialidad fue eliminado del sistema');
+                                  ->with('message', 'La especialización fue eliminado del sistema');
 
       }
     }
