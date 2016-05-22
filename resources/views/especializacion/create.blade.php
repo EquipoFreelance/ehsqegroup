@@ -1,66 +1,96 @@
 @extends('layouts.app_internas')
 
-@section('title', 'Dashboard Secretaria Académica - Crear una especialización')
+@section('title', 'Dashboard - Secretaria Académica Crear un Tipo de especialización')
+
+@section('sidebar_menu')
+@include('dashboard.dashboard_sa_menu')
+@stop
 
 @section('content')
-
-  @include('dashboard.dash_welcome')
-
-  @include('dashboard.dashboard_sa_menu')
-
-  <a href="#">Retornar</a><br>
-
-  <h1>Crear Nueva Especialización</h1><br>
-
-  @if(Session::has('message'))
-      <div class="alert alert-info">
-          {{ Session::get('message') }}
+<div class="clearfix"></div>
+<div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <br>
+    <div class="x_panel">
+      <div class="x_title">
+        <h1 style="font-size: 18px">Nueva Especialización <small> (En este interior usted podrá ingresar una nueva Especialización, editar los datos ingresados)</small></h1>
+        <div class="clearfix"></div>
       </div>
-  @endif
+      <br>
 
-  {!! Form::open(['route' => 'dashboard.esp.store']) !!}
+      {!! Form::open(['route' => 'dashboard.esp.store', 'class' => 'form-horizontal form-label-left']) !!}
 
-    <input type="text" name="nom_esp"  value="{{ old('nom_esp') }}" >
-    @if ($errors->has('nom_esp'))
-        <span class="help-block">
-            <strong>{{ $errors->first('nom_esp') }}</strong>
-        </span>
-    @endif
-    <br>
+      @if(Session::has('message'))
+      <div class="alert alert-success alert-dismissible fade in" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <strong>¡Perfecto!</strong>{{ Session::get('message') }}
+      </div>
+      @endif
 
-    {{ Form::select('cod_esp_tipo', $types) }}<br>
+      <div class="form-group">
+        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nom_esp_tipo">Nombre</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <input type="text" id="nom_esp" placeholder="Nombre" name="nom_esp"  class="form-control" value="{{ old('nom_esp') }}">
+          @if ($errors->has('nom_esp'))
+          <label for="nom_esp" generated="true" class="error">{{ $errors->first('nom_esp') }}</label>
+          @endif
+        </div>
+      </div>
 
-    <input type="text" name="nom_corto"  value="{{ old('nom_corto') }}" >
-    @if ($errors->has('nom_corto'))
-        <span class="help-block">
-            <strong>{{ $errors->first('nom_corto') }}</strong>
-        </span>
-    @endif
-    <br>
+      <div class="form-group">
+        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nom_esp_tipo">Nombre corto</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <input type="text" id="nom_corto" placeholder="Nombre corto" name="nom_corto"  class="form-control" value="{{ old('nom_corto') }}">
+          @if ($errors->has('nom_corto'))
+          <label for="nom_corto" generated="true" class="error">{{ $errors->first('nom_corto') }}</label>
+          @endif
+        </div>
+      </div>
 
-    <textarea name="descripcion" id="descripcion">{{ old('descripcion') }}</textarea>
+      <div class="form-group">
+        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="descripcion">Descripción</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <textarea class="form-control" name="descripcion" placeholder="Descripción">{{ old('descripcion') }}</textarea>
+          @if ($errors->has('descripcion'))
+          <label for="descripcion" generated="true" class="error">{{ $errors->first('descripcion') }}</label>
+          @endif
+        </div>
+      </div>
 
-    @if ($errors->has('descripcion'))
-        <span class="help-block">
-            <strong>{{ $errors->first('descripcion') }}</strong>
-        </span>
-    @endif
-    <br>
+      <div class="form-group">
+        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_esp_tipo">Tipo de especialización</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          {{ Form::select('cod_esp_tipo', $types, old('cod_esp_tipo'), ['class' => 'form-control']) }}
+          @if ($errors->has('cod_esp_tipo'))
+          <label for="cod_esp_tipo" generated="true" class="error">{{ $errors->first('cod_esp_tipo') }}</label>
+          @endif
+        </div>
+      </div>
 
-    <select name="activo" id="activo">
-      <option value="-1" selected="selected">Seleccione {{ old('activo') }}</option>
-      <option value="1"  @if ( old('activo') == 1) selected="selected" @else "" @endif >Activo</option>
-      <option value="0"  @if ( old('activo') == 0) selected="selected" @else "" @endif >No Activo</option>
-    </select>
+      <div class="form-group">
+        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="activo">Estado</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          {{ Form::select('activo', ['1' => 'Activo','0' => 'No Activo'], old('activo'), ['class' => 'form-control'] ) }}
+          @if ($errors->has('activo'))
+          <label for="activo" generated="true" class="error">{{ $errors->first('activo') }}</label>
+          @endif
+        </div>
+      </div>
 
-    @if ($errors->has('activo'))
-        <span class="help-block">
-            <strong>{{ $errors->first('activo') }}</strong>
-        </span>
-    @endif
-
-    <br>
-    <button type="submit">Crear</button>
-  {!! Form::close() !!}
+      <div class="ln_solid"></div>
+      <div class="form-group">
+        <label class="control-label col-md-4 col-sm-4 col-xs-12"></label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="form-group btncontrol">
+            <a href="{{ route('dashboard.esp.index') }}" class="btn btn-default">Retornar</a>
+            <!--<a href="{{ route('dashboard.tesp.index') }}" class="btn btn-danger cancel_btn">Cancelar</a>-->
+            <button type="submit" class="btn btn-success">Guardar</button>
+          </div>
+        </div>
+      </div>
+      {!! Form::close() !!}
+    </div>
+  </div>
+</div>
 
 @stop
