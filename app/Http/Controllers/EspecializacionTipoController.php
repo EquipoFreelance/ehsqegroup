@@ -21,7 +21,7 @@ class EspecializacionTipoController extends Controller
     {
 
         $esps_types = EspecializacionTipo::where("deleted", '=', 0)->get();
-        return view('tipo_especializacion.index', array('esps_types' => $esps_types));
+        return view('especializacion_tipo.index', array('esps_types' => $esps_types));
 
     }
 
@@ -33,7 +33,7 @@ class EspecializacionTipoController extends Controller
     public function create()
     {
         //
-        return view('tipo_especializacion.create');
+        return view('especializacion_tipo.create');
     }
 
     /**
@@ -67,21 +67,21 @@ class EspecializacionTipoController extends Controller
         if ($validator->fails()){
 
           // Enviando Mensaje
-          return redirect('/dashboard/tesp/create')
+          return redirect()->route('dashboard.tesp.create')
                                   ->withErrors($validator)
                                   ->withInput();
         } else {
 
           // Registramos el nuevo tipo de especialización
-          $te               = new EspecializacionTipo;
-          $te->nom_esp_tipo = $request->get("nom_esp_tipo");
-          $te->activo       = $request->get("activo");
-          $te->created_at   = Carbon::now();
+          $obj               = new EspecializacionTipo;
+          $obj->nom_esp_tipo = $request->get("nom_esp_tipo");
+          $obj->activo       = $request->get("activo");
+          $obj->created_at   = Carbon::now();
 
-          if($te->save()){
+          if($obj->save()){
 
               //Enviando mensaje
-              return redirect('/dashboard/tesp')
+              return redirect()->route('dashboard.tesp.index')
                                       ->with('message', 'Tipo de Especialización creado satisfactoriamente');
 
           }
@@ -98,7 +98,7 @@ class EspecializacionTipoController extends Controller
      */
     public function show($id)
     {
-        //return view('tipo_especializacion.edit', $te);
+        //return view('especializacion_tipo.edit', $te);
     }
 
     /**
@@ -110,7 +110,7 @@ class EspecializacionTipoController extends Controller
     public function edit($id)
     {
         $te = EspecializacionTipo::find($id);
-        return view('tipo_especializacion.edit', array("te" => $te ));
+        return view('especializacion_tipo.edit', array("te" => $te ));
     }
 
     /**
@@ -151,12 +151,12 @@ class EspecializacionTipoController extends Controller
       } else {
 
         // Actualizando el tipo de especialización
-        $te               = EspecializacionTipo::find($id);
-        $te->nom_esp_tipo = $request->get("nom_esp_tipo");
-        $te->activo       = $request->get("activo");
-        $te->updated_at   = Carbon::now();
+        $obj               = EspecializacionTipo::find($id);
+        $obj->nom_esp_tipo = $request->get("nom_esp_tipo");
+        $obj->activo       = $request->get("activo");
+        $obj->updated_at   = Carbon::now();
 
-        if($te->save()){
+        if($obj->save()){
 
             //Enviando mensaje
             return redirect('/dashboard/tesp')
@@ -176,11 +176,11 @@ class EspecializacionTipoController extends Controller
      */
     public function destroy($id)
     {
-        $te             = EspecializacionTipo::find($id);
-        $te->deleted    = 1;
-        $te->deleted_at = Carbon::now();
+        $obj             = EspecializacionTipo::find($id);
+        $obj->deleted    = 1;
+        $obj->deleted_at = Carbon::now();
 
-        if($te->save()){
+        if($obj->save()){
 
             //Enviando mensaje
             return redirect('/dashboard/tesp')

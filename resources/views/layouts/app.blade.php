@@ -27,9 +27,7 @@
 </head>
 
 <body style="background:#0074A2;">
-
     @yield('content')
-
     <!-- JavaScripts -->
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>

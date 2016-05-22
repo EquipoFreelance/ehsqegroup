@@ -36,7 +36,7 @@
         <div class="left_col scroll-view md">
 
           <div class="navbar nav_title" style="border: 0;">
-            <a href="index.html" class="site_title bmx"><img src="{{ URL::asset('assets/images/logos/cabe.png') }}"></a>
+            <a href="{{ url('/dashboard') }}" class="site_title bmx"><img src="{{ URL::asset('assets/images/logos/cabe.png') }}"></a>
           </div>
           <div class="clearfix"></div>
 
@@ -100,7 +100,9 @@
 
     <!-- page content -->
     <div class="right_col" role="main">
-    @yield('content')
+      <div class="">
+        @yield('content')
+      </div>
     </div>
     <!-- /page content -->
 
