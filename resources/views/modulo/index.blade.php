@@ -13,8 +13,8 @@
             {{ Session::get('message') }}
         </div>
     @endif
-    <h1>Especializaciones</h1>
-    <p style="margin-top: 15px">En este interior usted podrá ingresar una nueva Especialización, editar los datos ingresados, realizar la búsqueda de alguna de las Especializaciones, Exportar a Excel, Imprimir y generar un archivo PDF.</p>
+    <h1>Módulos</h1>
+    <p style="margin-top: 15px">Administrador de Módulos.</p>
   </div>
   <div class="clearfix"></div>
   <div class="row">

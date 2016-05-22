@@ -40,7 +40,7 @@
       <div class="form-group">
         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nom_corto">Nombre corto</label>
         <div class="col-md-6 col-sm-6 col-xs-12">
-          <input type="text" id="nom_corto" placeholder="Nombre corto" name="nombre"  class="form-control" value="{{ old('nom_corto') }}">
+          <input type="text" id="nom_corto" placeholder="Nombre corto" name="nom_corto"  class="form-control" value="{{ old('nom_corto') }}">
           @if ($errors->has('nom_corto'))
           <label for="nom_corto" generated="true" class="error">{{ $errors->first('nom_corto') }}</label>
           @endif
