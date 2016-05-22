@@ -60,6 +60,10 @@ Route::group(['middleware' => 'auth'], function () {
     /* Administrador de Módulos */
     Route::resource('/dashboard/modulo', 'ModuloController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
+    /* Administrador de Persona */
+    Route::resource('/dashboard/persona', 'PersonaController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
+    /* Administrador de Docentes */
+    Route::resource('/dashboard/docente', 'DocenteController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
 });

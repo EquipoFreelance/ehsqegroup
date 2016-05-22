@@ -7,6 +7,7 @@
          <li><a href="{{ route('dashboard.tesp.index') }}"><i class="fa fa-tasks"></i> Tipo de especializaciones</a></li>
          <li><a href="{{ route('dashboard.esp.index') }}"><i class="fa fa-tasks"></i> Especializaciones</a></li>
          <li><a href="{{ route('dashboard.modulo.index') }}"><i class="fa fa-tasks"></i> Módulos</a></li>
+         <li><a href="{{ route('dashboard.docente.index') }}"><i class="fa fa-tasks"></i> Docentes</a></li>
          <!--<li class="active"><a><i class="fa fa-edit"></i> Formulario de inscripción</a></li>
          <li><a><i class="fa fa-file-text-o"></i> Acta de notas modulares</a></li>
          <li><a><i class="fa fa-file-text-o"></i> Acta de notas</a></li>
