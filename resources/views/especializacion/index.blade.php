@@ -29,6 +29,7 @@
             <thead>
               <tr>
                 <th>Código</th>
+                <th>Tipo</th>
                 <th>Especialización</th>
                 <th>Estado</th>
                 <th></th>
@@ -38,6 +39,7 @@
               @foreach ($esps as $esp)
                   <tr data-id="{{ $esp->id }}">
                     <td class="data-cod" data-cod="{{ $esp->id }}">{{ $esp->id }}</td>
+                    <td class="data-tipo" data-tipo="{{ $esp->esptipo->nom_esp_tipo }}">{{ $esp->esptipo->nom_esp_tipo }}</td>
                     <td class="data-name" data-name="{{ $esp->nom_esp_tipo }}">{{ $esp->nom_esp }}</td>
                     <td class="data-acti" data-acti="{{ $esp->activo }}">
                       <span class="label @if($esp->activo == '1') label-success @else label-danger @endif ">

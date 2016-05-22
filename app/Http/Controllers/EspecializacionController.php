@@ -20,7 +20,7 @@ class EspecializacionController extends Controller
      */
     public function index()
     {
-      $esps = Especializacion::where("deleted", '=', 0)->get();
+      $esps = Especializacion::where("deleted", '=', 0)->with('esptipo')->get();
       return view('especializacion.index', array('esps' => $esps));
     }
 
