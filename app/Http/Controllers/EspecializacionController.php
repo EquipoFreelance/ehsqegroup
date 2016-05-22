@@ -10,6 +10,8 @@ use Validator;
 
 use Illuminate\Http\Response;
 use Carbon\Carbon;
+use Illuminate\Support\Str as Str;
+use AppHelper;
 
 class EspecializacionController extends Controller
 {
@@ -182,7 +184,7 @@ class EspecializacionController extends Controller
         // Actualizando la especialización seleccionada
         $esp                = Especializacion::find($id);
         $esp->nom_esp       = $request->get("nom_esp");
-        $esp->nom_corto     = $request->get("nom_corto");
+        $esp->nom_corto     = AppHelper::strNomCorto( Str::slug($request->get("nom_corto"), '_') );
         $esp->cod_esp_tipo  = $request->get("cod_esp_tipo");
         $esp->descripcion   = $request->get("descripcion");
         $esp->activo        = $request->get("activo");
