@@ -16,4 +16,9 @@ class Modulo extends Model
         'nombre', 'nom_corto', 'descripcion', 'cod_esp'
     ];
 
+    // Relación de uno a muchos
+    public function especializacion(){
+      return $this->belongsTo('App\Especializacion', 'cod_esp');
+    }
+
 }

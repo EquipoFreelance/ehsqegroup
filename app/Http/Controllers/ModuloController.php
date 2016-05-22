@@ -58,7 +58,7 @@ class ModuloController extends Controller
         $messages = [
             'nombre.required'      => 'Es necesario ingresar el nombre del módulo',
             'nom_corto.required'   => 'Es necesario ingresar el nombre corto del módulo',
-            'cod_esp.required'     => 'Es necesario asigna la especialización',
+            'cod_esp.required'     => 'Es necesario asignar la especialización',
             'descripcion.required' => 'Es necesario ingresar una descripción breve del módulo',
             'activo.required'      => 'Es necesario indicar si el el módulo estará activo o inactivo',
             'activo.integer'       => 'Solo esta permitido que sea números enteros'
