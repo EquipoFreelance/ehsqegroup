@@ -17,8 +17,8 @@ class Especializacion extends Model
     ];
 
     // Relación de uno a muchos
-    public function esptipo(){
+    /*public function esptipo(){
       return $this->belongsTo('App\EspecializacionTipo', 'cod_esp_tipo');
-    }
+    }*/
 
 }

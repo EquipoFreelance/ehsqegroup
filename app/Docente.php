@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Docente extends Model
 {
-    protected $table = 'persona_cargo';
+    /*protected $table = 'persona_cargo';
 
     protected $fillable = [
         'cod_persona',
@@ -21,7 +21,7 @@ class Docente extends Model
 
     public function persona()
     {
-        return $this->hasMany('App\Persona', 'cod_persona', 'id');
-    }
+        return $this->belongsTo('App\Persona', 'cod_persona', 'id');
+    }*/
 
 }

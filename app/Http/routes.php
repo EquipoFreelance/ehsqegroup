@@ -61,9 +61,35 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/dashboard/modulo', 'ModuloController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
     /* Administrador de Persona */
-    Route::resource('/dashboard/persona', 'PersonaController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+    //Route::resource('/dashboard/persona', 'PersonaController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
     /* Administrador de Docentes */
-    Route::resource('/dashboard/docente', 'DocenteController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+
+    // Listado de Docentes
+    Route::get('/dashboard/docente',[
+      'as' => 'dashboard.docente.index', 'uses' => 'DocenteController@index'
+    ]);
+
+    // Mostrar formulario para almacenar docentes
+    Route::get('/dashboard/docente/create',[
+      'as' => 'dashboard.docente.create', 'uses' => 'DocenteController@create'
+    ]);
+
+    // Almacenar docente
+    Route::post('/dashboard/docente',[
+      'as' => 'dashboard.persona.store', 'uses' => 'PersonaController@store'
+    ]);
+
+    Route::put('/dashboard/docente',[
+      'as' => 'dashboard.docente.edit', 'uses' => 'PersonaController@edit'
+    ]);
+
+    /*Route::put('/dashboard/docente',[
+      'as' => 'dashboard.docente.edit', 'uses' => 'PersonaController@edit'
+    ]);*/
+
+    //Route::post('/dashboard/docente', 'PersonaController@create');
+    //Route::put('/dashboard/docente/{id}', 'PersonaController@edit');
+    //Route::resource('/dashboard/docente', 'DocenteController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
 });

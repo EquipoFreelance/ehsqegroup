@@ -4,13 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PersonaCargo extends Model
+class PersonaCorreo extends Model
 {
-  protected $table = 'persona_cargo';
+  protected $table = 'persona_correo';
 
   protected $fillable = [
     'cod_persona',
-    'cod_personal_cargo_tipo',
+    'correo',
     'deleted',
     'activo'
   ];
@@ -19,7 +19,7 @@ class PersonaCargo extends Model
     'deleted' => 0,
   );
 
-  // Un cargo pertenece a muchas personas
+  // Un correo pertenece a una persona
   public function persona()
   {
     return $this->hasMany('App\Persona', 'cod_persona', 'id');

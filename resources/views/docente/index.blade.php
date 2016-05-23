@@ -42,15 +42,15 @@
             <tbody>
               @foreach ($docentes as $docente)
                 <tr>
-                   <td>11DSIGP15</td>
-                   <td><img src="../../images/users/img.jpg" width="40px" height="40px"></td>
-                   <td>Juan Wilfredo</td>
-                   <td>Rodas Mañez</td>
-                   <td>rodas.juan@demostracion.com</td>
-                   <td>999999999 / 4545454</td>
-                   <td>Activo</td>
+                   <td>{{ $docente->id }}</td>
+                   <td><img src="{{ URL::asset('assets/images/users/img.jpg') }}" width="40px" height="40px"></td>
+                   <td>{{ $docente->nombre }}</td>
+                   <td>{{ $docente->ape_pat }} {{ $docente->ape_mat }}</td>
+                   <td>{{ isset($docente->correos[0]) ? $docente->correos[0]->correo : '' }}</td>
+                   <td>{{ isset($docente->telefonos[0]) ? $docente->telefonos[0]->correo : '' }}</td>
+                   <td>@if($docente->activo == '1') Activo @else No Activo @endif</td>
                    <td><a href="javascript:void(0)" class="btn btn-link" data-toggle="modal" data-target="#cursosModal">Ver cursos</a></td>
-                   <td><a href="javascript:void(0)" class="btn btn-link" data-toggle="modal" data-target="#editarModal">Editar</a></td>
+                   <td><a href="{{ route('dashboard.docente.edit', $docente->id) }}" class="btn btn-link" data-toggle="modal" data-target="">Editar</a></td>
                 </tr>
               @endforeach
             </tbody>

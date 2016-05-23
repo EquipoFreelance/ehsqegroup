@@ -24,4 +24,22 @@ class Persona extends Model
        'deleted' => 0,
     );
 
+    // Una persona puede tener de uno a muchos cargos
+    public function cargos()
+    {
+        return $this->hasMany('App\PersonaCargo', 'cod_persona', 'id');
+    }
+
+    // Una persona puede tener de uno a muchos correos
+    public function correos()
+    {
+        return $this->hasMany('App\PersonaCorreo', 'cod_persona', 'id');
+    }
+
+    // Una persona puede tener de uno a muchos teléfonos
+    public function telefonos()
+    {
+        return $this->hasMany('App\PersonaTelefono', 'cod_persona', 'id');
+    }
+
 }
