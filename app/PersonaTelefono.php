@@ -12,9 +12,7 @@ class PersonaTelefono extends Model
 
     protected $fillable = [
       'cod_persona',
-      'correo',
-      'deleted',
-      'activo'
+      'telefono'
     ];
 
     // Un telefono pertenece a una persona

@@ -77,11 +77,15 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Almacenar docente
     Route::post('/dashboard/docente',[
-      'as' => 'dashboard.persona.store', 'uses' => 'PersonaController@store'
+      'as' => 'dashboard.docente.store', 'uses' => 'PersonaController@store'
     ]);
 
-    Route::put('/dashboard/docente',[
-      'as' => 'dashboard.docente.edit', 'uses' => 'PersonaController@edit'
+    Route::get('/dashboard/docente/{id}',[
+      'as' => 'dashboard.docente.edit', 'uses' => 'DocenteController@edit'
+    ]);
+
+    Route::put('/dashboard/docente/{id}',[
+      'as' => 'dashboard.docente.update', 'uses' => 'PersonaController@update'
     ]);
 
     /*Route::put('/dashboard/docente',[
@@ -91,5 +95,6 @@ Route::group(['middleware' => 'auth'], function () {
     //Route::post('/dashboard/docente', 'PersonaController@create');
     //Route::put('/dashboard/docente/{id}', 'PersonaController@edit');
     //Route::resource('/dashboard/docente', 'DocenteController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+
 
 });

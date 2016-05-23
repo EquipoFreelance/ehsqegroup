@@ -7,9 +7,10 @@ use App\Modulo;
 use App\Especializacion;
 use App\Http\Requests;
 use Validator;
-
 use Illuminate\Http\Response;
 use Carbon\Carbon;
+use Illuminate\Support\Str as Str;
+use AppHelper;
 
 class ModuloController extends Controller
 {
@@ -79,7 +80,7 @@ class ModuloController extends Controller
           // Registramos el nuevo módulo
           $obj               = new Modulo;
           $obj->nombre       = $request->get("nombre");
-          $obj->nom_corto    = $request->get("nom_corto");
+          $obj->nom_corto    = AppHelper::strNomCorto( Str::slug($request->get("nom_corto"), '_') );
           $obj->cod_esp      = $request->get("cod_esp");
           $obj->descripcion  = $request->get("descripcion");
           $obj->activo       = $request->get("activo");
@@ -168,7 +169,7 @@ class ModuloController extends Controller
         // Actualizando el módulo seleccionado
         $obj               = Modulo::find($id);
         $obj->nombre       = $request->get("nombre");
-        $obj->nom_corto    = $request->get("nom_corto");
+        $obj->nom_corto    = AppHelper::strNomCorto( Str::slug($request->get("nom_corto"), '_') );
         $obj->cod_esp      = $request->get("cod_esp");
         $obj->descripcion  = $request->get("descripcion");
         $obj->activo       = $request->get("activo");

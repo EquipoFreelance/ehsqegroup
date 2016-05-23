@@ -27,27 +27,7 @@
         </div>
         @endif
 
-        <input type="hidden" name="cod_personal_cargo_tipo" id="cod_personal_cargo_tipo" value="{{ $docente->cargos[0]->cod_personal_cargo_tipo }}" />
-
-        <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_doc_tip">Tipo de Documento</label>
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            {{ Form::select('cod_doc_tip', array('1' => 'DNI', '2' => 'Carnet de Extranjeria'), $docente->cod_doc_tip, ['class' => 'form-control'] ) }}
-            @if ($errors->has('cod_doc_tip'))
-            <label for="cod_doc_tip" generated="true" class="error">{{ $errors->first('cod_doc_tip') }}</label>
-            @endif
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="dni">DNI</label>
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            <input type="text" id="num_doc" placeholder="Número de documento" name="num_doc"  class="form-control" value="{{ $docente->num_doc }}">
-            @if ($errors->has('num_doc'))
-            <label for="num_doc" generated="true" class="error">{{ $errors->first('num_doc') }}</label>
-            @endif
-          </div>
-        </div>
+        <input type="hidden" name="cod_personal_cargo_tipo" id="cod_personal_cargo_tipo" value="1" />
 
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nombre">Nombre</label>
@@ -80,16 +60,6 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nom_corto">Dirección</label>
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            <input type="text" id="direccion" placeholder="Dirección" name="direccion"  class="form-control" value="{{ $docente->direccion }}">
-            @if ($errors->has('direccion'))
-            <label for="direccion" generated="true" class="error">{{ $errors->first('direccion') }}</label>
-            @endif
-          </div>
-        </div>
-
-        <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nom_corto">Fecha de nacimiento</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
             <input type="text" id="fe_nacimiento" placeholder="Fecha de nacimiento" name="fe_nacimiento"  class="form-control" value="{{ $docente->fe_nacimiento }}">
@@ -109,11 +79,53 @@
           </div>
         </div>
 
+        <div class="form-group">
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_doc_tip">Tipo de Documento</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            {{ Form::select('cod_doc_tip', array('1' => 'DNI', '2' => 'Carnet de Extranjeria'), $docente->cod_doc_tip, ['class' => 'form-control'] ) }}
+            @if ($errors->has('cod_doc_tip'))
+            <label for="cod_doc_tip" generated="true" class="error">{{ $errors->first('cod_doc_tip') }}</label>
+            @endif
+          </div>
+        </div>
 
         <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_sexo">Correo electrónico</label>
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="dni">DNI</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <input type="text" id="correo" placeholder="Correo eléctrónico" name="correo" class="form-control" value="{{ isset($docente->correos[0]) ? $docente->correos[0]->correo : '' }}">
+            <input type="text" id="num_doc" placeholder="Número de documento" name="num_doc"  class="form-control" value="{{ $docente->num_doc }}">
+            @if ($errors->has('num_doc'))
+            <label for="num_doc" generated="true" class="error">{{ $errors->first('num_doc') }}</label>
+            @endif
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nom_corto">Dirección</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <input type="text" id="direccion" placeholder="Dirección" name="direccion"  class="form-control" value="{{ $docente->direccion }}">
+            @if ($errors->has('direccion'))
+            <label for="direccion" generated="true" class="error">{{ $errors->first('direccion') }}</label>
+            @endif
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="telefono">Teléfonos</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+
+
+
+            <input type="text" id="telefono" placeholder="Teléfonos" name="telefono"  class="form-control" value="{{ isset($docente->telefonos[0]) ? $docente->telefonos[0]->telefono : '' }}">
+            @if ($errors->has('telefono'))
+            <label for="telefono" generated="true" class="error">{{ $errors->first('telefono') }}</label>
+            @endif
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="correo">Correo electrónico</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <input type="text" id="correo" placeholder="Correo electrónico" name="correo"  class="form-control" value="{{ isset($docente->correos[0]) ? $docente->correos[0]->correo : '' }}">
             @if ($errors->has('correo'))
             <label for="correo" generated="true" class="error">{{ $errors->first('correo') }}</label>
             @endif
@@ -142,8 +154,8 @@
           </div>
         </div>
         {!! Form::close() !!}
-
       </div>
     </div>
   </div>
+
 @stop

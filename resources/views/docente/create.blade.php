@@ -18,7 +18,7 @@
         </div>
         <br>
 
-        {!! Form::open(['route' => 'dashboard.persona.store', 'class' => 'form-horizontal form-label-left']) !!}
+        {!! Form::open(['route' => 'dashboard.docente.store', 'class' => 'form-horizontal form-label-left']) !!}
 
         @if(Session::has('message'))
         <div class="alert alert-success alert-dismissible fade in" role="alert">
@@ -28,26 +28,6 @@
         @endif
 
         <input type="hidden" name="cod_personal_cargo_tipo" id="cod_personal_cargo_tipo" value="1" />
-
-        <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_doc_tip">Tipo de Documento</label>
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            {{ Form::select('cod_doc_tip', array('1' => 'DNI', '2' => 'Carnet de Extranjeria'), old('cod_doc_tip'), ['class' => 'form-control'] ) }}
-            @if ($errors->has('cod_doc_tip'))
-            <label for="cod_doc_tip" generated="true" class="error">{{ $errors->first('cod_doc_tip') }}</label>
-            @endif
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="dni">DNI</label>
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            <input type="text" id="num_doc" placeholder="Número de documento" name="num_doc"  class="form-control" value="{{ old('num_doc') }}">
-            @if ($errors->has('num_doc'))
-            <label for="num_doc" generated="true" class="error">{{ $errors->first('num_doc') }}</label>
-            @endif
-          </div>
-        </div>
 
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nombre">Nombre</label>
@@ -80,6 +60,46 @@
         </div>
 
         <div class="form-group">
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nom_corto">Fecha de nacimiento</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <input type="text" id="fe_nacimiento" placeholder="Fecha de nacimiento" name="fe_nacimiento"  class="form-control" value="{{ old('fe_nacimiento') }}">
+            @if ($errors->has('direccion'))
+            <label for="fe_nacimiento" generated="true" class="error">{{ $errors->first('fe_nacimiento') }}</label>
+            @endif
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_sexo">Género</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            {{ Form::select('cod_sexo', array('1' => 'Masculino', '2' => 'Femenino'), old('cod_sexo'), ['class' => 'form-control'] ) }}
+            @if ($errors->has('cod_sexo'))
+            <label for="cod_esp" generated="true" class="error">{{ $errors->first('cod_sexo') }}</label>
+            @endif
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_doc_tip">Tipo de Documento</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            {{ Form::select('cod_doc_tip', array('1' => 'DNI', '2' => 'Carnet de Extranjeria'), old('cod_doc_tip'), ['class' => 'form-control'] ) }}
+            @if ($errors->has('cod_doc_tip'))
+            <label for="cod_doc_tip" generated="true" class="error">{{ $errors->first('cod_doc_tip') }}</label>
+            @endif
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="dni">DNI</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <input type="text" id="num_doc" placeholder="Número de documento" name="num_doc"  class="form-control" value="{{ old('num_doc') }}">
+            @if ($errors->has('num_doc'))
+            <label for="num_doc" generated="true" class="error">{{ $errors->first('num_doc') }}</label>
+            @endif
+          </div>
+        </div>
+
+        <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nom_corto">Dirección</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
             <input type="text" id="direccion" placeholder="Dirección" name="direccion"  class="form-control" value="{{ old('direccion') }}">
@@ -100,26 +120,14 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nom_corto">Fecha de nacimiento</label>
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="correo">Correo electrónico</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <input type="text" id="fe_nacimiento" placeholder="Fecha de nacimiento" name="fe_nacimiento"  class="form-control" value="{{ old('fe_nacimiento') }}">
-            @if ($errors->has('direccion'))
-            <label for="fe_nacimiento" generated="true" class="error">{{ $errors->first('fe_nacimiento') }}</label>
+            <input type="text" id="correo" placeholder="Correo electrónico" name="correo"  class="form-control" value="{{ old('correo') }}">
+            @if ($errors->has('correo'))
+            <label for="correo" generated="true" class="error">{{ $errors->first('correo') }}</label>
             @endif
           </div>
         </div>
-
-
-        <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_sexo">Género</label>
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            {{ Form::select('cod_sexo', array('1' => 'Masculino', '2' => 'Femenino'), old('cod_sexo'), ['class' => 'form-control'] ) }}
-            @if ($errors->has('cod_sexo'))
-            <label for="cod_esp" generated="true" class="error">{{ $errors->first('cod_sexo') }}</label>
-            @endif
-          </div>
-        </div>
-
 
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="activo">Estado</label>

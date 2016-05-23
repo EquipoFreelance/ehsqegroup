@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Persona;
 use App\PersonalCargoTipo;
@@ -11,6 +11,7 @@ use App\PersonaCorreo;
 use App\PersonaTelefono;
 use Validator;
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 class PersonaController extends Controller
@@ -45,14 +46,13 @@ class PersonaController extends Controller
   public function store(Request $request)
   {
     // Enviando los parametros necesarios para la validación
-    $validator = Validator::make($request->all(), $this->validateRules(), $this->validateMessage());
+    $validator = Validator::make( $request->all(), $this->validateRules(), $this->validateMessages() );
 
     // Si existen errores el Sistema muestra un mensaje
     if ($validator->fails()){
 
       // Enviando Mensaje
-      return redirect()->route('dashboard.docente.index')
-      ->withErrors($validator)
+      return redirect()->route('dashboard.docente.create')->withErrors($validator)
       ->withInput();
 
     } else {
@@ -80,7 +80,6 @@ class PersonaController extends Controller
 
         // Agregando teléfonos
         $this->setPersonaTelefono($persona, $request);
-
 
         //Enviando mensaje
         return redirect()->route('dashboard.docente.index')
@@ -123,7 +122,50 @@ class PersonaController extends Controller
   */
   public function update(Request $request, $id)
   {
-    //
+    // Enviando los parametros necesarios para la validación
+    $validator = Validator::make( $request->all(), $this->validateRules(), $this->validateMessages() );
+
+    // Si existen errores el Sistema muestra un mensaje
+    if ($validator->fails()){
+
+      // Enviando Mensaje
+      return redirect()->route('dashboard.docente.edit', $id)->withErrors($validator)
+      ->withInput();
+
+    } else {
+
+      // Registramos el nuevo módulo
+      $persona = Persona::find($id);
+      $persona->cod_doc_tip   = $request->get("cod_doc_tip");
+      $persona->num_doc       = $request->get("num_doc");
+      $persona->nombre        = $request->get("nombre");
+      $persona->ape_pat       = $request->get("ape_pat");
+      $persona->ape_mat       = $request->get("ape_mat");
+      $persona->direccion     = $request->get("direccion");
+      $persona->fe_nacimiento = $request->get("fe_nacimiento");
+      $persona->cod_sexo      = $request->get("cod_sexo");
+      $persona->activo        = $request->get("activo");
+      $persona->updated_at    = Carbon::now();
+
+      if($persona->save()){
+
+        // Agregando correos electrónicos
+        $this->setPersonaCorreo($persona, $request);
+
+        // Agregando cargo al docente
+        $this->setPersonaCargo($persona, $request);
+
+        // Agregando teléfonos
+        $this->setPersonaTelefono($persona, $request);
+
+        //Enviando mensaje
+        return redirect()->route('dashboard.docente.index')
+        ->with('message', 'Los datos se actualizaron satisfactoriamente');
+
+      }
+
+    }
+
   }
 
   /**
@@ -138,7 +180,7 @@ class PersonaController extends Controller
   }
 
   /* Reglas de validaciones */
-  function validateRules()
+  public function validateRules()
   {
 
     /* Aplicando validación al Request */
@@ -163,7 +205,7 @@ class PersonaController extends Controller
   }
 
   /* Mensaje personalizado */
-  function validateMessage()
+  public function validateMessages()
   {
 
     // Mensaje de validación Personalizado
@@ -253,7 +295,7 @@ class PersonaController extends Controller
 
       $telefono =  new PersonaTelefono([
         'cod_persona' => $obj->id,
-        'telefono'    => $request->get("cod_personal_cargo_tipo")
+        'telefono'    => $request->get("telefono")
       ]);
 
     }
