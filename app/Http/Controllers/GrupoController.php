@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Sede;
 use App\Http\Requests;
 
 class GrupoController extends Controller
@@ -24,7 +24,9 @@ class GrupoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(){
-      return view('grupo.create');
+
+      $data = ['sedes' => Sede::lists('nom_sede', 'id')];
+      return view('grupo.create', $data);
     }
 
     /**

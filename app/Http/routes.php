@@ -91,6 +91,9 @@ Route::group(['middleware' => 'auth'], function () {
     /* Administrador de Grupos */
     Route::resource('/dashboard/grupo', 'GrupoController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
+    /* Administrador de Sedes */
+    Route::resource('/dashboard/sede', 'SedeController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+
     /*Route::put('/dashboard/docente',[
       'as' => 'dashboard.docente.edit', 'uses' => 'PersonaController@edit'
     ]);*/
