@@ -65,10 +65,12 @@ class GrupoController extends Controller
           $grupo->num_min     = $request->get("num_min");
           $grupo->activo      = $request->get("activo");
 
-          if($obj->save()){
+          if($grupo->save()){
+
             //Enviando mensaje
             return redirect()->route('dashboard.grupo.index')
             ->with('message', 'Los datos se registraron satisfactoriamente');
+
           }
 
       }
