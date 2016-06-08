@@ -8,7 +8,7 @@
          <li><a href="{{ route('dashboard.esp.index') }}"><i class="fa fa-tasks"></i> Especializaciones</a></li>
          <li><a href="{{ route('dashboard.modulo.index') }}"><i class="fa fa-tasks"></i> Módulos</a></li>
          <li><a href="{{ route('dashboard.docente.index') }}"><i class="fa fa-tasks"></i> Docentes</a></li>
-
+         <li><a href="{{ route('dashboard.sede.index') }}"><i class="fa fa-tasks"></i> Sedes</a></li>
          <li><a href="{{ route('dashboard.grupo.index') }}"><i class="fa fa-tasks"></i> Grupos</a></li>
 
          <!--<li class="active"><a><i class="fa fa-edit"></i> Formulario de inscripción</a></li>

@@ -14,7 +14,7 @@
         </div>
     @endif
     <h1>Módulos</h1>
-    <p style="margin-top: 15px">Administrador de Grupos.</p>
+    <p style="margin-top: 15px">Administrador de Sedes.</p>
   </div>
   <div class="clearfix"></div>
   <div class="row">
@@ -22,29 +22,29 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
       <div class="x_panel">
 
-        <a href="{{ route('dashboard.grupo.create') }}" class="btn btn-success">Agregar</a>
+        <a href="{{ route('dashboard.sede.create') }}" class="btn btn-success">Agregar</a>
         <div class="ln_solid"></div>
         <div class="x_content">
           <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
             <thead>
               <tr>
                 <th>Código</th>
-                <th>Nombre</th>
+                <th>Sede</th>
                 <th>Estado</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              @foreach ($grupos as $grupo)
-                  <tr data-id="{{ $grupo->id }}">
-                    <td class="data-cod" data-cod="{{ $grupo->id }}">{{ $grupo->id }}</td>
-                    <td class="data-tipo" data-name="{{ $grupo->nom_grupo }}">{{ $grupo->sede->nom_sede }} - {{ $grupo->nom_grupo }}</td>
-                    <td class="data-acti" data-acti="{{ $grupo->activo }}">
-                      <span class="label @if($grupo->activo == '1') label-success @else label-danger @endif ">
-                        @if($grupo->activo == '1') Activo @else No Activo @endif
+              @foreach ($sedes as $sede)
+                  <tr data-id="{{ $sede->id }}">
+                    <td class="data-cod" data-cod="{{ $sede->id }}">{{ $sede->id }}</td>
+                    <td class="data-tipo" data-name="{{ $sede->nom_grupo }}">{{ $sede->nom_sede }}</td>
+                    <td class="data-acti" data-acti="{{ $sede->activo }}">
+                      <span class="label @if($sede->activo == '1') label-success @else label-danger @endif ">
+                        @if($sede->activo == '1') Activo @else No Activo @endif
                       </span>
                     </td>
-                    <td><a href="{{ route('dashboard.grupo.edit', $grupo->id) }}" class="btn btn-link">Editar</a></td>
+                    <td><a href="{{ route('dashboard.sede.edit', $sede->id) }}" class="btn btn-link">Editar</a></td>
                   </tr>
               @endforeach
             </tbody>
