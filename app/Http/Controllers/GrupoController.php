@@ -53,9 +53,24 @@ class GrupoController extends Controller
         ->withInput();
 
       } else {
-          //Enviando mensaje
-          return redirect()->route('dashboard.grupo.index')
-          ->with('message', 'Los datos se registraron satisfactoriamente');
+
+          // Registramos el grupo
+          $grupo = new Grupo;
+          $grupo->cod_sede    = $request->get("cod_sede");
+          $grupo->nom_grupo   = $request->get("nom_grupo");
+          $grupo->descripcion = $request->get("descripcion");
+          $grupo->fe_inicio   = $request->get("fe_inicio");
+          $grupo->fe_fin      = $request->get("fe_fin");
+          $grupo->num_max     = $request->get("num_max");
+          $grupo->num_min     = $request->get("num_min");
+          $grupo->activo      = $request->get("activo");
+
+          if($obj->save()){
+            //Enviando mensaje
+            return redirect()->route('dashboard.grupo.index')
+            ->with('message', 'Los datos se registraron satisfactoriamente');
+          }
+
       }
 
     }
