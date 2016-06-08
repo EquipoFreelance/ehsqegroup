@@ -105,6 +105,50 @@ class GrupoController extends Controller
       return view('grupo.edit', $data);
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id){
+
+      // Enviando los parametros necesarios para la validación
+      $validator = Validator::make( $request->all(), $this->validateRules(), $this->validateMessages() );
+
+      // Si existen errores el Sistema muestra un mensaje
+      if ($validator->fails()){
+
+        // Enviando Mensaje
+        return redirect()->route('dashboard.grupo.edit', $id)
+                                ->withErrors($validator)
+                                ->withInput();
+
+      } else {
+
+          // Actualizando el grupo seleccionado
+          $grupo = Grupo::find($id);
+          $grupo->cod_sede    = $request->get("cod_sede");
+          $grupo->nom_grupo   = $request->get("nom_grupo");
+          $grupo->descripcion = $request->get("descripcion");
+          $grupo->fe_inicio   = $request->get("fe_inicio");
+          $grupo->fe_fin      = $request->get("fe_fin");
+          $grupo->num_max     = $request->get("num_max");
+          $grupo->num_min     = $request->get("num_min");
+          $grupo->activo      = $request->get("activo");
+
+          if($grupo->save()){
+
+            //Enviando mensaje
+            return redirect()->route('dashboard.grupo.index')
+                                    ->with('message', 'El grupo se ha actualizado satisfactoriamente');
+
+          }
+      }
+
+    }
+
     /* Reglas de validaciones */
     public function validateRules()
     {
