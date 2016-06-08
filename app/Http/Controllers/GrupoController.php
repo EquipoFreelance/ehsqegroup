@@ -20,7 +20,8 @@ class GrupoController extends Controller
    * @return \Illuminate\Http\Response
    */
     public function index(){
-        return "asdasd";
+      $grupos = Grupo::where("deleted", '=', 0)->get();
+      return view('grupo.index', array('grupos' => $grupos));
     }
 
     /**
