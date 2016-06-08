@@ -13,7 +13,7 @@
       <br>
       <div class="x_panel">
         <div class="x_title">
-          <h1 style="font-size: 18px">Nuevo Grupo <small> (En este interior usted podrá ingresar una nueva Especialización, editar los datos ingresados)</small></h1>
+          <h1 style="font-size: 18px">Nuevo Grupo <small> (En este interior usted podrá ingresar una nuevo Grupo, editar los datos ingresados)</small></h1>
           <div class="clearfix"></div>
         </div>
 
