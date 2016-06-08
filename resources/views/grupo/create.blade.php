@@ -28,11 +28,11 @@
           @endif
 
           <div class="form-group">
-            {{ Form::label('cod_esp', 'Sede', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
+            {{ Form::label('cod_sede', 'Sede', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
             <div class="col-md-6 col-sm-6 col-xs-12">
-              {{ Form::select('cod_esp', $sedes, old('cod_esp'), ['class' => 'form-control'] ) }}
-              @if ($errors->has('cod_esp'))
-                <label for="cod_esp" generated="true" class="error">{{ $errors->first('cod_esp') }}</label>
+              {{ Form::select('cod_sede', $sedes, old('cod_sede'), ['class' => 'form-control'] ) }}
+              @if ($errors->has('cod_sede'))
+                <label for="cod_sede" generated="true" class="error">{{ $errors->first('cod_sede') }}</label>
               @endif
             </div>
           </div>
@@ -61,7 +61,7 @@
             {{ Form::label('fe_inicio', 'Fecha de inicio', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
             <div class="col-md-6 col-sm-6 col-xs-12">
               {{ Form::text('fe_inicio', old('fe_inicio'), ['class' => 'form-control'] ) }}
-              @if ($errors->has('descripcion'))
+              @if ($errors->has('fe_inicio'))
                 <label for="fe_inicio" generated="true" class="error">{{ $errors->first('fe_inicio') }}</label>
               @endif
             </div>
@@ -71,7 +71,7 @@
             {{ Form::label('fe_fin', 'Fecha de fin', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
             <div class="col-md-6 col-sm-6 col-xs-12">
               {{ Form::text('fe_fin', old('fe_fin'), ['class' => 'form-control'] ) }}
-              @if ($errors->has('descripcion'))
+              @if ($errors->has('fe_fin'))
                 <label for="fe_fin" generated="true" class="error">{{ $errors->first('fe_fin') }}</label>
               @endif
             </div>
@@ -97,13 +97,23 @@
             </div>
           </div>
 
+          <div class="form-group">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12" for="activo">Estado</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              {{ Form::select('activo', ['1' => 'Activo','0' => 'No Activo'], old('activo'), ['class' => 'form-control'] ) }}
+              @if ($errors->has('activo'))
+              <label for="activo" generated="true" class="error">{{ $errors->first('activo') }}</label>
+              @endif
+            </div>
+          </div>
+
           <div class="ln_solid"></div>
           <div class="form-group">
                 <label class="control-label col-md-4 col-sm-4 col-xs-12"></label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <div class="form-group btncontrol">
                       <a href="{{ route('dashboard.grupo.index') }}" class="btn btn-default">Retornar</a>
-                      {{ Form::button('Guardar', array('class' => 'btn btn-success')) }}
+                      {{ Form::button('Guardar', array('class' => 'btn btn-success', 'type' => 'submit')) }}
                     </div>
                 </div>
           </div>
