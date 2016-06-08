@@ -78,6 +78,33 @@ class GrupoController extends Controller
 
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+      $grupo = Grupo::find($id);
+      $data = [
+              "grupo" => $grupo,
+              'sedes' => Sede::lists('nom_sede', 'id')
+          ];
+      return view('grupo.edit', $data);
+    }
+
     /* Reglas de validaciones */
     public function validateRules()
     {
