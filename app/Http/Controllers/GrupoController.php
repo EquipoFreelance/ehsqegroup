@@ -149,6 +149,26 @@ class GrupoController extends Controller
 
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+      $grupo             = Grupo::find($id);
+      $grupo->deleted    = 1;
+      $grupo->deleted_at = Carbon::now();
+
+      if($grupo->save()){
+
+          //Enviando mensaje
+          return redirect()->route('dashboard.grupo.index')
+                                  ->with('message', 'El Grupo fue eliminado del sistema');
+
+      }
+    }
     /* Reglas de validaciones */
     public function validateRules()
     {

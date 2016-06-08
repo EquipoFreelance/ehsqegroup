@@ -119,6 +119,14 @@
           </div>
 
         {!! Form::close() !!}
+
+        {!! Form::open([
+                    'method' => 'DELETE',
+                    'route' => ['dashboard.grupo.destroy', $grupo->id]
+                ]) !!}
+            <button type="submit" class="btn btn-danger cancel_btn">Eliminar</button>
+        {!! Form::close() !!}
+
       </div>
     </div>
   </div>
