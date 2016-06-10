@@ -13,7 +13,7 @@
             {{ Session::get('message') }}
         </div>
     @endif
-    <h1>Módulos</h1>
+    <h1>Grupos</h1>
     <p style="margin-top: 15px">Administrador de Grupos.</p>
   </div>
   <div class="clearfix"></div>
@@ -31,7 +31,7 @@
                 <th>Código</th>
                 <th>Nombre</th>
                 <th>Estado</th>
-                <th></th>
+                <th colspan="2"></th>
               </tr>
             </thead>
             <tbody>
@@ -45,6 +45,7 @@
                       </span>
                     </td>
                     <td><a href="{{ route('dashboard.grupo.edit', $grupo->id) }}" class="btn btn-link">Editar</a></td>
+                    <td><a href="{{ route('dashboard.grupo.edit', $grupo->id) }}" class="btn btn-link">Horario</a></td>
                   </tr>
               @endforeach
             </tbody>

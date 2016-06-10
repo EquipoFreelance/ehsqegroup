@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Sede;
 use App\Models\Grupo;
+use App\Especializacion;
 use Validator;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
@@ -31,7 +32,10 @@ class GrupoController extends Controller
      */
     public function create(){
 
-      $data = ['sedes' => Sede::lists('nom_sede', 'id')];
+      $data = [
+              'sedes' => Sede::lists('nom_sede', 'id'),
+              'especializaciones' => Especializacion::lists('nom_esp','id')
+            ];
       return view('grupo.create', $data);
     }
 
@@ -58,6 +62,7 @@ class GrupoController extends Controller
           // Registramos el grupo
           $grupo = new Grupo;
           $grupo->cod_sede    = $request->get("cod_sede");
+          $grupo->cod_esp     = $request->get("cod_esp");
           $grupo->nom_grupo   = $request->get("nom_grupo");
           $grupo->descripcion = $request->get("descripcion");
           $grupo->fe_inicio   = $request->get("fe_inicio");
@@ -100,7 +105,8 @@ class GrupoController extends Controller
       $grupo = Grupo::find($id);
       $data = [
               "grupo" => $grupo,
-              'sedes' => Sede::lists('nom_sede', 'id')
+              'sedes' => Sede::lists('nom_sede', 'id'),
+              'especializaciones' => Especializacion::lists('nom_esp','id')
           ];
       return view('grupo.edit', $data);
     }
@@ -130,6 +136,7 @@ class GrupoController extends Controller
           // Actualizando el grupo seleccionado
           $grupo = Grupo::find($id);
           $grupo->cod_sede    = $request->get("cod_sede");
+          $grupo->cod_esp     = $request->get("cod_esp");
           $grupo->nom_grupo   = $request->get("nom_grupo");
           $grupo->descripcion = $request->get("descripcion");
           $grupo->fe_inicio   = $request->get("fe_inicio");

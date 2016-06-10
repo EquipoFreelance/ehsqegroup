@@ -13,7 +13,7 @@
             {{ Session::get('message') }}
         </div>
     @endif
-    <h1>Módulos</h1>
+    <h1>Sedes</h1>
     <p style="margin-top: 15px">Administrador de Sedes.</p>
   </div>
   <div class="clearfix"></div>

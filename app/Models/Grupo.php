@@ -24,11 +24,18 @@ class Grupo extends Model
     );
 
     /**
-     * Get the post that owns the comment.
+     * Pertenece a una Sede
      */
     public function sede()
     {
         return $this->belongsTo('App\Models\Sede', 'cod_sede');
+    }
+
+    /*
+    * Pertener a una Especialización
+    */
+    public function especializacion(){
+        return $this->belongsTo('App\Especializacion', 'cod_esp');
     }
 
 }

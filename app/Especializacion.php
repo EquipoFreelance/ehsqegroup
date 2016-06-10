@@ -16,9 +16,14 @@ class Especializacion extends Model
         'nom_esp', 'activo'
     ];
 
-    // Relación de uno a muchos
+    // Una especializacion pertenece a un tipo de especializacion
     public function esptipo(){
       return $this->belongsTo('App\EspecializacionTipo', 'cod_esp_tipo');
+    }
+
+    // Una especializacion tiene muchos
+    public function grupos(){
+        return $this->hasMany('App\Models\Grupo', 'cod_esp', 'id');
     }
 
 }

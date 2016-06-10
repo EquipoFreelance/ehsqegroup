@@ -38,6 +38,17 @@
           </div>
 
           <div class="form-group">
+            {{ Form::label('cod_esp', 'Especializacion', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              {{ Form::select('cod_esp', $especializaciones, old('cod_esp'), ['class' => 'form-control'] ) }}
+              @if ($errors->has('cod_esp'))
+                <label for="cod_esp" generated="true" class="error">{{ $errors->first('cod_esp') }}</label>
+              @endif
+            </div>
+          </div>
+
+
+          <div class="form-group">
             {{ Form::label('nom_grupo', 'Nombre del grupo', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
             <div class="col-md-6 col-sm-6 col-xs-12">
               {{ Form::text('nom_grupo', old('nom_grupo'), ['class' => 'form-control'] ) }}
