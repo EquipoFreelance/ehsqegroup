@@ -150,7 +150,7 @@ class ModalidadController extends Controller
 
       } else {
 
-          // Actualizando el grupo seleccionado
+          // Actualizando el modalidad seleccionado
           $modalidad = Modalidad::find($id);
           $modalidad->nom_mod = $request->get("nom_mod");
           $modalidad->activo  = $request->get("activo");
