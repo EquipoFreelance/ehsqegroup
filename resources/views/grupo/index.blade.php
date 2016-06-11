@@ -30,8 +30,9 @@
               <tr>
                 <th>Código</th>
                 <th>Nombre</th>
+                <th colspan="2"></th>
                 <th>Estado</th>
-                <th colspan="4"></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -39,15 +40,14 @@
                   <tr data-id="{{ $grupo->id }}">
                     <td class="data-cod" data-cod="{{ $grupo->id }}">{{ $grupo->id }}</td>
                     <td class="data-tipo" data-name="{{ $grupo->nom_grupo }}">{{ $grupo->sede->nom_sede }} - {{ $grupo->nom_grupo }}</td>
+                    <td><a href="{{ route('dashboard.grupo.edit', $grupo->id) }}" class="btn btn-link">Horarios</a></td>
+                    <td><a href="{{ route('dashboard.grupo.edit', $grupo->id) }}" class="btn btn-link">Alumnos</a></td>
                     <td class="data-acti" data-acti="{{ $grupo->activo }}">
                       <span class="label @if($grupo->activo == '1') label-success @else label-danger @endif ">
                         @if($grupo->activo == '1') Activo @else No Activo @endif
                       </span>
                     </td>
                     <td><a href="{{ route('dashboard.grupo.edit', $grupo->id) }}" class="btn btn-link">Editar</a></td>
-                    <td><a href="{{ route('dashboard.grupo.edit', $grupo->id) }}" class="btn btn-link">Horarios</a></td>
-                    <td><a href="{{ route('dashboard.grupo.edit', $grupo->id) }}" class="btn btn-link">Auxiliares</a></td>
-                    <td><a href="{{ route('dashboard.grupo.edit', $grupo->id) }}" class="btn btn-link">Alumnos</a></td>
                   </tr>
               @endforeach
             </tbody>
