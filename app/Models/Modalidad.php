@@ -11,7 +11,7 @@ class Modalidad extends Model
 
     // Campos activos
     protected $fillable = [
-        'nom_modalidad',
+        'nom_mod',
         'activo'
     ];
 

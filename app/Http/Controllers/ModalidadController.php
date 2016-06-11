@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests;
 
 use App\Models\Modalidad;
 
-use App\Http\Requests;
+use Validator;
+use Illuminate\Http\Response;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class ModalidadController extends Controller
 {
@@ -28,7 +31,7 @@ class ModalidadController extends Controller
      */
     public function create()
     {
-        //
+        return view('modalidad.create');
     }
 
     /**
@@ -39,7 +42,64 @@ class ModalidadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+      // Enviando los parametros necesarios para la validación
+      $validator = Validator::make( $request->all(), $this->validateRules(), $this->validateMessages() );
+
+      // Si existen errores el Sistema muestra un mensaje
+      if ($validator->fails()){
+
+        // Enviando Mensaje
+        return redirect()->route('dashboard.modalidad.create')->withErrors($validator)
+        ->withInput();
+
+      } else {
+
+          // Registramos la modalidad
+          $modalidad = new Modalidad;
+          $modalidad->nom_mod      = $request->get("nom_mod");
+          $modalidad->activo       = $request->get("activo");
+
+          if($modalidad->save()){
+
+            //Enviando mensaje
+            return redirect()->route('dashboard.modalidad.index')
+            ->with('message', 'Los datos se registraron satisfactoriamente');
+
+          }
+
+      }
+
+    }
+
+    /* Reglas de validaciones */
+    public function validateRules()
+    {
+
+      /* Aplicando validación al Request */
+
+      // Reglas de validación
+      $rules = [
+        'nom_mod' => 'required',
+        'activo'  => 'required'
+      ];
+
+      return $rules;
+
+    }
+
+    /* Mensaje personalizado */
+    public function validateMessages()
+    {
+
+      // Mensaje de validación Personalizado
+      $messages = [
+        'nom_mod.required' => 'Es necesario ingresar el nombre del modulo',
+        'activo.required'  => 'Es necesario indicar si el grupo estará activo o inactivo',
+        //'activo.integer'       => 'Solo esta permitido que sea números enteros'
+      ];
+
+      return $messages;
     }
 
     /**
