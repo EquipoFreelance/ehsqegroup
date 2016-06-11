@@ -9,7 +9,7 @@ class Modalidad extends Model
     // Nombre de la tabla asociada
     protected $table = 'modalidad';
 
-    // Campos actvos
+    // Campos activos
     protected $fillable = [
         'nom_modalidad',
         'activo'

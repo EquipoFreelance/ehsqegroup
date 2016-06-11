@@ -31,7 +31,7 @@
                 <th>Código</th>
                 <th>Nombre</th>
                 <th>Estado</th>
-                <th colspan="2"></th>
+                <th colspan="4"></th>
               </tr>
             </thead>
             <tbody>
@@ -45,7 +45,9 @@
                       </span>
                     </td>
                     <td><a href="{{ route('dashboard.grupo.edit', $grupo->id) }}" class="btn btn-link">Editar</a></td>
-                    <td><a href="{{ route('dashboard.grupo.edit', $grupo->id) }}" class="btn btn-link">Horario</a></td>
+                    <td><a href="{{ route('dashboard.grupo.edit', $grupo->id) }}" class="btn btn-link">Horarios</a></td>
+                    <td><a href="{{ route('dashboard.grupo.edit', $grupo->id) }}" class="btn btn-link">Auxiliares</a></td>
+                    <td><a href="{{ route('dashboard.grupo.edit', $grupo->id) }}" class="btn btn-link">Alumnos</a></td>
                   </tr>
               @endforeach
             </tbody>

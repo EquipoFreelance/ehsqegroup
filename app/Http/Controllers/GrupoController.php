@@ -33,8 +33,8 @@ class GrupoController extends Controller
     public function create(){
 
       $data = [
-              'sedes' => Sede::lists('nom_sede', 'id'),
-              'especializaciones' => Especializacion::lists('nom_esp','id')
+              'sedes' => Sede::lists('nom_sede', 'id'),                     // Listado de Sedes
+              'especializaciones' => Especializacion::lists('nom_esp','id') // Listado de Especialización
             ];
       return view('grupo.create', $data);
     }

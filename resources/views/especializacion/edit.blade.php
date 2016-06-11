@@ -58,6 +58,16 @@
         </div>
 
         <div class="form-group">
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_esp_tipo">Modalidad</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            {{ Form::select('cod_mod', $modalidades, $esp->cod_mod, ['class' => 'form-control']) }}
+            @if ($errors->has('cod_mod'))
+            <label for="cod_mod" generated="true" class="error">{{ $errors->first('cod_mod') }}</label>
+            @endif
+          </div>
+        </div>
+
+        <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_esp_tipo">Tipo de especialización</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
             {{ Form::select('cod_esp_tipo', $types, $esp->cod_esp_tipo, ['class' => 'form-control']) }}

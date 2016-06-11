@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+// Modelos asociados
 use App\Especializacion;
 use App\EspecializacionTipo;
+use App\Models\Modalidad;
+
 use App\Http\Requests;
 use Validator;
 use Illuminate\Http\Response;
@@ -33,7 +37,10 @@ class EspecializacionController extends Controller
     public function create()
     {
 
-        $data = ['types' => EspecializacionTipo::lists('nom_esp_tipo', 'id')];
+        $data = [
+                  'types' => EspecializacionTipo::lists('nom_esp_tipo', 'id'),  // Tipo de especialización
+                  'modalidades' => Modalidad::lists('nom_mod','id')             // Modalidades
+                ];
         return view('especializacion.create', $data);
 
     }
@@ -125,8 +132,9 @@ class EspecializacionController extends Controller
     {
       $esp = Especializacion::find($id);
       $data = [
-              "esp"   => $esp,
-              'types' => EspecializacionTipo::lists('nom_esp_tipo', 'id')
+              "esp"   => $esp,                                              // Información de la especialización
+              'types' => EspecializacionTipo::lists('nom_esp_tipo', 'id'),  // Tipo de expecialización
+              'modalidades' => Modalidad::lists('nom_mod','id')             // Modalidades
           ];
       return view('especializacion.edit', $data);
     }

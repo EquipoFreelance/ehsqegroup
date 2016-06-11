@@ -28,17 +28,25 @@
           @endif
 
           <div class="form-group">
-            {{ Form::label('cod_sede', 'Sede', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">Modalidad:</label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              {{ Form::select('cod_sede', $sedes, old('cod_sede'), ['class' => 'form-control'] ) }}
-              @if ($errors->has('cod_sede'))
-                <label for="cod_sede" generated="true" class="error">{{ $errors->first('cod_sede') }}</label>
-              @endif
+              <select class="form-control">
+                  <option></option>
+              </select>
             </div>
           </div>
 
           <div class="form-group">
-            {{ Form::label('cod_esp', 'Especializacion', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">Tipo de Especialización:</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <select class="form-control">
+                  <option></option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            {{ Form::label('cod_esp', 'Especializacion:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
             <div class="col-md-6 col-sm-6 col-xs-12">
               {{ Form::select('cod_esp', $especializaciones, old('cod_esp'), ['class' => 'form-control'] ) }}
               @if ($errors->has('cod_esp'))
@@ -47,9 +55,8 @@
             </div>
           </div>
 
-
           <div class="form-group">
-            {{ Form::label('nom_grupo', 'Nombre del grupo', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
+            {{ Form::label('nom_grupo', 'Nombre del grupo:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
             <div class="col-md-6 col-sm-6 col-xs-12">
               {{ Form::text('nom_grupo', old('nom_grupo'), ['class' => 'form-control'] ) }}
               @if ($errors->has('nom_grupo'))
@@ -59,7 +66,7 @@
           </div>
 
           <div class="form-group">
-            {{ Form::label('descripcion', 'Descripción', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
+            {{ Form::label('descripcion', 'Descripción:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
             <div class="col-md-6 col-sm-6 col-xs-12">
               {{ Form::textarea('descripcion', old('descripcion'), ['class' => 'form-control'] ) }}
               @if ($errors->has('descripcion'))
@@ -69,7 +76,17 @@
           </div>
 
           <div class="form-group">
-            {{ Form::label('fe_inicio', 'Fecha de inicio', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
+            {{ Form::label('cod_sede', 'Sede:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              {{ Form::select('cod_sede', $sedes, old('cod_sede'), ['class' => 'form-control'] ) }}
+              @if ($errors->has('cod_sede'))
+                <label for="cod_sede" generated="true" class="error">{{ $errors->first('cod_sede') }}</label>
+              @endif
+            </div>
+          </div>
+
+          <div class="form-group">
+            {{ Form::label('fe_inicio', 'Fecha de inicio:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
             <div class="col-md-6 col-sm-6 col-xs-12">
               {{ Form::text('fe_inicio', old('fe_inicio'), ['class' => 'form-control'] ) }}
               @if ($errors->has('fe_inicio'))
@@ -79,7 +96,7 @@
           </div>
 
           <div class="form-group">
-            {{ Form::label('fe_fin', 'Fecha de fin', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
+            {{ Form::label('fe_fin', 'Fecha de fin:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
             <div class="col-md-6 col-sm-6 col-xs-12">
               {{ Form::text('fe_fin', old('fe_fin'), ['class' => 'form-control'] ) }}
               @if ($errors->has('fe_fin'))
@@ -89,7 +106,7 @@
           </div>
 
           <div class="form-group">
-            {{ Form::label('num_max', 'Número máximo', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
+            {{ Form::label('num_max', 'Número máximo:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
             <div class="col-md-6 col-sm-6 col-xs-12">
               {{ Form::text('num_max', old('num_max'), ['class' => 'form-control'] ) }}
               @if ($errors->has('num_max'))
@@ -99,7 +116,7 @@
           </div>
 
           <div class="form-group">
-            {{ Form::label('num_min', 'Número mínimo', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
+            {{ Form::label('num_min', 'Número mínimo:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
             <div class="col-md-6 col-sm-6 col-xs-12">
               {{ Form::text('num_min', old('num_min'), ['class' => 'form-control'] ) }}
               @if ($errors->has('num_min'))
@@ -109,7 +126,7 @@
           </div>
 
           <div class="form-group">
-            <label class="control-label col-md-4 col-sm-4 col-xs-12" for="activo">Estado</label>
+            <label class="control-label col-md-4 col-sm-4 col-xs-12" for="activo">Estado:</label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               {{ Form::select('activo', ['1' => 'Activo','0' => 'No Activo'], old('activo'), ['class' => 'form-control'] ) }}
               @if ($errors->has('activo'))
