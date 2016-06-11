@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Modalidad;
+
 use App\Http\Requests;
 
 class ModalidadController extends Controller
@@ -15,7 +17,8 @@ class ModalidadController extends Controller
      */
     public function index()
     {
-        //
+      $modalidades = Modalidad::where("deleted", '=', 0)->get();
+      return view('modalidad.index', array('modalidades' => $modalidades));
     }
 
     /**

@@ -94,6 +94,8 @@ Route::group(['middleware' => 'auth'], function () {
     /* Administrador de Sedes */
     Route::resource('/dashboard/sede', 'SedeController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
+    /* Administrador de modalidades */
+    Route::resource('/dashboard/modalidad', 'ModalidadController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
     // Rutas asíncronas
     Route::get('/dashboard/json/esp/{modalidad}/{tipo_esp}', [
