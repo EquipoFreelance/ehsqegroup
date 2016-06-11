@@ -121,7 +121,11 @@ class ModalidadController extends Controller
      */
     public function edit($id)
     {
-        //
+      $modalidad = Modalidad::find($id);
+      $data = [
+              "modalidad" => $modalidad
+            ];
+      return view('modalidad.edit', $data);
     }
 
     /**
@@ -133,7 +137,32 @@ class ModalidadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      // Enviando los parametros necesarios para la validación
+      $validator = Validator::make( $request->all(), $this->validateRules(), $this->validateMessages() );
+
+      // Si existen errores el Sistema muestra un mensaje
+      if ($validator->fails()){
+
+        // Enviando Mensaje
+        return redirect()->route('dashboard.modalidad.edit', $id)
+                                ->withErrors($validator)
+                                ->withInput();
+
+      } else {
+
+          // Actualizando el grupo seleccionado
+          $modalidad = Modalidad::find($id);
+          $modalidad->nom_mod = $request->get("nom_mod");
+          $modalidad->activo  = $request->get("activo");
+
+          if($modalidad->save()){
+
+            //Enviando mensaje
+            return redirect()->route('dashboard.modalidad.index')
+                                    ->with('message', 'La modalidad se ha actualizado satisfactoriamente');
+
+          }
+      }
     }
 
     /**
@@ -144,6 +173,16 @@ class ModalidadController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $modalidad             = Modalidad::find($id);
+      $modalidad->deleted    = 1;
+      $modalidad->deleted_at = Carbon::now();
+
+      if($modalidad->save()){
+
+          //Enviando mensaje
+          return redirect()->route('dashboard.modalidad.index')
+                                  ->with('message', 'La Modalidad fue eliminado del sistema');
+
+      }
     }
 }
