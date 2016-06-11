@@ -94,13 +94,10 @@ Route::group(['middleware' => 'auth'], function () {
     /* Administrador de Sedes */
     Route::resource('/dashboard/sede', 'SedeController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
-    /*Route::put('/dashboard/docente',[
-      'as' => 'dashboard.docente.edit', 'uses' => 'PersonaController@edit'
-    ]);*/
 
-    //Route::post('/dashboard/docente', 'PersonaController@create');
-    //Route::put('/dashboard/docente/{id}', 'PersonaController@edit');
-    //Route::resource('/dashboard/docente', 'DocenteController', ['only' => ['index','create','store','edit','update','destroy'] ] );
-
+    // Rutas asíncronas
+    Route::get('/dashboard/json/esp/{modalidad}/{tipo_esp}', [
+        'as' => 'json.esp', 'uses' => 'EspecializacionController@getJsonEspToGrupo'
+    ]);
 
 });

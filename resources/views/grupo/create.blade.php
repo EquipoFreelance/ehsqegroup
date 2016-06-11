@@ -30,25 +30,21 @@
           <div class="form-group">
             <label class="control-label col-md-4 col-sm-4 col-xs-12">Modalidad:</label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <select class="form-control">
-                  <option></option>
-              </select>
+              {{ Form::select('cod_mod', $modalidades, ( old('cod_mod') ) ? old('cod_mod') : $cod_mod  , ['class' => 'form-control group_cod_mod'] ) }}
             </div>
           </div>
 
           <div class="form-group">
             <label class="control-label col-md-4 col-sm-4 col-xs-12">Tipo de Especialización:</label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <select class="form-control">
-                  <option></option>
-              </select>
+              {{ Form::select('cod_esp_tipo', $tipo_especializaciones, old('cod_esp_tipo'), ['class' => 'form-control group_cod_esp_tipo'] ) }}
             </div>
           </div>
 
           <div class="form-group">
             {{ Form::label('cod_esp', 'Especializacion:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
             <div class="col-md-6 col-sm-6 col-xs-12">
-              {{ Form::select('cod_esp', $especializaciones, old('cod_esp'), ['class' => 'form-control'] ) }}
+              {{ Form::select('cod_esp', $especializaciones, old('cod_esp'), ['class' => 'form-control group_cod_esp'] ) }}
               @if ($errors->has('cod_esp'))
                 <label for="cod_esp" generated="true" class="error">{{ $errors->first('cod_esp') }}</label>
               @endif

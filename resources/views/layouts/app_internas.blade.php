@@ -143,6 +143,9 @@
 <script src="{{ URL::asset('assets/js/datatables/dataTables.scroller.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/jquery.validated.js') }}"></script>
 
+<!-- Javascript - App -->
+<script src="{{ URL::asset('assets/js/app.js') }}"></script>
+
 <!-- pace -->
 <script src="{{ URL::asset('assets/js/pace/pace.min.js') }}"></script>
 <script>

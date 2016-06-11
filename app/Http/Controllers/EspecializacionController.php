@@ -229,4 +229,11 @@ class EspecializacionController extends Controller
 
       }
     }
+
+    // Metodos Asíncronos
+    public function getJsonEspToGrupo($modalidad, $tipo_esp){
+        $esp = Especializacion::where("cod_mod", $modalidad)->where("cod_esp_tipo", $tipo_esp)->get();
+        return $esp->toJSON();
+    }
+
 }

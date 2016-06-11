@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+
 use App\Models\Sede;
 use App\Models\Grupo;
+use App\Models\Modalidad;
 use App\Especializacion;
+use App\EspecializacionTipo;
+
 use Validator;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
@@ -33,8 +37,11 @@ class GrupoController extends Controller
     public function create(){
 
       $data = [
-              'sedes' => Sede::lists('nom_sede', 'id'),                     // Listado de Sedes
-              'especializaciones' => Especializacion::lists('nom_esp','id') // Listado de Especialización
+              'sedes'                   => Sede::lists('nom_sede', 'id'),                     // Listado de Sedes
+              'modalidades'             => Modalidad::lists('nom_mod','id'),                  // Listado de Modalidades
+              'tipo_especializaciones'  => EspecializacionTipo::lists('nom_esp_tipo','id'),   // Listado de Tipo de especialidades
+              'especializaciones'       => array(),                                           // Listado de Especialización,
+              'cod_mod'                 => 1
             ];
       return view('grupo.create', $data);
     }
@@ -61,15 +68,17 @@ class GrupoController extends Controller
 
           // Registramos el grupo
           $grupo = new Grupo;
-          $grupo->cod_sede    = $request->get("cod_sede");
-          $grupo->cod_esp     = $request->get("cod_esp");
-          $grupo->nom_grupo   = $request->get("nom_grupo");
-          $grupo->descripcion = $request->get("descripcion");
-          $grupo->fe_inicio   = $request->get("fe_inicio");
-          $grupo->fe_fin      = $request->get("fe_fin");
-          $grupo->num_max     = $request->get("num_max");
-          $grupo->num_min     = $request->get("num_min");
-          $grupo->activo      = $request->get("activo");
+          $grupo->cod_sede     = $request->get("cod_sede");
+          $grupo->cod_esp      = $request->get("cod_esp");
+          $grupo->cod_mod      = $request->get("cod_mod");
+          $grupo->cod_esp_tipo = $request->get("cod_esp_tipo");
+          $grupo->nom_grupo    = $request->get("nom_grupo");
+          $grupo->descripcion  = $request->get("descripcion");
+          $grupo->fe_inicio    = $request->get("fe_inicio");
+          $grupo->fe_fin       = $request->get("fe_fin");
+          $grupo->num_max      = $request->get("num_max");
+          $grupo->num_min      = $request->get("num_min");
+          $grupo->activo       = $request->get("activo");
 
           if($grupo->save()){
 
@@ -105,9 +114,12 @@ class GrupoController extends Controller
       $grupo = Grupo::find($id);
       $data = [
               "grupo" => $grupo,
-              'sedes' => Sede::lists('nom_sede', 'id'),
-              'especializaciones' => Especializacion::lists('nom_esp','id')
-          ];
+              'sedes'                   => Sede::lists('nom_sede', 'id'),                     // Listado de Sedes
+              'modalidades'             => Modalidad::lists('nom_mod','id'),                  // Listado de Modalidades
+              'tipo_especializaciones'  => EspecializacionTipo::lists('nom_esp_tipo','id'),   // Listado de Tipo de especialidades
+              'especializaciones'       => array(),                                           // Listado de Especialización,
+              'cod_mod'                 => 1
+            ];
       return view('grupo.edit', $data);
     }
 
@@ -135,15 +147,17 @@ class GrupoController extends Controller
 
           // Actualizando el grupo seleccionado
           $grupo = Grupo::find($id);
-          $grupo->cod_sede    = $request->get("cod_sede");
-          $grupo->cod_esp     = $request->get("cod_esp");
-          $grupo->nom_grupo   = $request->get("nom_grupo");
-          $grupo->descripcion = $request->get("descripcion");
-          $grupo->fe_inicio   = $request->get("fe_inicio");
-          $grupo->fe_fin      = $request->get("fe_fin");
-          $grupo->num_max     = $request->get("num_max");
-          $grupo->num_min     = $request->get("num_min");
-          $grupo->activo      = $request->get("activo");
+          $grupo->cod_sede     = $request->get("cod_sede");
+          $grupo->cod_esp      = $request->get("cod_esp");
+          $grupo->cod_mod      = $request->get("cod_mod");
+          $grupo->cod_esp_tipo = $request->get("cod_esp_tipo");
+          $grupo->nom_grupo    = $request->get("nom_grupo");
+          $grupo->descripcion  = $request->get("descripcion");
+          $grupo->fe_inicio    = $request->get("fe_inicio");
+          $grupo->fe_fin       = $request->get("fe_fin");
+          $grupo->num_max      = $request->get("num_max");
+          $grupo->num_min      = $request->get("num_min");
+          $grupo->activo       = $request->get("activo");
 
           if($grupo->save()){
 
