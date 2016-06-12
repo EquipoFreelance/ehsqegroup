@@ -14,6 +14,10 @@ class Auxiliar extends Model
         'activo'
     ];
 
+    protected $attributes = array(
+       'deleted' => 0,
+    );
+
     // Un auxiliar pertence a un persona
     public function persona()
     {

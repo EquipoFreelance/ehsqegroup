@@ -81,6 +81,8 @@ Route::group(['middleware' => 'auth'], function () {
     /* Administrador de Grupos */
     Route::resource('/dashboard/grupo', 'GrupoController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
+    /* Administrador de Auxiliares */
+    Route::resource('/dashboard/auxiliar', 'AuxiliarController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
     /* -- Routes - Personalizados -- */
 
