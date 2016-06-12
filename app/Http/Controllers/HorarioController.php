@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 
 use App\Models\Horario;
 use App\Models\Sede;
+use App\Models\SedeLocal;
 use App\Models\Grupo;
 use App\Modulo;
 
@@ -64,13 +65,12 @@ class HorarioController extends Controller
      $cod_esp_tipo = $grupo->cod_esp_tipo;  // Tipo de especialización
      $cod_esp      = $grupo->cod_esp;       // Tipo de especialización
      $docentes     = array();
-     $modulos      = array();
 
      // Información de los módulos
      $modulos = Modulo::where('cod_esp', $cod_esp)->get()->lists('nombre', 'id');
 
      // Información de los locales
-     $locales = Modulo::where('cod_esp', $cod_esp)->get()->lists('nombre', 'id');
+     $locales = SedeLocal::where('cod_sede', $cod_sede)->get()->lists('nom_local', 'id');
 
      $data = compact('id','cod_sede','cod_mod','cod_esp_tipo','cod_esp','modulos','locales');
      return view('horario.create', $data);

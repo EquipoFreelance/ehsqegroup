@@ -115,7 +115,7 @@
                 <label class="control-label col-md-4 col-sm-4 col-xs-12"></label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <div class="form-group btncontrol">
-                      <a href="{{ route('dashboard.horario.index') }}" class="btn btn-default">Retornar</a>
+                      <a href="{{ route('dashboard.grupo.horario.list', $id) }}" class="btn btn-default">Retornar</a>
                       {{ Form::button('Guardar', array('class' => 'btn btn-success', 'type' => 'submit')) }}
                     </div>
                 </div>
