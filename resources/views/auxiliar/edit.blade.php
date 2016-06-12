@@ -13,7 +13,7 @@
       <br>
       <div class="x_panel">
         <div class="x_title">
-          <h1 style="font-size: 18px">Nuevo Auxiliar <small> (En este interior usted podrá ingresar una nueva Especialización, editar los datos ingresados)</small></h1>
+          <h1 style="font-size: 18px">Editar Auxiliar <small> (En este interior usted podrá ingresar una nueva Especialización, editar los datos ingresados)</small></h1>
           <div class="clearfix"></div>
         </div>
         <br>

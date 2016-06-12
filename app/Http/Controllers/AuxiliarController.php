@@ -57,7 +57,7 @@ class AuxiliarController extends Controller
 
       } else {
 
-        // Registramos a la persona
+        // Registramos Información Personal del Personal de Apoyo
         $persona = new Persona;
         $persona->cod_doc_tip   = '1';
         $persona->num_doc       = $request->get("num_doc");
@@ -77,7 +77,7 @@ class AuxiliarController extends Controller
           ]);
 
           $cargos = [$cargo];
-          $persona->correos()->saveMany($cargos);
+          $persona->persona()->saveMany($cargos);
 
           //Enviando mensaje
           return redirect()->route('dashboard.auxiliar.index')
@@ -133,10 +133,9 @@ class AuxiliarController extends Controller
         ->withInput();
 
       } else {
-
-        // Actualizamos información de las personas
         $auxiliar = Auxiliar::with('Persona')->find($id);
 
+        // Actualizamos información personal del Personal de Apoyo
         $auxiliar->persona->fill([
           'cod_doc_tip'   => $request->get("cod_doc_tip"),
           'num_doc'       => $request->get("num_doc"),

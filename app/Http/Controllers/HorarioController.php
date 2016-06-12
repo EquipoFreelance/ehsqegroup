@@ -9,6 +9,7 @@ use App\Models\Horario;
 use App\Models\Sede;
 use App\Models\SedeLocal;
 use App\Models\Grupo;
+use App\Models\Auxiliar;
 use App\Modulo;
 
 use Validator;
@@ -68,11 +69,17 @@ class HorarioController extends Controller
 
      // Información de los módulos
      $modulos = Modulo::where('cod_esp', $cod_esp)->get()->lists('nombre', 'id');
+     $modulos->prepend('-- Seleccione el Módulo --');
 
      // Información de los locales
      $locales = SedeLocal::where('cod_sede', $cod_sede)->get()->lists('nom_local', 'id');
+     $locales->prepend('-- Seleccione El Local --');
 
-     $data = compact('id','cod_sede','cod_mod','cod_esp_tipo','cod_esp','modulos','locales');
+     // Información de los auxiliares
+     $auxiliar = Auxiliar::where("deleted", '=', 0)->get()->lists('persona.nombre', 'id');
+     $auxiliar->prepend('-- Seleccione Personal de Apoyo --');
+
+     $data = compact('id','cod_sede','cod_mod','cod_esp_tipo','cod_esp','modulos','locales','auxiliar');
      return view('horario.create', $data);
    }
 

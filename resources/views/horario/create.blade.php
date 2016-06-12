@@ -50,11 +50,11 @@
           </div>
 
           <div class="form-group">
-            {{ Form::label('cod_local', 'Personal de Apoyo:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
+            {{ Form::label('cod_auxiliar', 'Personal de Apoyo:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
             <div class="col-md-6 col-sm-6 col-xs-12">
-              {{ Form::select('cod_local', $locales, old('cod_local'), ['class' => 'form-control horario_cod_local'] ) }}
-              @if ($errors->has('cod_local'))
-              <label for="activo" generated="true" class="error">{{ $errors->first('cod_local') }}</label>
+              {{ Form::select('cod_auxiliar', $auxiliar, old('cod_auxiliar'), ['class' => 'form-control horario_cod_local'] ) }}
+              @if ($errors->has('cod_auxiliar'))
+              <label for="cod_auxiliar" generated="true" class="error">{{ $errors->first('cod_auxiliar') }}</label>
               @endif
             </div>
           </div>

@@ -1,17 +1,16 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Docente extends Model
 {
-    /*protected $table = 'persona_cargo';
+
+    protected $table = 'docente';
 
     protected $fillable = [
         'cod_persona',
-        'cod_personal_cargo_tipo',
-        'deleted',
         'activo'
     ];
 
@@ -19,9 +18,10 @@ class Docente extends Model
        'deleted' => 0,
     );
 
+    // Un Docente pertence a un persona
     public function persona()
     {
-        return $this->belongsTo('App\Persona', 'cod_persona', 'id');
-    }*/
+      return $this->belongsTo('App\Persona', 'cod_persona');
+    }
 
 }

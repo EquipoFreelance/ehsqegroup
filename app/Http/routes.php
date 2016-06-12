@@ -84,11 +84,14 @@ Route::group(['middleware' => 'auth'], function () {
     /* Administrador de Auxiliares */
     Route::resource('/dashboard/auxiliar', 'AuxiliarController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
+    /* Administrador de Docentes */
+    Route::resource('/dashboard/docente', 'DocenteController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+
     /* -- Routes - Personalizados -- */
 
     /* Administrador de Docentes */
 
-    // Listado de Docentes
+    /*// Listado de Docentes
     Route::get('/dashboard/docente',[
       'as' => 'dashboard.docente.index', 'uses' => 'DocenteController@index'
     ]);
@@ -111,7 +114,7 @@ Route::group(['middleware' => 'auth'], function () {
     //  Update Docente
     Route::put('/dashboard/docente/{id}',[
       'as' => 'dashboard.docente.update', 'uses' => 'PersonaController@update'
-    ]);
+    ]);*/
 
     /* Grupos - Horarios */
 

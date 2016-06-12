@@ -27,8 +27,6 @@
         </div>
         @endif
 
-        <input type="hidden" name="cod_personal_cargo_tipo" id="cod_personal_cargo_tipo" value="1" />
-
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nombre">Nombre</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
@@ -145,7 +143,6 @@
           <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="form-group btncontrol">
               <a href="{{ route('dashboard.docente.index') }}" class="btn btn-default">Retornar</a>
-              <!--<a href="{{ route('dashboard.tesp.index') }}" class="btn btn-danger cancel_btn">Cancelar</a>-->
               <button type="submit" class="btn btn-success">Guardar</button>
             </div>
           </div>
