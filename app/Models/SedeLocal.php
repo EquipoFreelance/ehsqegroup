@@ -1,10 +1,29 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class SedeLocal extends Model
 {
-    //
+    protected $table = 'sede_local';
+
+    protected $fillable = [
+        'nom_lugar',
+        'direccion',
+        'cod_sede',
+        'activo'
+    ];
+
+    protected $attributes = array(
+       'deleted' => 0,
+    );
+
+    /* Un local pertenece a una Sede */
+    public function sede()
+    {
+        return $this->belongsTo('App\Models\Sede', 'cod_sede');
+    }
+
+
 }

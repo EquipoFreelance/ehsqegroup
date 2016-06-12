@@ -115,6 +115,8 @@ Route::group(['middleware' => 'auth'], function () {
     ]);
 
 
+
+
     // Rutas asíncronas
     Route::get('/dashboard/json/esp/{modalidad}/{tipo_esp}', [
         'as' => 'json.esp', 'uses' => 'EspecializacionController@getJsonEspToGrupo'
