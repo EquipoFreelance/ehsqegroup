@@ -7,6 +7,8 @@ use Illuminate\Http\Response;
 
 use App\Models\Horario;
 use App\Models\Sede;
+use App\Models\Grupo;
+use App\Modulo;
 
 use Validator;
 
@@ -30,7 +32,7 @@ class HorarioController extends Controller
 
    public function getHorarioList($id)
    {
-     $data = compact('id');
+     $data = compact('id'); // Id del grupo
      return view('horario.index', $data);
    }
 
@@ -54,10 +56,23 @@ class HorarioController extends Controller
     */
    public function getCreateHorario($id)
    {
-     Grupo::
-     $data = compact('id');
-     //$sedes = Sede::lists('nom_sede', 'id');
-     //$data = compact('cod_mod','cod_esp_tipo','cod_esp','sedes');
+
+     // Información del Grupo
+     $grupo = Grupo::find($id);
+     $cod_sede     = $grupo->cod_sede;      // Sede
+     $cod_mod      = $grupo->cod_mod;       // Modalidad
+     $cod_esp_tipo = $grupo->cod_esp_tipo;  // Tipo de especialización
+     $cod_esp      = $grupo->cod_esp;       // Tipo de especialización
+     $docentes     = array();
+     $modulos      = array();
+
+     // Información de los módulos
+     $modulos = Modulo::where('cod_esp', $cod_esp)->get()->lists('nombre', 'id');
+
+     // Información de los locales
+     $locales = Modulo::where('cod_esp', $cod_esp)->get()->lists('nombre', 'id');
+
+     $data = compact('id','cod_sede','cod_mod','cod_esp_tipo','cod_esp','modulos','locales');
      return view('horario.create', $data);
    }
 

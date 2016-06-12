@@ -29,22 +29,33 @@
 
 
           <div class="form-group">
-            {{ Form::hidden('cod_mod', 1) }}
-            {{ Form::hidden('cod_esp_tipo', 1) }}
-            {{ Form::hidden('cod_esp', 1) }}
+            {{ Form::hidden('cod_sede', $cod_sede) }}
+            {{ Form::hidden('cod_mod', $cod_mod) }}
+            {{ Form::hidden('cod_esp_tipo', $cod_esp_tipo) }}
+            {{ Form::hidden('cod_esp', $cod_esp) }}
           </div>
 
           <div class="form-group">
             {{ Form::label('cod_mod', 'Modulo:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
             <div class="col-md-6 col-sm-6 col-xs-12">
-              {{ Form::select('cod_mod', $sedes, old('cod_mod'), ['class' => 'form-control horario_cod_local'] ) }}
+              {{ Form::select('cod_mod', $modulos, old('cod_mod'), ['class' => 'form-control horario_cod_local'] ) }}
             </div>
           </div>
 
           <div class="form-group">
             {{ Form::label('cod_docente', 'Docente:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
             <div class="col-md-6 col-sm-6 col-xs-12">
-              {{ Form::select('cod_docente', $sedes, old('cod_docente'), ['class' => 'form-control horario_cod_local'] ) }}
+              {{ Form::select('cod_docente', $modulos, old('cod_docente'), ['class' => 'form-control horario_cod_local'] ) }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            {{ Form::label('cod_local', 'Personal de Apoyo:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              {{ Form::select('cod_local', $locales, old('cod_local'), ['class' => 'form-control horario_cod_local'] ) }}
+              @if ($errors->has('cod_local'))
+              <label for="activo" generated="true" class="error">{{ $errors->first('cod_local') }}</label>
+              @endif
             </div>
           </div>
 
@@ -81,12 +92,13 @@
           <div class="form-group">
             {{ Form::label('cod_local', 'Local:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
             <div class="col-md-6 col-sm-6 col-xs-12">
-              {{ Form::select('cod_local', $sedes, old('cod_local'), ['class' => 'form-control horario_cod_local'] ) }}
+              {{ Form::select('cod_local', $locales, old('cod_local'), ['class' => 'form-control horario_cod_local'] ) }}
               @if ($errors->has('cod_local'))
               <label for="activo" generated="true" class="error">{{ $errors->first('cod_local') }}</label>
               @endif
             </div>
           </div>
+
 
           <div class="form-group">
             <label class="control-label col-md-4 col-sm-4 col-xs-12" for="activo">Estado:</label>
