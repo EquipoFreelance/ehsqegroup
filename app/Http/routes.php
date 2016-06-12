@@ -97,6 +97,9 @@ Route::group(['middleware' => 'auth'], function () {
     /* Administrador de modalidades */
     Route::resource('/dashboard/modalidad', 'ModalidadController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
+    /* Administrador de Horarios */
+    Route::resource('/dashboard/horario', 'HorarioController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+
     // Rutas asíncronas
     Route::get('/dashboard/json/esp/{modalidad}/{tipo_esp}', [
         'as' => 'json.esp', 'uses' => 'EspecializacionController@getJsonEspToGrupo'
