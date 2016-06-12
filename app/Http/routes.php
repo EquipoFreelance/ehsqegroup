@@ -98,7 +98,22 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/dashboard/modalidad', 'ModalidadController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
     /* Administrador de Horarios */
-    Route::resource('/dashboard/horario', 'HorarioController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+    Route::resource('/dashboard/horario', 'HorarioController', ['only' => ['index','create','store','edit','update','destroy', 'horario'] ] );
+
+    /* Grupos - Horarios */
+
+    // Listado de Horarios
+    Route::get('/dashboard/grupo/{id}/horario',[
+      'as' => 'dashboard.grupo.horario.list',
+      'uses' => 'HorarioController@getHorarioList'
+    ]);
+
+    // Crear Horarios
+    Route::get('/dashboard/grupo/{id}/horario/crear',[
+      'as' => 'dashboard.grupo.horario.crear',
+      'uses' => 'HorarioController@getCreateHorario'
+    ]);
+
 
     // Rutas asíncronas
     Route::get('/dashboard/json/esp/{modalidad}/{tipo_esp}', [
