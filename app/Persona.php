@@ -42,4 +42,10 @@ class Persona extends Model
         return $this->hasMany('App\PersonaTelefono', 'cod_persona', 'id');
     }
 
+    // Una persona puede ser un auxiliar
+    public function auxiliar()
+    {
+        return $this->hasOne('App\Models\Auxiliar', 'cod_persona', 'id');
+    }
+
 }

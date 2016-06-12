@@ -13,7 +13,7 @@
 
 
 
-/* Sistema de Autenficación */
+/* Sistema de Autentificación */
 
 // Inicio de sesión
 Route::post('v1/login', 'LoginController@login');
@@ -51,6 +51,12 @@ Route::group(['middleware' => 'auth'], function () {
     // Dashboard
     Route::get('/dashboard', 'DashBoardController@validateDashBoard');
 
+
+    /* -- Routes - Recursos -- */
+
+    /* Administrador de Modalidades */
+    Route::resource('/dashboard/modalidad', 'ModalidadController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+
     /* Administrador de Tipo de Especialización */
     Route::resource('/dashboard/tesp', 'EspecializacionTipoController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
@@ -62,6 +68,21 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* Administrador de Persona */
     //Route::resource('/dashboard/persona', 'PersonaController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+
+    /* Administrador de Sedes */
+    Route::resource('/dashboard/sede', 'SedeController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+
+    /* Administrador de Locales */
+    Route::resource('/dashboard/sede/local', 'SedeLocalController', ['only' => ['index','create','store','edit','update','destroy', 'horario'] ] );
+
+    /* Administrador de Horarios */
+    Route::resource('/dashboard/horario', 'HorarioController', ['only' => ['index','create','store','edit','update','destroy', 'horario'] ] );
+
+    /* Administrador de Grupos */
+    Route::resource('/dashboard/grupo', 'GrupoController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+
+
+    /* -- Routes - Personalizados -- */
 
     /* Administrador de Docentes */
 
@@ -75,33 +96,20 @@ Route::group(['middleware' => 'auth'], function () {
       'as' => 'dashboard.docente.create', 'uses' => 'DocenteController@create'
     ]);
 
-    // Almacenar docente
+    // Store docente
     Route::post('/dashboard/docente',[
       'as' => 'dashboard.docente.store', 'uses' => 'PersonaController@store'
     ]);
 
+    // Edit Docente
     Route::get('/dashboard/docente/{id}',[
       'as' => 'dashboard.docente.edit', 'uses' => 'DocenteController@edit'
     ]);
 
+    //  Update Docente
     Route::put('/dashboard/docente/{id}',[
       'as' => 'dashboard.docente.update', 'uses' => 'PersonaController@update'
     ]);
-
-    /* Administrador de Grupos */
-    Route::resource('/dashboard/grupo', 'GrupoController', ['only' => ['index','create','store','edit','update','destroy'] ] );
-
-    /* Administrador de Sedes */
-    Route::resource('/dashboard/sede', 'SedeController', ['only' => ['index','create','store','edit','update','destroy'] ] );
-
-    /* Administrador de Locales */
-    Route::resource('/dashboard/sede/local', 'SedeLocalController', ['only' => ['index','create','store','edit','update','destroy', 'horario'] ] );
-
-    /* Administrador de modalidades */
-    Route::resource('/dashboard/modalidad', 'ModalidadController', ['only' => ['index','create','store','edit','update','destroy'] ] );
-
-    /* Administrador de Horarios */
-    Route::resource('/dashboard/horario', 'HorarioController', ['only' => ['index','create','store','edit','update','destroy', 'horario'] ] );
 
     /* Grupos - Horarios */
 
@@ -117,10 +125,7 @@ Route::group(['middleware' => 'auth'], function () {
       'uses' => 'HorarioController@getCreateHorario'
     ]);
 
-
-
-
-    // Rutas asíncronas
+    /* Rutas asíncronas */
     Route::get('/dashboard/json/esp/{modalidad}/{tipo_esp}', [
         'as' => 'json.esp', 'uses' => 'EspecializacionController@getJsonEspToGrupo'
     ]);
