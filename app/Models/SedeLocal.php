@@ -9,7 +9,7 @@ class SedeLocal extends Model
     protected $table = 'sede_local';
 
     protected $fillable = [
-        'nom_lugar',
+        'nom_local',
         'direccion',
         'cod_sede',
         'activo'

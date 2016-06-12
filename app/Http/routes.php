@@ -94,6 +94,9 @@ Route::group(['middleware' => 'auth'], function () {
     /* Administrador de Sedes */
     Route::resource('/dashboard/sede', 'SedeController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
+    /* Administrador de Locales */
+    Route::resource('/dashboard/sede/local', 'SedeLocalController', ['only' => ['index','create','store','edit','update','destroy', 'horario'] ] );
+
     /* Administrador de modalidades */
     Route::resource('/dashboard/modalidad', 'ModalidadController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
