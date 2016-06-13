@@ -6,16 +6,18 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 use App\Models\Horario;
+use App\Models\HorarioDia;
 use App\Models\Sede;
 use App\Models\SedeLocal;
 use App\Models\Grupo;
 use App\Models\Auxiliar;
+use App\Models\Docente;
 use App\Modulo;
-
+use AppHelper;
 use Validator;
-
 use App\Http\Requests;
 use Carbon\Carbon;
+
 
 class HorarioController extends Controller
 {
@@ -45,8 +47,12 @@ class HorarioController extends Controller
     */
    public function create()
    {
+
+
+
      $data = [
-           'sedes' => Sede::lists('nom_sede', 'id'),                     // Listado de Sedes
+           'sedes'  => Sede::lists('nom_sede', 'id'),  // Listado de Sedes
+
          ];
         return view('horario.create', $data);
    }
@@ -79,9 +85,128 @@ class HorarioController extends Controller
      $auxiliar = Auxiliar::where("deleted", '=', 0)->get()->lists('persona.nombre', 'id');
      $auxiliar->prepend('-- Seleccione Personal de Apoyo --');
 
-     $data = compact('id','cod_sede','cod_mod','cod_esp_tipo','cod_esp','modulos','locales','auxiliar');
+     // Información de los Docente
+     $docentes = Docente::where("deleted", '=', 0)->get()->lists('persona.nombre', 'id');
+     $docentes->prepend('-- Seleccione Docente --');
+
+     // Días de la semana
+     $semana[] = array("cod_dia" => 1, "dia" => "Lunes");
+     $semana[] = array("cod_dia" => 2, "dia" => "Martes");
+     $semana[] = array("cod_dia" => 3, "dia" => "Miércoles");
+     $semana[] = array("cod_dia" => 4, "dia" => "Jueves");
+     $semana[] = array("cod_dia" => 5, "dia" => "Viernes");
+     $semana[] = array("cod_dia" => 6, "dia" => "Sábado");
+     $semana[] = array("cod_dia" => 7, "dia" => "Domingo");
+
+     // Valores recibidos del update
+     //$semana_data[] = 2;
+     //$semana_data[] = 6;
+
+     $data = compact('id','cod_sede','cod_mod','cod_esp_tipo','cod_esp','modulos','locales','auxiliar','docentes', 'semana');
      return view('horario.create', $data);
+
    }
 
+   /**
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
+   public function store(Request $request){
+
+     // Enviando los parametros necesarios para la validación
+     $validator = Validator::make( $request->all(), $this->validateRules(), $this->validateMessages() );
+
+     // Si existen errores el Sistema muestra un mensaje
+     if ($validator->fails()){
+
+       // Enviando Mensaje
+       return redirect()->route('dashboard.grupo.create')->withErrors($validator)
+       ->withInput();
+
+     } else {
+
+       $week_days   = $request->get("cod_dia");
+
+       // Registramos el nuevo horario
+       $horario = new Horario;
+       $horario->fec_inicio = $request->get("fec_inicio");
+       $horario->fec_fin    = $request->get("fec_fin");
+       $horario->h_inicio   = $request->get("h_inicio");
+       $horario->h_fin      = $request->get("h_fin");
+       $horario->num_horas  = $request->get("num_horas");
+       $horario->cod_sede   = $request->get("cod_sede");
+       $horario->cod_local  = $request->get("cod_local");
+       $horario->cod_mod    = $request->get("cod_mod");
+       $horario->activo     = $request->get("activo");
+
+       if($horario->save()){
+
+         $fec_inicio      = AppHelper::replaceFormat("/", $request->get("fec_inicio"));
+         $fec_fin         = AppHelper::replaceFormat("/", $request->get("fec_fin"));
+         $intervalos_dias = json_decode(AppHelper::rangeInterval($fec_inicio, $fec_fin, $week_days), true);
+         $horario_dias    = array();
+         foreach ($intervalos_dias as $key => $value) {
+            $horario_dia =  new HorarioDia([
+              'cod_horario' => $horario->id,
+              'cod_dia'     => $value['cod_dia'],
+              'fecha'       => $value['fecha'],
+              'activo'      => $request->get("activo")
+            ]);
+            $horario_dias[] = $horario_dia;
+         }
+
+         $horario->horariodias()->saveMany($horario_dias);
+
+         //Enviando mensaje
+         return redirect()->route('dashboard.grupo.horario.list', $request->get("cod_grupo"))
+         ->with('message', 'Los datos se registraron satisfactoriamente');
+
+       }
+
+     }
+
+
+   }
+
+   /* Reglas de validaciones */
+   public function validateRules()
+   {
+
+     /* Aplicando validación al Request */
+
+     // Reglas de validación
+     $rules = [
+       'cod_mod'     => 'required',
+       'cod_docente' => 'required',
+       'fec_inicio'  => 'required',
+       'fec_fin'     => 'required',
+       'num_horas'   => 'required',
+       'cod_local'   => 'required',
+       'activo'      => 'required'
+     ];
+
+     return $rules;
+
+   }
+
+   /* Mensaje personalizado */
+   public function validateMessages()
+   {
+
+     // Mensaje de validación Personalizado
+     $messages = [
+       'cod_mod.required'     => 'Es necesario seleccionar el módulo',
+       'cod_docente.required' => 'Es necesario seleccionar el docente',
+       'fec_inicio.required'  => 'Es necesario ingresar la fecha de inicio',
+       'fec_fin.required'     => 'Es necesario ingresar la fecha de finalización',
+       'num_horas.required'   => 'Es necesario indicar el número de horas',
+       'cod_local.required'   => 'Es necesario seleccionar el local',
+       'activo.integer'       => 'Solo esta permitido que sea números enteros'
+     ];
+
+     return $messages;
+   }
 
 }

@@ -33,6 +33,7 @@
             {{ Form::hidden('cod_mod', $cod_mod) }}
             {{ Form::hidden('cod_esp_tipo', $cod_esp_tipo) }}
             {{ Form::hidden('cod_esp', $cod_esp) }}
+            {{ Form::hidden('cod_grupo', $id) }}
           </div>
 
           <div class="form-group">
@@ -45,7 +46,7 @@
           <div class="form-group">
             {{ Form::label('cod_docente', 'Docente:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
             <div class="col-md-6 col-sm-6 col-xs-12">
-              {{ Form::select('cod_docente', $modulos, old('cod_docente'), ['class' => 'form-control horario_cod_local'] ) }}
+              {{ Form::select('cod_docente', $docentes, old('cod_docente'), ['class' => 'form-control horario_cod_local'] ) }}
             </div>
           </div>
 
@@ -69,6 +70,7 @@
             </div>
           </div>
 
+
           <div class="form-group">
             {{ Form::label('fec_fin', 'Fecha de fin:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -76,6 +78,36 @@
               @if ($errors->has('fec_fin'))
                 <label for="fec_fin" generated="true" class="error">{{ $errors->first('fec_fin') }}</label>
               @endif
+            </div>
+          </div>
+
+          <div class="form-group">
+            {{ Form::label('h_inicio', 'Hora de inicio:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              {{ Form::text('h_inicio', old('h_inicio'), ['class' => 'form-control'] ) }}
+              @if ($errors->has('h_inicio'))
+                <label for="h_inicio" generated="true" class="error">{{ $errors->first('h_inicio') }}</label>
+              @endif
+            </div>
+          </div>
+
+          <div class="form-group">
+            {{ Form::label('h_fin', 'Hora de fin:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              {{ Form::text('h_fin', old('h_fin'), ['class' => 'form-control'] ) }}
+              @if ($errors->has('h_fin'))
+                <label for="h_fin" generated="true" class="error">{{ $errors->first('h_fin') }}</label>
+              @endif
+            </div>
+          </div>
+
+          <div class="form-group">
+            {{ Form::label('cod_dia', 'Días:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}<br>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              @foreach ($semana as $dia)
+                {{ Form::checkbox('cod_dia[]', $dia['cod_dia']) }}
+                {{ Form::label('cod_dia', $dia['dia']) }}<br>
+              @endforeach
             </div>
           </div>
 

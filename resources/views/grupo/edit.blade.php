@@ -138,7 +138,7 @@
                     <div class="form-group btncontrol">
                       <a href="{{ route('dashboard.grupo.index') }}" class="btn btn-default">Retornar</a>
                       {{ Form::button('Guardar', array('class' => 'btn btn-success', 'type' => 'submit')) }}
-                      <a href="{{ route('dashboard.grupo.index') }}" class="btn btn-default">Horarios</a>
+                      <a href="{{ route('dashboard.grupo.horario.list', $grupo->id) }}" class="btn btn-default">Horarios</a>
                     </div>
                 </div>
           </div>

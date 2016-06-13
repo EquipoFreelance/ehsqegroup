@@ -12,12 +12,13 @@ class Horario extends Model
   // Campos activos
   protected $fillable = [
       'fec_inicio',
-      'fe_fin',
+      'fec_fin',
       'h_inicio',
       'h_fin',
       'num_horas',
       'cod_sede',
       'cod_local',
+      'cod_mod',
       'activo'
   ];
 
@@ -25,5 +26,9 @@ class Horario extends Model
   protected $attributes = array(
      'deleted' => 0,
   );
+
+  public function horariodias(){
+      return $this->hasMany('App\Models\HorarioDia', 'cod_horario', 'id');
+  }
 
 }

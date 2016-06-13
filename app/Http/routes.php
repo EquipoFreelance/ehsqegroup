@@ -135,4 +135,23 @@ Route::group(['middleware' => 'auth'], function () {
         'as' => 'json.esp', 'uses' => 'EspecializacionController@getJsonEspToGrupo'
     ]);
 
+    Route::get('testing', function(){
+
+      $begin = new DateTime( '2016-06-13' );
+      $end   = new DateTime( '2016-06-25' );
+      $end   = $end->modify( '+1 day' );
+
+      $interval  = new DateInterval('P1D');
+      $daterange = new DatePeriod($begin, $interval ,$end);
+
+      foreach($daterange as $date){
+
+        if(date("N", strtotime($date->format("Y-m-d"))) == 1){
+            print $date->format("Y-m-d")."-".date("l", strtotime($date->format("Y-m-d")))."<br>";
+        }
+
+      }
+
+    });
+
 });
