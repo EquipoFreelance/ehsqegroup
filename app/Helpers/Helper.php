@@ -12,6 +12,15 @@ class Helper
       return strtoupper($value);
     }
 
+    /*
+    * Determina un intervalo de días en formulario Y-m-d
+
+    * @param $f_inicio
+    * @param $f_fin
+    * @param $week_days
+    *
+    * @return json_encode $date_range
+    */
     public static function rangeInterval($f_inicio, $f_fin, $week_days = array()){
 
       $date_range = array();
@@ -40,6 +49,13 @@ class Helper
 
     }
 
+    /*
+    * Permite reemplazar formatos de fechas 
+    * @param $format
+    * @param $f
+    *
+    * @return array
+    */
     public static function replaceFormat($format, $f){
 
         if($format == "/"){

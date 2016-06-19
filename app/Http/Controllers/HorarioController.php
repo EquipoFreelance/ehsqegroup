@@ -47,14 +47,9 @@ class HorarioController extends Controller
     */
    public function create()
    {
-
-
-
-     $data = [
-           'sedes'  => Sede::lists('nom_sede', 'id'),  // Listado de Sedes
-
-         ];
-        return view('horario.create', $data);
+     // Listado de Sedes
+     $data = ['sedes'  => Sede::lists('nom_sede', 'id') ];
+     return view('horario.create', $data);
    }
 
    /**
@@ -90,17 +85,7 @@ class HorarioController extends Controller
      $docentes->prepend('-- Seleccione Docente --');
 
      // Días de la semana
-     $semana[] = array("cod_dia" => 1, "dia" => "Lunes");
-     $semana[] = array("cod_dia" => 2, "dia" => "Martes");
-     $semana[] = array("cod_dia" => 3, "dia" => "Miércoles");
-     $semana[] = array("cod_dia" => 4, "dia" => "Jueves");
-     $semana[] = array("cod_dia" => 5, "dia" => "Viernes");
-     $semana[] = array("cod_dia" => 6, "dia" => "Sábado");
-     $semana[] = array("cod_dia" => 7, "dia" => "Domingo");
-
-     // Valores recibidos del update
-     //$semana_data[] = 2;
-     //$semana_data[] = 6;
+     $semana = $this->dias_semana();
 
      $data = compact('id','cod_sede','cod_mod','cod_esp_tipo','cod_esp','modulos','locales','auxiliar','docentes', 'semana');
      return view('horario.create', $data);
@@ -143,10 +128,20 @@ class HorarioController extends Controller
 
        if($horario->save()){
 
-         $fec_inicio      = AppHelper::replaceFormat("/", $request->get("fec_inicio"));
+         // Add Auxiliar
+         $id_auxiliar = $request->get("cod_auxiliar");
+         $user = Auxiliar::find($id_auxiliar)->horarios()->save($horario);
+
+         // Formato necesario para obtener el rango de fechas
+         /*$fec_inicio      = AppHelper::replaceFormat("/", $request->get("fec_inicio"));
          $fec_fin         = AppHelper::replaceFormat("/", $request->get("fec_fin"));
+
+         // Retornar un JSOn con los días obtenidos
          $intervalos_dias = json_decode(AppHelper::rangeInterval($fec_inicio, $fec_fin, $week_days), true);
+
+         // Asignado los objectos para ser registrados
          $horario_dias    = array();
+
          foreach ($intervalos_dias as $key => $value) {
             $horario_dia =  new HorarioDia([
               'cod_horario' => $horario->id,
@@ -157,7 +152,12 @@ class HorarioController extends Controller
             $horario_dias[] = $horario_dia;
          }
 
-         $horario->horariodias()->saveMany($horario_dias);
+
+
+         $horario->horariodias()->saveMany($horario_dias);*/
+
+
+
 
          //Enviando mensaje
          return redirect()->route('dashboard.grupo.horario.list', $request->get("cod_grupo"))
@@ -207,6 +207,22 @@ class HorarioController extends Controller
      ];
 
      return $messages;
+   }
+
+   public function dias_semana(){
+
+    // Valores recibidos del update
+    //$semana_data[] = 2;
+    //$semana_data[] = 6;
+     // Días de la semana
+     $semana[] = array("cod_dia" => 1, "dia" => "Lunes");
+     $semana[] = array("cod_dia" => 2, "dia" => "Martes");
+     $semana[] = array("cod_dia" => 3, "dia" => "Miércoles");
+     $semana[] = array("cod_dia" => 4, "dia" => "Jueves");
+     $semana[] = array("cod_dia" => 5, "dia" => "Viernes");
+     $semana[] = array("cod_dia" => 6, "dia" => "Sábado");
+     $semana[] = array("cod_dia" => 7, "dia" => "Domingo");
+     return $semana;
    }
 
 }

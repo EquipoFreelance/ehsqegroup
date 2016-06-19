@@ -31,4 +31,13 @@ class Horario extends Model
       return $this->hasMany('App\Models\HorarioDia', 'cod_horario', 'id');
   }
 
+  public function auxiliares()
+  {
+      return $this->belongsToMany('App\Models\Auxiliar', 'horario_auxiliar', 'cod_horario', 'cod_horario');
+  }
+
+  /*public function auxiliar(){
+      return $this->hasMany('App\Models\HorarioAuxiliar', 'cod_horario', 'id');
+  }*/
+
 }

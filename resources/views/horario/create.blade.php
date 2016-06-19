@@ -70,7 +70,6 @@
             </div>
           </div>
 
-
           <div class="form-group">
             {{ Form::label('fec_fin', 'Fecha de fin:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -130,7 +129,6 @@
               @endif
             </div>
           </div>
-
 
           <div class="form-group">
             <label class="control-label col-md-4 col-sm-4 col-xs-12" for="activo">Estado:</label>
