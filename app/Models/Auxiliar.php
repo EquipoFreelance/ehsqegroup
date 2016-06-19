@@ -26,6 +26,7 @@ class Auxiliar extends Model
 
     public function horarios()
     {
-        return $this->belongsToMany('App\Models\Horario', 'horario_auxiliar', 'cod_auxiliar', 'cod_horario');
+        return $this->belongsToMany('App\Models\Horario', 'horario_auxiliar', 'cod_auxiliar', 'cod_horario')->withTimestamps();
     }
+
 }

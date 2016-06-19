@@ -24,4 +24,10 @@ class Docente extends Model
       return $this->belongsTo('App\Persona', 'cod_persona');
     }
 
+    public function horarios()
+    {
+        return $this->belongsToMany('App\Models\Horario', 'horario_auxiliar', 'cod_docente', 'cod_horario')->withTimestamps();
+    }
+
+
 }

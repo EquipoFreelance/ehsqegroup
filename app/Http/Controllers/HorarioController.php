@@ -129,8 +129,16 @@ class HorarioController extends Controller
        if($horario->save()){
 
          // Add Auxiliar
-         $id_auxiliar = $request->get("cod_auxiliar");
-         $user = Auxiliar::find($id_auxiliar)->horarios()->save($horario);
+         $auxiliar_id = $request->get("cod_auxiliar");
+         $user = Auxiliar::find($auxiliar_id)->horarios()->save($horario);
+
+         // Add Días
+         $horario_dias = $this->HorarioIntervaloDias($request->get("fec_inicio"), $request->get("fec_fin"), $week_days, $request->get("activo"));
+         $horario->horariodias()->saveMany($horario_dias);
+
+         // Add Docente
+         $docente_id = $request->get("cod_docente");
+         $user = Docente::find($docente_id)->horarios()->save($horario);
 
          // Formato necesario para obtener el rango de fechas
          /*$fec_inicio      = AppHelper::replaceFormat("/", $request->get("fec_inicio"));
@@ -152,11 +160,8 @@ class HorarioController extends Controller
             $horario_dias[] = $horario_dia;
          }
 
-
-
+         $horario_dias = $this->HorarioIntervaloDias($request->get("fec_inicio"), $request->get("fec_fin"), $week_days, $request->get("activo"));
          $horario->horariodias()->saveMany($horario_dias);*/
-
-
 
 
          //Enviando mensaje
@@ -207,6 +212,34 @@ class HorarioController extends Controller
      ];
 
      return $messages;
+   }
+
+   public function HorarioIntervaloDias($fec_inicio, $fec_fin, $week_days, $horario_id, $activo)
+   {
+     $horario_dias = array();
+
+     // Formato necesario para obtener el rango de fechas
+     $fec_inicio      = AppHelper::replaceFormat("/", $fec_inicio);
+     $fec_fin         = AppHelper::replaceFormat("/", $fec_fin);
+
+     // Retornar un JSOn con los días obtenidos
+     $intervalos_dias = json_decode(AppHelper::rangeInterval($fec_inicio, $fec_fin, $week_days), true);
+
+     // Asignado los objectos para ser registrados
+     $horario_dias    = array();
+
+     foreach ($intervalos_dias as $key => $value) {
+        $horario_dia =  new HorarioDia([
+          'cod_horario' => $horario_id,
+          'cod_dia'     => $value['cod_dia'],
+          'fecha'       => $value['fecha'],
+          'activo'      => $activo
+        ]);
+        $horario_dias[] = $horario_dia;
+     }
+
+     return $horario_dias;
+
    }
 
    public function dias_semana(){
