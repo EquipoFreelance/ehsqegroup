@@ -33,7 +33,6 @@
                 <th>Docente</th>
                 <th>Local</th>
                 <th>Módulo</th>
-
                 <th>Horas</th>
                 <th>Estado</th>
               </tr>
@@ -44,10 +43,8 @@
                    <td>{{ $horario->id }}</td>
                    <td>{{ $horario->fec_inicio }} y {{ $horario->fec_fin }} / {{ $horario->h_inicio }} - {{ $horario->h_inicio }}</td>
                    <td>{{ $horario->docente->persona->nombre.", ".$horario->docente->persona->ape_pat." ".$horario->docente->persona->ape_mat }}</td>
-                   <td>
-                     {{ $horario->cod_local }}
-                   </td>
-                   <td>{{ $horario->cod_mod }}</td>
+                   <td>{{ $horario->local->nom_local }}</td>
+                   <td>{{ $horario->modulo->nombre }}</td>
                    <td>{{ $horario->num_horas }}</td>
                    <td>@if($horario->activo == '1') Activo @else No Activo @endif</td>
                 </tr>

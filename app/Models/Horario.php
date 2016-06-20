@@ -27,11 +27,13 @@ class Horario extends Model
      'deleted' => 0,
   );
 
-  public function horariodias(){
+  // Horario - Dias
+  public function horariodias()
+  {
       return $this->hasMany('App\Models\HorarioDia', 'cod_horario', 'id');
   }
 
-
+  // Horarios - Auxiliares
   public function auxiliares()
   {
       return $this->belongsToMany('App\Models\Auxiliar', 'horario_auxiliar', 'cod_horario', 'cod_auxiliar')->withTimestamps();
@@ -42,22 +44,23 @@ class Horario extends Model
       return $this->belongsTo('App\Models\Docente', 'cod_docente', 'id');
   }
 
+  // En un horario solo puede existir un modulo
   public function modulo()
   {
       return $this->belongsTo('App\Models\Modulo', 'cod_mod', 'id');
   }
 
-  /*public function docentes()
+  // En un horario solo puede existir una sede
+  public function local()
   {
-      return $this->belongsToMany('App\Models\Docente', 'horario_docente', 'cod_horario', 'cod_docente')->withTimestamps();
-  }*/
+      return $this->belongsTo('App\Models\SedeLocal', 'cod_local', 'id');
+  }
 
-
+  // Un Horario - Grupos
   public function grupos()
   {
       return $this->belongsToMany('App\Models\Grupo', 'horario_grupo', 'cod_horario', 'cod_grupo')->withTimestamps();
   }
-
 
 
 }

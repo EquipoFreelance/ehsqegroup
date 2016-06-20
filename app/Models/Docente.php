@@ -18,7 +18,7 @@ class Docente extends Model
        'deleted' => 0,
     );
 
-    // Un Docente pertence a un persona
+    // Un Docente pertence a una persona
     public function persona()
     {
       return $this->belongsTo('App\Persona', 'cod_persona');
@@ -29,13 +29,5 @@ class Docente extends Model
     {
       return $this->hasMany('App\Models\Horario', 'cod_docente');
     }
-
-    public function addHorarios()
-    {
-        return $this->belongsToMany('App\Models\Horario', 'horario_docente', 'cod_docente', 'cod_horario')->withTimestamps();
-    }
-
-
-
 
 }

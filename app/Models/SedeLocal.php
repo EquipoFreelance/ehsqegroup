@@ -25,5 +25,10 @@ class SedeLocal extends Model
         return $this->belongsTo('App\Models\Sede', 'cod_sede');
     }
 
+    // Un Local puede estar en muchos horarios
+    public function horario()
+    {
+      return $this->hasMany('App\Models\Horario', 'cod_local');
+    }
 
 }

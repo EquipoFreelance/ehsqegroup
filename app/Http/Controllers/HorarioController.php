@@ -12,7 +12,7 @@ use App\Models\SedeLocal;
 use App\Models\Grupo;
 use App\Models\Auxiliar;
 use App\Models\Docente;
-use App\Modulo;
+use App\Models\Modulo;
 use AppHelper;
 use Validator;
 use App\Http\Requests;
@@ -71,23 +71,23 @@ class HorarioController extends Controller
      $cod_esp      = $grupo->cod_esp;       // Tipo de especialización
      $docentes     = array();
 
-     // Información de los módulos
+     // Lists módulos
      $modulos = Modulo::where('cod_esp', $cod_esp)->get()->lists('nombre', 'id');
      $modulos->prepend('-- Seleccione el Módulo --');
 
-     // Información de los locales
+     // Lists locales
      $locales = SedeLocal::where('cod_sede', $cod_sede)->get()->lists('nom_local', 'id');
      $locales->prepend('-- Seleccione El Local --');
 
-     // Información de los auxiliares
+     // Lists auxiliares
      $auxiliar = Auxiliar::where("deleted", '=', 0)->get()->lists('persona.nombre', 'id');
      $auxiliar->prepend('-- Seleccione Personal de Apoyo --');
 
-     // Información de los Docente
+     // Lists Docentes
      $docentes = Docente::where("deleted", '=', 0)->get()->lists('persona.nombre', 'id');
      $docentes->prepend('-- Seleccione Docente --');
 
-     // Días de la semana
+     // Lists Días de la semana
      $semana = $this->dias_semana();
 
      $data = compact('id','cod_sede','cod_mod','cod_esp_tipo','cod_esp','modulos','locales','auxiliar','docentes', 'semana');
