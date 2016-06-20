@@ -104,8 +104,8 @@
             {{ Form::label('cod_dia', 'Días:', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}<br>
             <div class="col-md-6 col-sm-6 col-xs-12">
               @foreach ($semana as $dia)
-                {{ Form::checkbox('cod_dia[]', $dia['cod_dia']) }}
-                {{ Form::label('cod_dia', $dia['dia']) }}<br>
+                {{ Form::checkbox('cod_dia[]', $dia['cod_dia'], null ,array('id' => 'cod_dia_'.$dia['cod_dia']) ) }}
+                {{ Form::label('cod_dia_'.$dia['cod_dia'], $dia['dia']) }}<br>
               @endforeach
             </div>
           </div>

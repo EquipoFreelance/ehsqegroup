@@ -36,8 +36,11 @@ class HorarioController extends Controller
 
    public function getHorarioList($id)
    {
-     $data = compact('id'); // Id del grupo
+
+     $grupo = Grupo::find($id);
+     $data = ['horarios' => $grupo->addHorarios, "id" => $id];
      return view('horario.index', $data);
+
    }
 
    /**
@@ -130,39 +133,19 @@ class HorarioController extends Controller
 
          // Add Auxiliar
          $auxiliar_id = $request->get("cod_auxiliar");
-         $user = Auxiliar::find($auxiliar_id)->horarios()->save($horario);
-
-         // Add Días
-         $horario_dias = $this->HorarioIntervaloDias($request->get("fec_inicio"), $request->get("fec_fin"), $week_days, $request->get("activo"));
-         $horario->horariodias()->saveMany($horario_dias);
+         Auxiliar::find($auxiliar_id)->addHorarios()->save($horario);
 
          // Add Docente
          $docente_id = $request->get("cod_docente");
-         $user = Docente::find($docente_id)->horarios()->save($horario);
+         Docente::find($docente_id)->addHorarios()->save($horario);
 
-         // Formato necesario para obtener el rango de fechas
-         /*$fec_inicio      = AppHelper::replaceFormat("/", $request->get("fec_inicio"));
-         $fec_fin         = AppHelper::replaceFormat("/", $request->get("fec_fin"));
+         // Add Grupos
+         $grupo_id = $request->get("cod_grupo");
+         Grupo::find($grupo_id)->addHorarios()->save($horario);
 
-         // Retornar un JSOn con los días obtenidos
-         $intervalos_dias = json_decode(AppHelper::rangeInterval($fec_inicio, $fec_fin, $week_days), true);
-
-         // Asignado los objectos para ser registrados
-         $horario_dias    = array();
-
-         foreach ($intervalos_dias as $key => $value) {
-            $horario_dia =  new HorarioDia([
-              'cod_horario' => $horario->id,
-              'cod_dia'     => $value['cod_dia'],
-              'fecha'       => $value['fecha'],
-              'activo'      => $request->get("activo")
-            ]);
-            $horario_dias[] = $horario_dia;
-         }
-
-         $horario_dias = $this->HorarioIntervaloDias($request->get("fec_inicio"), $request->get("fec_fin"), $week_days, $request->get("activo"));
-         $horario->horariodias()->saveMany($horario_dias);*/
-
+         // Add Días
+         $horario_dias = $this->HorarioIntervaloDias($request->get("fec_inicio"), $request->get("fec_fin"), $week_days, $horario->id, $request->get("activo"));
+         $horario->horariodias()->saveMany($horario_dias);
 
          //Enviando mensaje
          return redirect()->route('dashboard.grupo.horario.list', $request->get("cod_grupo"))
@@ -171,7 +154,6 @@ class HorarioController extends Controller
        }
 
      }
-
 
    }
 
@@ -214,6 +196,7 @@ class HorarioController extends Controller
      return $messages;
    }
 
+   // Obteniendo los días de un intervarlo de fechas
    public function HorarioIntervaloDias($fec_inicio, $fec_fin, $week_days, $horario_id, $activo)
    {
      $horario_dias = array();
@@ -242,6 +225,7 @@ class HorarioController extends Controller
 
    }
 
+   // Array Días de la semana
    public function dias_semana(){
 
     // Valores recibidos del update

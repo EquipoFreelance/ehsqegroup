@@ -89,33 +89,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* -- Routes - Personalizados -- */
 
-    /* Administrador de Docentes */
-
-    /*// Listado de Docentes
-    Route::get('/dashboard/docente',[
-      'as' => 'dashboard.docente.index', 'uses' => 'DocenteController@index'
-    ]);
-
-    // Mostrar formulario para almacenar docentes
-    Route::get('/dashboard/docente/create',[
-      'as' => 'dashboard.docente.create', 'uses' => 'DocenteController@create'
-    ]);
-
-    // Store docente
-    Route::post('/dashboard/docente',[
-      'as' => 'dashboard.docente.store', 'uses' => 'PersonaController@store'
-    ]);
-
-    // Edit Docente
-    Route::get('/dashboard/docente/{id}',[
-      'as' => 'dashboard.docente.edit', 'uses' => 'DocenteController@edit'
-    ]);
-
-    //  Update Docente
-    Route::put('/dashboard/docente/{id}',[
-      'as' => 'dashboard.docente.update', 'uses' => 'PersonaController@update'
-    ]);*/
-
     /* Grupos - Horarios */
 
     // Listado de Horarios
