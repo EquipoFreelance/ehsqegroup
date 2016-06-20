@@ -35,6 +35,7 @@
                 <th>Módulo</th>
                 <th>Horas</th>
                 <th>Estado</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -47,6 +48,7 @@
                    <td>{{ $horario->modulo->nombre }}</td>
                    <td>{{ $horario->num_horas }}</td>
                    <td>@if($horario->activo == '1') Activo @else No Activo @endif</td>
+                   <td><a href="{{ route('dashboard.grupo.horario.edit', array("id" => $id, 'cod_horario' => $horario->id ) ) }}" class="btn btn-link">Editar</a></td>
                 </tr>
               @endforeach
             </tbody>

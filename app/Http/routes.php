@@ -97,10 +97,16 @@ Route::group(['middleware' => 'auth'], function () {
       'uses' => 'HorarioController@getHorarioList'
     ]);
 
-    // Crear Horarios
+    // Create Horario
     Route::get('/dashboard/grupo/{id}/horario/crear',[
       'as' => 'dashboard.grupo.horario.crear',
       'uses' => 'HorarioController@getCreateHorario'
+    ]);
+
+    // Edit Horario
+    Route::get('/dashboard/grupo/{id}/horario/{cod_horario}/edit',[
+      'as' => 'dashboard.grupo.horario.edit',
+      'uses' => 'HorarioController@getEditHorario'
     ]);
 
     /* Rutas asíncronas */

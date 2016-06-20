@@ -22,18 +22,11 @@ use Carbon\Carbon;
 class HorarioController extends Controller
 {
 
-  /**
-   * Display a listing of the resource.
-   *
+   /**
+   * Listado de Horario con su respectivo grupo
+   * @param  $id -> ID del Grupo
    * @return \Illuminate\Http\Response
    */
-   public function index()
-   {
-     //$horarios = Horario::where("deleted", '=', 0)->get();
-     //return view('horario.index', array('horarios' => $horarios));
-     return "Listado de horarios";
-   }
-
    public function getHorarioList($id)
    {
 
@@ -44,20 +37,8 @@ class HorarioController extends Controller
    }
 
    /**
-    * Show the form for creating a new resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
-   public function create()
-   {
-     // Listado de Sedes
-     $data = ['sedes'  => Sede::lists('nom_sede', 'id') ];
-     return view('horario.create', $data);
-   }
-
-   /**
-    * Show the form for creating a new resource.
-    *
+    * Mostrar el formulario con su respectivo grupo
+    * @param  $id -> ID del Grupo
     * @return \Illuminate\Http\Response
     */
    public function getCreateHorario($id)
@@ -96,6 +77,56 @@ class HorarioController extends Controller
    }
 
    /**
+    * Mostrar el formulario para editar con su respectivo grupo
+    * @param  $id -> ID del Grupo
+    * @return \Illuminate\Http\Response
+    */
+   public function getEditHorario($id, $cod_horario)
+   {
+
+      // Get Horario
+      $horario = Horario::find($cod_horario);
+
+      // Get Grupo
+      $grupo = Grupo::find($id);
+      $cod_sede     = $grupo->cod_sede;      // Sede
+      $cod_mod      = $grupo->cod_mod;       // Modalidad
+      $cod_esp_tipo = $grupo->cod_esp_tipo;  // Tipo de especialización
+      $cod_esp      = $grupo->cod_esp;       // Tipo de especialización
+
+      // Lists módulos
+      $modulos = Modulo::where('cod_esp', $cod_esp)->get()->lists('nombre', 'id');
+      $modulos->prepend('-- Seleccione el Módulo --', 0);
+
+      // Lists locales
+      $locales = SedeLocal::where('cod_sede', $cod_sede)->get()->lists('nom_local', 'id');
+      $locales->prepend('-- Seleccione El Local --', 0);
+
+      // Lists auxiliares
+      $cod_auxiliar = '';
+
+      foreach ($horario->auxiliares as $auxiliar) {
+        $cod_auxiliar = $auxiliar->pivot->cod_auxiliar;
+        break;
+      }
+
+      $auxiliar = Auxiliar::where("deleted", '=', 0)->get()->lists('persona.nombre', 'id');
+      $auxiliar->prepend('-- Seleccione Personal de Apoyo --', 0);
+
+      // Lists Docentes
+      $docentes = Docente::where("deleted", '=', 0)->get()->lists('persona.nombre', 'id');
+      $docentes->prepend('-- Seleccione Docente --', 0);
+
+      // Lists Días de la semana
+      $semana = $this->dias_semana();
+
+      $data = compact('id', 'cod_sede', 'cod_mod', 'cod_esp_tipo', 'cod_esp', 'cod_auxiliar', 'modulos', 'locales', 'auxiliar', 'docentes', 'semana', 'horario');
+      return view('horario.edit', $data );
+
+   }
+
+
+   /**
     * Store a newly created resource in storage.
     *
     * @param  \Illuminate\Http\Request  $request
@@ -115,9 +146,7 @@ class HorarioController extends Controller
 
      } else {
 
-       $week_days   = $request->get("cod_dia");
-
-       // Registramos el nuevo horario
+       // Add New Horario
        $horario = new Horario;
        $horario->fec_inicio  = $request->get("fec_inicio");
        $horario->fec_fin     = $request->get("fec_fin");
@@ -129,13 +158,15 @@ class HorarioController extends Controller
        $horario->cod_docente = $request->get("cod_docente");
        $horario->activo      = $request->get("activo");
 
+       $week_days   = $request->get("cod_dia");
+
        if($horario->save()){
 
          // Add Auxiliar
          $auxiliar_id = $request->get("cod_auxiliar");
          Auxiliar::find($auxiliar_id)->addHorarios()->save($horario);
 
-         // Add Grupos
+         // Add Grupo
          $grupo_id = $request->get("cod_grupo");
          Grupo::find($grupo_id)->addHorarios()->save($horario);
 
