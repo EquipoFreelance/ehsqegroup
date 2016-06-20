@@ -73,19 +73,19 @@ class HorarioController extends Controller
 
      // Lists módulos
      $modulos = Modulo::where('cod_esp', $cod_esp)->get()->lists('nombre', 'id');
-     $modulos->prepend('-- Seleccione el Módulo --');
+     $modulos->prepend('-- Seleccione el Módulo --', 0);
 
      // Lists locales
      $locales = SedeLocal::where('cod_sede', $cod_sede)->get()->lists('nom_local', 'id');
-     $locales->prepend('-- Seleccione El Local --');
+     $locales->prepend('-- Seleccione El Local --', 0);
 
      // Lists auxiliares
      $auxiliar = Auxiliar::where("deleted", '=', 0)->get()->lists('persona.nombre', 'id');
-     $auxiliar->prepend('-- Seleccione Personal de Apoyo --');
+     $auxiliar->prepend('-- Seleccione Personal de Apoyo --', 0);
 
      // Lists Docentes
      $docentes = Docente::where("deleted", '=', 0)->get()->lists('persona.nombre', 'id');
-     $docentes->prepend('-- Seleccione Docente --');
+     $docentes->prepend('-- Seleccione Docente --', 0);
 
      // Lists Días de la semana
      $semana = $this->dias_semana();
@@ -119,25 +119,21 @@ class HorarioController extends Controller
 
        // Registramos el nuevo horario
        $horario = new Horario;
-       $horario->fec_inicio = $request->get("fec_inicio");
-       $horario->fec_fin    = $request->get("fec_fin");
-       $horario->h_inicio   = $request->get("h_inicio");
-       $horario->h_fin      = $request->get("h_fin");
-       $horario->num_horas  = $request->get("num_horas");
-       $horario->cod_sede   = $request->get("cod_sede");
-       $horario->cod_local  = $request->get("cod_local");
-       $horario->cod_mod    = $request->get("cod_mod");
-       $horario->activo     = $request->get("activo");
+       $horario->fec_inicio  = $request->get("fec_inicio");
+       $horario->fec_fin     = $request->get("fec_fin");
+       $horario->h_inicio    = $request->get("h_inicio");
+       $horario->h_fin       = $request->get("h_fin");
+       $horario->num_horas   = $request->get("num_horas");
+       $horario->cod_local   = $request->get("cod_local");
+       $horario->cod_mod     = $request->get("cod_mod");
+       $horario->cod_docente = $request->get("cod_docente");
+       $horario->activo      = $request->get("activo");
 
        if($horario->save()){
 
          // Add Auxiliar
          $auxiliar_id = $request->get("cod_auxiliar");
          Auxiliar::find($auxiliar_id)->addHorarios()->save($horario);
-
-         // Add Docente
-         $docente_id = $request->get("cod_docente");
-         Docente::find($docente_id)->addHorarios()->save($horario);
 
          // Add Grupos
          $grupo_id = $request->get("cod_grupo");
