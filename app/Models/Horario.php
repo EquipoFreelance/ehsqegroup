@@ -24,7 +24,7 @@ class Horario extends Model
 
   // Atributos con valores por defecto
   protected $attributes = array(
-     'deleted' => 0,
+     'deleted' => 0
   );
 
   // Horario - Dias

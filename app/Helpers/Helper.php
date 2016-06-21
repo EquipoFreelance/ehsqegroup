@@ -29,7 +29,8 @@ class Helper
 
       $interval  = DateInterval::createFromDateString('1 day');
 
-      $end->setTime(0, 0)->add($interval);
+      $begin->setTime(0,0);
+      $end->setTime(23, 59, 59)->add($interval);
 
       $daterange = new DatePeriod($begin, $interval, $end);
 
@@ -50,7 +51,7 @@ class Helper
     }
 
     /*
-    * Permite reemplazar formatos de fechas 
+    * Permite reemplazar formatos de fechas
     * @param $format
     * @param $f
     *

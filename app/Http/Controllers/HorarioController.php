@@ -27,7 +27,7 @@ class HorarioController extends Controller
    * @param  $id -> ID del Grupo
    * @return \Illuminate\Http\Response
    */
-   public function getHorarioList($id)
+   public function index($id)
    {
 
      $grupo = Grupo::find($id);
@@ -41,7 +41,7 @@ class HorarioController extends Controller
     * @param  $id -> ID del Grupo
     * @return \Illuminate\Http\Response
     */
-   public function getCreateHorario($id)
+   public function create($id)
    {
 
      // Información del Grupo
@@ -81,7 +81,7 @@ class HorarioController extends Controller
     * @param  $id -> ID del Grupo
     * @return \Illuminate\Http\Response
     */
-   public function getEditHorario($id, $cod_horario)
+   public function edit($id, $cod_horario)
    {
 
       // Get Horario
@@ -95,11 +95,11 @@ class HorarioController extends Controller
       $cod_esp      = $grupo->cod_esp;       // Tipo de especialización
 
       // Lists módulos
-      $modulos = Modulo::where('cod_esp', $cod_esp)->get()->lists('nombre', 'id');
+      $modulos = Modulo::where("deleted", '=', 0)->get()->lists('nombre', 'id');
       $modulos->prepend('-- Seleccione el Módulo --', 0);
 
       // Lists locales
-      $locales = SedeLocal::where('cod_sede', $cod_sede)->get()->lists('nom_local', 'id');
+      $locales = SedeLocal::where("deleted", '=', 0)->get()->lists('nom_local', 'id');
       $locales->prepend('-- Seleccione El Local --', 0);
 
       // Lists auxiliares
@@ -118,9 +118,16 @@ class HorarioController extends Controller
       $docentes->prepend('-- Seleccione Docente --', 0);
 
       // Lists Días de la semana
-      $semana = $this->dias_semana();
+      $list_semana = $this->dias_semana();
 
-      $data = compact('id', 'cod_sede', 'cod_mod', 'cod_esp_tipo', 'cod_esp', 'cod_auxiliar', 'modulos', 'locales', 'auxiliar', 'docentes', 'semana', 'horario');
+      $horario_dias = $horario->horariodias()->get();
+
+      foreach ($horario_dias as $dia) {
+        $get_semana[] = $dia->cod_dia;
+      }
+
+      $data = compact('id', 'cod_sede', 'cod_mod', 'cod_esp_tipo', 'cod_esp', 'cod_auxiliar', 'modulos', 'locales', 'auxiliar', 'docentes', 'list_semana', 'horario','get_semana');
+
       return view('horario.edit', $data );
 
    }
@@ -184,6 +191,48 @@ class HorarioController extends Controller
 
    }
 
+   public function update(Request $request, $id)
+   {
+
+
+     // Get Horario
+     $horario = Horario::find($id);
+     $horario->fec_inicio  = $request->get("fec_inicio");
+     $horario->fec_fin     = $request->get("fec_fin");
+     $horario->h_inicio    = $request->get("h_inicio");
+     $horario->h_fin       = $request->get("h_fin");
+     $horario->num_horas   = $request->get("num_horas");
+     $horario->cod_local   = $request->get("cod_local");
+     $horario->cod_mod     = $request->get("cod_mod");
+     $horario->cod_docente = $request->get("cod_docente");
+     $horario->updated_at  = Carbon::now();
+     $horario->activo      = $request->get("activo");
+
+     $week_days   = $request->get("cod_dia");
+
+     $horario_dias = $this->HorarioIntervaloDias($request->get("fec_inicio"), $request->get("fec_fin"), $week_days, $horario->id, $request->get("activo"));
+     
+     if($horario->save()){
+
+       // Add Auxiliar
+       $auxiliar_id = $request->get("cod_auxiliar");
+
+       //Auxiliar::find($auxiliar_id)->addHorarios()->save($horario);
+
+       // Add Días
+       $horario->horariodias()->delete();
+       $horario_dias = $this->HorarioIntervaloDias($request->get("fec_inicio"), $request->get("fec_fin"), $week_days, $horario->id, $request->get("activo"));
+       $horario->horariodias()->saveMany($horario_dias);
+
+       //Enviando mensaje
+       return redirect()->route('dashboard.grupo.horario.list', $request->get("cod_grupo"))
+       ->with('message', 'Los datos se actualizaron satisfactoriamente');
+
+     }
+
+
+   }
+
    /* Reglas de validaciones */
    public function validateRules()
    {
@@ -223,6 +272,7 @@ class HorarioController extends Controller
      return $messages;
    }
 
+
    // Obteniendo los días de un intervarlo de fechas
    public function HorarioIntervaloDias($fec_inicio, $fec_fin, $week_days, $horario_id, $activo)
    {
@@ -255,9 +305,6 @@ class HorarioController extends Controller
    // Array Días de la semana
    public function dias_semana(){
 
-    // Valores recibidos del update
-    //$semana_data[] = 2;
-    //$semana_data[] = 6;
      // Días de la semana
      $semana[] = array("cod_dia" => 1, "dia" => "Lunes");
      $semana[] = array("cod_dia" => 2, "dia" => "Martes");
@@ -266,6 +313,7 @@ class HorarioController extends Controller
      $semana[] = array("cod_dia" => 5, "dia" => "Viernes");
      $semana[] = array("cod_dia" => 6, "dia" => "Sábado");
      $semana[] = array("cod_dia" => 7, "dia" => "Domingo");
+
      return $semana;
    }
 

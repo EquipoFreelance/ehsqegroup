@@ -73,10 +73,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/dashboard/sede', 'SedeController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
     /* Administrador de Locales */
-    Route::resource('/dashboard/sede/local', 'SedeLocalController', ['only' => ['index','create','store','edit','update','destroy', 'horario'] ] );
+    Route::resource('/dashboard/sede/local', 'SedeLocalController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
     /* Administrador de Horarios */
-    Route::resource('/dashboard/horario', 'HorarioController', ['only' => ['index','create','store','edit','update','destroy', 'horario'] ] );
+    Route::resource('/dashboard/horario', 'HorarioController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
     /* Administrador de Grupos */
     Route::resource('/dashboard/grupo', 'GrupoController', ['only' => ['index','create','store','edit','update','destroy'] ] );
@@ -94,19 +94,19 @@ Route::group(['middleware' => 'auth'], function () {
     // Listado de Horarios
     Route::get('/dashboard/grupo/{id}/horario',[
       'as' => 'dashboard.grupo.horario.list',
-      'uses' => 'HorarioController@getHorarioList'
+      'uses' => 'HorarioController@index'
     ]);
 
     // Create Horario
     Route::get('/dashboard/grupo/{id}/horario/crear',[
       'as' => 'dashboard.grupo.horario.crear',
-      'uses' => 'HorarioController@getCreateHorario'
+      'uses' => 'HorarioController@create'
     ]);
 
     // Edit Horario
     Route::get('/dashboard/grupo/{id}/horario/{cod_horario}/edit',[
       'as' => 'dashboard.grupo.horario.edit',
-      'uses' => 'HorarioController@getEditHorario'
+      'uses' => 'HorarioController@edit'
     ]);
 
     /* Rutas asíncronas */
