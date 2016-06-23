@@ -37,9 +37,9 @@ Route::auth();
 
 Route::group(['middleware' => ['web']], function () {
 
-    // Filtro Sistema Academico
 
-    Route::group(['middleware' => ['auth','admin']], function(){
+    // Dashboard
+    Route::group(['middleware' => ['auth']], function(){
 
         // Redirect Dashboard
         Route::get('/', function () {
@@ -51,7 +51,8 @@ Route::group(['middleware' => ['web']], function () {
 
     });
 
-    Route::group(['middleware' => ['auth','admin']], function(){
+    // Filtro Sistema Academico
+    Route::group(['middleware' => ['auth','academico']], function(){
 
       /* -- Routes - Recursos -- */
 
@@ -84,6 +85,9 @@ Route::group(['middleware' => ['web']], function () {
 
       // Administrador de Docentes
       Route::resource('/dashboard/docente', 'DocenteController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+
+      // Administrador de talleres
+      Route::resource('/dashboard/docente', 'TallerController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
       /* -- Routes - Personalizados -- */
 

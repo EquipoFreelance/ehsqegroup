@@ -16,8 +16,7 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        // Pertenece a Servicios acacemicos
-
+        // Pertenece a Servicios académicos
         if(Auth::User()->id_user_type == 2)
         {
             return $next($request);
