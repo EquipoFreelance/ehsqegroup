@@ -4,11 +4,12 @@
       <div class="clear"></div>
       <ul class="nav side-menu">
          <li class="title">Menú principal</li>
+         <li><a href="{{ route('dashboard.taller.index') }}"><i class="fa fa-tasks"></i> Talleres</a></li>
          <li><a href="{{ route('dashboard.modalidad.index') }}"><i class="fa fa-tasks"></i> Modalidades</a></li>
          <li><a href="{{ route('dashboard.tesp.index') }}"><i class="fa fa-tasks"></i> Tipo de especializaciones</a></li>
          <li><a href="{{ route('dashboard.esp.index') }}"><i class="fa fa-tasks"></i> Especializaciones</a></li>
          <li><a href="{{ route('dashboard.modulo.index') }}"><i class="fa fa-tasks"></i> Módulos</a></li>
-        <li><a href="{{ route('dashboard.docente.index') }}"><i class="fa fa-tasks"></i> Docentes</a></li>
+         <li><a href="{{ route('dashboard.docente.index') }}"><i class="fa fa-tasks"></i> Docentes</a></li>
          <li><a href="{{ route('dashboard.auxiliar.index') }}"><i class="fa fa-tasks"></i> Auxiliares</a></li>
          <li><a href="{{ route('dashboard.sede.index') }}"><i class="fa fa-tasks"></i> Sedes</a></li>
          <li><a href="{{ route('dashboard.sede.local.index') }}"><i class="fa fa-tasks"></i> Locales</a></li>

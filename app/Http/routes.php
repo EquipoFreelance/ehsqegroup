@@ -35,7 +35,7 @@ Route::resource('v1/usertype', 'UserTypeController', ['only' => ['store', 'show'
 
 Route::auth();
 
-Route::group(['middleware' => ['web']], function () {
+//Route::group(['middleware' => ['web']], function () {
 
 
     // Dashboard
@@ -87,7 +87,7 @@ Route::group(['middleware' => ['web']], function () {
       Route::resource('/dashboard/docente', 'DocenteController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
       // Administrador de talleres
-      Route::resource('/dashboard/docente', 'TallerController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+      Route::resource('/dashboard/taller', 'TallerController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
       /* -- Routes - Personalizados -- */
 
@@ -118,4 +118,4 @@ Route::group(['middleware' => ['web']], function () {
 
     });
 
-});
+//});

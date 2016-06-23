@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Taller extends Model
 {
+
+    use SoftDeletes;
+
     protected $table = 'taller';
 
     protected $fillable = [
@@ -16,5 +20,7 @@ class Taller extends Model
     protected $attributes = array(
        'deleted' => 0,
     );
+    
+    protected $dates = ['deleted_at'];
 
 }
