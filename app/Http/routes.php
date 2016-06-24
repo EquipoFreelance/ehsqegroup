@@ -66,19 +66,19 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
 
   /* -- Routes - Personalizados -- */
 
-  /* Grupos > Horarios */
+  // Administrador de Horarios
 
-  // Listado de Horarios
+  // index
   Route::get('/dashboard/grupo/{id}/horario',[
     'as' => 'dashboard.grupo.horario.list', 'uses' => 'HorarioController@index'
   ]);
 
-  // Create Horario
+  // create
   Route::get('/dashboard/grupo/{id}/horario/crear',[
     'as' => 'dashboard.grupo.horario.crear', 'uses' => 'HorarioController@create'
   ]);
 
-  // Edit Horario
+  // edit
   Route::get('/dashboard/grupo/{id}/horario/{cod_horario}/edit',[
     'as' => 'dashboard.grupo.horario.edit', 'uses' => 'HorarioController@edit'
   ]);
