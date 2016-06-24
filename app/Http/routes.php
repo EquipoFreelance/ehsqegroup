@@ -11,28 +11,6 @@
 |
 */
 
-
-
-/* Sistema de Autentificación */
-
-// Inicio de sesión
-Route::post('v1/login', 'LoginController@login');
-
-// Cierre de sesión
-Route::post('v1/logout', 'LoginController@logout');
-
-/* Sistema de Registro */
-Route::resource('v1/user', 'UserController', ['only' => ['store', 'show', 'update', 'index'] ] );
-
-// Admin - Activar usuarios
-Route::put('v1/user/activate/{id}', 'UserController@activate');
-
-// Admin - Bloquear usuarios
-Route::put('v1/user/toblock/{id}', 'UserController@toblock');
-
-/* Crud de Tipo de usuarios */
-Route::resource('v1/usertype', 'UserTypeController', ['only' => ['store', 'show', 'update', 'index', 'destroy'] ] );
-
 Route::auth();
 
 // Dashboard
