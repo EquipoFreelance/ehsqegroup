@@ -99,3 +99,8 @@ Route::group(['middleware' => ['auth','role.docente']], function(){
 Route::group(['middleware' => ['auth','role.alumno']], function(){
 
 });
+
+// Sistemas
+Route::group(['middleware' => ['auth','role.sistema']], function(){
+
+});
