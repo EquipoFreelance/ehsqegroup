@@ -47,8 +47,8 @@
               <img src="{{ URL::asset('assets/images/users/img.jpg') }}" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
-              <h2>{{ Auth::user()->username }}</h2>
-              <span>Admin. Secretaría Academica</span>
+              <h2>{{ $fullname }}</h2>
+              <span>{{ $tipo }}</span>
             </div>
           </div>
           <!-- /menu prile quick info -->
@@ -77,7 +77,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li class="">
               <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                <img src="{{ URL::asset('assets/images/users/img.jpg') }}" alt="">{{ Auth::user()->username }}
+                <img src="{{ URL::asset('assets/images/users/img.jpg') }}" alt="">{{ $fullname }} 
                 <span class=" fa fa-angle-down"></span>
               </a>
               <ul class="dropdown-menu dropdown-usermenu pull-right">
