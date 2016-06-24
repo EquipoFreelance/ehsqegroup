@@ -32,6 +32,11 @@ class User extends Authenticatable
       return $this->belongsTo('App\UserType', 'id_user_type');
     }
 
+    // Una usuario puede ser un administrativo
+    public function administrativo()
+    {
+        return $this->hasOne('App\Models\Administrativo', 'cod_persona', 'id');
+    }
 
     /**
      * Campo adicional.
