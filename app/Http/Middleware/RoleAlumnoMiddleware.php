@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Auth;
 
-class AdminMiddleware
+class RoleAlumnoMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class AdminMiddleware
     public function handle($request, Closure $next)
     {
         // Pertenece a Servicios académicos
-        if(Auth::User()->id_user_type == 2)
+        if(Auth::User()->id_user_type == 4)
         {
             return $next($request);
 
