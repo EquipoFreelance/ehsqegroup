@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-
-use App\Http\Requests\StoreTallerRequest;
-use Validator;
 use App\Http\Requests;
+use App\Http\Requests\StoreTallerRequest;
 use Illuminate\Http\Response;
+
+use Validator;
 use App\Models\Taller;
 use Carbon\Carbon;
 
