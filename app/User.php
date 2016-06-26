@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password', 'fullname'
+        'username', 'email', 'password'
     ];
 
     /**
@@ -30,6 +30,12 @@ class User extends Authenticatable
     // Relación entre roles y usuarios
     public function role(){
       return $this->belongsTo('App\Role', 'cod_role', 'id');
+    }
+
+    // Relacion entre usuario y perfil
+    public function profile()
+    {
+      return $this->hasOne('App\Models\Profile', 'cod_user', 'id');
     }
 
     // Una usuario puede ser un administrativo

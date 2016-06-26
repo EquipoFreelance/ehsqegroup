@@ -24,6 +24,9 @@ Route::group(['middleware' => ['auth']], function(){
     // Dashboard
     Route::get('/dashboard', 'DashBoardController@validateDashBoard');
 
+    // Administrador de Perfil
+    Route::resource('/dashboard/profile', 'ProfileController', ['only' => ['edit','update'] ] );
+
 });
 
 // Sistema Académicos
