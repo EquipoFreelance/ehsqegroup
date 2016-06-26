@@ -25,7 +25,11 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/dashboard', 'DashBoardController@validateDashBoard');
 
     // Administrador de Perfil
-    Route::resource('/dashboard/profile', 'ProfileController', ['only' => ['edit','update'] ] );
+    Route::resource('/dashboard/profile', 'ProfileController', ['only' => ['edit', 'update'] ] );
+
+    Route::put('/dashboard/user/changepassword',[
+      'as' => 'dashboard.user.update', 'uses' => 'UserController@putChangePassword'
+    ]);
 
 });
 

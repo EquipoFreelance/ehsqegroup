@@ -18,14 +18,15 @@
         </div>
 
         <br>
-        {!! Form::model($profile, [ 'method' => 'PUT', 'route' => ['dashboard.profile.update', $profile->id], 'class' => 'form-horizontal form-label-left', 'files'=>true ]) !!}
 
-          @if(Session::has('message'))
-            <div class="alert alert-success alert-dismissible fade in" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-              <strong>¡Perfecto!</strong>{{ Session::get('message') }}
-            </div>
-          @endif
+        @if(Session::has('message'))
+          <div class="alert alert-success alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <strong>¡Perfecto!</strong>{{ Session::get('message') }}
+          </div>
+        @endif
+
+        {!! Form::model($profile, [ 'method' => 'PUT', 'route' => ['dashboard.profile.update', $profile->id], 'class' => 'form-horizontal form-label-left', 'files'=>true ]) !!}
 
           <div class="form-group">
             {{ Form::label('fullname', 'Nombre del usuario', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
@@ -47,9 +48,6 @@
             </div>
           </div>
 
-
-
-
           <div class="ln_solid"></div>
           <div class="form-group">
                 <label class="control-label col-md-4 col-sm-4 col-xs-12"></label>
@@ -62,6 +60,43 @@
           </div>
 
         {!! Form::close() !!}
+
+        {!! Form::model('', [ 'method' => 'PUT', 'route' => ['dashboard.user.update'], 'class' => 'form-horizontal form-label-left', 'files'=>true ]) !!}
+
+        <div class="form-group">
+          {{ Form::label('old_password', 'Antigua contraseña', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            {{ Form::password('old_password', ['class' => 'form-control'] ) }}
+            @if ($errors->has('old_password'))
+              <label for="old_password" generated="true" class="error">{{ $errors->first('old_password') }}</label>
+            @endif
+          </div>
+        </div>
+
+        <div class="form-group">
+          {{ Form::label('password', 'Nueva Contraseña', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            {{ Form::password('password', ['class' => 'form-control'] ) }}
+            @if ($errors->has('password'))
+              <label for="fullname" generated="true" class="error">{{ $errors->first('password') }}</label>
+            @endif
+          </div>
+        </div>
+
+        <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-12"></label>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                  <div class="form-group btncontrol">
+                    <a href="#" class="btn btn-default">Retornar</a>
+                    {{ Form::button('Guardar', array('class' => 'btn btn-success', 'type' => 'submit')) }}
+                  </div>
+              </div>
+        </div>
+
+        {!! Form::close() !!}
+
+
+
       </div>
     </div>
   </div>

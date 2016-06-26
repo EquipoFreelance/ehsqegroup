@@ -2,16 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
-use App\User;
 use App\Http\Controllers\Controller;
-use Validator;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use App\Http\Requests;
+use App\Http\Requests\UpdateUserRequest;
+
+use Auth;
+use Hash;
 use Carbon\Carbon;
+use App\User;
 
 class UserController extends Controller
 {
+
+    /**
+     * Change Password
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function putChangePassword(UpdateUserRequest $request)
+    {
+
+        /*$request_old_password = $request->old_password;
+
+        $old_password = Auth::user()->password;
+
+        if (Hash::check($request_old_password, $old_password) ) {
+            return "Yes";
+        } else {
+            return "No";
+        }*/
+
+        return "Paso";
+
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -175,6 +203,8 @@ class UserController extends Controller
         }
 
     }
+
+
 
     /**
      * Detalle de la cuenta de usuario.
