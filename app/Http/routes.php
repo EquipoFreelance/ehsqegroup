@@ -22,7 +22,7 @@ Route::group(['middleware' => ['auth']], function(){
     });
 
     // Dashboard
-    Route::get('/dashboard', 'DashBoardController@validateDashBoard');
+    Route::get('/dashboard', 'DashBoardController@validateDashBoard', ['as' => 'dashboard.index']);
 
     // Administrador de Perfil
     Route::resource('/dashboard/profile', 'ProfileController', ['only' => ['edit', 'update'] ] );

@@ -22,10 +22,10 @@ class DashBoardController extends Controller
     public function validateDashBoard(){
 
         // Secretaria Académica
-        if($user_type == 2){
-
+        //if($user_type == 2){
+            $data = array("ddd");
             return view('dashboard.dashboard_sa_index', $data);
-        }
+        //}
 
     }
 

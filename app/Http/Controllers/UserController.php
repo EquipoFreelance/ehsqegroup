@@ -25,18 +25,16 @@ class UserController extends Controller
     public function putChangePassword(UpdateUserRequest $request)
     {
 
-        /*$request_old_password = $request->old_password;
+        $user = User::find(Auth::user()->id);
+        $user->password = bcrypt($request->new_password);
 
-        $old_password = Auth::user()->password;
+        if($user->save()){
 
-        if (Hash::check($request_old_password, $old_password) ) {
-            return "Yes";
-        } else {
-            return "No";
-        }*/
+          //Enviando mensaje
+          return redirect()->route('dashboard.profile.edit', $user->profile->id)
+          ->with('message', 'La contraseña fue cambiada satisfactoriamente');
 
-        return "Paso";
-
+        }
 
     }
 
