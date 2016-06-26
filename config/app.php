@@ -157,6 +157,9 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\HelperServiceProvider::class,
 
+        // Manupulación de imagenes
+        Intervention\Image\ImageServiceProvider::class,
+
     ],
 
     /*
@@ -205,6 +208,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'AppHelper' => App\Helpers\Helper::class,
+        'Image' => Intervention\Image\Facades\Image::class
 
     ],
 

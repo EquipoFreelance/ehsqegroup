@@ -25,7 +25,7 @@ class UpdateProfileRequest extends Request
     {
       return [
         'fullname' => 'required',
-        'avatar'   => 'required',
+        'avatar'   => 'image|mimes:jpeg,jpg,bmp,png|max:1024000'
       ];
     }
 
@@ -33,7 +33,9 @@ class UpdateProfileRequest extends Request
     {
         return [
             'fullname.required' => 'Es obligatorio ingresar su nombre de usuario',
-            'avatar.required' => 'Es necesario tener una foto tuya'
+            'avatar.image'      => 'Es necesario que el archivo image',
+            'avatar.mimes'      => 'Solo está permitido las siguientes opciones: jpeg,jpg,bmp,png',
+            'avatar.max'        => 'El tamaño maximo es de 1GB'
         ];
     }
 }

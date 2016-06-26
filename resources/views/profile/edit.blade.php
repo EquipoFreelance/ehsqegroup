@@ -41,6 +41,9 @@
           <div class="form-group">
             {{ Form::label('avatar', 'Avatar', array('class' => 'control-label col-md-4 col-sm-4 col-xs-12')) }}
             <div class="col-md-6 col-sm-6 col-xs-12">
+              <br>
+              <img src="{{ URL::asset( $profile->avatar ) }}">
+              <br><br>
               {{ Form::file('avatar', $attributes = array()) }}
               @if ($errors->has('avatar'))
                 <label for="avatar" generated="true" class="error">{{ $errors->first('avatar') }}</label>

@@ -21,6 +21,10 @@ Route::group(['middleware' => ['auth']], function(){
         return redirect()->to('/dashboard');
     });
 
+    Route::get('/info', function () {
+        phpinfo();
+    });
+
     // Dashboard
     Route::get('/dashboard', 'DashBoardController@validateDashBoard', ['as' => 'dashboard.index']);
 

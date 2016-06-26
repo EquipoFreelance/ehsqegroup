@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Models\Profile;
 use App\Http\Requests;
+use Image;
+use File;
 
 class ProfileController extends Controller
 {
@@ -31,21 +33,61 @@ class ProfileController extends Controller
   public function update(UpdateProfileRequest $request, $id)
   {
 
-      if ($request->file('avatar')->isValid())
-      {
-        $destinationPath = 'assets/images/users/';
-        $fileName = $id.'.png';
-        $request->file('avatar')->move($destinationPath, $fileName);
-      }
+      $upload = $this->uploadFile($request, 'avatar');
 
       $profile = Profile::find($id);
-      $profile->avatar   = $destinationPath.$fileName;
+      $old_avatar = $profile->avatar;
+      $profile->avatar = ($upload != false)? $upload : $profile->avatar;
       $profile->fullname = $request->fullname;
-      $profile->save();
 
-      //Enviando mensaje
-      return redirect()->route('dashboard.profile.edit', $profile->id)
-      ->with('message', 'Los datos se actualizaron satisfactoriamente');
+      if($profile->save())
+      {
+        // Eliminando el archivo anterior
+
+        ($upload != false)? File::delete($old_avatar) : '';
+
+        //Enviando mensaje
+        return redirect()->route('dashboard.profile.edit', $profile->id)
+        ->with('message', 'Los datos se actualizaron satisfactoriamente');
+      }
+
+  }
+
+  /**
+  * Permite realizar la subida de archivo de tipo imagen
+  *
+  * @param  string  $inputFile
+  * @return string $$inputFileName
+  */
+  public function uploadFile($inputFile, $inputFileName)
+  {
+    if( $inputFile->file($inputFileName) ){
+
+      if ($inputFile->file($inputFileName)->isValid())
+      {
+
+        $destinationPath = 'assets/images/users/';
+        $fileName = str_random(10).'.png';
+        $inputFile->file($inputFileName)->move($destinationPath, $fileName);
+
+        $img = Image::make($destinationPath.$fileName);
+        $img->resize(200, 200);
+        $img->save();
+
+        return $destinationPath.$fileName;
+
+      } else {
+
+        return false;
+
+      }
+
+    } else {
+
+        return false;
+
+    }
+
   }
 
 
