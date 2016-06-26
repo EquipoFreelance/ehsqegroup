@@ -54,7 +54,7 @@ class ProfileController extends Controller
   }
 
   /**
-  * Permite realizar la subida de archivo de tipo imagen
+  * Realizar la subida de archivo avatar
   *
   * @param  string  $inputFile
   * @return string $$inputFileName
