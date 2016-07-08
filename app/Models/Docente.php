@@ -21,7 +21,7 @@ class Docente extends Model
     // Un Docente pertence a una persona
     public function persona()
     {
-      return $this->belongsTo('App\Persona', 'cod_persona');
+      return $this->belongsTo('App\Models\Persona', 'cod_persona');
     }
 
     // Un Docente puede tener muchos horarios

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,7 +22,7 @@ class PersonaCargo extends Model
   // Un cargo pertenece a muchas personas
   public function persona()
   {
-    return $this->hasMany('App\Persona', 'cod_persona', 'id');
+    return $this->hasMany('App\Models\Persona', 'cod_persona', 'id');
   }
 
 }

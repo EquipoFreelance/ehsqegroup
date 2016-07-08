@@ -8,8 +8,8 @@ use App\Http\Requests;
 use App\Models\Sede;
 use App\Models\Grupo;
 use App\Models\Modalidad;
-use App\Especializacion;
-use App\EspecializacionTipo;
+use App\Models\Especializacion;
+use App\Models\EspecializacionTipo;
 
 use Validator;
 use Illuminate\Http\Response;

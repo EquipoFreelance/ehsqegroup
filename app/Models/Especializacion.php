@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,7 +21,7 @@ class Especializacion extends Model
 
     // Una especializacion pertenece a un tipo de especializacion
     public function esptipo(){
-      return $this->belongsTo('App\EspecializacionTipo', 'cod_esp_tipo');
+      return $this->belongsTo('App\Models\EspecializacionTipo', 'cod_esp_tipo');
     }
 
     // Una especializacion tiene muchos

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +11,7 @@ class PersonalCargoTipo extends Model
     // Una persona puede tener de uno a muchos cargos
     public function personacargo()
     {
-        return $this->hasMany('App\PersonaCargo', 'cod_personal_cargo_tipo', 'id');
+        return $this->hasMany('App\Models\PersonaCargo', 'cod_personal_cargo_tipo', 'id');
     }
 
 }

@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-use App\Persona;
-use App\PersonalCargoTipo;
-use App\PersonaCargo;
-use App\PersonaCorreo;
-use App\PersonaTelefono;
+use App\Models\Persona;
+use App\Models\PersonalCargoTipo;
+use App\Models\PersonaCargo;
+use App\Models\PersonaCorreo;
+use App\Models\PersonaTelefono;
 use Validator;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;

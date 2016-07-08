@@ -17,14 +17,7 @@ class Administrativo extends Model
     // Un Administrativo pertenece a una persona
     public function persona()
     {
-      return $this->belongsTo('App\Persona', 'cod_persona');
-    }
-
-    // Un Administrativo pertenece a una persona
-    public function usuario()
-    {
-      //return $this->belongsTo('App\User', 'cod_admin');
-      return $this->belongsToMany('App\User', 'administrativo_usuario', 'cod_usuario', 'cod_admin');
+      return $this->belongsTo('App\Models\Persona', 'cod_persona');
     }
 
 }

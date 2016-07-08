@@ -24,4 +24,7 @@ class Profile extends Model
       $this->belongsTo('App\User', 'cod_user', 'id');
     }
 
+    
+
+
 }

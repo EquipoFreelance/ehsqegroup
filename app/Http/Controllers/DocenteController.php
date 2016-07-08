@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Persona;
-use App\PersonalCargoTipo;
-use App\PersonaCargo;
-use App\PersonaCorreo;
+use App\Models\Persona;
+use App\Models\PersonalCargoTipo;
+use App\Models\PersonaCargo;
+use App\Models\PersonaCorreo;
 use App\Models\Docente;
 use Validator;
 use Illuminate\Http\Response;

@@ -12,7 +12,7 @@ use Auth;
 
 use App\Models\Administrativo;
 use App\Persona;
-use App\User;
+//use App\User;
 //use App\Models\Profile;
 
 class DashBoardController extends Controller
@@ -22,10 +22,10 @@ class DashBoardController extends Controller
     public function validateDashBoard(){
 
         // Secretaria Académica
-        //if($user_type == 2){
-            $data = array("ddd");
-            return view('dashboard.dashboard_sa_index', $data);
-        //}
+        if(  Auth::user()->cod_role == 2){
+            return view('dashboard.dashboard_sa_index');
+        }
+
 
     }
 

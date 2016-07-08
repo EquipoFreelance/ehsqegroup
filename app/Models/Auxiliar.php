@@ -21,7 +21,7 @@ class Auxiliar extends Model
     // Un auxiliar pertence a un persona
     public function persona()
     {
-      return $this->belongsTo('App\Persona', 'cod_persona');
+      return $this->belongsTo('App\Models\Persona', 'cod_persona');
     }
 
     public function addHorarios()

@@ -35,9 +35,9 @@ class Grupo extends Model
     * Pertener a una Especialización
     */
     public function especializacion(){
-        return $this->belongsTo('App\Especializacion', 'cod_esp');
+        return $this->belongsTo('App\Models\Especializacion', 'cod_esp');
     }
-    
+
     public function addHorarios()
     {
         return $this->belongsToMany('App\Models\Horario', 'horario_grupo', 'cod_grupo', 'cod_horario')->withTimestamps();

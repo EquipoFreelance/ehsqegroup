@@ -29,19 +29,13 @@ class User extends Authenticatable
 
     // Relación entre roles y usuarios
     public function role(){
-      return $this->belongsTo('App\Role', 'cod_role', 'id');
+      return $this->belongsTo('App\Models\Role', 'cod_role', 'id');
     }
 
     // Relacion entre usuario y perfil
     public function profile()
     {
       return $this->hasOne('App\Models\Profile', 'cod_user', 'id');
-    }
-
-    // Una usuario puede ser un administrativo
-    public function administrativo()
-    {
-        return $this->belongsToMany('App\Models\Administrativo', 'administrativo_usuario', 'cod_usuario', 'cod_admin');
     }
 
     /**

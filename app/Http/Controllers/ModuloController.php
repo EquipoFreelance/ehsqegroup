@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Modulo;
-use App\Especializacion;
+use App\Models\Especializacion;
 use App\Http\Requests;
 use Validator;
 use Illuminate\Http\Response;

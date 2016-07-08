@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\EspecializacionTipo;
+use App\Models\EspecializacionTipo;
 use App\Http\Requests;
 use Validator;
 

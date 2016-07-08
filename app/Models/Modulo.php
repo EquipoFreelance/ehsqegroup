@@ -18,7 +18,7 @@ class Modulo extends Model
 
     // Relación de uno a muchos
     public function especializacion(){
-      return $this->belongsTo('App\Especializacion', 'cod_esp');
+      return $this->belongsTo('App\Models\Especializacion', 'cod_esp');
     }
 
     // Un Modulo puede estar en muchos horarios

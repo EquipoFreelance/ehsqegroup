@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,7 +22,7 @@ class PersonaCorreo extends Model
   // Un correo pertenece a una persona
   public function persona()
   {
-    return $this->hasMany('App\Persona', 'cod_persona', 'id');
+    return $this->hasMany('App\Models\Persona', 'cod_persona', 'id');
   }
 
 }

@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 // Modelos asociados
-use App\Especializacion;
-use App\EspecializacionTipo;
+use App\Models\Especializacion;
+use App\Models\EspecializacionTipo;
 use App\Models\Modalidad;
 
 use App\Http\Requests;

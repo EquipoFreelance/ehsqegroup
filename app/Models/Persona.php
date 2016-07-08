@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,19 +27,19 @@ class Persona extends Model
     // Una persona puede tener de uno a muchos cargos
     public function cargos()
     {
-        return $this->hasMany('App\PersonaCargo', 'cod_persona', 'id');
+        return $this->hasMany('App\Models\PersonaCargo', 'cod_persona', 'id');
     }
 
     // Una persona puede tener de uno a muchos correos
     public function correos()
     {
-        return $this->hasMany('App\PersonaCorreo', 'cod_persona', 'id');
+        return $this->hasMany('App\Models\PersonaCorreo', 'cod_persona', 'id');
     }
 
     // Una persona puede tener de uno a muchos teléfonos
     public function telefonos()
     {
-        return $this->hasMany('App\PersonaTelefono', 'cod_persona', 'id');
+        return $this->hasMany('App\Models\PersonaTelefono', 'cod_persona', 'id');
     }
 
     // Una persona puede ser un auxiliar

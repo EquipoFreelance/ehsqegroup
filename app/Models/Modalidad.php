@@ -23,7 +23,7 @@ class Modalidad extends Model
     //Una Modalidad tiene de uno a muchas Especializaciones
     public function especializaciones()
     {
-        return $this->hasMany('App\Especializacion', 'cod_mod', 'id');
+        return $this->hasMany('App\Models\Especializacion', 'cod_mod', 'id');
     }
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,7 +19,7 @@ class EspecializacionTipo extends Model
     // Un telefono pertenece a una persona
     public function especializacion()
     {
-      return $this->hasMany('App\Especializacion', 'cod_esp_tipo', 'id');
+      return $this->hasMany('App\Models\Especializacion', 'cod_esp_tipo', 'id');
     }
 
 }
