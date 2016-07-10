@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\InscriptionStoreRequest;
 
 use App\Models\Persona;
 use App\Models\PersonaCorreo;
 use App\Models\PersonaTelefono;
 use App\Models\Student;
 use App\Models\Enrollment;
+
+
+use Validator;
 
 class InscriptionController extends Controller
 {
@@ -32,7 +36,7 @@ class InscriptionController extends Controller
 
   }
 
-  public function store(Request $request)
+  public function store(InscriptionStoreRequest $request)
   {
 
       $persona = new Persona();

@@ -99,7 +99,7 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
       'as' => 'json.esp', 'uses' => 'EspecializacionController@getJsonEspToGrupo'
   ]);
 
-
+  
   // Recursos Suscripción
   Route::resource('dashboard/inscription', 'InscriptionController', ['only' => ['create','store','show'] ]);
 

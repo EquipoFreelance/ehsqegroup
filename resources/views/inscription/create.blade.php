@@ -40,7 +40,7 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nom_corto">Apellido paterno</label>
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="ape_pat">Apellido paterno</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
             <input type="text" id="ape_pat" placeholder="Apellido paterno" name="ape_pat"  class="form-control" value="{{ old('ape_pat') }}">
             @if ($errors->has('ape_pat'))
@@ -90,7 +90,7 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nom_corto">Departamento</label>
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_dpto">Departamento</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
             <select class="form-control"><option>--Seleccione</option></select>
             @if ($errors->has('direccion'))
@@ -120,7 +120,7 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nom_corto">Dirección</label>
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="direccion">Dirección</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
             <input type="text" id="direccion" placeholder="Dirección" name="direccion"  class="form-control" value="{{ old('direccion') }}">
             @if ($errors->has('direccion'))
@@ -152,9 +152,9 @@
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="dni">Teléfono celular</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <input type="text" id="num_telefono" placeholder="Teléfono celular" name="num_tel_mobile"  class="form-control" value="{{ old('num_telefono') }}">
+            <input type="text" id="num_tel_mobile" placeholder="Teléfono celular" name="num_tel_mobile"  class="form-control" value="{{ old('num_telefono') }}">
             @if ($errors->has('num_telefono'))
-            <label for="num_telefono" generated="true" class="error">{{ $errors->first('num_tel_mobile') }}</label>
+            <label for="num_tel_mobile" generated="true" class="error">{{ $errors->first('num_tel_mobile') }}</label>
             @endif
           </div>
         </div>
@@ -162,39 +162,39 @@
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="dni">Teléfono Fijo</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <input type="text" id="num_telefono" placeholder="Teléfono fijo" name="num_tel_fijo"  class="form-control" value="{{ old('num_telefono') }}">
+            <input type="text" id="num_tel_fijo" placeholder="Teléfono fijo" name="num_tel_fijo"  class="form-control" value="{{ old('num_telefono') }}">
             @if ($errors->has('num_telefono'))
-            <label for="num_telefono" generated="true" class="error">{{ $errors->first('num_tel_fijo') }}</label>
+            <label for="num_tel_fijo" generated="true" class="error">{{ $errors->first('num_tel_fijo') }}</label>
             @endif
           </div>
         </div>
 
         <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nom_corto">Tipo de Especialización</label>
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_esp_tipo">Tipo de Especialización</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control"><option>--Seleccione</option></select>
-            @if ($errors->has('direccion'))
-            <label for="num_doc" generated="true" class="error">{{ $errors->first('num_doc') }}</label>
+            <select class="form-control" name="cod_esp_tipo"><option>--Seleccione</option></select>
+            @if ($errors->has('cod_esp_tipo'))
+            <label for="cod_esp_tipo" generated="true" class="error">{{ $errors->first('cod_esp_tipo') }}</label>
             @endif
           </div>
         </div>
 
         <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nom_corto">Especialización</label>
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_esp">Especialización</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control"><option>--Seleccione</option></select>
-            @if ($errors->has('direccion'))
-            <label for="num_doc" generated="true" class="error">{{ $errors->first('num_doc') }}</label>
+            <select class="form-control" name="cod_esp"><option>--Seleccione</option></select>
+            @if ($errors->has('cod_esp'))
+            <label for="cod_esp" generated="true" class="error">{{ $errors->first('cod_esp') }}</label>
             @endif
           </div>
         </div>
 
         <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nom_corto">Modalidad</label>
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_modalidad">Modalidad</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control"><option>--Seleccione</option></select>
-            @if ($errors->has('direccion'))
-            <label for="num_doc" generated="true" class="error">{{ $errors->first('num_doc') }}</label>
+            <select class="form-control" name="cod_modalidad"><option>--Seleccione</option></select>
+            @if ($errors->has('cod_modalidad'))
+            <label for="cod_modalidad" generated="true" class="error">{{ $errors->first('cod_modalidad') }}</label>
             @endif
           </div>
         </div>
