@@ -8,11 +8,11 @@ class PersonaTelefono extends Model
 {
     protected $table = 'persona_telefono';
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
       'cod_persona',
-      'telefono'
+      'num_telefono'
     ];
 
     // Un telefono pertenece a una persona

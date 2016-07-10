@@ -18,9 +18,11 @@ class ProfileController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function edit($id){
+
     $profile = Profile::find($id);
     $data = compact('profile');
     return view('profile.edit', $data);
+
   }
 
   /**

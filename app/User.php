@@ -28,14 +28,15 @@ class User extends Authenticatable
     ];
 
     // Relación entre roles y usuarios
-    public function role(){
+    public function role()
+    {
       return $this->belongsTo('App\Models\Role', 'cod_role', 'id');
     }
 
     // Relacion entre usuario y perfil
-    public function profile()
+    public function persona()
     {
-      return $this->hasOne('App\Models\Profile', 'cod_user', 'id');
+      return $this->belongsTo('App\Models\Persona', 'cod_persona', 'id');
     }
 
     /**

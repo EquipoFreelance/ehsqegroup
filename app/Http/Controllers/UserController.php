@@ -31,7 +31,7 @@ class UserController extends Controller
         if($user->save()){
 
           //Enviando mensaje
-          return redirect()->route('dashboard.profile.edit', $user->profile->id)
+          return redirect()->route('dashboard.profile.edit', $user->id)
           ->with('message', 'La contraseña fue cambiada satisfactoriamente');
 
         }

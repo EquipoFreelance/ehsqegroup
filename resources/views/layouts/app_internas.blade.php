@@ -44,10 +44,10 @@
           <!-- menu prile quick info -->
           <div class="profile">
             <div class="profile_pic">
-              <img src="{{ URL::asset( Auth::user()->profile->avatar ) }}" alt="..." class="img-circle profile_img">
+              <img src="{{ URL::asset( Auth::user()->avatar ) }}" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
-              <h2>{{ Auth::user()->profile->fullname }}</h2>
+              <h2>{{ Auth::user()->fullname }}</h2>
               <span>{{ Auth::user()->role->nom_role }}</span>
             </div>
           </div>
@@ -77,11 +77,11 @@
           <ul class="nav navbar-nav navbar-right">
             <li class="">
               <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                <img src="{{ URL::asset( Auth::user()->profile->avatar ) }}" alt="">{{ Auth::user()->profile->fullname }}
+                <img src="{{ URL::asset( Auth::user()->avatar ) }}" alt="">{{ Auth::user()->fullname }}
                 <span class=" fa fa-angle-down"></span>
               </a>
               <ul class="dropdown-menu dropdown-usermenu pull-right">
-                <li><a href="{{ route('dashboard.profile.edit', Auth::user()->profile->id ) }}"> Editar Infomación</a>
+                <li><a href="{{ route('dashboard.profile.edit', Auth::user()->id ) }}"> Editar Infomación</a>
                 </li>
                 <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out pull-right"></i> Cerrar sesión</a>
                 </li>

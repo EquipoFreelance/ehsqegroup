@@ -4,24 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Profile extends Model
+class Student extends Model
 {
-
-    protected $table = 'users';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'fullname', 'avatar','cod_persona',
-    ];
+    protected $table = 'alumno';
 
     // Relacion entre usuario y perfil
     public function persona()
     {
       return $this->belongsTo('App\Models\Persona', 'cod_persona', 'id');
+    }
+
+    // Estudiante - Matriculas
+    public function enrollments()
+    {
+      return $this->hasMany('App\Models\Enrollment', 'cod_alumno', 'id');
     }
 
 }
