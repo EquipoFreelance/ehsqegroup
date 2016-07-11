@@ -27,8 +27,6 @@
         </div>
         @endif
 
-
-
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nombre">Nombre de participante</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
@@ -92,7 +90,7 @@
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_dpto">Departamento</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control"><option>--Seleccione</option></select>
+            <select class="form-control" name="cod_dpto" id="cod_dpto"><option>-- Seleccione el Departamento --</option></select>
             @if ($errors->has('direccion'))
             <label for="num_doc" generated="true" class="error">{{ $errors->first('num_doc') }}</label>
             @endif
@@ -100,9 +98,9 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nom_corto">Provincia</label>
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_prov">Provincia</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control"><option>--Seleccione</option></select>
+            <select class="form-control" name="cod_prov" id="cod_prov"><option>-- Seleccione la provincia --</option></select>
             @if ($errors->has('direccion'))
             <label for="num_doc" generated="true" class="error">{{ $errors->first('num_doc') }}</label>
             @endif
@@ -110,9 +108,9 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nom_corto">Distrito</label>
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_dist">Distrito</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control"><option>--Seleccione</option></select>
+            <select class="form-control" name="cod_dist" id="cod_dist"><option>-- Seleccione el distrito --</option></select>
             @if ($errors->has('direccion'))
             <label for="num_doc" generated="true" class="error">{{ $errors->first('num_doc') }}</label>
             @endif

@@ -5,6 +5,13 @@ var group_cod_mod       = $('.group_cod_mod option:selected').val();
 var group_cod_esp_tipo  = $('.group_cod_esp_tipo option:selected').val();
 var group_cod_esp       = $("#cod_esp").attr("data-id");
 
+
+var routes = {
+  ub_departaments : '/dashboard/json/departaments/',
+  ub_provinces : '/dashboard/json/provinces/',
+  ub_districts : '/dashboard/json/districts/',
+};
+
 $(".group_cod_mod").change(function() {
   group_cod_mod = $(this).val();
 });
@@ -14,14 +21,24 @@ $(".group_cod_esp_tipo").change(function() {
     ListEspecializaciones('/dashboard/json/esp/'+group_cod_mod+'/'+group_cod_esp_tipo);
 });
 
+// Ub Departamentos
+wsUbigeo(routes.ub_departaments+'1', "#cod_dpto", "-- Seleccione el Departamento --");
+
+// Ub Pronvincias
+$("#cod_dpto").change(function(){
+  wsUbigeo(routes.ub_provinces+$(this).val(), "#cod_prov", "-- Seleccione la provincia --");
+});
+
+// Ub Distritos
+$("#cod_prov").change(function(){
+  wsUbigeo(routes.ub_districts+$("#cod_dpto").val()+"/"+$(this).val(), "#cod_dist", "-- Seleccione el distrito --");
+});
+
+
 // Si lo valores por defecto son diferentes a Vacío
 if(group_cod_mod != '' && group_cod_esp_tipo != ''){
-
     // Realizar change
     $(".group_cod_esp_tipo").trigger("change");
-
-
-
 }
 
 
@@ -64,9 +81,38 @@ function ListEspecializaciones(route){
 }
 
 function DefaultOptionSelect(element, str){
+  $(element).attr("disabled", "disabled");
   response_html = $(element).append($('<option>', {
     value: 0,
     text : str
   }));
   return response_html;
+}
+
+function wsUbigeo(route, element, placeholder){
+  $.ajax({
+     url:route,
+     type:'get',
+     datatype: 'json',
+     data:{},
+     beforeSend: function(){
+       $(element).empty();
+       DefaultOptionSelect(element, placeholder);
+     },
+     success:function(items)
+     {
+       setListItems(items, element);
+     }
+   });
+}
+
+function setListItems(data, element){
+   $.each(JSON.parse(data), function (i, item) {
+     $(element).append($('<option>', {
+       value: item.id,
+       text : item.name
+     }));
+   });
+   $(element).removeAttr("disabled");
+   return false;
 }

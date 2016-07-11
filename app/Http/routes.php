@@ -99,7 +99,26 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
       'as' => 'json.esp', 'uses' => 'EspecializacionController@getJsonEspToGrupo'
   ]);
 
-  
+  // Ub Departamentos
+  Route::get('/dashboard/json/departaments/{cod_pais}',[
+      'as' => 'json.departaments', 'uses' => 'WebServiceController@wsDepartaments'
+  ]);
+
+  // Ub Provincias
+  Route::get('/dashboard/json/provinces/{cod_dpto}',[
+      'as' => 'json.provinces', 'uses' => 'WebServiceController@wsProvinces'
+  ]);
+
+  // Ub Distritos
+  Route::get('/dashboard/json/districts/{cod_dpto}/{cod_prov}',[
+      'as' => 'json.districts', 'uses' => 'WebServiceController@wsDistricts'
+  ]);
+
+
+  ///Route::resource('/dashboard/json/provinces.scope', 'ProvinceController', ['only' => ['index'] ] );
+  //Route::resource('/dashboard/json/districts', 'DistrictController', ['only' => ['index'] ] );
+
+
   // Recursos Suscripción
   Route::resource('dashboard/inscription', 'InscriptionController', ['only' => ['create','store','show'] ]);
 
