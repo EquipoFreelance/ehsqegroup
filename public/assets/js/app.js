@@ -5,11 +5,14 @@ var group_cod_mod       = $('.group_cod_mod option:selected').val();
 var group_cod_esp_tipo  = $('.group_cod_esp_tipo option:selected').val();
 var group_cod_esp       = $("#cod_esp").attr("data-id");
 
-
+// Routes
 var routes = {
   ub_departaments : '/dashboard/json/departaments/',
-  ub_provinces : '/dashboard/json/provinces/',
-  ub_districts : '/dashboard/json/districts/',
+  ub_provinces    : '/dashboard/json/provinces/',
+  ub_districts    : '/dashboard/json/districts/',
+  esp_tipo        : '/dashboard/json/esp_tipos',
+  especializacion : '/dashboard/json/especializaciones/',
+  modalidades     : '/dashboard/json/modalidades'
 };
 
 $(".group_cod_mod").change(function() {
@@ -34,6 +37,15 @@ $("#cod_prov").change(function(){
   wsUbigeo(routes.ub_districts+$("#cod_dpto").val()+"/"+$(this).val(), "#cod_dist", "-- Seleccione el distrito --");
 });
 
+// Set List Tipo de Especialización
+wsUbigeo(routes.esp_tipo, "#cod_esp_tipo", "-- Seleccione el tipo de especialización --");
+
+// Set List Modalidades
+wsUbigeo(routes.modalidades, "#cod_modalidad", "-- Seleccione la modalidad --");
+
+$("#cod_esp_tipo").change(function(){
+  wsUbigeo(routes.especializacion+$(this).val(), "#cod_esp", "-- Seleccione la especialización --");
+});
 
 // Si lo valores por defecto son diferentes a Vacío
 if(group_cod_mod != '' && group_cod_esp_tipo != ''){
@@ -83,7 +95,7 @@ function ListEspecializaciones(route){
 function DefaultOptionSelect(element, str){
   $(element).attr("disabled", "disabled");
   response_html = $(element).append($('<option>', {
-    value: 0,
+    value: '',
     text : str
   }));
   return response_html;

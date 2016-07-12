@@ -4,6 +4,7 @@
       <div class="clear"></div>
       <ul class="nav side-menu">
          <li class="title">Menú principal</li>
+         <li><a href="{{ route('dashboard.inscriptions.index') }}"><i class="fa fa-tasks"></i> Inscritos</a></li>
          <li><a href="{{ route('dashboard.taller.index') }}"><i class="fa fa-tasks"></i> Talleres</a></li>
          <li><a href="{{ route('dashboard.modalidad.index') }}"><i class="fa fa-tasks"></i> Modalidades</a></li>
          <li><a href="{{ route('dashboard.tesp.index') }}"><i class="fa fa-tasks"></i> Tipo de especializaciones</a></li>

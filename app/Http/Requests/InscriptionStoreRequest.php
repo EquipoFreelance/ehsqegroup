@@ -31,10 +31,16 @@ class InscriptionStoreRequest extends Request
         'num_doc'        => 'required',
         'correo'         => 'required',
         'direccion'      => 'required',
+        'cod_dpto'       => 'required',
+        'cod_prov'       => 'required',
+        'cod_dist'       => 'required',
         'fe_nacimiento'  => 'required',
         'cod_sexo'       => 'required',
         'num_tel_fijo'   => 'required',
-        'num_tel_mobile' => 'required'
+        'num_tel_mobile' => 'required',
+        'cod_esp'        => 'required',
+        'cod_esp_tipo'   => 'required',
+        'cod_modalidad'  => 'required',
       ];
     }
 
@@ -48,10 +54,16 @@ class InscriptionStoreRequest extends Request
             'num_doc.required'        => 'Es necesario ingresar el número de DNI',
             'correo.required'         => 'Es necesario ingresar el correo electrónico',
             'direccion.required'      => 'Es necesario ingresar la dirección',
+            'cod_dpto.required'       => 'Es necesario seleccionar el departamento',
+            'cod_prov.required'       => 'Es necesario seleccionar la provincia',
+            'cod_dist.required'       => 'Es necesario seleccionar el distrito',
             'fe_nacimiento.required'  => 'Es necesario ingresar la fecha de nacimiento',
             'cod_sexo.required'       => 'Es necesario ingresar el sexo',
             'num_tel_fijo.required'   => 'Es necesario ingresar el teléfono fijo',
             'num_tel_mobile.required' => 'Es necesario ingresar el teléfono celular',
+            'cod_esp.required'        => 'Es necesario seleccionar la especialización',
+            'cod_esp_tipo.required'   => 'Es necesario seleccionar tipo de especialización',
+            'cod_modalidad.required'  => 'Es necesario seleccionar la modalidad',
         ];
     }
 }

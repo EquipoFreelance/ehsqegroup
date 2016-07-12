@@ -19,6 +19,13 @@ use Validator;
 class InscriptionController extends Controller
 {
 
+  public function index()
+  {
+      $personas = Persona::all();
+      $data = compact('personas');
+      return view('inscription.index', $data);
+  }
+
   public function create()
   {
 
@@ -80,10 +87,10 @@ class InscriptionController extends Controller
           // Add Matrícula (La matricula esta por defecto inactivo debido a que se debe realizar la validación interna)
           $matricula = new Enrollment();
           $matricula->cod_alumno    = $persona->persona_student()->first()->id;
-          $matricula->cod_modalidad = 1;
-          $matricula->cod_esp_tipo  = 1;
-          $matricula->cod_esp       = 1;
-          $matricula->fecha_inicio  = 1;
+          $matricula->cod_modalidad = $request->get("cod_modalidad");
+          $matricula->cod_esp_tipo  = $request->get("cod_esp_tipo");
+          $matricula->cod_esp       = $request->get("cod_esp");
+          $matricula->fecha_inicio  = '2016-07-12';
           $matricula->activo        = 0;
           $matricula->save();
 

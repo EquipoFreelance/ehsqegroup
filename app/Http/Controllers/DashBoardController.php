@@ -11,9 +11,8 @@ use App\Http\Controllers\Controller;
 use Auth;
 
 use App\Models\Administrativo;
-use App\Persona;
-//use App\User;
-//use App\Models\Profile;
+
+use App\Models\Persona;
 
 class DashBoardController extends Controller
 {
@@ -23,7 +22,9 @@ class DashBoardController extends Controller
 
         // Secretaria Académica
         if(  Auth::user()->cod_role == 2){
-            return view('dashboard.dashboard_sa_index');
+            $personas = Persona::all();
+            $data = compact('personas');
+            return view('inscription.index', $data);
         }
 
 

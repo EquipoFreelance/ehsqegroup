@@ -95,6 +95,7 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
   ]);
 
   /* Rutas asíncronas */
+
   Route::get('/dashboard/json/esp/{modalidad}/{tipo_esp}', [
       'as' => 'json.esp', 'uses' => 'EspecializacionController@getJsonEspToGrupo'
   ]);
@@ -114,13 +115,20 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
       'as' => 'json.districts', 'uses' => 'WebServiceController@wsDistricts'
   ]);
 
+  Route::get('/dashboard/json/esp_tipos',[
+      'as' => 'json.districts', 'uses' => 'WebServiceController@wsEspecializacionTipos'
+  ]);
 
-  ///Route::resource('/dashboard/json/provinces.scope', 'ProvinceController', ['only' => ['index'] ] );
-  //Route::resource('/dashboard/json/districts', 'DistrictController', ['only' => ['index'] ] );
+  Route::get('/dashboard/json/especializaciones/{cod_esp_tipo}',[
+      'as' => 'json.districts', 'uses' => 'WebServiceController@wsEspecializaciones'
+  ]);
 
+  Route::get('/dashboard/json/modalidades',[
+      'as' => 'json.districts', 'uses' => 'WebServiceController@wsModalidades'
+  ]);
 
   // Recursos Suscripción
-  Route::resource('dashboard/inscription', 'InscriptionController', ['only' => ['create','store','show'] ]);
+  Route::resource('dashboard/inscriptions', 'InscriptionController', ['only' => ['create','store','show','index'] ]);
 
 });
 

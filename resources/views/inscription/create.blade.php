@@ -18,7 +18,7 @@
         </div>
         <br>
 
-        {!! Form::open(['route' => 'dashboard.inscription.store', 'class' => 'form-horizontal form-label-left']) !!}
+        {!! Form::open(['route' => 'dashboard.inscriptions.store', 'class' => 'form-horizontal form-label-left']) !!}
 
         @if(Session::has('message'))
         <div class="alert alert-success alert-dismissible fade in" role="alert">
@@ -60,7 +60,7 @@
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_doc_tip">Tipo de Documento</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            {{ Form::select('cod_doc_tip', array('1' => 'DNI', '2' => 'Carnet de Extranjeria'), old('cod_doc_tip'), ['class' => 'form-control'] ) }}
+            {{ Form::select('cod_doc_tip', array('' => '-- Seleccione el tipo de documento --','1' => 'DNI', '2' => 'Carnet de Extranjeria'), old('cod_doc_tip'), ['class' => 'form-control'] ) }}
             @if ($errors->has('cod_doc_tip'))
             <label for="cod_doc_tip" generated="true" class="error">{{ $errors->first('cod_doc_tip') }}</label>
             @endif
@@ -90,9 +90,9 @@
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_dpto">Departamento</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control" name="cod_dpto" id="cod_dpto"><option>-- Seleccione el Departamento --</option></select>
-            @if ($errors->has('direccion'))
-            <label for="num_doc" generated="true" class="error">{{ $errors->first('num_doc') }}</label>
+            <select class="form-control" name="cod_dpto" id="cod_dpto"><option value="">-- Seleccione el Departamento --</option></select>
+            @if ($errors->has('cod_dpto'))
+            <label for="cod_dpto" generated="true" class="error">{{ $errors->first('cod_dpto') }}</label>
             @endif
           </div>
         </div>
@@ -100,9 +100,9 @@
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_prov">Provincia</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control" name="cod_prov" id="cod_prov"><option>-- Seleccione la provincia --</option></select>
-            @if ($errors->has('direccion'))
-            <label for="num_doc" generated="true" class="error">{{ $errors->first('num_doc') }}</label>
+            <select class="form-control" name="cod_prov" id="cod_prov"><option value="">-- Seleccione la provincia --</option></select>
+            @if ($errors->has('cod_prov'))
+            <label for="cod_prov" generated="true" class="error">{{ $errors->first('cod_prov') }}</label>
             @endif
           </div>
         </div>
@@ -110,9 +110,9 @@
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_dist">Distrito</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control" name="cod_dist" id="cod_dist"><option>-- Seleccione el distrito --</option></select>
+            <select class="form-control" name="cod_dist" id="cod_dist"><option value="">-- Seleccione el distrito --</option></select>
             @if ($errors->has('direccion'))
-            <label for="num_doc" generated="true" class="error">{{ $errors->first('num_doc') }}</label>
+            <label for="cod_dist" generated="true" class="error">{{ $errors->first('cod_dist') }}</label>
             @endif
           </div>
         </div>
@@ -140,7 +140,7 @@
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_sexo">Género</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            {{ Form::select('cod_sexo', array('1' => 'Masculino', '2' => 'Femenino'), old('cod_sexo'), ['class' => 'form-control'] ) }}
+            {{ Form::select('cod_sexo', array('' => '-- Seleccione el sexo --','1' => 'Masculino', '2' => 'Femenino'), old('cod_sexo'), ['class' => 'form-control'] ) }}
             @if ($errors->has('cod_sexo'))
             <label for="cod_esp" generated="true" class="error">{{ $errors->first('cod_sexo') }}</label>
             @endif
@@ -148,20 +148,20 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="dni">Teléfono celular</label>
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="num_tel_mobile">Teléfono celular</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
             <input type="text" id="num_tel_mobile" placeholder="Teléfono celular" name="num_tel_mobile"  class="form-control" value="{{ old('num_telefono') }}">
-            @if ($errors->has('num_telefono'))
+            @if ($errors->has('num_tel_mobile'))
             <label for="num_tel_mobile" generated="true" class="error">{{ $errors->first('num_tel_mobile') }}</label>
             @endif
           </div>
         </div>
 
         <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="dni">Teléfono Fijo</label>
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="num_tel_fijo">Teléfono Fijo</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
             <input type="text" id="num_tel_fijo" placeholder="Teléfono fijo" name="num_tel_fijo"  class="form-control" value="{{ old('num_telefono') }}">
-            @if ($errors->has('num_telefono'))
+            @if ($errors->has('num_tel_fijo'))
             <label for="num_tel_fijo" generated="true" class="error">{{ $errors->first('num_tel_fijo') }}</label>
             @endif
           </div>
@@ -170,7 +170,7 @@
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_esp_tipo">Tipo de Especialización</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control" name="cod_esp_tipo"><option>--Seleccione</option></select>
+            <select class="form-control" name="cod_esp_tipo" id="cod_esp_tipo"><option>-- Seleccione el tipo de especialización --</option></select>
             @if ($errors->has('cod_esp_tipo'))
             <label for="cod_esp_tipo" generated="true" class="error">{{ $errors->first('cod_esp_tipo') }}</label>
             @endif
@@ -180,7 +180,7 @@
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_esp">Especialización</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control" name="cod_esp"><option>--Seleccione</option></select>
+            <select class="form-control" name="cod_esp" id="cod_esp"><option value="">-- Seleccione la especialización --</option></select>
             @if ($errors->has('cod_esp'))
             <label for="cod_esp" generated="true" class="error">{{ $errors->first('cod_esp') }}</label>
             @endif
@@ -190,7 +190,7 @@
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_modalidad">Modalidad</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control" name="cod_modalidad"><option>--Seleccione</option></select>
+            <select class="form-control" name="cod_modalidad" id="cod_modalidad"><option value="">-- Seleccione la modalidad --</option></select>
             @if ($errors->has('cod_modalidad'))
             <label for="cod_modalidad" generated="true" class="error">{{ $errors->first('cod_modalidad') }}</label>
             @endif
