@@ -94,7 +94,7 @@ class InscriptionController extends Controller
           $matricula->activo        = 0;
           $matricula->save();
 
-          return redirect()->route('dashboard.inscription.create')
+          return redirect()->route('dashboard.inscriptions.create')
           ->with('message', 'Inscripción realizada satisfactoriamente');
 
       }
