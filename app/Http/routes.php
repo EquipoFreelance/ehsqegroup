@@ -128,7 +128,7 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
   ]);
 
   // Recursos Suscripción
-  Route::resource('dashboard/inscriptions', 'InscriptionController', ['only' => ['create','store','show','index'] ]);
+  Route::resource('dashboard/inscriptions', 'InscriptionController', ['only' => ['create','store','show','index','edit','update'] ]);
 
 });
 

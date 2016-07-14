@@ -1,10 +1,5 @@
 // Functions Javascript for App
 
-// Create Groups
-var group_cod_mod       = $('.group_cod_mod option:selected').val();
-var group_cod_esp_tipo  = $('.group_cod_esp_tipo option:selected').val();
-var group_cod_esp       = $("#cod_esp").attr("data-id");
-
 // Routes
 var routes = {
   ub_departaments : '/dashboard/json/departaments/',
@@ -14,6 +9,12 @@ var routes = {
   especializacion : '/dashboard/json/especializaciones/',
   modalidades     : '/dashboard/json/modalidades'
 };
+
+// Create Groups
+var group_cod_mod       = $('.group_cod_mod option:selected').val();
+var group_cod_esp_tipo  = $('.group_cod_esp_tipo option:selected').val();
+var group_cod_esp       = $("#cod_esp").attr("data-id");
+
 
 $(".group_cod_mod").change(function() {
   group_cod_mod = $(this).val();
@@ -119,11 +120,25 @@ function wsUbigeo(route, element, placeholder){
 }
 
 function setListItems(data, element){
+
+   var attr = $(element).attr("data-id-default");
+
    $.each(JSON.parse(data), function (i, item) {
      $(element).append($('<option>', {
        value: item.id,
        text : item.name
      }));
+
+     // For some browsers, `attr` is undefined; for others, `attr` is false. Check for both.
+     if (typeof attr !== typeof undefined && attr !== false) {
+       if( attr == item.id ){
+         //console.log(element+"-"+attr+"-"+item.id);
+         $(element).val(attr).attr("value", attr).attr("selected", "selected");
+         $(element).change();
+       }
+     }
+
+
    });
    $(element).removeAttr("disabled");
    return false;

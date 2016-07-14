@@ -22,9 +22,9 @@ class DashBoardController extends Controller
 
         // Secretaria Académica
         if(  Auth::user()->cod_role == 2){
-            $personas = Persona::all();
-            $data = compact('personas');
-            return view('inscription.index', $data);
+          $personas = Persona::orderBy('created_at', 'desc')->get();
+          $data = compact('personas');
+          return view('inscription.index', $data);
         }
 
 
