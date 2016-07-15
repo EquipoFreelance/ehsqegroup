@@ -90,6 +90,16 @@
         </div>
 
         <div class="form-group">
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_pais">País</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <select class="form-control" name="cod_pais" id="cod_pais" data-id-default="{{ $persona->cod_pais }}"><option value="">-- Seleccione el País --</option></select>
+            @if ($errors->has('cod_pais'))
+            <label for="cod_pais" generated="true" class="error">{{ $errors->first('cod_pais') }}</label>
+            @endif
+          </div>
+        </div>
+
+        <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_dpto">Departamento</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
             <select class="form-control" name="cod_dpto" id="cod_dpto" data-id-default="{{ $persona->cod_dpto }}"><option value="">-- Seleccione el Departamento --</option></select>
@@ -187,7 +197,7 @@
           <label class="control-label col-md-4 col-sm-4 col-xs-12"></label>
           <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="form-group btncontrol">
-              <a href="{{ route('dashboard.modulo.index') }}" class="btn btn-default">Retornar</a>
+              <a href="{{ route('dashboard.inscriptions.index') }}" class="btn btn-default">Retornar</a>
               <!--<a href="{{ route('dashboard.tesp.index') }}" class="btn btn-danger cancel_btn">Cancelar</a>-->
               <button type="submit" class="btn btn-success">Guardar</button>
             </div>

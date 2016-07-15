@@ -105,7 +105,7 @@ class InscriptionController extends Controller
           $matricula->cod_modalidad = $request->get("cod_modalidad");
           $matricula->cod_esp_tipo  = $request->get("cod_esp_tipo");
           $matricula->cod_esp       = $request->get("cod_esp");
-          $matricula->fecha_inicio  = '2016-07-12';
+          $matricula->fecha_inicio  = $request->get("fecha_inicio");
           $matricula->activo        = 0;
           $matricula->save();
 

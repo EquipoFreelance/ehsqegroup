@@ -90,7 +90,7 @@
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_pais">País</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control" name="cod_pais" id="cod_pais"><option value="1">-- Seleccione el País --</option></select>
+            <select class="form-control" name="cod_pais" id="cod_pais"><option value="">-- Seleccione el País --</option></select>
             @if ($errors->has('cod_pais'))
             <label for="cod_pais" generated="true" class="error">{{ $errors->first('cod_pais') }}</label>
             @endif
@@ -178,6 +178,34 @@
         </div>
 
         <div class="form-group">
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="proteccion_datos">Terminos</label><br>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+              {{ Form::checkbox('proteccion_datos', 1, false) }}
+              {{ Form::label('proteccion_datos', 'Aceptar los terminos y condiciones') }}<br>
+          </div>
+        </div>
+
+
+        <div class="x_title">
+          <h1 style="font-size: 18px">Información de la matricula <small></small></h1>
+          <div class="clearfix"></div>
+        </div>
+        <br>
+
+        <div class="form-group">
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="fecha_inicio">Fecha de Inicio</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <select class="form-control" name="fecha_inicio" id="fecha_inicio">
+                <option value="0">-- Seleccione la fecha de inicio --</option>
+                <option value="2016-07-14">2016-07-14</option>
+            </select>
+            @if ($errors->has('fecha_inicio'))
+            <label for="fecha_inicio" generated="true" class="error">{{ $errors->first('fecha_inicio') }}</label>
+            @endif
+          </div>
+        </div>
+
+        <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_esp_tipo">Tipo de Especialización</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
             <select class="form-control" name="cod_esp_tipo" id="cod_esp_tipo"><option>-- Seleccione el tipo de especialización --</option></select>
@@ -207,21 +235,12 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="proteccion_datos">Terminos</label><br>
-          <div class="col-md-6 col-sm-6 col-xs-12">
-              {{ Form::checkbox('proteccion_datos', 1, false) }}
-              {{ Form::label('proteccion_datos', 'Aceptar los terminos y condiciones') }}<br>
-          </div>
-        </div>
-
-
         <div class="ln_solid"></div>
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12"></label>
           <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="form-group btncontrol">
-              <a href="{{ route('dashboard.modulo.index') }}" class="btn btn-default">Retornar</a>
+              <a href="{{ route('dashboard.inscriptions.index') }}" class="btn btn-default">Retornar</a>
               <!--<a href="{{ route('dashboard.tesp.index') }}" class="btn btn-danger cancel_btn">Cancelar</a>-->
               <button type="submit" class="btn btn-success">Guardar</button>
             </div>

@@ -2,6 +2,7 @@
 
 // Routes
 var routes = {
+  ub_countries    : '/dashboard/json/ub/countries/',
   ub_departaments : '/dashboard/json/departaments/',
   ub_provinces    : '/dashboard/json/provinces/',
   ub_districts    : '/dashboard/json/districts/',
@@ -15,7 +16,6 @@ var group_cod_mod       = $('.group_cod_mod option:selected').val();
 var group_cod_esp_tipo  = $('.group_cod_esp_tipo option:selected').val();
 var group_cod_esp       = $("#cod_esp").attr("data-id");
 
-
 $(".group_cod_mod").change(function() {
   group_cod_mod = $(this).val();
 });
@@ -25,8 +25,12 @@ $(".group_cod_esp_tipo").change(function() {
     ListEspecializaciones('/dashboard/json/esp/'+group_cod_mod+'/'+group_cod_esp_tipo);
 });
 
+wsUbigeo(routes.ub_countries, "#cod_pais", "-- Seleccione el País --");
+
 // Ub Departamentos
-wsUbigeo(routes.ub_departaments+'1', "#cod_dpto", "-- Seleccione el Departamento --");
+$("#cod_pais").change(function(){
+  wsUbigeo(routes.ub_departaments+$(this).val(), "#cod_dpto", "-- Seleccione el Departamento --");
+});
 
 // Ub Pronvincias
 $("#cod_dpto").change(function(){

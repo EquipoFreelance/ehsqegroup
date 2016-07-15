@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\Models\Country;
+
 use App\Models\Departament;
 
 use App\Models\Province;
@@ -20,6 +22,10 @@ use App\Models\Modalidad;
 
 class WebServiceController extends Controller
 {
+    public function wsCountries()
+    {
+      return $departament = Country::select('nom_pais as name', 'id')->get()->toJson();
+    }
 
     public function wsDepartaments($cod_pais)
     {

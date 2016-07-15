@@ -100,6 +100,10 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
       'as' => 'json.esp', 'uses' => 'EspecializacionController@getJsonEspToGrupo'
   ]);
 
+  Route::get('/dashboard/json/ub/countries',[
+      'as' => 'json.countries', 'uses' => 'WebServiceController@wsCountries'
+  ]);
+
   // Ub Departamentos
   Route::get('/dashboard/json/departaments/{cod_pais}',[
       'as' => 'json.departaments', 'uses' => 'WebServiceController@wsDepartaments'
