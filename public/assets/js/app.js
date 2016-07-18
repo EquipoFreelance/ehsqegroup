@@ -25,8 +25,8 @@ $(".group_cod_esp_tipo").change(function() {
     ListEspecializaciones('/dashboard/json/esp/'+group_cod_mod+'/'+group_cod_esp_tipo);
 });
 
-console.log(routes.ub_countries);
-wsUbigeo('/dashboard/json/ub/countries/', "#cod_pais", "-- Seleccione el País --");
+// Ub Países
+wsUbigeo(routes.ub_countries, "#cod_pais", "-- Seleccione el País --");
 
 // Ub Departamentos
 $("#cod_pais").change(function(){
