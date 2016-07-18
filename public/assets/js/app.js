@@ -25,6 +25,7 @@ $(".group_cod_esp_tipo").change(function() {
     ListEspecializaciones('/dashboard/json/esp/'+group_cod_mod+'/'+group_cod_esp_tipo);
 });
 
+console.log(routes.ub_countries);
 wsUbigeo(routes.ub_countries, "#cod_pais", "-- Seleccione el País --");
 
 // Ub Departamentos
@@ -136,7 +137,6 @@ function setListItems(data, element){
      // For some browsers, `attr` is undefined; for others, `attr` is false. Check for both.
      if (typeof attr !== typeof undefined && attr !== false) {
        if( attr == item.id ){
-         //console.log(element+"-"+attr+"-"+item.id);
          $(element).val(attr).attr("value", attr).attr("selected", "selected");
          $(element).change();
        }
@@ -145,5 +145,4 @@ function setListItems(data, element){
 
    });
    $(element).removeAttr("disabled");
-   return false;
 }
