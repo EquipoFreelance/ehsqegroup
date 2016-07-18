@@ -2,7 +2,7 @@
 
 // Routes
 var routes = {
-  ub_countries    : '/dashboard/json/ub/countries/',
+  ub_countries    : '/dashboard/json/ub/countries',
   ub_departaments : '/dashboard/json/departaments/',
   ub_provinces    : '/dashboard/json/provinces/',
   ub_districts    : '/dashboard/json/districts/',
@@ -112,6 +112,7 @@ function wsUbigeo(route, element, placeholder){
      url:route,
      type:'get',
      datatype: 'json',
+     data:{},
      beforeSend: function(){
        $(element).empty();
        DefaultOptionSelect(element, placeholder);
