@@ -112,7 +112,6 @@ function wsUbigeo(route, element, placeholder){
      url:route,
      type:'get',
      datatype: 'json',
-     data:{},
      beforeSend: function(){
        $(element).empty();
        DefaultOptionSelect(element, placeholder);
