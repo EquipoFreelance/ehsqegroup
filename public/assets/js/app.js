@@ -26,7 +26,7 @@ $(".group_cod_esp_tipo").change(function() {
 });
 
 console.log(routes.ub_countries);
-wsUbigeo(routes.ub_countries, "#cod_pais", "-- Seleccione el País --");
+wsUbigeo('/dashboard/json/ub/countries/', "#cod_pais", "-- Seleccione el País --");
 
 // Ub Departamentos
 $("#cod_pais").change(function(){
