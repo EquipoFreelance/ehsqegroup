@@ -59,7 +59,6 @@ if(group_cod_mod != '' && group_cod_esp_tipo != ''){
     $(".group_cod_esp_tipo").trigger("change");
 }
 
-
 /*
   @route string
 */
@@ -145,4 +144,5 @@ function setListItems(data, element){
 
    });
    $(element).removeAttr("disabled");
+   return false;
 }
