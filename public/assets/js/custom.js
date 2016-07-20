@@ -14,7 +14,7 @@ $(function () {
         $LEFT_COL = $('.left_col');
 
     $SIDEBAR_MENU.find('li ul').slideUp();
-    $SIDEBAR_MENU.find('li').removeClass('active');
+    //$SIDEBAR_MENU.find('li').removeClass('active');
 
     $SIDEBAR_MENU.find('li').on('click', function(ev) {
         var link = $('a', this).attr('href');
@@ -90,6 +90,7 @@ $(function () {
 
         $BOX_PANEL.remove();
     });
+
 });
 
 // Right column height

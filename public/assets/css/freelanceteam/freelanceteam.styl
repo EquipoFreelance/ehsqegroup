@@ -33,6 +33,7 @@ body,
 body.nav-md
 	background #edecec
 	color #5e5e5e
+	font-family 'Open Sans', sans-serif
 
 /* SIDE BAR INFORMACION*/
 .img-circle.profile_img
@@ -113,7 +114,8 @@ body.nav-md
 
 body.nav-md .container.body .right_col,
 .main_container .top_nav
-	margin-left 300px
+	margin-left 0px
+	margin-top 54px
 body.nav-md .container.body .col-md-3.left_col,
 .nav_title
 	width 300px
@@ -130,20 +132,16 @@ body.nav-md .container.body .col-md-3.left_col,
 	box-shadow 0px 5px 10px rgba(0, 0, 0, 0.2)
 	border-bottom 0
 	height 55px
-
-body.nav-sm .container.body .left_col,
-body.nav-sm .navbar.nav_title
-	width 0
-	overflow hidden
-body.nav-sm .container.body .right_col,
-body.nav-sm .main_container .top_nav
-	margin-left 0
-
+	position fixed
+	top 0
+	left 0
+	width 100%
+	z-index 999
 
 #menu_toggle
 	//position: absolute;
 	//top: 0px;
-	background #FFF
+	background #f5f5f5
 	height 54px
 	width 55px
 	text-decoration none
@@ -199,7 +197,7 @@ body.nav-sm .main_container .top_nav
 .pace-done.nav-sm #menu_toggle .dev-page-sidebar-collapse-icon .line-three
 	top 31px
 body.nav-md .container.body .right_col
-	padding 30px 20px 0px 20px
+	padding 20px 20px 30px 20px
 .page-title
 	overflow hidden
 	padding 20px 0px
@@ -210,8 +208,8 @@ body.nav-md .container.body .right_col
 .table > tbody > tr th
 	background #304056
 	color #FFF
-	font-size 12px
-	font-weight 600
+	font-size 14px
+	font-weight 300
 	//text-transform uppercase
 	line-height 15px
 	padding 10px
@@ -237,6 +235,7 @@ body.nav-md .container.body .right_col
 .table-bordered>tbody>tr>td .label
 	padding 5px 7px
 	font-size 12px
+	font-weight 400
 
 .page-title h1
 	font-size 22px
@@ -376,22 +375,23 @@ fieldset[disabled] .form-control
 	border-radius: 5px;
 
 .nav-tabs 
-	border-color: #e7ebf1;
+	border-color: #e7ebf1
 
 .nav-tabs > li > a 
-	color: #555555;
-	margin: 0px;
-	border: 0px;
-	border-bottom: 3px solid transparent;
-	-webkit-transition: all 200ms ease;
-	-moz-transition: all 200ms ease;
-	-ms-transition: all 200ms ease;
-	-o-transition: all 200ms ease;
-	transition: all 200ms ease;
-	padding: 15px 20px;
+	color #555555
+	margin 0px
+	border 0px
+	border-bottom 3px solid transparent
+	-webkit-transition all 200ms ease
+	-moz-transition all 200ms ease
+	-ms-transition all 200ms ease
+	-o-transition all 200ms ease
+	transition all 200ms ease
+	padding 15px 20px
 	//text-transform: uppercase;
-	font-weight: 500;
-	position: relative;
+	font-weight 500
+	position relative
+	font-size 14px
 
 .nav-tabs > li > a:hover 
 	border-bottom-color: #e7ebf1;
@@ -832,6 +832,7 @@ fieldset[disabled] .form-control
 .x_panel
 	border none
 	box-shadow 0 1px 1px rgba(0, 0, 0, 0.15)
+	padding 0
 
 
 /** SELECT 2 **/
@@ -956,6 +957,7 @@ div.error a.select2-choice
 /***********************/
 label.error
 	margin 5px 0px 0px
+	font-weight 400
 
 label.error.checked
 	display none !important
@@ -967,3 +969,281 @@ label.error.checked
 /*
 body .col-md-3.left_col
 	height calc(100% - 65px)*/
+
+.y_title
+	border-bottom 1px solid #E6E9ED
+	padding 8px 15px
+	margin-bottom 0px
+	background #222c3c
+
+.y_title h1,
+.y_title h2
+	margin 4px 0px
+	float left
+	display block
+	text-overflow ellipsis
+	overflow hidden
+	white-space nowrap
+	font-weight 300
+	color #FFFFFF
+
+.y_title h1 small,
+.y_title h2 small
+	margin-left 10px
+.alert
+	margin-bottom 10px
+	
+form .alert
+	margin-left 10px
+	margin-right 10px
+form .alert.fade
+	display none
+form .alert.fade.in
+	display block
+.alert i.fa
+	font-size 25px
+	vertical-align middle
+	display inline-block
+	margin-right 10px
+/*******************/
+.alert-success
+	color #597151
+	background-color #def2d6
+	border-color #b0cca5
+.alert-success i.fa
+	color #5a7052
+/*******************/
+.alert-info
+	color #447eaf
+	background-color #cde8f6
+	border-color #84bfe1
+.alert-info i.fa
+	color #447eaf
+/******************/
+.alert-warning
+	color #96722e
+	background-color #f8f4d5
+	border-color #ded591
+.alert-warning i.fa
+	color #96722e
+/******************/
+.alert-danger
+	color #b4302b
+	background-color #ecc8c5
+	border-color #c68e8d
+.alert-danger i.fa
+	color #b4302b	
+
+.form-control.error,
+.form-control.error:focus
+	border-color #ab3c3c !important
+
+.y_title h2 .fa
+	border-radius 100%
+	background #465973
+	width 30px
+	height 30px
+	padding-top 7px
+	color #FFF
+	margin-right 6px
+	text-align center
+
+.x_content
+	padding 20px 15px
+
+.x_title
+	border-bottom: 1px solid #DDDCDC
+	padding 15px
+	margin-bottom 0
+	background #FFFF
+
+table > tbody > tr > td > .btn
+	padding 2px 12px
+
+.logo-content a
+	float left
+	width 150px
+	display inline-block
+	padding 15px 5px
+	height 54px
+.logo-content img
+	width 71%
+	height auto
+	margin-top -5px
+
+/***********************************************/
+
+#sidebar
+	position fixed
+	background #304056
+	box-shadow 0 0 10px rgba(51, 51, 51, 0.38)
+	top 54px
+	//height calc(100% - 54px)
+	height 900px
+	z-index 900
+	width 291px
+	overflow hidden
+	-webkit-transition all
+	-o-transition all
+	transition all
+	-webkit-transition-duration 300ms
+	transition-duration 300ms
+	/*-webkit-transform translate3d(0, 0, 0)
+	transform translate3d(0, 0, 0)
+	opacity 1*/
+	
+	-webkit-transform: translate3d(-291px, 0, 0)
+	transform translate3d(-291px, 0, 0)
+	opacity 0
+
+body.nav-sm #sidebar
+	-webkit-transform: translate3d(-291px, 0, 0)
+	transform translate3d(-291px, 0, 0)
+	opacity 0
+	
+body.nav-sm .container.body .right_col,
+body.nav-sm .main_container .top_nav
+	margin-left 0
+
+.avatar-view
+	height 100%
+	width 100%
+	margin-bottom 10px
+
+.w100
+	width 100%
+
+.dinline
+	display inline-block
+
+.form_content_block
+	width 100%
+	margin 0 auto
+	position relative
+
+.date_content
+	position relative
+.date_content .form-control-feedback.left
+	border-right 1px solid #ccc
+	left 0
+	margin 0
+	top 1px
+	height 32px
+	line-height 32px
+
+.date_content .form-control
+	padding-left 45px
+
+.table.dtp-picker-days > thead > tr th, 
+.table.dtp-picker-days > tbody > tr th
+	background transparent
+	border-top none !important
+	border-bottom 2px solid #ddd
+.table.dtp-picker-days
+	text-transform uppercase
+
+/*** ANIMATE FOMR TYPE LOGIN ****/
+.divanimate
+	position absolute
+	top 0px
+	width 100%
+
+.divanimate.m1
+	z-index 22
+.divanimate.m2
+	z-index 21
+	opacity 0
+	width 100%
+
+#asignadarcursos:target ~ .container .m1, 
+#editarcursos:target ~ .container .m2
+	z-index 22
+	-webkit-animation-name fadeInLeft
+	-moz-animation-name fadeInLeft
+	-ms-animation-name fadeInLeft
+	-o-animation-name fadeInLeft
+	animation-name fadeInLeft
+	-webkit-animation-delay .1s
+	-moz-animation-delay .1s
+	-o-animation-delay .1s
+	-ms-animation-delay .1s
+	animation-delay .1s
+
+#asignadarcursos:target ~ .container .m2, 
+#editarcursos:target ~ .container .m1
+	-webkit-animation-name fadeOutLeft
+	-moz-animation-name fadeOutLeft
+	-ms-animation-name fadeOutLeft
+	-o-animation-name fadeOutLeft
+	animation-name fadeOutLeft
+
+.dt-buttons.btn-group
+	margin-bottom 10px
+
+.nav>li>a
+	padding 11px 15px 12px
+
+.content_grafica
+	padding 20px 0px 10px 0px
+	
+.box_a,
+.box_b
+	float left
+
+.box_b
+	font-size 16px
+
+.box_a
+	width 60%
+.box_b
+	width 40%
+
+.fa-square.ta:before
+	color #3498DB
+.fa-square.tf:before
+	color #E74C3C
+
+.mcdf
+	padding 2px 10px
+
+.mcdf h2
+	font-size 14px
+	font-weight 400
+	margin 15px 0px
+
+@media print
+	header nav, footer, title
+		display none
+	#headprint
+		display block !important
+
+@media (min-width: 1200px)
+	.form_content_block
+		width 800px
+
+@media (max-width: 1200px)
+	body.nav-sm #sidebar
+		-webkit-transform translate3d(0, 0, 0)
+		transform translate3d(0, 0, 0)
+		opacity 1
+		box-shadow 0 1px 1px rgba(0, 0, 0, 0.15)
+
+@media (min-width: 1200px)
+	body #sidebar
+		-webkit-transform translate3d(0, 0, 0)
+		transform translate3d(0, 0, 0)
+		opacity 1
+		box-shadow 0 1px 1px rgba(0, 0, 0, 0.15)
+
+	body.nav-md .container.body .right_col
+		margin-left 291px
+
+@media (max-width: 768px)
+	
+	.box_a,
+	.box_b
+		width 100%
+		float none
+	.box_b
+		font-size 14px
+		padding-top 15px
