@@ -1,4 +1,4 @@
-@extends('layouts.app_internas')
+@extends('layouts.app_internas_forms')
 
 @section('title', 'Dashboard - Secretaria Académica Módulos')
 
@@ -12,11 +12,12 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
       <br>
       <div class="x_panel">
-        <div class="x_title">
-          <h1 style="font-size: 18px">Ficha de inscripción <small></small></h1>
-          <div class="clearfix"></div>
+        <div class="y_title">
+           <h2><i class="fa fa-edit"></i> Aumnos Inscritos</h2>
+           <div class="clearfix"></div>
         </div>
         <br>
+        <div class="x_content">
 
         {!! Form::model($persona, [ 'method' => 'PUT', 'route' => ['dashboard.inscriptions.update', $persona->id], 'class' => 'form-horizontal form-label-left' ]) !!}
 
@@ -194,16 +195,17 @@
 
         <div class="ln_solid"></div>
         <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12"></label>
-          <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="col-md-12" style="float: right">
             <div class="form-group btncontrol">
-              <a href="{{ route('dashboard.inscriptions.index') }}" class="btn btn-default">Retornar</a>
-              <!--<a href="{{ route('dashboard.tesp.index') }}" class="btn btn-danger cancel_btn">Cancelar</a>-->
-              <button type="submit" class="btn btn-success">Guardar</button>
+              <a href="{{ route('dashboard.inscriptions.index') }}" class="btn btn-5 btn-5a icon-return return"><span>Retornar</span></a>
+              <button type="submit" class="btn btn-5 btn-5a icon-save save"><span>Guardar</span></button>
             </div>
           </div>
         </div>
         {!! Form::close() !!}
+
+      </div>
+
       </div>
     </div>
   </div>

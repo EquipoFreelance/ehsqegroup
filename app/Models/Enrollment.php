@@ -12,7 +12,26 @@ class Enrollment extends Model
     // Matricula - Estudiantes
     public function student()
     {
-      $this->belongsTo("App\Models\Student", "cod_alumno", "id");
+      return $this->belongsTo("App\Models\Student", "cod_alumno", "id");
     }
+
+    // Matricula - Tipo de Expecialización
+    public function type_specialization()
+    {
+      return $this->belongsTo("App\Models\EspecializacionTipo", "cod_esp_tipo", "id");
+    }
+
+    // Matricula - Expecialización
+    public function specialization()
+    {
+      return $this->belongsTo("App\Models\Especializacion", "cod_esp", "id");
+    }
+
+    // Matricula - Modalidad
+    public function modality()
+    {
+      return $this->belongsTo("App\Models\Modalidad", "cod_modalidad", "id");
+    }
+
 
 }

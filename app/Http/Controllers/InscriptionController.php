@@ -22,9 +22,13 @@ class InscriptionController extends Controller
 
   public function index()
   {
-      $personas = Persona::orderBy('created_at', 'asc')->get();
+      /*$personas = Persona::orderBy('created_at', 'asc')->get();
       $data = compact('personas');
-      return view('inscription.index', $data);
+      */
+      return view('inscription.index');
+      //$enrollment = Enrollment::where("fecha_inicio", "2016-07-12")->with('student')->with('student.persona')->get();
+      //return $enrollment->toJSON();
+
   }
 
   public function create()
@@ -186,5 +190,6 @@ class InscriptionController extends Controller
     }
 
   }
+
 
 }

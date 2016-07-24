@@ -23,9 +23,6 @@
   <link href="{{ URL::asset('assets/css/freelanceteam/component.css') }}" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,300,700,800' rel='stylesheet' type='text/css'>
 
-
-
-
   <!--[if lt IE 9]>
   <script src="../assets/js/ie8-responsive-file-warning.js') }}"></script>
   <![endif]-->
@@ -98,7 +95,7 @@
 
       <!-- page content -->
       <div class="right_col" role="main">
-        <div class="">
+        <div class="form_content_block">
           @yield('content')
         </div>
       </div>
@@ -115,7 +112,6 @@
 
 <!-- bootstrap progress js -->
 <script src="{{ URL::asset('assets/js/progressbar/bootstrap-progressbar.min.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
 
 <!-- icheck -->
 <script src="{{ URL::asset('assets/js/icheck/icheck.min.js') }}"></script>
@@ -143,15 +139,13 @@
 <script src="{{ URL::asset('assets/js/datatables/dataTables.scroller.min.js') }}"></script>
 
 <!-- Javascript - App -->
-<script src="{{ URL::asset('assets/js/app-templates-js.js') }}"></script>
 <script src="{{ URL::asset('assets/js/app.js') }}"></script>
-
 
 <!-- pace -->
 <script src="{{ URL::asset('assets/js/pace/pace.min.js') }}"></script>
 <script>
 //DATATABE GENERADOR
-/*$('#datatable-responsive').DataTable({
+$('#datatable-responsive').DataTable({
 
   "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
   "language":
@@ -182,7 +176,7 @@
       text:"Imprimir",
       className: "btn btn-5 btn-5a icon-print print"
     }],
-  });*/
+  });
 
   </script>
 

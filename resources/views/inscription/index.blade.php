@@ -7,6 +7,40 @@
 @stop
 
 @section('content')
+  <!-- Custom Templates -->
+  <script id="response-template" type="text/x-handlebars-template">
+    @{{#each response}}
+      <tr>
+        <td>@{{id}}</td>
+        <td>@{{created_at}}</td>
+        <td>@{{student.persona.num_doc}}</td>
+        <td>@{{student.persona.nombre}} @{{student.persona.ape_pat}} @{{student.persona.ape_mat}}</td>
+        <td>
+            @{{#each student.persona.persona_correos}}
+              @{{ correo }}
+            @{{/each}}
+        </td>
+        <td>
+          @{{#each student.persona.persona_telefonos}}
+            @{{ num_telefono }}
+          @{{/each}}
+        </td>
+        <td>@{{ type_specialization.nom_esp_tipo }} / @{{ specialization.nom_esp }}</td>
+        <td>@{{ modality.nom_mod }}</td>
+        <td>
+          @{{#validate activo 1}}
+            <span class="label label-success">Matriculado</span>
+          @{{else}}
+            <span class="label label-danger">Por Matricular</span>
+          @{{/validate}}
+        </td>
+        <td>
+          <a href="#" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>
+        </td>
+      </tr>
+    @{{/each}}
+  </script>
+
   <div class="page-title">
     @if(Session::has('message'))
         <div class="alert alert-info">
@@ -22,53 +56,45 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
       <div class="x_panel">
 
-        <a href="{{ route('dashboard.inscriptions.create') }}" class="btn btn-success">Agregar</a>
-        <div class="ln_solid"></div>
+        <div class="x_title">
+            <a href="{{ route('dashboard.inscriptions.create') }}" class="btn btn-5 btn-5a icon-add add"><span>Agregar</span></a>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_title">
+            <form class="form-inline">
+              <div class="form-group">
+                  <label>Fecha de inicio: </label>
+                  <select class="form-control" name="fecha_inicio" id="fecha_inicio">
+                    <option value="-">Mostrar Toda la lista</option>
+                    <option value="2016-07-16">2016-07-16</option>
+                    <option value="2016-07-12">2016-07-12</option>
+                  </select>
+                </div>
+            </form>
+            <div class="clearfix"></div>
+        </div>
         <div class="x_content">
           <table id="datatable-responsive" class="table table-stripedx table-borderedx dt-responsive nowrap" cellspacing="0" width="100%">
             <thead>
               <tr>
                 <th>Id</th>
-                <th>Fecha de registro</th>
+                <th>Fecha</th>
                 <th>DNI</th>
-                <th>Nombres</th>
-                <th>Apellidos</th>
+                <th>Nombres Apellidos</th>
                 <th>Correos</th>
                 <th>Teléfonos</th>
+                <th>Tipo / Especialización</th>
                 <th>Modalidad</th>
+                <th>Estado</th>
                 <th></th>
               </tr>
             </thead>
-            <tbody>
-              @foreach ($personas as $persona)
+            <tbody class="items">
 
-                  <tr data-id="{{ $persona->id }}">
-                    <td>{{ $persona->id }}</td>
-                    <td>{{ $persona->created_at }}</td>
-                    <td>{{ $persona->num_doc }}</td>
-                    <td>{{ $persona->nombre }}</td>
-                    <td>{{ $persona->ape_pat." ".$persona->ape_mat }}</td>
-                    <td>
-                      @foreach ($persona->persona_correos()->get() as $correo)
-                        {{ $correo->correo }}
-                      @endforeach
-                    </td>
-                    <td>
-                      @foreach ($persona->persona_telefonos()->get() as $telefono)
-                        {{ $telefono->num_telefono }}
-                      @endforeach
-                    </td>
-                    <td>
-                      <span class="label @if($persona->activo == '1') label-success @else label-danger @endif ">
-                        @if($persona->activo == '1') Activo @else No Activo @endif
-                      </span>
-                    </td>
-                    <td><a href="{{ route('dashboard.inscriptions.edit', $persona->id) }}" class="btn btn-link">Editar</a></td>
-                  </tr>
-              @endforeach
             </tbody>
           </table>
         </div>
+
       </div>
     </div>
     <!-- FINAL TABLA FINAL -->

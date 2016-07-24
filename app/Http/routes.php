@@ -75,6 +75,9 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
   // Administrador de talleres
   Route::resource('/dashboard/taller', 'TallerController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
+  // Recursos Suscripción
+  Route::resource('dashboard/inscriptions', 'InscriptionController', ['only' => ['create','store','show','index','edit','update'] ]);
+
   /* -- Routes - Personalizados -- */
 
   // Administrador de Horarios
@@ -94,7 +97,7 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
     'as' => 'dashboard.grupo.horario.edit', 'uses' => 'HorarioController@edit'
   ]);
 
-  /* Rutas asíncronas */
+  /* -- Rutas asíncronas -- */
 
   Route::get('/dashboard/json/esp/{modalidad}/{tipo_esp}', [
       'as' => 'json.esp', 'uses' => 'EspecializacionController@getJsonEspToGrupo'
@@ -119,20 +122,26 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
       'as' => 'json.districts', 'uses' => 'WebServiceController@wsDistricts'
   ]);
 
+  // Tipo de Especializaciones
   Route::get('/dashboard/json/esp_tipos',[
-      'as' => 'json.districts', 'uses' => 'WebServiceController@wsEspecializacionTipos'
+      'as' => 'json.esp_tipos', 'uses' => 'WebServiceController@wsEspecializacionTipos'
   ]);
 
+  // Especializaciones
   Route::get('/dashboard/json/especializaciones/{cod_esp_tipo}',[
-      'as' => 'json.districts', 'uses' => 'WebServiceController@wsEspecializaciones'
+      'as' => 'json.especializaciones', 'uses' => 'WebServiceController@wsEspecializaciones'
   ]);
 
+  // Modalidades
   Route::get('/dashboard/json/modalidades',[
-      'as' => 'json.districts', 'uses' => 'WebServiceController@wsModalidades'
+      'as' => 'json.modalidades', 'uses' => 'WebServiceController@wsModalidades'
   ]);
 
-  // Recursos Suscripción
-  Route::resource('dashboard/inscriptions', 'InscriptionController', ['only' => ['create','store','show','index','edit','update'] ]);
+  // Enrollments
+  Route::get('/dashboard/json/enrollments/{fecha_inicio}',[
+      'as' => 'json.enrollments', 'uses' => 'WebServiceController@wsEnrollments'
+  ]);
+
 
 });
 

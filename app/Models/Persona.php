@@ -36,7 +36,7 @@ class Persona extends Model
     // Una persona puede tener de uno a muchos correos
     public function persona_correos()
     {
-        return $this->hasMany('App\Models\PersonaCorreo', 'cod_persona', 'id');
+      return $this->hasMany('App\Models\PersonaCorreo', 'cod_persona', 'id');
     }
 
     // Una persona puede tener de uno a muchos teléfonos
