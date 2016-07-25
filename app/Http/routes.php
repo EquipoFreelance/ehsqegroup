@@ -153,6 +153,10 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
       'as' => 'json.students.all', 'uses' => 'WebServiceController@wsStudent'
   ]);
 
+  Route::get('/hsqegroup/api/students/search/{q}',[
+      'as' => 'json.students.all', 'uses' => 'WebServiceController@wsStudentLike'
+  ]);
+
 });
 
 // Sistema Docentes

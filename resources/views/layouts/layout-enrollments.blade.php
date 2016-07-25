@@ -11,6 +11,8 @@
   <link href="{{ URL::asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
   <link href="{{ URL::asset('assets/fonts/css/font-awesome.min.css')}}" rel="stylesheet">
   <link href="{{ URL::asset('assets/css/animate.min.css')}}" rel="stylesheet">
+  <link href="{{ URL::asset('assets/css/select/select2.min.css')}}" rel="stylesheet">
+
   <!-- Custom styling plus plugins -->
   <link href="{{ URL::asset('assets/css/custom.css') }}" rel="stylesheet">
   <link href="{{ URL::asset('assets/css/icheck/flat/green.css') }}" rel="stylesheet">
@@ -129,6 +131,9 @@
   <script src="{{ URL::asset('assets/js/datatables/dataTables.responsive.min.js') }}"></script>
   <script src="{{ URL::asset('assets/js/datatables/responsive.bootstrap.min.js') }}"></script>
   <script src="{{ URL::asset('assets/js/datatables/dataTables.scroller.min.js') }}"></script>
+
+  <script src="{{ URL::asset('assets/js/bootstrap-filestyle.min.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/select/select2.full.js') }}"></script>
 
   <!-- Javascript - App -->
   @yield('custom_js')

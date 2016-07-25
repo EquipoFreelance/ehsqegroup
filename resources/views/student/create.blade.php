@@ -91,7 +91,7 @@
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_pais">País</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control" name="cod_pais" id="cod_pais"><option value="">-- Seleccione el País --</option></select>
+            <select class="form-control" name="cod_pais" id="cod_pais" data-id-default="{{ old('cod_pais') }}"><option value="">-- Seleccione el País --</option></select>
             @if ($errors->has('cod_pais'))
             <label for="cod_pais" generated="true" class="error">{{ $errors->first('cod_pais') }}</label>
             @endif
@@ -101,7 +101,7 @@
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_dpto">Departamento</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control" name="cod_dpto" id="cod_dpto"><option value="">-- Seleccione el Departamento --</option></select>
+            <select class="form-control" name="cod_dpto" id="cod_dpto" data-id-default="{{ old('cod_dpto') }}"><option value="">-- Seleccione el Departamento --</option></select>
             @if ($errors->has('cod_dpto'))
             <label for="cod_dpto" generated="true" class="error">{{ $errors->first('cod_dpto') }}</label>
             @endif
@@ -111,7 +111,7 @@
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_prov">Provincia</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control" name="cod_prov" id="cod_prov"><option value="">-- Seleccione la provincia --</option></select>
+            <select class="form-control" name="cod_prov" id="cod_prov" data-id-default="{{ old('cod_prov') }}"><option value="">-- Seleccione la provincia --</option></select>
             @if ($errors->has('cod_prov'))
             <label for="cod_prov" generated="true" class="error">{{ $errors->first('cod_prov') }}</label>
             @endif
@@ -121,7 +121,7 @@
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_dist">Distrito</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control" name="cod_dist" id="cod_dist"><option value="">-- Seleccione el distrito --</option></select>
+            <select class="form-control" name="cod_dist" id="cod_dist" data-id-default="{{ old('cod_dist') }}"><option value="">-- Seleccione el distrito --</option></select>
             @if ($errors->has('direccion'))
             <label for="cod_dist" generated="true" class="error">{{ $errors->first('cod_dist') }}</label>
             @endif

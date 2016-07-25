@@ -13,9 +13,9 @@
       @{{#each response}}
         <tr>
           <td>@{{id}}</td>
-          <td>@{{created_at}}</td>
-          <td>@{{student.persona.num_doc}}</td>
-          <td>@{{student.persona.nombre}} @{{student.persona.ape_pat}} @{{student.persona.ape_mat}}</td>
+          <td>@{{ created_at}}</td>
+          <td>@{{ student.persona.num_doc}}</td>
+          <td>@{{ student.persona.nombre}} @{{student.persona.ape_pat}} @{{student.persona.ape_mat}}</td>
           <td>@{{ student.persona.correo }}</td>
           <td>@{{ student.persona.num_phone  }} / @{{ student.persona.num_cellphone }}</td>
           <td>@{{ type_specialization.nom_esp_tipo }} / @{{ specialization.nom_esp }}</td>
@@ -50,7 +50,7 @@
         <div class="x_panel">
 
           <div class="x_title">
-              <a href="{{ route('dashboard.inscription.create') }}" class="btn btn-5 btn-5a icon-add add"><span>Agregar</span></a>
+              <a href="{{ route('dashboard.enrollment.create') }}" class="btn btn-5 btn-5a icon-add add"><span>Agregar</span></a>
               <div class="clearfix"></div>
           </div>
           <div class="x_title">

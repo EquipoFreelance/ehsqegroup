@@ -124,9 +124,7 @@ class WebServiceController extends Controller
                 ->with('specialization')
                 ->with('modality')
                 ->with('student')
-                ->with('student.persona')
-                ->with('student.persona.persona_correos')
-                ->with('student.persona.persona_telefonos')->orderBy('created_at', 'desc')->get();
+                ->with('student.persona')->orderBy('created_at', 'desc')->get();
 
                 $response = response()->json(["response" => $enrollment->toArray()], 200);
 
@@ -141,9 +139,7 @@ class WebServiceController extends Controller
             ->with('specialization')
             ->with('modality')
             ->with('student')
-            ->with('student.persona')
-            ->with('student.persona.persona_correos')
-            ->with('student.persona.persona_telefonos')->orderBy('created_at', 'desc')->get();
+            ->with('student.persona')->orderBy('created_at', 'desc')->get();
 
             $response = response()->json(["response" => $enrollment->toArray()], 200);
         }
@@ -161,10 +157,22 @@ class WebServiceController extends Controller
 
     public function wsStudent()
     {
-        $students = Student::with('persona')
-        ->with('persona.persona_correos')
-        ->with('persona.persona_telefonos')->orderBy('created_at', 'desc')->get();
+        $students = Student::with('persona')->orderBy('created_at', 'desc')->get();
         $response = response()->json(["response" => $students->toArray()], 200);
         return $response;
     }
+
+    public function wsStudentLike($q)
+    {
+
+        $students = Student::with('persona')->whereHas('persona', function ($query) use($q) {
+            $query->where('nombre', 'LIKE', '%'. $q .'%');
+        })->get();
+
+        $response = response()->json(["items" => $students->toArray()], 200);
+
+        return $response;
+    }
+
+
 }

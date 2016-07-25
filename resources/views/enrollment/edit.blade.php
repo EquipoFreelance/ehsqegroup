@@ -14,7 +14,7 @@
       <br>
       <div class="x_panel">
         <div class="y_title">
-           <h2><i class="fa fa-edit"></i> Actualizar Matricula</h2>
+           <h2><i class="fa fa-edit"></i> Editar Matricula</h2>
            <div class="clearfix"></div>
         </div>
         <br>
@@ -38,7 +38,7 @@
               <option value="2016-07-12">2016-07-12</option>
             </select>
             @if ($errors->has('fecha_inicio'))
-            <label for="cod_modalidad" generated="true" class="error">{{ $errors->first('cod_modalidad') }}</label>
+            <label for="cod_modalidad" generated="true" class="error">{{ $errors->first('fecha_inicio') }}</label>
             @endif
           </div>
         </div>
