@@ -75,8 +75,14 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
   // Administrador de talleres
   Route::resource('/dashboard/taller', 'TallerController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
-  // Recursos Suscripción
-  Route::resource('dashboard/inscriptions', 'InscriptionController', ['only' => ['create','store','show','index','edit','update'] ]);
+  // Resources Students
+  Route::resource('dashboard/student', 'StudentController', ['only' => ['create','store','show','index','edit','update'] ]);
+
+  // Recursos de Inscripciones
+  Route::resource('dashboard/inscription', 'InscriptionController', ['only' => ['create','store','show','index','edit','update'] ]);
+
+  // Recursos Enrollments
+  Route::resource('dashboard/enrollment', 'EnrollmentController', ['only' => ['create','store','show','index','edit','update'] ]);
 
   /* -- Routes - Personalizados -- */
 
@@ -142,6 +148,10 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
       'as' => 'json.enrollments', 'uses' => 'WebServiceController@wsEnrollments'
   ]);
 
+  // Students
+  Route::get('/hsqegroup/api/students',[
+      'as' => 'json.students.all', 'uses' => 'WebServiceController@wsStudent'
+  ]);
 
 });
 

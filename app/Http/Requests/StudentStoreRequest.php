@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class InscriptionUpdateRequest extends Request
+class StudentStoreRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -40,6 +40,7 @@ class InscriptionUpdateRequest extends Request
         'num_cellphone'  => 'required',
         'num_phone'      => 'required',
         'proteccion_datos' => 'required'
+
       ];
     }
 

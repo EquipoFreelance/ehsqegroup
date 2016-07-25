@@ -1,4 +1,4 @@
-@extends('layouts.app_internas')
+@extends('layouts.layout-student')
 
 @section('title', 'Dashboard - Secretaria Académica Módulos')
 
@@ -7,18 +7,19 @@
 @stop
 
 @section('content')
+<div class="form_content_block">
   <div class="clearfix"></div>
   <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
       <br>
       <div class="x_panel">
-        <div class="x_title">
-          <h1 style="font-size: 18px">Ficha de inscripción <small></small></h1>
-          <div class="clearfix"></div>
+        <div class="y_title">
+           <h2><i class="fa fa-edit"></i> Ficha de Alumno</h2>
+           <div class="clearfix"></div>
         </div>
         <br>
 
-        {!! Form::open(['route' => 'dashboard.inscriptions.store', 'class' => 'form-horizontal form-label-left']) !!}
+        {!! Form::open(['route' => 'dashboard.inscription.store', 'class' => 'form-horizontal form-label-left']) !!}
 
         @if(Session::has('message'))
         <div class="alert alert-success alert-dismissible fade in" role="alert">
@@ -140,7 +141,10 @@
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nom_corto">Fecha de nacimiento</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <input type="text" id="fe_nacimiento" placeholder="Fecha de nacimiento" name="fe_nacimiento"  class="form-control" value="{{ old('fe_nacimiento') }}">
+            <div class="date_content">
+              <input type="text" id="fe_nacimiento" placeholder="Fecha de nacimiento" name="fe_nacimiento"  class="form-control form-control has-feedback-left calendar" value="{{ old('fe_nacimiento') }}">
+              <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+            </div>
             @if ($errors->has('direccion'))
             <label for="fe_nacimiento" generated="true" class="error">{{ $errors->first('fe_nacimiento') }}</label>
             @endif
@@ -160,9 +164,9 @@
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="num_tel_mobile">Teléfono celular</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <input type="text" id="num_tel_mobile" placeholder="Teléfono celular" name="num_tel_mobile"  class="form-control" value="{{ old('num_telefono') }}">
-            @if ($errors->has('num_tel_mobile'))
-            <label for="num_tel_mobile" generated="true" class="error">{{ $errors->first('num_tel_mobile') }}</label>
+            <input type="text" id="num_cellphone" placeholder="Teléfono celular" name="num_cellphone" class="form-control" value="{{ old('num_cellphone') }}">
+            @if ($errors->has('num_cellphone'))
+            <label for="num_cellphone" generated="true" class="error">{{ $errors->first('num_cellphone') }}</label>
             @endif
           </div>
         </div>
@@ -170,68 +174,20 @@
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="num_tel_fijo">Teléfono Fijo</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <input type="text" id="num_tel_fijo" placeholder="Teléfono fijo" name="num_tel_fijo"  class="form-control" value="{{ old('num_telefono') }}">
-            @if ($errors->has('num_tel_fijo'))
-            <label for="num_tel_fijo" generated="true" class="error">{{ $errors->first('num_tel_fijo') }}</label>
+            <input type="text" id="num_phone" placeholder="Teléfono fijo" name="num_phone" class="form-control" value="{{ old('num_phone')  }}">
+            @if ($errors->has('num_phone'))
+            <label for="num_phone" generated="true" class="error">{{ $errors->first('num_phone') }}</label>
             @endif
           </div>
         </div>
 
         <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="proteccion_datos">Terminos</label><br>
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="proteccion_datos">Acepta los terminos y condiciones</label><br>
           <div class="col-md-6 col-sm-6 col-xs-12">
               {{ Form::checkbox('proteccion_datos', 1, false) }}
-              {{ Form::label('proteccion_datos', 'Aceptar los terminos y condiciones') }}<br>
-          </div>
-        </div>
-
-
-        <div class="x_title">
-          <h1 style="font-size: 18px">Información de la matricula <small></small></h1>
-          <div class="clearfix"></div>
-        </div>
-        <br>
-
-        <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="fecha_inicio">Fecha de Inicio</label>
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control" name="fecha_inicio" id="fecha_inicio">
-                <option value="0">-- Seleccione la fecha de inicio --</option>
-                <option value="2016-07-14">2016-07-14</option>
-            </select>
-            @if ($errors->has('fecha_inicio'))
-            <label for="fecha_inicio" generated="true" class="error">{{ $errors->first('fecha_inicio') }}</label>
-            @endif
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_esp_tipo">Tipo de Especialización</label>
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control" name="cod_esp_tipo" id="cod_esp_tipo"><option>-- Seleccione el tipo de especialización --</option></select>
-            @if ($errors->has('cod_esp_tipo'))
-            <label for="cod_esp_tipo" generated="true" class="error">{{ $errors->first('cod_esp_tipo') }}</label>
-            @endif
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_esp">Especialización</label>
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control" name="cod_esp" id="cod_esp"><option value="">-- Seleccione la especialización --</option></select>
-            @if ($errors->has('cod_esp'))
-            <label for="cod_esp" generated="true" class="error">{{ $errors->first('cod_esp') }}</label>
-            @endif
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_modalidad">Modalidad</label>
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control" name="cod_modalidad" id="cod_modalidad"><option value="">-- Seleccione la modalidad --</option></select>
-            @if ($errors->has('cod_modalidad'))
-            <label for="cod_modalidad" generated="true" class="error">{{ $errors->first('cod_modalidad') }}</label>
-            @endif
+              @if ($errors->has('proteccion_datos'))
+              <label for="proteccion_datos" generated="true" class="error">{{ $errors->first('proteccion_datos') }}</label>
+              @endif
           </div>
         </div>
 
@@ -240,9 +196,8 @@
           <label class="control-label col-md-4 col-sm-4 col-xs-12"></label>
           <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="form-group btncontrol">
-              <a href="{{ route('dashboard.inscriptions.index') }}" class="btn btn-default">Retornar</a>
-              <!--<a href="{{ route('dashboard.tesp.index') }}" class="btn btn-danger cancel_btn">Cancelar</a>-->
-              <button type="submit" class="btn btn-success">Guardar</button>
+              <a href="{{ route('dashboard.inscription.index') }}" class="btn btn-5 btn-5a icon-return return"><span>Retornar</span></a>
+              <button type="submit" class="btn btn-5 btn-5a icon-save save"><span>Guardar</span></button>
             </div>
           </div>
         </div>
@@ -250,4 +205,11 @@
       </div>
     </div>
   </div>
+</div>
+@stop
+
+
+@section('custom_js')
+  <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/app-students.js') }}"></script>
 @stop

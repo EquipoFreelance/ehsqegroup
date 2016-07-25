@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Requests\InscriptionStoreRequest;
-use App\Http\Requests\InscriptionUpdateRequest;
+use App\Http\Requests\StudentStoreRequest;
+use App\Http\Requests\StudentUpdateRequest;
 
 use App\Models\Persona;
 use App\Models\PersonaCorreo;
@@ -17,19 +17,19 @@ use App\Models\Enrollment;
 
 use Validator;
 
-class InscriptionController extends Controller
+class StudentController extends Controller
 {
 
   public function index()
   {
-      return view('inscription.index');
+      return view('student.index');
   }
 
   public function create()
   {
 
     $data = array();
-    return view('inscription.create', $data);
+    return view('student.create', $data);
 
   }
 
@@ -44,11 +44,11 @@ class InscriptionController extends Controller
 
     $student = Student::with('persona.persona_correos')->with('persona.persona_telefonos')->find($id);
     $data = compact('student');
-    return view('inscription.edit', $data);
+    return view('student.edit', $data);
 
   }
 
-  public function store(InscriptionStoreRequest $request)
+  public function store(StudentStoreRequest $request)
   {
 
     $persona = new Persona(array(
@@ -77,12 +77,12 @@ class InscriptionController extends Controller
       $student->cod_sede    = 1;
       $student->activo      = 1;
       $student->save();
-      return redirect()->route('dashboard.inscription.edit', $student->id)
+      return redirect()->route('dashboard.student.edit', $student->id)
       ->with('message', 'La Persona fue registrada como alumnos');
     }
   }
 
-  public function update(InscriptionUpdateRequest $request, $id)
+  public function update(StudentUpdateRequest $request, $id)
   {
 
       $student = Student::with('persona')->find($id);
@@ -107,7 +107,7 @@ class InscriptionController extends Controller
       {
         $student->persona->save();
         //Enviando mensaje
-        return redirect()->route('dashboard.inscription.edit', $id)
+        return redirect()->route('dashboard.student.edit', $id)
                       ->with('message', 'La información del alumnos fue actualizado satisfactoriamente');
       }
 

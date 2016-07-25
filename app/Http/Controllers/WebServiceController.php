@@ -22,6 +22,8 @@ use App\Models\Modalidad;
 
 use App\Models\Enrollment;
 
+use App\Models\Student;
+
 class WebServiceController extends Controller
 {
   /**
@@ -124,7 +126,7 @@ class WebServiceController extends Controller
                 ->with('student')
                 ->with('student.persona')
                 ->with('student.persona.persona_correos')
-                ->with('student.persona.persona_telefonos')->get();
+                ->with('student.persona.persona_telefonos')->orderBy('created_at', 'desc')->get();
 
                 $response = response()->json(["response" => $enrollment->toArray()], 200);
 
@@ -134,14 +136,14 @@ class WebServiceController extends Controller
             }
 
         } else {
-            
+
             $enrollment = Enrollment::with('type_specialization')
             ->with('specialization')
             ->with('modality')
             ->with('student')
             ->with('student.persona')
             ->with('student.persona.persona_correos')
-            ->with('student.persona.persona_telefonos')->get();
+            ->with('student.persona.persona_telefonos')->orderBy('created_at', 'desc')->get();
 
             $response = response()->json(["response" => $enrollment->toArray()], 200);
         }
@@ -157,4 +159,12 @@ class WebServiceController extends Controller
 
     }
 
+    public function wsStudent()
+    {
+        $students = Student::with('persona')
+        ->with('persona.persona_correos')
+        ->with('persona.persona_telefonos')->orderBy('created_at', 'desc')->get();
+        $response = response()->json(["response" => $students->toArray()], 200);
+        return $response;
+    }
 }

@@ -94,56 +94,47 @@
 
       <!-- page content -->
       <div class="right_col" role="main">
-        <div class="">
           @yield('content')
-        </div>
       </div>
       <!-- /page content -->
 
     </div>
   </div>
 
-<!-- JavaScripts -->
-{{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+  <!-- JavaScripts -->
+  {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="{{ URL::asset('assets/js/bootstrap.min.js') }}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="{{ URL::asset('assets/js/bootstrap.min.js') }}"></script>
 
-<!-- bootstrap progress js -->
-<script src="{{ URL::asset('assets/js/progressbar/bootstrap-progressbar.min.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+  <!-- bootstrap progress js -->
+  <script src="{{ URL::asset('assets/js/progressbar/bootstrap-progressbar.min.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
 
-<!-- icheck -->
-<script src="{{ URL::asset('assets/js/icheck/icheck.min.js') }}"></script>
-<script src="{{ URL::asset('assets/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
-<script src="{{ URL::asset('assets/js/custom.js') }}"></script>
+  <!-- icheck -->
+  <script src="{{ URL::asset('assets/js/icheck/icheck.min.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/custom.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/datatables/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/datatables/dataTables.bootstrap.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/datatables/dataTables.buttons.min.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/datatables/buttons.bootstrap.min.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/datatables/jszip.min.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/datatables/pdfmake.min.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/datatables/vfs_fonts.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/datatables/buttons.html5.min.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/datatables/buttons.print.min.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/datatables/dataTables.fixedHeader.min.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/datatables/dataTables.keyTable.min.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/datatables/dataTables.responsive.min.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/datatables/responsive.bootstrap.min.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/datatables/dataTables.scroller.min.js') }}"></script>
 
-<!-- Datatables -->
-<!-- <script src="{{ URL::asset('assets/js/datatables/js/jquery.dataTables.js') }}"></script>
-<script src="{{ URL::asset('assets/js/datatables/tools/js/dataTables.tableTools.js') }}"></script> -->
-<!-- Datatables-->
+  <!-- Javascript - App -->
+  @yield('custom_js')
 
-<script src="{{ URL::asset('assets/js/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ URL::asset('assets/js/datatables/dataTables.bootstrap.js') }}"></script>
-<script src="{{ URL::asset('assets/js/datatables/dataTables.buttons.min.js') }}"></script>
-<script src="{{ URL::asset('assets/js/datatables/buttons.bootstrap.min.js') }}"></script>
-<script src="{{ URL::asset('assets/js/datatables/jszip.min.js') }}"></script>
-<script src="{{ URL::asset('assets/js/datatables/pdfmake.min.js') }}"></script>
-<script src="{{ URL::asset('assets/js/datatables/vfs_fonts.js') }}"></script>
-<script src="{{ URL::asset('assets/js/datatables/buttons.html5.min.js') }}"></script>
-<script src="{{ URL::asset('assets/js/datatables/buttons.print.min.js') }}"></script>
-<script src="{{ URL::asset('assets/js/datatables/dataTables.fixedHeader.min.js') }}"></script>
-<script src="{{ URL::asset('assets/js/datatables/dataTables.keyTable.min.js') }}"></script>
-<script src="{{ URL::asset('assets/js/datatables/dataTables.responsive.min.js') }}"></script>
-<script src="{{ URL::asset('assets/js/datatables/responsive.bootstrap.min.js') }}"></script>
-<script src="{{ URL::asset('assets/js/datatables/dataTables.scroller.min.js') }}"></script>
-
-<!-- Javascript - App -->
-<script src="{{ URL::asset('assets/js/app-templates-js.js') }}"></script>
-<script src="{{ URL::asset('assets/js/app.js') }}"></script>
-
-<!-- pace -->
-<script src="{{ URL::asset('assets/js/pace/pace.min.js') }}"></script>
+  <!-- pace -->
+  <script src="{{ URL::asset('assets/js/pace/pace.min.js') }}"></script>
 
 </body>
 </html>

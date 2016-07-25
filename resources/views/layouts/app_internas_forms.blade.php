@@ -143,42 +143,6 @@
 
 <!-- pace -->
 <script src="{{ URL::asset('assets/js/pace/pace.min.js') }}"></script>
-<script>
-//DATATABE GENERADOR
-$('#datatable-responsive').DataTable({
-
-  "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-  "language":
-  {
-    "lengthMenu": "Mostrar _MENU_ registros por página",
-    "zeroRecords": "Sin resultados",
-    "info": "Mostrando _PAGE_ de _PAGES_",
-    "infoEmpty": "No hay registros Activos",
-    "infoFiltered": "(filtrada de _MAX_  entradas en total)",
-    "sSearch": "Buscar :",
-    "paginate": {
-      "previous": "Anterior",
-      "next": "Siguiente",
-      "first": "Inicio",
-      "last": "Final"
-    }
-  },
-  dom: "Bfrtip",
-  buttons: [
-    {
-      extend: "excel",
-      className: "btn btn-5 btn-5a icon-excel excel"
-    }, {
-      extend: "pdf",
-      className: "btn btn-5 btn-5a icon-pdf pdf"
-    }, {
-      extend: "print",
-      text:"Imprimir",
-      className: "btn btn-5 btn-5a icon-print print"
-    }],
-  });
-
-  </script>
 
 </body>
 </html>

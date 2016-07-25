@@ -1,4 +1,4 @@
-@extends('layouts.layout-enrollments')
+@extends('layouts.layout-student')
 
 @section('title', 'Dashboard - Secretaria Académica Módulos')
 
@@ -19,7 +19,7 @@
           <td>@{{ persona.correo }}</td>
           <td>@{{ persona.num_phone  }} / @{{ persona.num_cellphone }}</td>
           <td>
-            <a href="inscription/@{{id}}/edit" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>
+            <a href="student/@{{id}}/edit" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>
           </td>
         </tr>
       @{{/each}}
@@ -31,7 +31,7 @@
               {{ Session::get('message') }}
           </div>
       @endif
-      <h1>Administrador de Alumnos</h1>
+      <h1>Alumnos</h1>
       <p style="margin-top: 15px">Información administrable de Alumnos.</p>
     </div>
     <div class="clearfix"></div>
@@ -41,7 +41,7 @@
         <div class="x_panel">
 
           <div class="x_title">
-              <a href="{{ route('dashboard.inscription.create') }}" class="btn btn-5 btn-5a icon-add add"><span>Agregar</span></a>
+              <a href="{{ route('dashboard.student.create') }}" class="btn btn-5 btn-5a icon-add add"><span>Agregar</span></a>
               <div class="clearfix"></div>
           </div>
           <div class="x_content">

@@ -20,7 +20,7 @@
         <br>
         <div class="x_content">
 
-        {!! Form::model($student, [ 'method' => 'PUT', 'route' => ['dashboard.inscription.update', $student->id], 'class' => 'form-horizontal form-label-left' ]) !!}
+        {!! Form::model($student, [ 'method' => 'PUT', 'route' => ['dashboard.student.update', $student->id], 'class' => 'form-horizontal form-label-left' ]) !!}
 
         @if(Session::has('message'))
         <div class="alert alert-success alert-dismissible fade in" role="alert">
@@ -196,7 +196,7 @@
         <div class="form-group">
           <div class="col-md-12" style="float: right">
             <div class="form-group btncontrol">
-              <a href="{{ route('dashboard.inscription.index') }}" class="btn btn-5 btn-5a icon-return return"><span>Retornar</span></a>
+              <a href="{{ route('dashboard.student.index') }}" class="btn btn-5 btn-5a icon-return return"><span>Retornar</span></a>
               <button type="submit" class="btn btn-5 btn-5a icon-save save"><span>Guardar</span></button>
             </div>
           </div>

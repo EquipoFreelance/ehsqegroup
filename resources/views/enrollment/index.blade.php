@@ -14,12 +14,21 @@
         <tr>
           <td>@{{id}}</td>
           <td>@{{created_at}}</td>
-          <td>@{{persona.num_doc}}</td>
-          <td>@{{persona.nombre}} @{{persona.ape_pat}} @{{persona.ape_mat}}</td>
-          <td>@{{ persona.correo }}</td>
-          <td>@{{ persona.num_phone  }} / @{{ persona.num_cellphone }}</td>
+          <td>@{{student.persona.num_doc}}</td>
+          <td>@{{student.persona.nombre}} @{{student.persona.ape_pat}} @{{student.persona.ape_mat}}</td>
+          <td>@{{ student.persona.correo }}</td>
+          <td>@{{ student.persona.num_phone  }} / @{{ student.persona.num_cellphone }}</td>
+          <td>@{{ type_specialization.nom_esp_tipo }} / @{{ specialization.nom_esp }}</td>
+          <td>@{{ modality.nom_mod }}</td>
           <td>
-            <a href="inscription/@{{id}}/edit" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>
+            @{{#validate activo 1}}
+              <span class="label label-success">Matriculado</span>
+            @{{else}}
+              <span class="label label-danger">Por Matricular</span>
+            @{{/validate}}
+          </td>
+          <td>
+            <a href="enrollment/@{{id}}/edit" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>
           </td>
         </tr>
       @{{/each}}
@@ -31,8 +40,8 @@
               {{ Session::get('message') }}
           </div>
       @endif
-      <h1>Administrador de Alumnos</h1>
-      <p style="margin-top: 15px">Información administrable de Alumnos.</p>
+      <h1>Matriculas</h1>
+      <p style="margin-top: 15px">Administración de matriculas.</p>
     </div>
     <div class="clearfix"></div>
     <div class="row">
@@ -42,6 +51,19 @@
 
           <div class="x_title">
               <a href="{{ route('dashboard.inscription.create') }}" class="btn btn-5 btn-5a icon-add add"><span>Agregar</span></a>
+              <div class="clearfix"></div>
+          </div>
+          <div class="x_title">
+              <form class="form-inline">
+                <div class="form-group">
+                    <label>Fecha de inicio: </label>
+                    <select class="form-control" name="fecha_inicio" id="fecha_inicio">
+                      <option value="-">Mostrar Toda la lista</option>
+                      <option value="2016-07-16">2016-07-16</option>
+                      <option value="2016-07-12">2016-07-12</option>
+                    </select>
+                  </div>
+              </form>
               <div class="clearfix"></div>
           </div>
           <div class="x_content">
@@ -54,6 +76,9 @@
                   <th>Nombres Apellidos</th>
                   <th>Correos</th>
                   <th>Teléfonos</th>
+                  <th>Tipo / Especialización</th>
+                  <th>Modalidad</th>
+                  <th>Estado</th>
                   <th></th>
                 </tr>
               </thead>
@@ -72,8 +97,5 @@
 
 @section('custom_js')
   <script src="{{ URL::asset('assets/js/app-templates-js.js') }}"></script>
-  <script src="{{ URL::asset('assets/js/app-students.js') }}"></script>
-  <script>
-    listStudents();
-  </script>
+  <script src="{{ URL::asset('assets/js/app-enrollments.js') }}"></script>
 @stop

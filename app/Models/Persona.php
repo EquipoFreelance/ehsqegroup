@@ -9,16 +9,24 @@ class Persona extends Model
     protected $table = 'persona';
 
     protected $fillable = [
-        'id',
-        'cod_doc_tip',
-        'num_doc',
-        'nombre',
-        'ape_pat',
-        'ape_mat',
-        'direccion',
-        'fe_nacimiento',
-        'cod_sexo',
-        'activo'
+      'id',
+      'nombre',
+      'ape_pat',
+      'ape_mat' ,
+      'cod_doc_tip',
+      'num_doc',
+      'correo',
+      'cod_pais',
+      'cod_dpto',
+      'cod_prov',
+      'cod_dist',
+      'direccion',
+      'fe_nacimiento',
+      'cod_sexo',
+      'num_cellphone',
+      'num_phone',
+      'proteccion_datos',
+      'activo'
     ];
 
     // Una persona puede tener de uno a muchos cargos
