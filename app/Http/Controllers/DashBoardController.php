@@ -45,7 +45,7 @@ class DashBoardController extends Controller
             break;
         }
 
-        Session::push('menu.dashboard', $data);
+        Session::put('menu.dashboard', $data);
         return view('dashboard.main', $data);
 
     }

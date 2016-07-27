@@ -1,9 +1,9 @@
 @extends('dashboard.layouts.master')
 
-@section('title', $title)
+@section('title', Session::get('menu.dashboard.title')  )
 
 @section('sidebar_menu')
-  @include('dashboard.menus.'.$menu)
+  @include('dashboard.menus.' . Session::get('menu.dashboard.menu')  )
 @stop
 
 @section('content')

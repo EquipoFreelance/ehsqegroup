@@ -8,7 +8,7 @@ use App\Models\Profile;
 use App\Http\Requests;
 use Image;
 use File;
-//use Session;
+use Session;
 
 class ProfileController extends Controller
 {
