@@ -12,10 +12,10 @@
     <script id="response-template" type="text/x-handlebars-template">
       @{{#each response}}
         <tr>
-          <td>@{{id}}</td>
-          <td>@{{created_at}}</td>
-          <td>@{{persona.num_doc}}</td>
-          <td>@{{persona.nombre}} @{{persona.ape_pat}} @{{persona.ape_mat}}</td>
+          <td>@{{ id }}</td>
+          <td>@{{ created_at }}</td>
+          <td>@{{ persona.num_doc }}</td>
+          <td>@{{ persona.nombre }} @{{ persona.ape_pat }} @{{ persona.ape_mat }}</td>
           <td>@{{ persona.correo }}</td>
           <td>@{{ persona.num_phone  }} / @{{ persona.num_cellphone }}</td>
           <td>

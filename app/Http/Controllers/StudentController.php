@@ -78,7 +78,7 @@ class StudentController extends Controller
       $student->activo      = 1;
       $student->save();
       return redirect()->route('dashboard.student.edit', $student->id)
-      ->with('message', 'La Persona fue registrada como alumnos');
+      ->with('message', 'El alumno fue registrado satisfactoriamente');
     }
   }
 

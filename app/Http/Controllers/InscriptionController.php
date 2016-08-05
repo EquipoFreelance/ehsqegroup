@@ -33,24 +33,10 @@ class InscriptionController extends Controller
 
   }
 
-  public function show()
-  {
-    //$persona = Persona::with('persona_student')->find(32);//->persona_telefonos->toJson();
-    //return $persona->persona_student()->first()->id;
-  }
-
-  public function edit($id)
-  {
-
-    $student = Student::with('persona.persona_correos')->with('persona.persona_telefonos')->find($id);
-    $data = compact('student');
-    return view('inscription.edit', $data);
-
-  }
-
   public function store(InscriptionStoreRequest $request)
   {
 
+    // Create new Person
     $persona = new Persona(array(
       'nombre'           => $request->get("nombre"),
       'ape_pat'          => $request->get("ape_pat"),
@@ -67,20 +53,58 @@ class InscriptionController extends Controller
       'cod_sexo'         => $request->get("cod_sexo"),
       'num_cellphone'    => $request->get("num_cellphone"),
       'num_phone'        => $request->get("num_phone"),
-      'proteccion_datos' => ($request->get("proteccion_datos") == '' || $request->get("proteccion_datos") == 0)? 0 : $request->get("proteccion_datos")
+      'proteccion_datos' => ($request->get("proteccion_datos") == '' || $request->get("proteccion_datos") == 0)? 0 : $request->get("proteccion_datos"),
+      'activo'           => 1
     ));
 
     if($persona->save())
     {
-      $student = new Student();
-      $student->cod_persona = $persona->id;
-      $student->cod_sede    = 1;
-      $student->activo      = 1;
-      $student->save();
-      return redirect()->route('dashboard.inscription.edit', $student->id)
-      ->with('message', 'La Persona fue registrada como alumnos');
+      // Create new student
+      $student = new Student(array(
+        "cod_persona" => $persona->id,
+        "cod_sede" => 1,
+        "cod_sede" => 1
+      ));
+
+      if( $student->save() ){
+
+        // Create new enrollment
+        $enrollment = new Enrollment( array(
+          "cod_alumno"    => $student->id,                  // Code of new student
+          "fecha_inicio"  => $request->get("fecha_inicio"),
+          "cod_modalidad" => $request->get("cod_modalidad"),
+          "cod_esp_tipo"  => $request->get("cod_esp_tipo"),
+          "cod_esp"       => $request->get("cod_esp"),
+          "activo"        => ($request->get("activo") == '' || $request->get("activo") == 0)? 0 : $request->get("activo")
+        ));
+
+        $student->enrollments()->save($enrollment);
+
+        return redirect()->route('dashboard.inscription.edit', $student->id)
+        ->with('message', 'La Inscripción fue registrada satisfactoriamente');
+
+      }
+
+
     }
   }
+
+  public function show()
+  {
+    //$persona = Persona::with('persona_student')->find(32);//->persona_telefonos->toJson();
+    //return $persona->persona_student()->first()->id;
+  }
+
+  public function edit($id)
+  {
+
+    $student = Student::with('persona.persona_correos')->with('persona.persona_telefonos')->find($id);
+    $data = compact('student');
+    return view('inscription.edit', $data);
+
+  }
+
+
 
   public function update(InscriptionUpdateRequest $request, $id)
   {
@@ -105,10 +129,20 @@ class InscriptionController extends Controller
 
       if( $student->save() )
       {
-        $student->persona->save();
-        //Enviando mensaje
-        return redirect()->route('dashboard.inscription.edit', $id)
-                      ->with('message', 'La información del alumnos fue actualizado satisfactoriamente');
+
+        $id_enrollment = $student->enrollments()->first()->id;      // Code of Enrollemnt associate
+
+        $enrollment = Enrollment::find($id_enrollment);
+        $enrollment->fecha_inicio   = $request->get("fecha_inicio");
+        $enrollment->cod_modalidad  = $request->get("cod_modalidad");
+        $enrollment->cod_esp_tipo   = $request->get("cod_esp_tipo");
+        $enrollment->cod_esp        = $request->get("cod_esp");
+
+        if( $enrollment->save() ){
+          return redirect()->route('dashboard.inscription.edit', $id)
+                        ->with('message', 'La información del alumnos fue actualizado satisfactoriamente');
+        }
+
       }
 
   }

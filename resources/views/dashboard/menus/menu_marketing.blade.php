@@ -4,7 +4,7 @@
       <div class="clear"></div>
       <ul class="nav side-menu">
          <li class="title">Menú principal</li>
-         <li><a href="{{ route('dashboard.student.index') }}"><i class="fa fa-tasks"></i> Inscripciones</a></li>
+         <li><a href="{{ route('dashboard.inscription.index') }}"><i class="fa fa-tasks"></i> Inscripciones</a></li>
       </ul>
    </div>
 </div>

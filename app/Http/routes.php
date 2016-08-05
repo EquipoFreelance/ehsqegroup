@@ -35,6 +35,60 @@ Route::group(['middleware' => ['auth']], function(){
       'as' => 'dashboard.user.update', 'uses' => 'UserController@putChangePassword'
     ]);
 
+    /* -- Rutas asíncronas -- */
+
+    Route::get('/dashboard/json/esp/{modalidad}/{tipo_esp}', [
+        'as' => 'json.esp', 'uses' => 'EspecializacionController@getJsonEspToGrupo'
+    ]);
+
+    Route::get('/dashboard/json/ub/countries',[
+        'as' => 'json.countries', 'uses' => 'WebServiceController@wsCountries'
+    ]);
+
+    // Ub Departamentos
+    Route::get('/dashboard/json/departaments/{cod_pais}',[
+        'as' => 'json.departaments', 'uses' => 'WebServiceController@wsDepartaments'
+    ]);
+
+    // Ub Provincias
+    Route::get('/dashboard/json/provinces/{cod_dpto}',[
+        'as' => 'json.provinces', 'uses' => 'WebServiceController@wsProvinces'
+    ]);
+
+    // Ub Distritos
+    Route::get('/dashboard/json/districts/{cod_dpto}/{cod_prov}',[
+        'as' => 'json.districts', 'uses' => 'WebServiceController@wsDistricts'
+    ]);
+
+    // Tipo de Especializaciones
+    Route::get('/dashboard/json/esp_tipos',[
+        'as' => 'json.esp_tipos', 'uses' => 'WebServiceController@wsEspecializacionTipos'
+    ]);
+
+    // Especializaciones
+    Route::get('/dashboard/json/especializaciones/{cod_esp_tipo}',[
+        'as' => 'json.especializaciones', 'uses' => 'WebServiceController@wsEspecializaciones'
+    ]);
+
+    // Modalidades
+    Route::get('/dashboard/json/modalidades',[
+        'as' => 'json.modalidades', 'uses' => 'WebServiceController@wsModalidades'
+    ]);
+
+    // Enrollments
+    Route::get('/dashboard/json/enrollments/{fecha_inicio}',[
+        'as' => 'json.enrollments', 'uses' => 'WebServiceController@wsEnrollments'
+    ]);
+
+    // Students
+    Route::get('/hsqegroup/api/students',[
+        'as' => 'json.students.all', 'uses' => 'WebServiceController@wsStudent'
+    ]);
+
+    Route::get('/hsqegroup/api/students/search/{q}',[
+        'as' => 'json.students.all', 'uses' => 'WebServiceController@wsStudentLike'
+    ]);
+
 });
 
 // Sistema Académicos
@@ -78,9 +132,6 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
   // Resources Students
   Route::resource('dashboard/student', 'StudentController', ['only' => ['create','store','show','index','edit','update'] ]);
 
-  // Recursos de Inscripciones
-  Route::resource('dashboard/inscription', 'InscriptionController', ['only' => ['create','store','show','index','edit','update'] ]);
-
   // Recursos Enrollments
   Route::resource('dashboard/enrollment', 'EnrollmentController', ['only' => ['create','store','show','index','edit','update'] ]);
 
@@ -103,59 +154,13 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
     'as' => 'dashboard.grupo.horario.edit', 'uses' => 'HorarioController@edit'
   ]);
 
-  /* -- Rutas asíncronas -- */
+});
 
-  Route::get('/dashboard/json/esp/{modalidad}/{tipo_esp}', [
-      'as' => 'json.esp', 'uses' => 'EspecializacionController@getJsonEspToGrupo'
-  ]);
+// Marketing
+Route::group(['middleware' => ['auth','role.marketing']], function(){
 
-  Route::get('/dashboard/json/ub/countries',[
-      'as' => 'json.countries', 'uses' => 'WebServiceController@wsCountries'
-  ]);
-
-  // Ub Departamentos
-  Route::get('/dashboard/json/departaments/{cod_pais}',[
-      'as' => 'json.departaments', 'uses' => 'WebServiceController@wsDepartaments'
-  ]);
-
-  // Ub Provincias
-  Route::get('/dashboard/json/provinces/{cod_dpto}',[
-      'as' => 'json.provinces', 'uses' => 'WebServiceController@wsProvinces'
-  ]);
-
-  // Ub Distritos
-  Route::get('/dashboard/json/districts/{cod_dpto}/{cod_prov}',[
-      'as' => 'json.districts', 'uses' => 'WebServiceController@wsDistricts'
-  ]);
-
-  // Tipo de Especializaciones
-  Route::get('/dashboard/json/esp_tipos',[
-      'as' => 'json.esp_tipos', 'uses' => 'WebServiceController@wsEspecializacionTipos'
-  ]);
-
-  // Especializaciones
-  Route::get('/dashboard/json/especializaciones/{cod_esp_tipo}',[
-      'as' => 'json.especializaciones', 'uses' => 'WebServiceController@wsEspecializaciones'
-  ]);
-
-  // Modalidades
-  Route::get('/dashboard/json/modalidades',[
-      'as' => 'json.modalidades', 'uses' => 'WebServiceController@wsModalidades'
-  ]);
-
-  // Enrollments
-  Route::get('/dashboard/json/enrollments/{fecha_inicio}',[
-      'as' => 'json.enrollments', 'uses' => 'WebServiceController@wsEnrollments'
-  ]);
-
-  // Students
-  Route::get('/hsqegroup/api/students',[
-      'as' => 'json.students.all', 'uses' => 'WebServiceController@wsStudent'
-  ]);
-
-  Route::get('/hsqegroup/api/students/search/{q}',[
-      'as' => 'json.students.all', 'uses' => 'WebServiceController@wsStudentLike'
-  ]);
+  // Recursos de Inscripciones
+  Route::resource('dashboard/inscription', 'InscriptionController', ['only' => ['create','store','show','index','edit','update'] ]);
 
 });
 

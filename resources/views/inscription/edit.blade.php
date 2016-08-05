@@ -1,9 +1,9 @@
-@extends('layouts.layout-student')
+@extends('dashboard.layouts.master')
 
-@section('title', 'Dashboard - Secretaria Académica Módulos')
+@section('title', Session::get('menu.dashboard.title')  )
 
 @section('sidebar_menu')
-@include('dashboard.dashboard_sa_menu')
+  @include('dashboard.menus.' . Session::get('menu.dashboard.menu')  )
 @stop
 
 @section('content')
@@ -14,11 +14,10 @@
       <br>
       <div class="x_panel">
         <div class="y_title">
-           <h2><i class="fa fa-edit"></i>Editar Ficha de Alumno</h2>
+           <h2><i class="fa fa-edit"></i> Ficha de Inscripción</h2>
            <div class="clearfix"></div>
         </div>
         <br>
-        <div class="x_content">
 
         {!! Form::model($student, [ 'method' => 'PUT', 'route' => ['dashboard.inscription.update', $student->id], 'class' => 'form-horizontal form-label-left' ]) !!}
 
@@ -50,7 +49,7 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="ape_pat">Apellido Materno</label>
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nom_corto">Apellido materno</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
             <input type="text" id="ape_mat" placeholder="Apellido materno" name="ape_mat"  class="form-control" value="{{ $student->persona->ape_mat }}">
             @if ($errors->has('ape_mat'))
@@ -123,7 +122,7 @@
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_dist">Distrito</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
             <select class="form-control" name="cod_dist" id="cod_dist" data-id-default="{{ $student->persona->cod_dist }}"><option value="">-- Seleccione el distrito --</option></select>
-            @if ($errors->has('direccion'))
+            @if ($errors->has('cod_dist'))
             <label for="cod_dist" generated="true" class="error">{{ $errors->first('cod_dist') }}</label>
             @endif
           </div>
@@ -192,9 +191,60 @@
           </div>
         </div>
 
+        <div class="form-group">
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="fecha_inicio">Fecha de inicio</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <select name="fecha_inicio" id="fecha_inicio" class="form-control">
+              <option value="">Fecha de inicio</option>
+              <option value="01-08-2016">01-08-2016</option>
+              <option value="02-08-2016">02-08-2016</option>
+            </select>
+            @if ($errors->has('fecha_inicio'))
+            <label for="fecha_inicio" generated="true" class="error">{{ $errors->first('fecha_inicio') }}</label>
+            @endif
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_modalidad">Modalidad</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <select name="cod_modalidad" id="cod_modalidad" class="form-control" data-id-default="{{ $student->enrollments()->first()->cod_modalidad }}">
+              <option value=""></option>
+            </select>
+            @if ($errors->has('cod_modalidad'))
+            <label for="cod_modalidad" generated="true" class="error">{{ $errors->first('cod_modalidad') }}</label>
+            @endif
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_esp_tipo">Tipo de Especialización</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <select name="cod_esp_tipo" id="cod_esp_tipo" class="form-control" data-id-default="{{ $student->enrollments()->first()->cod_esp_tipo }}">
+              <option value=""></option>
+            </select>
+            @if ($errors->has('cod_esp_tipo'))
+            <label for="cod_esp_tipo" generated="true" class="error">{{ $errors->first('cod_esp_tipo') }}</label>
+            @endif
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_esp">Especialización</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <select name="cod_esp" id="cod_esp" class="form-control" data-id-default="{{ $student->enrollments()->first()->cod_esp }}">
+              <option value="">-- Seleccione la especialización --</option>
+            </select>
+            @if ($errors->has('cod_esp'))
+            <label for="cod_esp" generated="true" class="error">{{ $errors->first('cod_esp') }}</label>
+            @endif
+          </div>
+        </div>
+
         <div class="ln_solid"></div>
         <div class="form-group">
-          <div class="col-md-12" style="float: right">
+          <label class="control-label col-md-4 col-sm-4 col-xs-12"></label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="form-group btncontrol">
               <a href="{{ route('dashboard.inscription.index') }}" class="btn btn-5 btn-5a icon-return return"><span>Retornar</span></a>
               <button type="submit" class="btn btn-5 btn-5a icon-save save"><span>Guardar</span></button>
@@ -202,16 +252,14 @@
           </div>
         </div>
         {!! Form::close() !!}
-
-      </div>
-
       </div>
     </div>
   </div>
 </div>
 @stop
 
+
 @section('custom_js')
   <script src="{{ URL::asset('assets/js/app.js') }}"></script>
-  <script src="{{ URL::asset('assets/js/app-students.js') }}"></script>
+  <!--<script src="{{ URL::asset('assets/js/app-students.js') }}"></script>-->
 @stop

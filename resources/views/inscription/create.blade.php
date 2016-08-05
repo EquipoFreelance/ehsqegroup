@@ -1,9 +1,9 @@
-@extends('layouts.layout-student')
+@extends('dashboard.layouts.master')
 
-@section('title', 'Dashboard - Secretaria Académica Módulos')
+@section('title', Session::get('menu.dashboard.title')  )
 
 @section('sidebar_menu')
-@include('dashboard.dashboard_sa_menu')
+  @include('dashboard.menus.' . Session::get('menu.dashboard.menu')  )
 @stop
 
 @section('content')
@@ -14,7 +14,7 @@
       <br>
       <div class="x_panel">
         <div class="y_title">
-           <h2><i class="fa fa-edit"></i> Ficha de Alumno</h2>
+           <h2><i class="fa fa-edit"></i> Ficha de Inscripción</h2>
            <div class="clearfix"></div>
         </div>
         <br>
@@ -191,6 +191,56 @@
           </div>
         </div>
 
+        <div class="form-group">
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="fecha_inicio">Fecha de inicio</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <select name="fecha_inicio" id="fecha_inicio" class="form-control">
+              <option value="">Fecha de inicio</option>
+              <option value="01-08-2016">01-08-2016</option>
+              <option value="02-08-2016">02-08-2016</option>
+            </select>
+            @if ($errors->has('fecha_inicio'))
+            <label for="fecha_inicio" generated="true" class="error">{{ $errors->first('fecha_inicio') }}</label>
+            @endif
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_modalidad">Modalidad</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <select name="cod_modalidad" id="cod_modalidad" class="form-control">
+              <option value=""></option>
+            </select>
+            @if ($errors->has('cod_modalidad'))
+            <label for="cod_modalidad" generated="true" class="error">{{ $errors->first('cod_modalidad') }}</label>
+            @endif
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_esp_tipo">Tipo de Especialización</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <select name="cod_esp_tipo" id="cod_esp_tipo" class="form-control">
+              <option value=""></option>
+            </select>
+            @if ($errors->has('cod_esp_tipo'))
+            <label for="cod_esp_tipo" generated="true" class="error">{{ $errors->first('cod_esp_tipo') }}</label>
+            @endif
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_esp">Especialización</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <select name="cod_esp" id="cod_esp" class="form-control">
+              <option value="">-- Seleccione la especialización --</option>
+            </select>
+            @if ($errors->has('cod_esp'))
+            <label for="cod_esp" generated="true" class="error">{{ $errors->first('cod_esp') }}</label>
+            @endif
+          </div>
+        </div>
+
         <div class="ln_solid"></div>
         <div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12"></label>
@@ -211,5 +261,5 @@
 
 @section('custom_js')
   <script src="{{ URL::asset('assets/js/app.js') }}"></script>
-  <script src="{{ URL::asset('assets/js/app-students.js') }}"></script>
+  <!--<script src="{{ URL::asset('assets/js/app-students.js') }}"></script>-->
 @stop

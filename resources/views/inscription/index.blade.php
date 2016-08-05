@@ -1,29 +1,13 @@
-@extends('layouts.layout-enrollments')
+@extends('dashboard.layouts.master')
 
-@section('title', 'Dashboard - Secretaria Académica Módulos')
+@section('title', Session::get('menu.dashboard.title')  )
 
 @section('sidebar_menu')
-  @include('dashboard.dashboard_sa_menu')
+  @include('dashboard.menus.' . Session::get('menu.dashboard.menu')  )
 @stop
 
 @section('content')
   <div class="">
-    <!-- Custom Templates -->
-    <script id="response-template" type="text/x-handlebars-template">
-      @{{#each response}}
-        <tr>
-          <td>@{{id}}</td>
-          <td>@{{created_at}}</td>
-          <td>@{{persona.num_doc}}</td>
-          <td>@{{persona.nombre}} @{{persona.ape_pat}} @{{persona.ape_mat}}</td>
-          <td>@{{ persona.correo }}</td>
-          <td>@{{ persona.num_phone  }} / @{{ persona.num_cellphone }}</td>
-          <td>
-            <a href="inscription/@{{id}}/edit" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>
-          </td>
-        </tr>
-      @{{/each}}
-    </script>
 
     <div class="page-title">
       @if(Session::has('message'))
@@ -31,8 +15,8 @@
               {{ Session::get('message') }}
           </div>
       @endif
-      <h1>Administrador de Alumnos</h1>
-      <p style="margin-top: 15px">Información administrable de Alumnos.</p>
+      <h1>Administrador de Inscritos</h1>
+      <p style="margin-top: 15px">Información administrable de Inscritos.</p>
     </div>
     <div class="clearfix"></div>
     <div class="row">
@@ -49,11 +33,15 @@
               <thead>
                 <tr>
                   <th>Id</th>
-                  <th>Fecha</th>
-                  <th>DNI</th>
-                  <th>Nombres Apellidos</th>
-                  <th>Correos</th>
-                  <th>Teléfonos</th>
+                  <th>Fecha Registro</th>
+                  <th>Tipo documento</th>
+                  <th>Número</th>
+                  <th>Nombres</th>
+                  <th>Apellidos</th>
+                  <th>Correo</th>
+                  <th>Teléfono</th>
+                  <th>Modalidad</th>
+                  <th>Estado</th>
                   <th></th>
                 </tr>
               </thead>
@@ -71,9 +59,9 @@
 @stop
 
 @section('custom_js')
-  <script src="{{ URL::asset('assets/js/app-templates-js.js') }}"></script>
-  <script src="{{ URL::asset('assets/js/app-students.js') }}"></script>
-  <script>
+  <!--<script src="{{ URL::asset('assets/js/app-templates-js.js') }}"></script>-->
+  <!--<script src="{{ URL::asset('assets/js/app-students.js') }}"></script>-->
+  <!--<script>
     listStudents();
-  </script>
+  </script>-->
 @stop
