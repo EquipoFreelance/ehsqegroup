@@ -80,6 +80,11 @@ Route::group(['middleware' => ['auth']], function(){
         'as' => 'json.enrollments', 'uses' => 'WebServiceController@wsEnrollments'
     ]);
 
+    // Inscriptions
+    Route::get('/dashboard/json/inscriptions/{fecha_inicio}',[
+        'as' => 'json.enrollments', 'uses' => 'WebServiceController@wsInscriptions'
+    ]);
+
     // Students
     Route::get('/hsqegroup/api/students',[
         'as' => 'json.students.all', 'uses' => 'WebServiceController@wsStudent'

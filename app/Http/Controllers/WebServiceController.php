@@ -155,6 +155,53 @@ class WebServiceController extends Controller
 
     }
 
+    /* WS - List of inscriptions */
+    public function wsInscriptions($fecha_inicio){
+
+      if($fecha_inicio){
+
+        // Solo cuando el usuario seleccione el signo "-"
+        if($fecha_inicio != '-')
+        {
+            // Verificando existencia de registros con los parametros recibidos
+            if(Enrollment::where("fecha_inicio", $fecha_inicio)->with('student')->with('student.persona')->count() > 0)
+            {
+                $enrollment = Enrollment::where("fecha_inicio", $fecha_inicio)
+                ->with('type_specialization')
+                ->with('specialization')
+                ->with('modality')
+                ->with('student')
+                ->with('student.persona')->orderBy('created_at', 'desc')->get();
+
+                $response = response()->json(["response" => $enrollment->toArray()], 200);
+
+            } else {
+
+                $response = response()->json(["message" => "Empty"], 400);
+            }
+
+        } else {
+
+            $enrollment = Enrollment::with('type_specialization')
+            ->with('specialization')
+            ->with('modality')
+            ->with('student')
+            ->with('student.persona')->orderBy('created_at', 'desc')->get();
+
+            $response = response()->json(["response" => $enrollment->toArray()], 200);
+        }
+
+
+      } else {
+
+        $response = response()->json(["message" => "Empty"], 400);
+
+      }
+
+      return $response;
+
+    }
+
     public function wsStudent()
     {
         $students = Student::with('persona')->orderBy('created_at', 'desc')->get();

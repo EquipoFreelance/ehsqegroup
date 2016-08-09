@@ -9,6 +9,27 @@
 @section('content')
   <div class="">
 
+    <!-- Custom Templates -->
+    <script id="response-template" type="text/x-handlebars-template">
+      @{{#each response}}
+        <tr>
+          <td>@{{ student.id }}</td>
+          <td>@{{ created_at }}</td>
+          <td>@{{ student.persona.cod_doc_tip }}</td>
+          <td>@{{ student.persona.num_doc }}</td>
+          <td>@{{ student.persona.nombre }}</td>
+          <td>@{{ student.persona.ape_pat }} @{{ student.persona.ape_mat }}</td>
+          <td>@{{ student.persona.correo }}</td>
+          <td>@{{ student.persona.num_phone  }} / @{{ student.persona.num_cellphone }}</td>
+          <td>@{{ modality.nom_mod }}</td>
+          <td>@{{ type_specialization.nom_esp_tipo }} / @{{ specialization.nom_esp }}</td>
+          <td>
+            <a href="inscription/@{{student.id}}/edit" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>
+          </td>
+        </tr>
+      @{{/each}}
+    </script>
+
     <div class="page-title">
       @if(Session::has('message'))
           <div class="alert alert-info">
@@ -41,7 +62,7 @@
                   <th>Correo</th>
                   <th>Teléfono</th>
                   <th>Modalidad</th>
-                  <th>Estado</th>
+                  <th>Curso</th>
                   <th></th>
                 </tr>
               </thead>
@@ -59,9 +80,6 @@
 @stop
 
 @section('custom_js')
-  <!--<script src="{{ URL::asset('assets/js/app-templates-js.js') }}"></script>-->
-  <!--<script src="{{ URL::asset('assets/js/app-students.js') }}"></script>-->
-  <!--<script>
-    listStudents();
-  </script>-->
+  <script src="{{ URL::asset('assets/js/app-templates-js.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/app-inscription.js') }}"></script>
 @stop

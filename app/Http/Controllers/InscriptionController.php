@@ -98,13 +98,12 @@ class InscriptionController extends Controller
   public function edit($id)
   {
 
-    $student = Student::with('persona.persona_correos')->with('persona.persona_telefonos')->find($id);
+    // Info of Student
+    $student = Student::with('persona')->find($id);
     $data = compact('student');
     return view('inscription.edit', $data);
 
   }
-
-
 
   public function update(InscriptionUpdateRequest $request, $id)
   {
@@ -129,7 +128,8 @@ class InscriptionController extends Controller
 
       if( $student->save() )
       {
-
+        $student->persona->save();
+        
         $id_enrollment = $student->enrollments()->first()->id;      // Code of Enrollemnt associate
 
         $enrollment = Enrollment::find($id_enrollment);
