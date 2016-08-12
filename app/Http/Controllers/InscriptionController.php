@@ -49,8 +49,8 @@ class InscriptionController extends Controller
       'cod_prov'         => $request->get("cod_prov"),
       'cod_dist'         => $request->get("cod_dist"),
       'direccion'        => $request->get("direccion"),
-      'fe_nacimiento'    => $request->get("fe_nacimiento"),
-      'cod_sexo'         => $request->get("cod_sexo"),
+      //'fe_nacimiento'    => $request->get("fe_nacimiento"),
+      //'cod_sexo'         => $request->get("cod_sexo"),
       'num_cellphone'    => $request->get("num_cellphone"),
       'num_phone'        => $request->get("num_phone"),
       'proteccion_datos' => ($request->get("proteccion_datos") == '' || $request->get("proteccion_datos") == 0)? 0 : $request->get("proteccion_datos"),
@@ -120,8 +120,8 @@ class InscriptionController extends Controller
       $student->persona->cod_prov         = $request->get("cod_prov");
       $student->persona->cod_dist         = $request->get("cod_dist");
       $student->persona->direccion        = $request->get("direccion");
-      $student->persona->fe_nacimiento    = $request->get("fe_nacimiento");
-      $student->persona->cod_sexo         = $request->get("cod_sexo");
+      //$student->persona->fe_nacimiento    = $request->get("fe_nacimiento");
+      //$student->persona->cod_sexo         = $request->get("cod_sexo");
       $student->persona->num_cellphone    = $request->get("num_cellphone");
       $student->persona->num_phone        = $request->get("num_phone");
       $student->persona->proteccion_datos = ($request->get("proteccion_datos") == '' || $request->get("proteccion_datos") == 0)? 0 : $request->get("proteccion_datos");
@@ -129,7 +129,7 @@ class InscriptionController extends Controller
       if( $student->save() )
       {
         $student->persona->save();
-        
+
         $id_enrollment = $student->enrollments()->first()->id;      // Code of Enrollemnt associate
 
         $enrollment = Enrollment::find($id_enrollment);

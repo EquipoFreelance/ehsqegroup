@@ -45,7 +45,8 @@
 .icon-add:after,
 .icon-picture:after,
 .icon-valid:after,
-.icon-see:after{
+.icon-see:after,
+.icon-send:after{
 	display: inline-block;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
@@ -91,6 +92,9 @@
 }
 .icon-delete:before{
 	content: "\f1f8"
+}
+.icon-send:before{
+	content: "\f1d8"
 }
 
 

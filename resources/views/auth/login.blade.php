@@ -11,7 +11,7 @@
         <!-- Formulario de Inicio de Sesión  -->
         <form id="form_login" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="{{ url('/login') }}#toregister">
           {!! csrf_field() !!}
-          <h2><img src="{{ URL::asset('assets/images/logos/cabe.png')}}"></h2>
+          <h2><img src="{{ URL::asset('assets/images/logos/cabe-login.png')}}"></h2>
           <div class="form-group">
             <span class="input-group-addon" id="basic-addon1"><i class="fa fa-envelope"></i></span>
             <input type="email" class="form-control customemail @if ($errors->has('email')) error @endif" placeholder="Correo electrónico" aria-describedby="basic-addon1" name="email" value="{{ old('email') }}"/>
