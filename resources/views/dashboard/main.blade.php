@@ -1,9 +1,9 @@
 @extends('dashboard.layouts.master')
 
-@section('title', Session::get('menu.dashboard.title')  )
+@section('title', Auth::user()->role->nom_role  )
 
 @section('sidebar_menu')
-  @include('dashboard.menus.' . Session::get('menu.dashboard.menu')  )
+  @include('dashboard.menus.' . Auth::user()->role->menu )
 @stop
 
 @section('content')

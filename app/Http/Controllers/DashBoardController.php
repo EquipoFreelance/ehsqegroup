@@ -16,7 +16,7 @@ class DashBoardController extends Controller
     // Validación de tipo de dashboard a mostrar
     public function validateDashBoard(Request $request){
 
-        $user_role = Auth::user()->cod_role;
+        /*$user_role = Auth::user()->cod_role;
 
         switch ($user_role) {
 
@@ -46,7 +46,12 @@ class DashBoardController extends Controller
         }
 
         Session::put('menu.dashboard', $data);
-        return view('dashboard.main', $data);
+
+        Auth::user()->role->nom_role
+        return view('dashboard.main', $data);*/
+        /**Auth::user()->role->menu;
+        return view('dashboard.main', $data);*/
+        return view('dashboard.main');
 
     }
 

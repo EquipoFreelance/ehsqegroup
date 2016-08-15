@@ -17,7 +17,7 @@ class RoleAlumnoMiddleware
     public function handle($request, Closure $next)
     {
         // Pertenece a Servicios académicos
-        if(Auth::User()->id_user_type == 4)
+        if(Auth::User()->cod_role == 5)
         {
             return $next($request);
 
