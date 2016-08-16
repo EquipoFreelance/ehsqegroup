@@ -1,9 +1,9 @@
-@extends('layouts.layout-student')
+@extends('dashboard.layouts.master')
 
-@section('title', 'Dashboard - Secretaria Académica Módulos')
+@section('title', Auth::user()->role->nom_role  )
 
 @section('sidebar_menu')
-@include('dashboard.dashboard_sa_menu')
+  @include('dashboard.menus.' . Auth::user()->role->menu )
 @stop
 
 @section('content')
@@ -219,9 +219,9 @@
         <div class="ln_solid"></div>
 
         <div class="form-group">
-          
+
           <div class="form-group btncontrol">
-            <a href="{{ route('dashboard.student.index') }}" class="btn btn-5 btn-5a icon-return return"><span>Retornar</span></a>
+            <a href="{{ route('dashboard.student.index') }}" class="btn btn-default"><span>Retornar</span></a>
             <button type="submit" class="btn btn-5 btn-5a icon-save save"><span>Guardar</span></button>
           </div>
 

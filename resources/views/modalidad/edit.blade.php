@@ -1,23 +1,24 @@
-@extends('layouts.app_internas')
+@extends('dashboard.layouts.master')
 
-@section('title', 'Dashboard - Secretaria Académica Módulos')
+@section('title', Auth::user()->role->nom_role  )
 
 @section('sidebar_menu')
-@include('dashboard.dashboard_sa_menu')
+  @include('dashboard.menus.' . Auth::user()->role->menu )
 @stop
 
 @section('content')
+<div class="form_content_block">
   <div class="clearfix"></div>
   <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
       <br>
       <div class="x_panel">
-        <div class="x_title">
-          <h1 style="font-size: 18px">Editar Modalidad <small> (En este interior usted podrá ingresar una nueva Modalidad, editar los datos ingresados)</small></h1>
+        <div class="y_title">
+          <h2><i class="fa fa-edit"></i> Editar Modalidad</h2>
           <div class="clearfix"></div>
         </div>
 
-        <br>
+        <div class="x_content">
         {!! Form::model($modalidad, [ 'method' => 'PUT', 'route' => ['dashboard.modalidad.update', $modalidad->id], 'class' => 'form-horizontal form-label-left' ]) !!}
 
           @if(Session::has('message'))
@@ -52,9 +53,8 @@
             <label class="control-label col-md-4 col-sm-4 col-xs-12"></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <div class="form-group btncontrol">
-                <a href="{{ route('dashboard.modalidad.index') }}" class="btn btn-default">Retornar</a>
-                <!--<a href="{{ route('dashboard.tesp.index') }}" class="btn btn-danger cancel_btn">Cancelar</a>-->
-                <button type="submit" class="btn btn-success">Guardar</button>
+                <a href="{{ route('dashboard.modalidad.index') }}" class="btn btn-5 btn-5a icon-return return"><span>Retornar</span></a>
+                {{ Form::button('<span>Guardar</span>', array('class' => 'btn btn-5 btn-5a icon-save save', 'type' => 'submit')) }}
               </div>
             </div>
           </div>
@@ -66,8 +66,10 @@
                   ]) !!}
               <button type="submit" class="btn btn-danger cancel_btn">Eliminar</button>
           {!! Form::close() !!}
+        </div>
 
       </div>
     </div>
   </div>
+</div>
 @stop

@@ -1,23 +1,24 @@
-@extends('layouts.app_internas')
+@extends('dashboard.layouts.master')
 
-@section('title', 'Dashboard - Secretaria Académica Módulos')
+@section('title', Auth::user()->role->nom_role  )
 
 @section('sidebar_menu')
-@include('dashboard.dashboard_sa_menu')
+  @include('dashboard.menus.' . Auth::user()->role->menu )
 @stop
 
 @section('content')
-  <div class="clearfix"></div>
-  <div class="row">
+  <div class="form_content_block">
+    <div class="clearfix"></div>
+    <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
       <br>
       <div class="x_panel">
-        <div class="x_title">
-          <h1 style="font-size: 18px">Nueva Modalidad <small> (En este interior usted podrá ingresar una nueva Modalidad, editar los datos ingresados)</small></h1>
-          <div class="clearfix"></div>
+        <div class="y_title">
+           <h2><i class="fa fa-edit"></i> Nueva Modalidad</h2>
+           <div class="clearfix"></div>
         </div>
 
-        <br>
+        <div class="x_content">
         {!! Form::open(['route' => 'dashboard.modalidad.store', 'class' => 'form-horizontal form-label-left']) !!}
 
           @if(Session::has('message'))
@@ -52,14 +53,16 @@
                 <label class="control-label col-md-4 col-sm-4 col-xs-12"></label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <div class="form-group btncontrol">
-                      <a href="{{ route('dashboard.modalidad.index') }}" class="btn btn-default">Retornar</a>
-                      {{ Form::button('Guardar', array('class' => 'btn btn-success', 'type' => 'submit')) }}
+                      <a href="{{ route('dashboard.modalidad.index') }}" class="btn btn-5 btn-5a icon-return return"><span>Retornar</span></a>
+                      {{ Form::button('<span>Guardar</span>', array('class' => 'btn btn-5 btn-5a icon-save save', 'type' => 'submit')) }}
                     </div>
                 </div>
           </div>
 
         {!! Form::close() !!}
+        </div>
       </div>
     </div>
+  </div>
   </div>
 @stop
