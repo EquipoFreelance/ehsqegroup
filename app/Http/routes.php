@@ -172,6 +172,13 @@ Route::group(['middleware' => ['auth','role.marketing']], function(){
 // Sistema Docentes
 Route::group(['middleware' => ['auth','role.docente']], function(){
 
+  // Recursos de Report Card
+  Route::resource('dashboard/teacher/report-card', 'ReportCardController', ['only' => ['create','store','show','index','edit','update'] ]);
+
+  // Recursos de Assistance
+  Route::resource('dashboard/teacher/assistance', 'AssistanceController', ['only' => ['create','store','show','index','edit','update'] ]);
+
+
 });
 
 // Sistema Alumnos
