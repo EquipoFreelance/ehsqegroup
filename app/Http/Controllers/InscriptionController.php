@@ -14,7 +14,6 @@ use App\Models\PersonaTelefono;
 use App\Models\Student;
 use App\Models\Enrollment;
 
-
 use Validator;
 
 class InscriptionController extends Controller
@@ -49,8 +48,6 @@ class InscriptionController extends Controller
       'cod_prov'         => $request->get("cod_prov"),
       'cod_dist'         => $request->get("cod_dist"),
       'direccion'        => $request->get("direccion"),
-      //'fe_nacimiento'    => $request->get("fe_nacimiento"),
-      //'cod_sexo'         => $request->get("cod_sexo"),
       'num_cellphone'    => $request->get("num_cellphone"),
       'num_phone'        => $request->get("num_phone"),
       'proteccion_datos' => ($request->get("proteccion_datos") == '' || $request->get("proteccion_datos") == 0)? 0 : $request->get("proteccion_datos"),
@@ -62,7 +59,6 @@ class InscriptionController extends Controller
       // Create new student
       $student = new Student(array(
         "cod_persona" => $persona->id,
-        "cod_sede" => 1,
         "cod_sede" => 1
       ));
 

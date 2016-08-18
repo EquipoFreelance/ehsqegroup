@@ -8,6 +8,12 @@ class Student extends Model
 {
     protected $table = 'alumno';
 
+    protected $fillable = [
+        'cod_persona',
+        'cod_sede',
+        'activo'
+    ];
+
     // Relacion entre usuario y perfil
     public function persona()
     {

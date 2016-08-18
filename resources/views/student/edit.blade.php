@@ -150,9 +150,7 @@
         </div>
 
         <div class="form-group">
-
           <div class="row">
-
             <div class="col-md-12 col-sm-12 col-xs-12">
               <label for="direccion">Dirección</label>
               <input type="text" id="direccion" placeholder="Dirección" name="direccion"  class="form-control" value="{{ $student->persona->direccion }}">
@@ -160,16 +158,11 @@
               <label for="direccion" generated="true" class="error">{{ $errors->first('direccion') }}</label>
               @endif
             </div>
-
-
-
           </div>
-
         </div>
 
 
         <div class="form-group">
-
           <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-12">
               <label for="fe_nacimiento">Fecha de nacimiento</label>
@@ -181,7 +174,6 @@
               <label for="fe_nacimiento" generated="true" class="error">{{ $errors->first('fe_nacimiento') }}</label>
               @endif
             </div>
-
             <div class="col-md-6 col-sm-6 col-xs-12">
               <label for="cod_sexo">Género</label>
               {{ Form::select('cod_sexo', array('' => '-- Seleccione el sexo --','1' => 'Masculino', '2' => 'Femenino'), $student->persona->cod_sexo, ['class' => 'form-control'] ) }}
@@ -190,33 +182,25 @@
               @endif
             </div>
           </div>
-
         </div>
 
         <div class="form-group">
-
           <div class="row">
-
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            <label for="num_tel_mobile">Teléfono celular</label>
-            <input type="text" id="num_cellphone" placeholder="Teléfono celular" name="num_cellphone" class="form-control" value="{{ $student->persona->num_cellphone }}">
-            @if ($errors->has('num_cellphone'))
-            <label for="num_cellphone" generated="true" class="error">{{ $errors->first('num_cellphone') }}</label>
-            @endif
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <label for="num_tel_mobile">Teléfono celular</label>
+              <input type="text" id="num_cellphone" placeholder="Teléfono celular" name="num_cellphone" class="form-control" value="{{ $student->persona->num_cellphone }}">
+              @if ($errors->has('num_cellphone'))
+              <label for="num_cellphone" generated="true" class="error">{{ $errors->first('num_cellphone') }}</label>
+              @endif
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <label for="num_tel_fijo">Teléfono Fijo</label>
+              <input type="text" id="num_phone" placeholder="Teléfono fijo" name="num_phone" class="form-control" value="{{ $student->persona->num_phone  }}">
+              @if ($errors->has('num_phone'))
+              <label for="num_phone" generated="true" class="error">{{ $errors->first('num_phone') }}</label>
+              @endif
+            </div>
           </div>
-
-
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            <label for="num_tel_fijo">Teléfono Fijo</label>
-            <input type="text" id="num_phone" placeholder="Teléfono fijo" name="num_phone" class="form-control" value="{{ $student->persona->num_phone  }}">
-            @if ($errors->has('num_phone'))
-            <label for="num_phone" generated="true" class="error">{{ $errors->first('num_phone') }}</label>
-            @endif
-          </div>
-
-          </div>
-
-
         </div>
 
         <div class="chkContent">
@@ -228,6 +212,7 @@
         </div>
 
         <div class="ln_solid"></div>
+        
         <div class="form-group">
           <div class="form-group btncontrol">
             <a href="{{ route('dashboard.student.index') }}" class="btn btn-5 btn-5a icon-return return"><span>Retornar</span></a>

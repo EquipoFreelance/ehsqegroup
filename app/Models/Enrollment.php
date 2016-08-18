@@ -9,6 +9,16 @@ class Enrollment extends Model
 
     protected $table = 'matricula';
 
+    protected $fillable = [
+      "cod_alumno",
+      "fecha_inicio",
+      "cod_modalidad",
+      "cod_esp_tipo",
+      "cod_esp",
+      "activo"
+    ];
+
+
     // Matricula - Estudiantes
     public function student()
     {

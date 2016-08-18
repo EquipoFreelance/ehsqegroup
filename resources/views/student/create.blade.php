@@ -221,7 +221,7 @@
         <div class="form-group">
 
           <div class="form-group btncontrol">
-            <a href="{{ route('dashboard.student.index') }}" class="btn btn-default"><span>Retornar</span></a>
+            <a href="{{ route('dashboard.student.index') }}" class="btn btn-5 btn-5a icon-return return"><span>Retornar</span></a>
             <button type="submit" class="btn btn-5 btn-5a icon-save save"><span>Guardar</span></button>
           </div>
 
