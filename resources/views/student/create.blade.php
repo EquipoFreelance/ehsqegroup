@@ -11,7 +11,7 @@
   <div class="clearfix"></div>
   <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-      <br>
+
       <div class="x_panel">
         <div class="y_title">
            <h2><i class="fa fa-edit"></i> Ficha de Alumno</h2>
@@ -218,14 +218,14 @@
 
         <div class="ln_solid"></div>
 
-        <div class="form-group">
 
-          <div class="form-group btncontrol">
-            <a href="{{ route('dashboard.student.index') }}" class="btn btn-5 btn-5a icon-return return"><span>Retornar</span></a>
-            <button type="submit" class="btn btn-5 btn-5a icon-save save"><span>Guardar</span></button>
-          </div>
 
+        <div class="form-group btncontrol">
+          <a href="{{ route('dashboard.student.index') }}" class="btn btn-5 btn-5a icon-return return"><span>Retornar</span></a>
+          <button type="submit" class="btn btn-5 btn-5a icon-save save"><span>Guardar</span></button>
         </div>
+
+
         {!! Form::close() !!}
 
         </div>

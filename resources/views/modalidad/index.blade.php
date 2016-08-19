@@ -14,7 +14,7 @@
             {{ Session::get('message') }}
         </div>
     @endif
-    <h1>Grupos</h1>
+    <h1>Modalidades</h1>
     <p style="margin-top: 15px">Administrador de Modalidades.</p>
   </div>
     <div class="clearfix"></div>

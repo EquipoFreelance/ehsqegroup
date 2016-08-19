@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\Models\Modulo;
+
+use App\Models\Taller;
+
 use App\Models\Enrollment;
 
 class EnrollmentController extends Controller
@@ -28,11 +32,26 @@ class EnrollmentController extends Controller
       $enrollment->activo        = ($request->get("activo") == '' || $request->get("activo") == 0)? 0 : $request->get("activo");
       if( $enrollment->save() )
       {
+
         //Enviando mensaje
         return redirect()->route('dashboard.enrollment.edit', $enrollment->id)
                                 ->with('message', 'La matricula fue registrada satisfactoriamente');
+
       }
+
   }
+
+  function postCreateReportCard($cod_esp){
+
+    // Find Modulos
+    $modulos = Modulo::where("cod_esp", $cod_esp)->get();
+    foreach ($modulos as $key => $value) {
+        $talleres = Taller::where("cod_esp", $cod_esp)->get();
+    }
+
+
+  }
+
 
   public function create()
   {

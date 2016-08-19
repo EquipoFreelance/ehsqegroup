@@ -1,23 +1,25 @@
-@extends('layouts.app_internas')
+@extends('dashboard.layouts.master')
 
-@section('title', 'Dashboard - Secretaria Académica Módulos')
+@section('title', Auth::user()->role->nom_role  )
 
 @section('sidebar_menu')
-@include('dashboard.dashboard_sa_menu')
+  @include('dashboard.menus.' . Auth::user()->role->menu )
 @stop
 
 @section('content')
-<div class="clearfix"></div>
-<div class="row">
+<div class="form_content_block">
+  <div class="clearfix"></div>
+  <div class="row">
   <div class="col-md-12 col-sm-12 col-xs-12">
-    <br>
-    <div class="x_panel">
-      <div class="x_title">
-        <h1 style="font-size: 18px">Nuevo Módulo <small> (En este interior usted podrá ingresar un nuevo módulo, editar los datos ingresados)</small></h1>
-        <div class="clearfix"></div>
-      </div>
-      <br>
 
+    <div class="x_panel">
+
+      <div class="y_title">
+         <h2><i class="fa fa-edit"></i> Nuevo Módulo</h2>
+         <div class="clearfix"></div>
+      </div>
+
+      <div class="x_content">
       {!! Form::open(['route' => 'dashboard.modulo.store', 'class' => 'form-horizontal form-label-left']) !!}
 
       @if(Session::has('message'))
@@ -28,8 +30,8 @@
       @endif
 
       <div class="form-group">
-        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nombre">Nombre</label>
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <label for="nombre">Nombre</label>
           <input type="text" id="nombre" placeholder="Nombre" name="nombre"  class="form-control" value="{{ old('nombre') }}">
           @if ($errors->has('nombre'))
           <label for="nombre" generated="true" class="error">{{ $errors->first('nombre') }}</label>
@@ -38,8 +40,8 @@
       </div>
 
       <div class="form-group">
-        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nom_corto">Nombre corto</label>
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <label for="nom_corto">Nombre corto</label>
           <input type="text" id="nom_corto" placeholder="Nombre corto" name="nom_corto"  class="form-control" value="{{ old('nom_corto') }}">
           @if ($errors->has('nom_corto'))
           <label for="nom_corto" generated="true" class="error">{{ $errors->first('nom_corto') }}</label>
@@ -48,8 +50,8 @@
       </div>
 
       <div class="form-group">
-        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="nom_corto">Descripción</label>
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <label for="nom_corto">Descripción</label>
           <textarea name="descripcion" id="descripcion" class="form-control" placeholder="Descripción" >{{ old('descripcion') }}</textarea>
           @if ($errors->has('descripcion'))
           <label for="descripcion" generated="true" class="error">{{ $errors->first('nom_corto') }}</label>
@@ -58,8 +60,8 @@
       </div>
 
       <div class="form-group">
-        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="cod_esp">Especialización</label>
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <label for="cod_esp">Especialización</label>
           {{ Form::select('cod_esp', $especializacion, old('cod_esp'), ['class' => 'form-control'] ) }}
           @if ($errors->has('cod_esp'))
           <label for="cod_esp" generated="true" class="error">{{ $errors->first('cod_esp') }}</label>
@@ -67,9 +69,16 @@
         </div>
       </div>
 
+      <div class="checkbox">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <label><input type="checkbox">Taller 1</label><br>
+            <label><input type="checkbox">Taller 2</label>
+          </div>
+      </div>
+
       <div class="form-group">
-        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="activo">Estado</label>
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <label for="activo">Estado</label>
           {{ Form::select('activo', ['1' => 'Activo','0' => 'No Activo'], old('activo'), ['class' => 'form-control'] ) }}
           @if ($errors->has('activo'))
           <label for="activo" generated="true" class="error">{{ $errors->first('activo') }}</label>
@@ -78,19 +87,18 @@
       </div>
 
       <div class="ln_solid"></div>
-      <div class="form-group">
-        <label class="control-label col-md-4 col-sm-4 col-xs-12"></label>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-          <div class="form-group btncontrol">
-            <a href="{{ route('dashboard.modulo.index') }}" class="btn btn-default">Retornar</a>
-            <!--<a href="{{ route('dashboard.tesp.index') }}" class="btn btn-danger cancel_btn">Cancelar</a>-->
-            <button type="submit" class="btn btn-success">Guardar</button>
-          </div>
-        </div>
+
+      <div class="form-group btncontrol">
+        <a href="{{ route('dashboard.modulo.index') }}" class="btn btn-5 btn-5a icon-return return"><span>Retornar</span></a>
+        <button type="submit" class="btn btn-5 btn-5a icon-save save"><span>Guardar</span></button>
       </div>
+
+
       {!! Form::close() !!}
+
+      </div>
     </div>
   </div>
 </div>
-
+</div>
 @stop
