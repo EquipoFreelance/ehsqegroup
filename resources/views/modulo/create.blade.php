@@ -71,8 +71,15 @@
 
       <div class="checkbox">
           <div class="col-md-12 col-sm-12 col-xs-12">
-            <label><input type="checkbox">Taller 1</label><br>
-            <label><input type="checkbox">Taller 2</label>
+            {{ $talleres }}
+            @foreach ($talleres as $taller)
+              <label>
+                {{ Form::checkbox('cod_taller[]', $taller->id, null ,array('id' => 'cod_taller_'.$taller->id) ) }}
+                {{ $taller['id'] }}
+                <!--{{ Form::label('cod_taller_'.$taller['id'], $taller['id']) }}<br>-->
+              </label>
+            @endforeach
+
           </div>
       </div>
 

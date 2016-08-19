@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Modulo;
 use App\Models\Especializacion;
+use App\Models\Taller;
 use App\Http\Requests;
 use Validator;
 use Illuminate\Http\Response;
@@ -32,7 +33,10 @@ class ModuloController extends Controller
      */
     public function create()
     {
-        $data = ['especializacion' => Especializacion::lists('nom_esp', 'id')];
+        $data = [
+                'especializacion' => Especializacion::lists('nom_esp', 'id'),
+                'talleres' => Taller::lists('id','nom_taller')
+                ];
         return view('modulo.create', $data);
     }
 
@@ -207,4 +211,15 @@ class ModuloController extends Controller
 
       }
     }
+
+    public function getTalleres(){
+
+      $talleres = Taller::all();
+      /*foreach ($variable as $key => $value) {
+        $semana[] = array("cod_dia" => 1, "dia" => "Lunes");
+      }*/
+      return $talleres->toArray();
+
+    }
+
 }
