@@ -1,11 +1,4 @@
 @extends('dashboard.layouts.master')
-
-@section('title', Auth::user()->role->nom_role  )
-
-@section('sidebar_menu')
-  @include('dashboard.menus.' . Auth::user()->role->menu )
-@stop
-
 @section('content')
 <div class="">
   <div class="page-title">
@@ -30,20 +23,24 @@
           <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
             <thead>
               <tr>
-                <th>Código</th>
-                <th>Especialización</th>
+                <!--<th>Código</th>-->
                 <th>Módulo</th>
+                <th>Modalidad</th>
+                <th>Tipo</th>
+                <th>Especialización</th>
                 <th>Estado</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
               @foreach ($modulos as $modulo)
-                  <tr data-id="{{ $modulo->id }}">
-                    <td class="data-cod" data-cod="{{ $modulo->id }}">{{ $modulo->id }}</td>
-                    <td class="data-tipo" data-tipo="{{ $modulo->especializacion->nom_esp }}">{{ $modulo->especializacion->nom_esp }}</td>
-                    <td class="data-name" data-name="{{ $modulo->nombre }}">{{ $modulo->nombre }}</td>
-                    <td class="data-acti" data-acti="{{ $modulo->activo }}">
+                  <tr>
+                    <!--<td>{{ $modulo->id }}</td>-->
+                    <td>{{ $modulo->nombre }}</td>
+                    <td>{{ $modulo->modalidad->nom_mod }}</td>
+                    <td>{{ $modulo->tipo_especializacion->nom_esp_tipo }}</td>
+                    <td>{{ $modulo->especializacion->nom_esp }}</td>
+                    <td>
                       @if($modulo->activo == '1') <span class="label label-success">Activo</span> @else <span class="label label-danger">No activo</span> @endif
                     </td>
                     <td><a href="{{ route('dashboard.modulo.edit', $modulo->id) }}" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a></td>

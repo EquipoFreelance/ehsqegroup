@@ -1,12 +1,11 @@
-@extends('layouts.app_internas')
-
-@section('title', 'Dashboard - Secretaria Académica Especialización')
+@extends('dashboard.layouts.master')
 
 @section('sidebar_menu')
-@include('dashboard.dashboard_sa_menu')
+  @include('dashboard.menus.' . Auth::user()->role->menu )
 @stop
 
 @section('content')
+<div class="">
   <div class="page-title">
     @if(Session::has('message'))
         <div class="alert alert-info">
@@ -22,8 +21,11 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
       <div class="x_panel">
 
-        <a href="{{ route('dashboard.esp.create') }}" class="btn btn-success">Agregar</a>
-        <div class="ln_solid"></div>
+        <div class="x_title">
+          <a href="{{ route('dashboard.esp.create') }}" class="btn btn-5 btn-5a icon-add add"><span>Agregar</span></a>
+          <div class="clearfix"></div>
+        </div>
+
         <div class="x_content">
           <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
             <thead>
@@ -37,16 +39,16 @@
             </thead>
             <tbody>
               @foreach ($esps as $esp)
-                  <tr data-id="{{ $esp->id }}">
-                    <td class="data-cod" data-cod="{{ $esp->id }}">{{ $esp->id }}</td>
-                    <td class="data-tipo" data-tipo="{{ $esp->esptipo->nom_esp_tipo }}">{{ $esp->esptipo->nom_esp_tipo }}</td>
-                    <td class="data-name" data-name="{{ $esp->nom_esp_tipo }}">{{ $esp->nom_esp }}</td>
-                    <td class="data-acti" data-acti="{{ $esp->activo }}">
+                  <tr>
+                    <td>{{ $esp->id }}</td>
+                    <td>{{ $esp->esptipo->nom_esp_tipo }}</td>
+                    <td>{{ $esp->nom_esp }}</td>
+                    <td>
                       <span class="label @if($esp->activo == '1') label-success @else label-danger @endif ">
                         @if($esp->activo == '1') Activo @else No Activo @endif
                       </span>
                     </td>
-                    <td><a href="{{ route('dashboard.esp.edit', $esp->id) }}" class="btn btn-link">Editar</a></td>
+                    <td><a href="{{ route('dashboard.esp.edit', $esp->id) }}" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>
                   </tr>
               @endforeach
             </tbody>
@@ -56,5 +58,5 @@
     </div>
     <!-- FINAL TABLA FINAL -->
   </div>
-
+</div>
 @stop

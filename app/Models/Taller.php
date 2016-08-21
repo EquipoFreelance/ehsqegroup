@@ -23,4 +23,8 @@ class Taller extends Model
     
     protected $dates = ['deleted_at'];
 
+    public function modulos(){
+        return $this->belongsToMany('App\Models\Modulo', 'modulo_taller', 'cod_taller', 'cod_modulo');
+    }
+    
 }

@@ -1,11 +1,4 @@
 @extends('dashboard.layouts.master')
-
-@section('title', Auth::user()->role->nom_role  )
-
-@section('sidebar_menu')
-  @include('dashboard.menus.' . Auth::user()->role->menu )
-@stop
-
 @section('content')
 <div class="form_content_block">
   <div class="clearfix"></div>
@@ -15,7 +8,7 @@
     <div class="x_panel">
 
       <div class="y_title">
-         <h2><i class="fa fa-edit"></i> Nuevo Módulo</h2>
+         <h2><i class="fa fa-edit"></i>Nuevo</h2>
          <div class="clearfix"></div>
       </div>
 
@@ -30,66 +23,106 @@
       @endif
 
       <div class="form-group">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-          <label for="nombre">Nombre</label>
-          <input type="text" id="nombre" placeholder="Nombre" name="nombre"  class="form-control" value="{{ old('nombre') }}">
-          @if ($errors->has('nombre'))
-          <label for="nombre" generated="true" class="error">{{ $errors->first('nombre') }}</label>
-          @endif
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-          <label for="nom_corto">Nombre corto</label>
-          <input type="text" id="nom_corto" placeholder="Nombre corto" name="nom_corto"  class="form-control" value="{{ old('nom_corto') }}">
-          @if ($errors->has('nom_corto'))
-          <label for="nom_corto" generated="true" class="error">{{ $errors->first('nom_corto') }}</label>
-          @endif
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-          <label for="nom_corto">Descripción</label>
-          <textarea name="descripcion" id="descripcion" class="form-control" placeholder="Descripción" >{{ old('descripcion') }}</textarea>
-          @if ($errors->has('descripcion'))
-          <label for="descripcion" generated="true" class="error">{{ $errors->first('nom_corto') }}</label>
-          @endif
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-          <label for="cod_esp">Especialización</label>
-          {{ Form::select('cod_esp', $especializacion, old('cod_esp'), ['class' => 'form-control'] ) }}
-          @if ($errors->has('cod_esp'))
-          <label for="cod_esp" generated="true" class="error">{{ $errors->first('cod_esp') }}</label>
-          @endif
-        </div>
-      </div>
-
-      <div class="checkbox">
+        <div class="row">
           <div class="col-md-12 col-sm-12 col-xs-12">
-            {{ $talleres }}
-            @foreach ($talleres as $taller)
-              <label>
-                {{ Form::checkbox('cod_taller[]', $taller->id, null ,array('id' => 'cod_taller_'.$taller->id) ) }}
-                {{ $taller['id'] }}
-                <!--{{ Form::label('cod_taller_'.$taller['id'], $taller['id']) }}<br>-->
-              </label>
-            @endforeach
-
+            <label for="cod_modalidad">Modalidad</label>
+            <select name="cod_modalidad" id="cod_modalidad" class="form-control">
+              <option value=""></option>
+            </select>
+            @if ($errors->has('cod_modalidad'))
+              <label for="cod_modalidad" generated="true" class="error">{{ $errors->first('cod_modalidad') }}</label>
+            @endif
           </div>
+        </div>
       </div>
 
       <div class="form-group">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-          <label for="activo">Estado</label>
-          {{ Form::select('activo', ['1' => 'Activo','0' => 'No Activo'], old('activo'), ['class' => 'form-control'] ) }}
-          @if ($errors->has('activo'))
-          <label for="activo" generated="true" class="error">{{ $errors->first('activo') }}</label>
-          @endif
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <label for="cod_esp_tipo">Tipo de Especialización</label>
+            <select name="cod_esp_tipo" id="cod_esp_tipo" class="form-control">
+              <option value=""></option>
+            </select>
+            @if ($errors->has('cod_esp_tipo'))
+              <label for="cod_esp_tipo" generated="true" class="error">{{ $errors->first('cod_esp_tipo') }}</label>
+            @endif
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <label for="cod_esp">Especialización</label>
+            <select name="cod_esp" id="cod_esp" class="form-control">
+              <option value="">-- Seleccione la especialización --</option>
+            </select>
+            @if ($errors->has('cod_esp'))
+              <label for="cod_esp" generated="true" class="error">{{ $errors->first('cod_esp') }}</label>
+            @endif
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" placeholder="Nombre" name="nombre"  class="form-control" value="{{ old('nombre') }}">
+            @if ($errors->has('nombre'))
+            <label for="nombre" generated="true" class="error">{{ $errors->first('nombre') }}</label>
+            @endif
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <label for="nom_corto">Nombre corto</label>
+            <input type="text" id="nom_corto" placeholder="Nombre corto" name="nom_corto"  class="form-control" value="{{ old('nom_corto') }}">
+            @if ($errors->has('nom_corto'))
+            <label for="nom_corto" generated="true" class="error">{{ $errors->first('nom_corto') }}</label>
+            @endif
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <label for="nom_corto">Descripción</label>
+            <textarea name="descripcion" id="descripcion" class="form-control" placeholder="Descripción" >{{ old('descripcion') }}</textarea>
+            @if ($errors->has('descripcion'))
+            <label for="descripcion" generated="true" class="error">{{ $errors->first('nom_corto') }}</label>
+            @endif
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+              <label for="num_taller">Talleres</label>
+              <select name="num_taller" id="num_taller" class="form-control">
+                <option value="" >-- Seleccione el número de Talleres --</option>
+                @foreach ($talleres as $key => $value)
+                <option value="{{ $key }}">{{ $key }}</option>
+                @endforeach
+              </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <label for="activo">Estado</label>
+            {{ Form::select('activo', ['1' => 'Activo','0' => 'No Activo'], old('activo'), ['class' => 'form-control'] ) }}
+            @if ($errors->has('activo'))
+            <label for="activo" generated="true" class="error">{{ $errors->first('activo') }}</label>
+            @endif
+          </div>
         </div>
       </div>
 
@@ -108,4 +141,8 @@
   </div>
 </div>
 </div>
+@stop
+
+@section('custom_js')
+  <script src="{{ URL::asset('assets/js/app.js') }}"></script>
 @stop

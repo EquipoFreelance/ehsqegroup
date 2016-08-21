@@ -57,35 +57,33 @@ class EspecializacionController extends Controller
 
         // Reglas de validación
         $rules = [
-            'nom_esp'     => 'required',
-            'nom_corto'   => 'required',
-            'cod_esp_tipo'=> 'required',
-            'descripcion' => 'required',
-            'activo'      => 'required|integer'//|min:0|min:1
+            'nom_esp'      => 'required',
+            'nom_corto'    => 'required',
+            'cod_esp_tipo' => 'required',
+            'descripcion'  => 'required',
+            'activo'       => 'required|integer'
         ];
 
         // Mensaje Personalizado
         $messages = [
-            'nom_esp.required'     => 'Es necesario ingresar el nombre de la especialización',
-            'nom_corto.required'   => 'Es necesario ingresar el nombre corto de la especialización',
-            'cod_esp_tipo.required'=> 'Es necesario indicar el tipo de especialización',
-            'descripcion.required' => 'Es necesario ingresar una descripción breve de la especialización',
-            'activo.required'      => 'Es necesario indicar si el tipo de especialización estará activo o inactivo',
-            'activo.integer'       => 'Solo esta permitido que sea números enteros',
-            //'activo.min'           => 'Solo esta permitido valor enteros +',
-            //'activo.max'           => 'Solo esta permitido valor enteros +'
+            'nom_esp.required'      => 'Es necesario ingresar el nombre de la especialización',
+            'nom_corto.required'    => 'Es necesario ingresar el nombre corto de la especialización',
+            'cod_esp_tipo.required' => 'Es necesario indicar el tipo de especialización',
+            'descripcion.required'  => 'Es necesario ingresar una descripción breve de la especialización',
+            'activo.required'       => 'Es necesario indicar si el tipo de especialización estará activo o inactivo',
+            'activo.integer'        => 'Solo esta permitido que sea números enteros'
         ];
 
         // Enviando los parametros necesarios para la validación
         $validator = Validator::make($request->all(), $rules, $messages);
 
         // Si existen errores el Sistema muestra un mensaje
-        if ($validator->fails()){
+        if ( $validator->fails() ){
 
           // Enviando Mensaje
           return redirect('/dashboard/esp/create')
-                                  ->withErrors($validator)
-                                  ->withInput();
+              ->withErrors($validator)
+              ->withInput();
 
         } else {
 
@@ -93,6 +91,7 @@ class EspecializacionController extends Controller
           $esp               = new Especializacion;
           $esp->nom_esp      = $request->get("nom_esp");
           $esp->nom_corto    = AppHelper::strNomCorto( Str::slug($request->get("nom_corto"), '_') );
+          $esp->cod_mod      = $request->get("cod_mod");
           $esp->cod_esp_tipo = $request->get("cod_esp_tipo");
           $esp->descripcion  = $request->get("descripcion");
           $esp->activo       = $request->get("activo");
@@ -102,7 +101,7 @@ class EspecializacionController extends Controller
 
               //Enviando mensaje
               return redirect('/dashboard/esp')
-                                      ->with('message', 'La Especialización se ha creado satisfactoriamente');
+                  ->with('message', 'La Especialización se ha creado satisfactoriamente');
 
           }
 

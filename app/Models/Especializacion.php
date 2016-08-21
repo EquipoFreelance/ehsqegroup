@@ -16,7 +16,13 @@ class Especializacion extends Model
 
     // Atributos con valores por defecto
     protected $fillable = [
-        'nom_esp', 'activo'
+        'nom_esp',
+        'nom_corto',
+        'cod_mod',
+        'cod_esp_tipo',
+        'descripcion',
+        'activo',
+        'created_at'
     ];
 
     // Una especializacion pertenece a un tipo de especializacion

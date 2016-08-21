@@ -7,6 +7,7 @@ use App\Models\Modulo;
 use App\Models\Especializacion;
 use App\Models\Taller;
 use App\Http\Requests;
+use App\Http\Requests\StoreModuloRequest;
 use Validator;
 use Illuminate\Http\Response;
 use Carbon\Carbon;
@@ -22,7 +23,7 @@ class ModuloController extends Controller
      */
     public function index()
     {
-      $modulos = Modulo::where("deleted", '=', 0)->get();
+      $modulos = Modulo::where("deleted", '=', 0)->orderBy('id', 'desc')->get();
       return view('modulo.index', array('modulos' => $modulos));
     }
 
@@ -35,7 +36,7 @@ class ModuloController extends Controller
     {
         $data = [
                 'especializacion' => Especializacion::lists('nom_esp', 'id'),
-                'talleres' => Taller::lists('id','nom_taller')
+                'talleres'        => Taller::lists('nom_taller','id')
                 ];
         return view('modulo.create', $data);
     }
@@ -46,59 +47,28 @@ class ModuloController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreModuloRequest $request)
     {
-        /* Aplicando validación al Request */
 
-        // Reglas de validación
-        $rules = [
-            'nombre'      => 'required',
-            'nom_corto'   => 'required',
-            'cod_esp'     => 'required',
-            'descripcion' => 'required',
-            'activo'      => 'required|integer'//|min:0|min:1
-        ];
+        // Registramos el nuevo módulo
+        $obj                = new Modulo;
+        $obj->cod_modalidad = $request->get("cod_modalidad");
+        $obj->cod_esp_tipo  = $request->get("cod_esp_tipo");
+        $obj->cod_esp       = $request->get("cod_esp");
+        $obj->nombre        = $request->get("nombre");
+        $obj->nom_corto     = AppHelper::strNomCorto( Str::slug($request->get("nom_corto"), '_') );
+        $obj->descripcion   = $request->get("descripcion");
+        $obj->activo        = $request->get("activo");
+        $obj->num_taller    = $request->get("num_taller");
+        $obj->created_at    = Carbon::now();
 
-        // Mensaje de validación Personalizado
-        $messages = [
-            'nombre.required'      => 'Es necesario ingresar el nombre del módulo',
-            'nom_corto.required'   => 'Es necesario ingresar el nombre corto del módulo',
-            'cod_esp.required'     => 'Es necesario asignar la especialización',
-            'descripcion.required' => 'Es necesario ingresar una descripción breve del módulo',
-            'activo.required'      => 'Es necesario indicar si el el módulo estará activo o inactivo',
-            'activo.integer'       => 'Solo esta permitido que sea números enteros'
-        ];
+        if($obj->save()){
 
-        // Enviando los parametros necesarios para la validación
-        $validator = Validator::make($request->all(), $rules, $messages);
-
-        // Si existen errores el Sistema muestra un mensaje
-        if ($validator->fails()){
-
-          // Enviando Mensaje
-          return redirect()->route('dashboard.modulo.create')
-                                  ->withErrors($validator)
-                                  ->withInput();
-        } else {
-
-          // Registramos el nuevo módulo
-          $obj               = new Modulo;
-          $obj->nombre       = $request->get("nombre");
-          $obj->nom_corto    = AppHelper::strNomCorto( Str::slug($request->get("nom_corto"), '_') );
-          $obj->cod_esp      = $request->get("cod_esp");
-          $obj->descripcion  = $request->get("descripcion");
-          $obj->activo       = $request->get("activo");
-          $obj->created_at   = Carbon::now();
-
-          if($obj->save()){
-
-              //Enviando mensaje
-              return redirect()->route('dashboard.modulo.index')
-                                      ->with('message', 'El módulo se ha creado satisfactoriamente');
-
-          }
+            //Enviando mensaje
+            return redirect()->route('dashboard.modulo.index')->with('message', 'El módulo se ha creado satisfactoriamente');
 
         }
+
     }
 
     /**
@@ -123,7 +93,8 @@ class ModuloController extends Controller
       $modulo = Modulo::find($id);
       $data = [
               "modulo"          => $modulo,
-              'especializacion' => Especializacion::lists('nom_esp', 'id')
+              "especializacion" => Especializacion::lists('nom_esp', 'id'),
+              "talleres"        => Taller::lists('nom_taller','id')
           ];
       return view('modulo.edit', $data);
     }
@@ -135,59 +106,28 @@ class ModuloController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreModuloRequest $request, $id)
     {
-      /* Aplicando validación al Request */
-
-      // Reglas de validación
-      $rules = [
-          'nombre'      => 'required',
-          'nom_corto'   => 'required',
-          'cod_esp'     => 'required',
-          'descripcion' => 'required',
-          'activo'      => 'required|integer'//|min:0|min:1
-      ];
-
-      // Mensaje de validación Personalizado
-      $messages = [
-          'nombre.required'      => 'Es necesario ingresar el nombre del módulo',
-          'nom_corto.required'   => 'Es necesario ingresar el nombre corto del módulo',
-          'cod_esp.required'     => 'Es necesario asigna la especialización',
-          'descripcion.required' => 'Es necesario ingresar una descripción breve del módulo',
-          'activo.required'      => 'Es necesario indicar si el el módulo estará activo o inactivo',
-          'activo.integer'       => 'Solo esta permitido que sea números enteros'
-      ];
-
-      // Enviando los parametros necesarios para la validación
-      $validator = Validator::make($request->all(), $rules, $messages);
-
-      // Si existen errores el Sistema muestra un mensaje
-      if ($validator->fails()){
-
-        // Enviando Mensaje
-        return redirect()->route('dashboard.modulo.edit', $id)
-                                ->withErrors($validator)
-                                ->withInput();
-      } else {
 
         // Actualizando el módulo seleccionado
-        $obj               = Modulo::find($id);
-        $obj->nombre       = $request->get("nombre");
-        $obj->nom_corto    = AppHelper::strNomCorto( Str::slug($request->get("nom_corto"), '_') );
-        $obj->cod_esp      = $request->get("cod_esp");
-        $obj->descripcion  = $request->get("descripcion");
-        $obj->activo       = $request->get("activo");
-        $obj->updated_at   = Carbon::now();
+        $obj                = Modulo::find($id);
+        $obj->cod_modalidad = $request->get("cod_modalidad");
+        $obj->cod_esp_tipo  = $request->get("cod_esp_tipo");
+        $obj->cod_esp       = $request->get("cod_esp");
+        $obj->nombre        = $request->get("nombre");
+        $obj->nom_corto     = AppHelper::strNomCorto( Str::slug($request->get("nom_corto"), '_') );
+        $obj->descripcion   = $request->get("descripcion");
+        $obj->activo        = $request->get("activo");
+        $obj->num_taller    = $request->get("num_taller");
+        $obj->created_at    = Carbon::now();
 
         if($obj->save()){
 
             //Enviando mensaje
-            return redirect()->route('dashboard.modulo.index')
-                                    ->with('message', 'El módulo se ha actualizado satisfactoriamente');
+            return redirect()->route('dashboard.modulo.index')->with('message', 'El módulo se ha actualizado satisfactoriamente');
 
         }
 
-      }
 
     }
 
@@ -212,14 +152,5 @@ class ModuloController extends Controller
       }
     }
 
-    public function getTalleres(){
-
-      $talleres = Taller::all();
-      /*foreach ($variable as $key => $value) {
-        $semana[] = array("cod_dia" => 1, "dia" => "Lunes");
-      }*/
-      return $talleres->toArray();
-
-    }
 
 }

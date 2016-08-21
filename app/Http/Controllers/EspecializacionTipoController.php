@@ -20,7 +20,7 @@ class EspecializacionTipoController extends Controller
     public function index()
     {
 
-        $esps_types = EspecializacionTipo::where("deleted", '=', 0)->get();
+        $esps_types = EspecializacionTipo::where("deleted", '=', 0)->orderBy('id', 'desc')->get();
         return view('especializacion_tipo.index', array('esps_types' => $esps_types));
 
     }
