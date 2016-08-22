@@ -1,12 +1,7 @@
-@extends('layouts.app_internas')
-
-@section('title', 'Dashboard - Secretaria Académica Docentes')
-
-@section('sidebar_menu')
-@include('dashboard.dashboard_sa_menu')
-@stop
+@extends('dashboard.layouts.master')
 
 @section('content')
+<div class="">
   <div class="page-title">
     @if(Session::has('message'))
         <div class="alert alert-info">
@@ -22,16 +17,18 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
       <div class="x_panel">
 
-        <a href="{{ route('dashboard.docente.create') }}" class="btn btn-success">Agregar</a>
-        <div class="ln_solid"></div>
-        <div class="x_content">
+          <div class="x_title">
+              <a href="{{ route('dashboard.docente.create') }}" class="btn btn-5 btn-5a icon-add add"><span>Agregar</span></a>
+              <div class="clearfix"></div>
+          </div>
+
+          <div class="x_content">
           <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
             <thead>
               <tr>
                  <th>Código</th>
-                 <th>Foto</th>
                  <th>Nombre</th>
-                 <th>Apellido</th>
+                 <th>Apellidos</th>
                  <th>Estado</th>
                  <th>Cursos asignados</th>
                  <th></th>
@@ -41,12 +38,17 @@
               @foreach ($docentes as $docente)
                 <tr>
                    <td>{{ $docente->id }}</td>
-                   <td><img src="{{ URL::asset('assets/images/users/img.jpg') }}" width="40px" height="40px"></td>
                    <td>{{ $docente->persona->nombre }}</td>
                    <td>{{ $docente->persona->ape_pat }} {{ $docente->persona->ape_mat }}</td>
-                   <td>@if($docente->activo == '1') Activo @else No Activo @endif</td>
-                   <td><a href="javascript:void(0)" class="btn btn-link">Ver cursos</a></td>
-                   <td><a href="{{ route('dashboard.docente.edit', $docente->id) }}" class="btn btn-link" data-toggle="modal" data-target="">Editar</a></td>
+                   <td>
+                       @if($docente->activo == '1')
+                           <span class="label label-success">Activo</span>
+                       @else
+                           <span class="label label-danger">No activo</span>
+                       @endif
+                   </td>
+                   <td><a href="javascript:void(0)" class="btn btn-5 btn-5a icon-edit edit"><span>Ver cursos</span></a></td>
+                   <td><a href="{{ route('dashboard.docente.edit', $docente->id) }}" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a></td>
                 </tr>
               @endforeach
             </tbody>
@@ -56,5 +58,5 @@
     </div>
     <!-- FINAL TABLA FINAL -->
   </div>
-
+</div>
 @stop
