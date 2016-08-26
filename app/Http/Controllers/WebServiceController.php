@@ -24,6 +24,9 @@ use App\Models\Enrollment;
 
 use App\Models\Student;
 
+use App\Models\AcademicSchedule;
+
+
 class WebServiceController extends Controller
 {
   /**
@@ -221,5 +224,12 @@ class WebServiceController extends Controller
         return $response;
     }
 
+    public function wsAcademicSchedule(){
+
+        $schedules = AcademicSchedule::select('start_date as name', 'id')->orderBy('id', 'desc')->get()->toJson();
+        //$response = response()->json(["items" => $schedules->toArray()], 200);
+        return $schedules;
+
+    }
 
 }

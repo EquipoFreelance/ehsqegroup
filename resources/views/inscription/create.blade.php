@@ -32,11 +32,7 @@
             <div class="row">
               <div class="col-md-6 col-sm-6 col-xs-12">
                 <label for="fecha_inicio">Fecha de inicio</label>
-                <select name="fecha_inicio" id="fecha_inicio" class="form-control">
-                  <option value="">Fecha de inicio</option>
-                  <option value="01-08-2016">01-08-2016</option>
-                  <option value="02-08-2016">02-08-2016</option>
-                </select>
+                <select name="fecha_inicio" id="fecha_inicio" class="form-control"></select>
                 @if ($errors->has('fecha_inicio'))
                 <label for="fecha_inicio" generated="true" class="error">{{ $errors->first('fecha_inicio') }}</label>
                 @endif
@@ -244,5 +240,5 @@
 
 @section('custom_js')
   <script src="{{ URL::asset('assets/js/app.js') }}"></script>
-  <!--<script src="{{ URL::asset('assets/js/app-students.js') }}"></script>-->
+  <script src="{{ URL::asset('assets/js/app-academic-schedule.js') }}"></script>
 @stop

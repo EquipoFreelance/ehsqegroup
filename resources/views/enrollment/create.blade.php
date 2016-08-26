@@ -19,7 +19,7 @@
         @if(Session::has('message'))
         <div class="alert alert-success alert-dismissible fade in" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-          <strong>¡Perfecto!</strong>{{ Session::get('message') }}
+          {{ Session::get('message') }}
         </div>
         @endif
 
@@ -41,11 +41,7 @@
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
               <label for="fecha_inicio">Fecha de Inicio</label>
-              <select class="form-control" name="fecha_inicio" id="fecha_inicio" data-id-default="{{ old('fecha_inicio') }}">
-                <option value="">-- Seleccione la fecha de inicio --</option>
-                <option value="2016-07-16">2016-07-16</option>
-                <option value="2016-07-12">2016-07-12</option>
-              </select>
+              <select name="fecha_inicio" id="fecha_inicio" class="form-control"></select>
               @if ($errors->has('fecha_inicio'))
               <label for="cod_modalidad" generated="true" class="error">{{ $errors->first('fecha_inicio') }}</label>
               @endif
@@ -118,6 +114,7 @@
 
 @section('custom_js')
   <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/app-academic-schedule.js') }}"></script>
   <script>
     $(".cod_alumno").select2({
       theme: "classic",
@@ -147,4 +144,5 @@
       console.log($('.cod_alumno').val());
     });
   </script>
+
 @stop

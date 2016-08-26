@@ -40,7 +40,17 @@ class Enrollment extends Model
     // Matricula - Modalidad
     public function modality()
     {
-      return $this->belongsTo("App\Models\Modalidad", "cod_modalidad", "id");
+        return $this->belongsTo("App\Models\Modalidad", "cod_modalidad", "id");
+    }
+
+    // Matricula - Boleta de Notas
+    public function report_card(){
+        return $this->hasMany("App\Models\ReportCard", "cod_matricula", "id");
+    }
+
+    // Matricula - Cronograma academico
+    public function academic_schedule(){
+        return $this->hasMany("App\Models\ReportCard", "cod_matricula", "id");
     }
 
 

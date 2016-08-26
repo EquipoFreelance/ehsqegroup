@@ -241,5 +241,5 @@
 
 @section('custom_js')
   <script src="{{ URL::asset('assets/js/app.js') }}"></script>
-  <!--<script src="{{ URL::asset('assets/js/app-students.js') }}"></script>-->
+  <script src="{{ URL::asset('assets/js/app-academic-schedule.js') }}"></script>
 @stop
