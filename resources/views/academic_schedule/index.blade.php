@@ -8,8 +8,8 @@
                     {{ Session::get('message') }}
                 </div>
             @endif
-            <h1>Cronograma académico</h1>
-            <p style="margin-top: 15px">Administrador Cronograma académicos.</p>
+            <h1>Periodos académicos</h1>
+            <p style="margin-top: 15px">Administrador Periodos académicos.</p>
         </div>
         <div class="clearfix"></div>
         <div class="row">
