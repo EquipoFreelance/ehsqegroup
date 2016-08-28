@@ -18,7 +18,7 @@
                 <div class="x_panel">
 
                     <div class="x_title">
-                        <a href="{{ route('dashboard.academic_schedule.create') }}" class="btn btn-5 btn-5a icon-add add"><span>Agregar</span></a>
+                        <a href="{{ route('dashboard.academic_period.create') }}" class="btn btn-5 btn-5a icon-add add"><span>Agregar</span></a>
                         <div class="clearfix"></div>
                     </div>
 
@@ -29,6 +29,7 @@
                                 <th>Id</th>
                                 <th>Fecha de inicio</th>
                                 <th>Fecha de finalización</th>
+                                <th>Activo</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -38,7 +39,12 @@
                                     <td>{{ $schedule->id }}</td>
                                     <td>{{ $schedule->start_date }}</td>
                                     <td>{{ $schedule->finish_date }}</td>
-                                    <td><a href="{{ route('dashboard.academic_schedule.edit', $schedule->id) }}" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a></td>
+                                    <td>
+                                        <span class="label @if($schedule->active == '1') label-success @else label-danger @endif ">
+                                            @if($schedule->active == '1') Activo @else No Activo @endif
+                                        </span>
+                                    </td>
+                                    <td><a href="{{ route('dashboard.academic_period.edit', $schedule->id) }}" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a></td>
                                 </tr>
                             @endforeach
                             </tbody>

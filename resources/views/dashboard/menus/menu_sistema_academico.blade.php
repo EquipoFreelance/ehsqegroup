@@ -4,8 +4,10 @@
       <div class="clear"></div>
       <ul class="nav side-menu">
          <li class="title">Menú principal</li>
+         <li><a href="{{ route('dashboard.academic_period.index') }}"><i class="fa fa-tasks"></i> Periodos académicos</a></li>
+
          <li><a href="{{ route('dashboard.student.index') }}"><i class="fa fa-tasks"></i> Alumnos</a></li>
-         <li><a href="{{ route('dashboard.academic_schedule.index') }}"><i class="fa fa-tasks"></i> Periodos académicos</a></li>
+
          <li><a href="{{ route('dashboard.enrollment.index') }}"><i class="fa fa-tasks"></i> Matriculas</a></li>
          <li><a href="{{ route('dashboard.modalidad.index') }}"><i class="fa fa-tasks"></i> Modalidades</a></li>
          <li><a href="{{ route('dashboard.tesp.index') }}"><i class="fa fa-tasks"></i> Tipo de especializaciones</a></li>

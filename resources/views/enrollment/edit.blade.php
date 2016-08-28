@@ -25,10 +25,10 @@
         <div class="form-group">
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
-              <label for="fecha_inicio">Fecha de Inicio</label>
-              <select name="fecha_inicio" id="fecha_inicio" class="form-control"></select>
-              @if ($errors->has('fecha_inicio'))
-              <label for="cod_modalidad" generated="true" class="error">{{ $errors->first('fecha_inicio') }}</label>
+              <label for="id_academic_period">Fecha de Inicio</label>
+              <select name="id_academic_period" id="id_academic_period" data-id-default="{{ $enrollment->id_academic_period }}" class="form-control"></select>
+              @if ($errors->has('id_academic_period'))
+              <label for="id_academic_period" generated="true" class="error">{{ $errors->first('id_academic_period') }}</label>
               @endif
             </div>
           </div>
@@ -97,5 +97,5 @@
 
 @section('custom_js')
   <script src="{{ URL::asset('assets/js/app.js') }}"></script>
-  <script src="{{ URL::asset('assets/js/app-academic-schedule.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/app-academic-period.js') }}"></script>
 @stop

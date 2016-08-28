@@ -1,11 +1,5 @@
 @extends('dashboard.layouts.master')
 
-@section('title', Auth::user()->role->nom_role  )
-
-@section('sidebar_menu')
-  @include('dashboard.menus.' . Auth::user()->role->menu )
-@stop
-
 @section('content')
 <div class="form_content_block">
 
@@ -24,17 +18,17 @@
           @if(Session::has('message'))
           <div class="alert alert-success alert-dismissible fade in" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <strong>¡Perfecto!</strong>{{ Session::get('message') }}
+            {{ Session::get('message') }}
           </div>
           @endif
 
           <div class="form-group">
             <div class="row">
               <div class="col-md-6 col-sm-6 col-xs-12">
-                <label for="fecha_inicio">Fecha de inicio</label>
-                <select name="fecha_inicio" id="fecha_inicio" class="form-control"></select>
-                @if ($errors->has('fecha_inicio'))
-                <label for="fecha_inicio" generated="true" class="error">{{ $errors->first('fecha_inicio') }}</label>
+                <label for="id_academic_period">Fecha de inicio</label>
+                <select name="id_academic_period" id="id_academic_period" class="form-control"></select>
+                @if ($errors->has('id_academic_period'))
+                <label for="id_academic_period" generated="true" class="error">{{ $errors->first('id_academic_period') }}</label>
                 @endif
               </div>
 
@@ -214,7 +208,9 @@
             {{ Form::checkbox('proteccion_datos', 1, false, ['class' => 'flat']) }}
             Acepto los <a href="#" title="términos y condiciones" target="_blank">términos y condiciones</a> y brindo mi consentimiento para el tratamiento de mis datos de carácter personal proporcionados en el presente formulario de inscripción al equipo de Doktuz, para que sean analizados, procesados, almacenados y transferidos, de tal manera que puedan brindarme todos los servicios que ofrecen de manera directa o a través de terceros. Si tienes alguna duda o sugerencia puedes escribirnos a <a href="#">contacto@info.com</a> y con gusto responderemos tus dudas o sugerencias.
             @if ($errors->has('proteccion_datos'))
-            <label for="proteccion_datos" generated="true" class="error">{{ $errors->first('proteccion_datos') }}</label>
+            <div class="hidden" id="chkvalid" style="display:block !important">
+              <label for="proteccion_datos" generated="true" class="error" style="display:block !important">Es necesario que los términos y condiciones.</label>
+            </div>
             @endif
           </div>
 
@@ -237,8 +233,7 @@
 </div>
 @stop
 
-
 @section('custom_js')
   <script src="{{ URL::asset('assets/js/app.js') }}"></script>
-  <script src="{{ URL::asset('assets/js/app-academic-schedule.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/app-academic-period.js') }}"></script>
 @stop

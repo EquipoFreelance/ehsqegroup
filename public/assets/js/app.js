@@ -26,7 +26,9 @@ $(".group_cod_esp_tipo").change(function() {
 });
 
 // Ub Países
-wsUbigeo(routes.ub_countries, "#cod_pais", "-- Seleccione el País --");
+if($("#cod_pais").length > 0){
+   wsUbigeo(routes.ub_countries, "#cod_pais", "-- Seleccione el País --");
+}
 
 // Ub Departamentos
 $("#cod_pais").change(function(){
@@ -43,11 +45,16 @@ $("#cod_prov").change(function(){
   wsUbigeo(routes.ub_districts+$("#cod_dpto").val()+"/"+$(this).val(), "#cod_dist", "-- Seleccione el distrito --");
 });
 
-// Set List Tipo de Especialización
-wsUbigeo(routes.esp_tipo, "#cod_esp_tipo", "-- Seleccione el tipo de especialización --");
+if($("#cod_esp_tipo").length > 0){
+    // Set List Tipo de Especialización
+    wsUbigeo(routes.esp_tipo, "#cod_esp_tipo", "-- Seleccione el tipo de especialización --");
+}
 
-// Set List Modalidades
-wsUbigeo(routes.modalidades, "#cod_modalidad", "-- Seleccione la modalidad --");
+if($("#cod_modalidad").length > 0){
+    // Set List Modalidades
+    wsUbigeo(routes.modalidades, "#cod_modalidad", "-- Seleccione la modalidad --");
+}
+
 
 $("#cod_esp_tipo").change(function(){
   wsUbigeo(routes.especializacion+$(this).val(), "#cod_esp", "-- Seleccione la especialización --");

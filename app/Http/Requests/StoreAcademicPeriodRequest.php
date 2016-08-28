@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class StoreAcademicScheduleRequest extends Request
+class StoreAcademicPeriodRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,8 @@ class StoreAcademicScheduleRequest extends Request
     {
         return [
             'start_date'  => 'required',
-            'finish_date' => 'required'
+            'finish_date' => 'required',
+            'active'      => 'required'
         ];
     }
 
@@ -38,7 +39,8 @@ class StoreAcademicScheduleRequest extends Request
     {
         return [
             'start_date.required'  => 'Es necesario colocar la fecha inicio',
-            'finish_date.required' => 'Es necesario colocar la fecha de finalización'
+            'finish_date.required' => 'Es necesario colocar la fecha de finalización',
+            'active.required'      => 'Es necesario seleccionar el estado del periodo académico'
         ];
     }
 }

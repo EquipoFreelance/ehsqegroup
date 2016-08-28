@@ -1,10 +1,4 @@
-@extends('layouts.layout-enrollments')
-
-@section('title', 'Dashboard - Secretaria Académica Módulos')
-
-@section('sidebar_menu')
-  @include('dashboard.dashboard_sa_menu')
-@stop
+@extends('dashboard.layouts.master')
 
 @section('content')
   <div class="">
@@ -57,10 +51,8 @@
               <form class="form-inline">
                 <div class="form-group">
                     <label>Fecha de inicio: </label>
-                    <select class="form-control" name="fecha_inicio" id="fecha_inicio">
-                      <option value="-">Mostrar Toda la lista</option>
-                      <option value="2016-07-16">2016-07-16</option>
-                      <option value="2016-07-12">2016-07-12</option>
+                    <select class="form-control" name="id_academic_period" id="id_academic_period">
+                      <option value="-">-- Seleccione el periodo académico --</option>
                     </select>
                   </div>
               </form>
@@ -96,6 +88,8 @@
 @stop
 
 @section('custom_js')
+  <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/app-academic-period.js') }}"></script>
   <script src="{{ URL::asset('assets/js/app-templates-js.js') }}"></script>
   <script src="{{ URL::asset('assets/js/app-enrollments.js') }}"></script>
 @stop

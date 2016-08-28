@@ -83,7 +83,7 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
   Route::resource('dashboard/enrollment', 'EnrollmentController', ['only' => ['create','store','show','index','edit','update'] ]);
 
   // Recursos Enrollments
-  Route::resource('dashboard/academic_schedule', 'AcademicScheduleController', ['only' => ['create','store','show','index','edit','update'] ]);
+  Route::resource('dashboard/academic_period', 'AcademicPeriodController', ['only' => ['create','store','show','index','edit','update'] ]);
 
   /* -- Routes - Personalizados -- */
 

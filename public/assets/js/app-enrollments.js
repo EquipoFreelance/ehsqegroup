@@ -4,11 +4,11 @@ var routes = {
 };
 
 /* -- App Matricula -- */
-var filtro_fecha_inicio = $("#fecha_inicio");
+var filtro_id_academic_period = $("#id_academic_period");
 
 listEnrollments('-');
 
-filtro_fecha_inicio.change(function(){
+filtro_id_academic_period.change(function(){
   listEnrollments($(this).val());
 });
 
@@ -18,9 +18,9 @@ filtro_fecha_inicio.change(function(){
 /*
 * Enrollments Lists
 */
-function listEnrollments(fecha_inicio = '-'){
+function listEnrollments(id_academic_period){
   $.ajax({
-     url:routes.enrollments+fecha_inicio,
+     url:routes.enrollments+id_academic_period,
      type:'get',
      datatype: 'json',
      data:{},
@@ -30,7 +30,6 @@ function listEnrollments(fecha_inicio = '-'){
      success:function(response)
      {
         GridSuccess(response);
-        console.log(response);
      },
      error:function(response)
     {

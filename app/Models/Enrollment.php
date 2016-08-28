@@ -11,7 +11,7 @@ class Enrollment extends Model
 
     protected $fillable = [
       "cod_alumno",
-      "fecha_inicio",
+      "id_academic_period",
       "cod_modalidad",
       "cod_esp_tipo",
       "cod_esp",

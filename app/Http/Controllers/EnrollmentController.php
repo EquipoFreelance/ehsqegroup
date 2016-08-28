@@ -25,12 +25,12 @@ class EnrollmentController extends Controller
   {
 
       $enrollment = new Enrollment();
-      $enrollment->cod_alumno    = $request->get("cod_alumno");
-      $enrollment->fecha_inicio  = $request->get("fecha_inicio");
-      $enrollment->cod_modalidad = $request->get("cod_modalidad");
-      $enrollment->cod_esp_tipo  = $request->get("cod_esp_tipo");
-      $enrollment->cod_esp       = $request->get("cod_esp");
-      $enrollment->activo        = ($request->get("activo") == '' || $request->get("activo") == 0)? 0 : $request->get("activo");
+      $enrollment->cod_alumno         = $request->get("cod_alumno");
+      $enrollment->id_academic_period = $request->get("id_academic_period");
+      $enrollment->cod_modalidad      = $request->get("cod_modalidad");
+      $enrollment->cod_esp_tipo       = $request->get("cod_esp_tipo");
+      $enrollment->cod_esp            = $request->get("cod_esp");
+      $enrollment->activo             = ($request->get("activo") == '' || $request->get("activo") == 0)? 0 : $request->get("activo");
 
       if( $enrollment->save() )
       {
@@ -75,11 +75,11 @@ class EnrollmentController extends Controller
     {
 
       $enrollment = Enrollment::find($id);
-      $enrollment->fecha_inicio   = $request->get("fecha_inicio");
-      $enrollment->cod_modalidad  = $request->get("cod_modalidad");
-      $enrollment->cod_esp_tipo   = $request->get("cod_esp_tipo");
-      $enrollment->cod_esp        = $request->get("cod_esp");
-      $enrollment->activo         = ($request->get("activo") == '' || $request->get("activo") == 0)? 0 : $request->get("activo");
+      $enrollment->id_academic_period = $request->get("id_academic_period");
+      $enrollment->cod_modalidad      = $request->get("cod_modalidad");
+      $enrollment->cod_esp_tipo       = $request->get("cod_esp_tipo");
+      $enrollment->cod_esp            = $request->get("cod_esp");
+      $enrollment->activo             = ($request->get("activo") == '' || $request->get("activo") == 0)? 0 : $request->get("activo");
 
       if( $enrollment->save() )
       {

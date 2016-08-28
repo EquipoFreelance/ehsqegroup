@@ -14,7 +14,7 @@
 
                     <div class="x_content">
 
-                        {!! Form::model($schedule, [ 'method' => 'PUT', 'route' => ['dashboard.academic_schedule.update', $schedule->id], 'class' => 'form-horizontal form-label-left' ]) !!}
+                        {!! Form::model($schedule, [ 'method' => 'PUT', 'route' => ['dashboard.academic_period.update', $schedule->id], 'class' => 'form-horizontal form-label-left' ]) !!}
 
                         @if(Session::has('message'))
                             <div class="alert alert-success alert-dismissible fade in" role="alert">
@@ -47,10 +47,22 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label for="active">Estado</label>
+                                    {{ Form::select('active', ['' => '-- Seleccione el estado --','1' => 'Activo','0' => 'No Activo'], $schedule->active, ['class' => 'form-control'] ) }}
+                                    @if ($errors->has('active'))
+                                        <label for="active" generated="true" class="error">{{ $errors->first('active') }}</label>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="ln_solid"></div>
 
                         <div class="form-group btncontrol">
-                            <a href="{{ route('dashboard.academic_schedule.index') }}" class="btn btn-5 btn-5a icon-return return"><span>Retornar</span></a>
+                            <a href="{{ route('dashboard.academic_period.index') }}" class="btn btn-5 btn-5a icon-return return"><span>Retornar</span></a>
                             <button type="submit" class="btn btn-5 btn-5a icon-save save"><span>Guardar</span></button>
                         </div>
 
@@ -61,6 +73,6 @@
         </div>
         @stop
 
-        @section('custom_js')
-            <script src="{{ URL::asset('app-academapp-academic-schedule.jscript>
+@section('custom_js')
+    <script src="{{ URL::asset('app-academic-period.js') }}"></script>
 @stop

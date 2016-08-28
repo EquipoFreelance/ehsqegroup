@@ -24,7 +24,7 @@ use App\Models\Enrollment;
 
 use App\Models\Student;
 
-use App\Models\AcademicSchedule;
+use App\Models\AcademicPeriod;
 
 
 class WebServiceController extends Controller
@@ -112,17 +112,17 @@ class WebServiceController extends Controller
     * @param string $fecha_inicio -> Fecha de Inicio
     * @return Response $response  -> Json
     */
-    public function wsEnrollments($fecha_inicio)
+    public function wsEnrollments($id_academic_period)
     {
-      if($fecha_inicio){
+      if($id_academic_period){
 
         // Solo cuando el usuario seleccione el signo "-"
-        if($fecha_inicio != '-')
+        if($id_academic_period != '-')
         {
             // Verificando existencia de registros con los parametros recibidos
-            if(Enrollment::where("fecha_inicio", $fecha_inicio)->with('student')->with('student.persona')->count() > 0)
+            if(Enrollment::where("id_academic_period", $id_academic_period)->with('student')->with('student.persona')->count() > 0)
             {
-                $enrollment = Enrollment::where("fecha_inicio", $fecha_inicio)
+                $enrollment = Enrollment::where("id_academic_period", $id_academic_period)
                 ->with('type_specialization')
                 ->with('specialization')
                 ->with('modality')
@@ -159,17 +159,17 @@ class WebServiceController extends Controller
     }
 
     /* WS - List of inscriptions */
-    public function wsInscriptions($fecha_inicio){
+    public function wsInscriptions($id_academic_period){
 
-      if($fecha_inicio){
+      if($id_academic_period){
 
         // Solo cuando el usuario seleccione el signo "-"
-        if($fecha_inicio != '-')
+        if($id_academic_period != '-')
         {
             // Verificando existencia de registros con los parametros recibidos
-            if(Enrollment::where("fecha_inicio", $fecha_inicio)->with('student')->with('student.persona')->count() > 0)
+            if(Enrollment::where("id_academic_period", $id_academic_period)->with('student')->with('student.persona')->count() > 0)
             {
-                $enrollment = Enrollment::where("fecha_inicio", $fecha_inicio)
+                $enrollment = Enrollment::where("id_academic_period", $id_academic_period)
                 ->with('type_specialization')
                 ->with('specialization')
                 ->with('modality')
@@ -226,7 +226,7 @@ class WebServiceController extends Controller
 
     public function wsAcademicSchedule(){
 
-        $schedules = AcademicSchedule::select('start_date as name', 'id')->orderBy('id', 'desc')->get()->toJson();
+        $schedules = AcademicPeriod::select('start_date as name', 'id')->where("active", 1)->orderBy('id', 'desc')->get()->toJson();
         //$response = response()->json(["items" => $schedules->toArray()], 200);
         return $schedules;
 

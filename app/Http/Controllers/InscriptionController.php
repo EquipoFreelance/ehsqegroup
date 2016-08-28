@@ -37,19 +37,19 @@ class InscriptionController extends Controller
 
     // Create new Person
     $persona = new Persona(array(
-      'nombre'           => $request->get("nombre"),
-      'ape_pat'          => $request->get("ape_pat"),
-      'ape_mat'          => $request->get("ape_mat"),
-      'cod_doc_tip'      => $request->get("cod_doc_tip"),
-      'num_doc'          => $request->get("num_doc"),
-      'correo'           => $request->get("correo"),
-      'cod_pais'         => $request->get("cod_pais"),
-      'cod_dpto'         => $request->get("cod_dpto"),
-      'cod_prov'         => $request->get("cod_prov"),
-      'cod_dist'         => $request->get("cod_dist"),
-      'direccion'        => $request->get("direccion"),
-      'num_cellphone'    => $request->get("num_cellphone"),
-      'num_phone'        => $request->get("num_phone"),
+      'nombre'             => $request->get("nombre"),
+      'ape_pat'            => $request->get("ape_pat"),
+      'ape_mat'            => $request->get("ape_mat"),
+      'cod_doc_tip'        => $request->get("cod_doc_tip"),
+      'num_doc'            => $request->get("num_doc"),
+      'correo'             => $request->get("correo"),
+      'cod_pais'           => $request->get("cod_pais"),
+      'cod_dpto'           => $request->get("cod_dpto"),
+      'cod_prov'           => $request->get("cod_prov"),
+      'cod_dist'           => $request->get("cod_dist"),
+      'direccion'          => $request->get("direccion"),
+      'num_cellphone'      => $request->get("num_cellphone"),
+      'num_phone'          => $request->get("num_phone"),
       'proteccion_datos' => ($request->get("proteccion_datos") == '' || $request->get("proteccion_datos") == 0)? 0 : $request->get("proteccion_datos"),
       'activo'           => 1
     ));
@@ -67,7 +67,7 @@ class InscriptionController extends Controller
         // Create new enrollment
         $enrollment = new Enrollment( array(
           "cod_alumno"    => $student->id,                  // Code of new student
-          "fecha_inicio"  => $request->get("fecha_inicio"),
+          "id_academic_period"  => $request->get("id_academic_period"),
           "cod_modalidad" => $request->get("cod_modalidad"),
           "cod_esp_tipo"  => $request->get("cod_esp_tipo"),
           "cod_esp"       => $request->get("cod_esp"),
@@ -101,7 +101,7 @@ class InscriptionController extends Controller
 
   }
 
-  public function update(InscriptionUpdateRequest $request, $id)
+  public function update(InscriptionStoreRequest $request, $id)
   {
 
       $student = Student::with('persona')->find($id);
@@ -116,10 +116,9 @@ class InscriptionController extends Controller
       $student->persona->cod_prov         = $request->get("cod_prov");
       $student->persona->cod_dist         = $request->get("cod_dist");
       $student->persona->direccion        = $request->get("direccion");
-      //$student->persona->fe_nacimiento    = $request->get("fe_nacimiento");
-      //$student->persona->cod_sexo         = $request->get("cod_sexo");
       $student->persona->num_cellphone    = $request->get("num_cellphone");
       $student->persona->num_phone        = $request->get("num_phone");
+      $student->persona->num_phone        = $request->get("id_academic_period");
       $student->persona->proteccion_datos = ($request->get("proteccion_datos") == '' || $request->get("proteccion_datos") == 0)? 0 : $request->get("proteccion_datos");
 
       if( $student->save() )
@@ -129,14 +128,14 @@ class InscriptionController extends Controller
         $id_enrollment = $student->enrollments()->first()->id;      // Code of Enrollemnt associate
 
         $enrollment = Enrollment::find($id_enrollment);
-        $enrollment->fecha_inicio   = $request->get("fecha_inicio");
-        $enrollment->cod_modalidad  = $request->get("cod_modalidad");
-        $enrollment->cod_esp_tipo   = $request->get("cod_esp_tipo");
-        $enrollment->cod_esp        = $request->get("cod_esp");
+        $enrollment->id_academic_period = $request->get("id_academic_period");
+        $enrollment->cod_modalidad      = $request->get("cod_modalidad");
+        $enrollment->cod_esp_tipo       = $request->get("cod_esp_tipo");
+        $enrollment->cod_esp            = $request->get("cod_esp");
 
         if( $enrollment->save() ){
           return redirect()->route('dashboard.inscription.edit', $id)
-                        ->with('message', 'La información del alumnos fue actualizado satisfactoriamente');
+                        ->with('message', 'La Inscripción fue actualizada satisfactoriamente');
         }
 
       }
