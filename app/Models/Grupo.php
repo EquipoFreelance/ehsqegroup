@@ -9,6 +9,9 @@ class Grupo extends Model
     protected $table = 'grupo';
 
     protected $fillable = [
+        'cod_modalidad',
+        'cod_esp_tipo',
+        'cod_esp',
         'nom_grupo',
         'cod_sede',
         'descripcion',

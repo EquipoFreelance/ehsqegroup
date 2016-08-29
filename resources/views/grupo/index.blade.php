@@ -1,12 +1,7 @@
-@extends('layouts.app_internas')
-
-@section('title', 'Dashboard - Secretaria Académica Módulos')
-
-@section('sidebar_menu')
-@include('dashboard.dashboard_sa_menu')
-@stop
+@extends('dashboard.layouts.master')
 
 @section('content')
+<div class="">
   <div class="page-title">
     @if(Session::has('message'))
         <div class="alert alert-info">
@@ -16,13 +11,17 @@
     <h1>Grupos</h1>
     <p style="margin-top: 15px">Administrador de Grupos.</p>
   </div>
-  <div class="clearfix"></div>
+
   <div class="row">
     <!-- INICIO TABLA FINAL -->
     <div class="col-md-12 col-sm-12 col-xs-12">
       <div class="x_panel">
 
-        <a href="{{ route('dashboard.grupo.create') }}" class="btn btn-success">Agregar</a>
+        <div class="x_title">
+          <a href="{{ route('dashboard.grupo.create') }}" class="btn btn-5 btn-5a icon-add add"><span>Agregar</span></a>
+          <div class="clearfix"></div>
+        </div>
+
         <div class="ln_solid"></div>
         <div class="x_content">
           <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
@@ -37,17 +36,17 @@
             </thead>
             <tbody>
               @foreach ($grupos as $grupo)
-                  <tr data-id="{{ $grupo->id }}">
-                    <td class="data-cod" data-cod="{{ $grupo->id }}">{{ $grupo->id }}</td>
-                    <td class="data-tipo" data-name="{{ $grupo->nom_grupo }}">{{ $grupo->sede->nom_sede }} - {{ $grupo->nom_grupo }}</td>
-                    <td><a href="{{ route('dashboard.grupo.horario.list', $grupo->id) }}" class="btn btn-link">Horarios</a></td>
-                    <td><a href="{{ route('dashboard.grupo.edit', $grupo->id) }}" class="btn btn-link">Alumnos</a></td>
-                    <td class="data-acti" data-acti="{{ $grupo->activo }}">
+                  <tr>
+                    <td>{{ $grupo->id }}</td>
+                    <td>{{ $grupo->sede->nom_sede }} - {{ $grupo->nom_grupo }}</td>
+                    <td><a href="{{ route('dashboard.grupo.horario.list', $grupo->id) }}" class="btn btn-5 btn-5a icon-add add"><span>Horarios</span></a></td>
+                    <td><a href="{{ route('dashboard.grupo.edit', $grupo->id) }}" class="btn btn-5 btn-5a icon-return return"><span>Alumnos</span></a></td>
+                    <td>
                       <span class="label @if($grupo->activo == '1') label-success @else label-danger @endif ">
                         @if($grupo->activo == '1') Activo @else No Activo @endif
                       </span>
                     </td>
-                    <td><a href="{{ route('dashboard.grupo.edit', $grupo->id) }}" class="btn btn-link">Editar</a></td>
+                    <td><a href="{{ route('dashboard.grupo.edit', $grupo->id) }}" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>
                   </tr>
               @endforeach
             </tbody>
@@ -57,5 +56,5 @@
     </div>
     <!-- FINAL TABLA FINAL -->
   </div>
-
+</div>
 @stop

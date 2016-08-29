@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use App\Http\Requests\StoreGrupoRequest;
 
 use App\Models\Sede;
 use App\Models\Grupo;
@@ -13,7 +14,9 @@ use App\Models\EspecializacionTipo;
 
 use Validator;
 use Illuminate\Http\Response;
+
 use Illuminate\Http\Request;
+
 use Carbon\Carbon;
 
 class GrupoController extends Controller
@@ -38,9 +41,6 @@ class GrupoController extends Controller
 
       $data = [
               'sedes'                   => Sede::lists('nom_sede', 'id'),                     // Listado de Sedes
-              'modalidades'             => Modalidad::lists('nom_mod','id'),                  // Listado de Modalidades
-              'tipo_especializaciones'  => EspecializacionTipo::lists('nom_esp_tipo','id'),   // Listado de Tipo de especialidades
-              'especializaciones'       => array(),                                           // Listado de Especialización,
               'cod_mod'                 => 1
             ];
       return view('grupo.create', $data);
@@ -52,43 +52,32 @@ class GrupoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request){
+    public function store(StoreGrupoRequest $request){
 
-      // Enviando los parametros necesarios para la validación
-      $validator = Validator::make( $request->all(), $this->validateRules(), $this->validateMessages() );
 
-      // Si existen errores el Sistema muestra un mensaje
-      if ($validator->fails()){
+        // Registramos el grupo
+        $grupo = new Grupo;
 
-        // Enviando Mensaje
-        return redirect()->route('dashboard.grupo.create')->withErrors($validator)
-        ->withInput();
+        $grupo->cod_esp       = $request->get("cod_esp");
+        $grupo->cod_modalidad = $request->get("cod_modalidad");
+        $grupo->cod_esp_tipo  = $request->get("cod_esp_tipo");
+        $grupo->cod_sede      = $request->get("cod_sede");
+        $grupo->nom_grupo     = $request->get("nom_grupo");
+        $grupo->descripcion   = $request->get("descripcion");
+        $grupo->fe_inicio     = $request->get("fe_inicio");
+        $grupo->fe_fin        = $request->get("fe_fin");
+        $grupo->num_max       = $request->get("num_max");
+        $grupo->num_min       = $request->get("num_min");
+        $grupo->activo        = $request->get("activo");
 
-      } else {
+        if($grupo->save()){
 
-          // Registramos el grupo
-          $grupo = new Grupo;
-          $grupo->cod_sede     = $request->get("cod_sede");
-          $grupo->cod_esp      = $request->get("cod_esp");
-          $grupo->cod_mod      = $request->get("cod_mod");
-          $grupo->cod_esp_tipo = $request->get("cod_esp_tipo");
-          $grupo->nom_grupo    = $request->get("nom_grupo");
-          $grupo->descripcion  = $request->get("descripcion");
-          $grupo->fe_inicio    = $request->get("fe_inicio");
-          $grupo->fe_fin       = $request->get("fe_fin");
-          $grupo->num_max      = $request->get("num_max");
-          $grupo->num_min      = $request->get("num_min");
-          $grupo->activo       = $request->get("activo");
+        //Enviando mensaje
+        return redirect()->route('dashboard.grupo.index')
+        ->with('message', 'Los datos se registraron satisfactoriamente');
 
-          if($grupo->save()){
+        }
 
-            //Enviando mensaje
-            return redirect()->route('dashboard.grupo.index')
-            ->with('message', 'Los datos se registraron satisfactoriamente');
-
-          }
-
-      }
 
     }
 
@@ -130,43 +119,31 @@ class GrupoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id){
+    public function update(StoreGrupoRequest $request, $id){
 
-      // Enviando los parametros necesarios para la validación
-      $validator = Validator::make( $request->all(), $this->validateRules(), $this->validateMessages() );
+      // Actualizando el grupo seleccionado
+      $grupo = Grupo::find($id);
 
-      // Si existen errores el Sistema muestra un mensaje
-      if ($validator->fails()){
+      $grupo->cod_esp       = $request->get("cod_esp");
+      $grupo->cod_modalidad = $request->get("cod_modalidad");
+      $grupo->cod_esp_tipo  = $request->get("cod_esp_tipo");
+      $grupo->cod_sede      = $request->get("cod_sede");
+      $grupo->nom_grupo     = $request->get("nom_grupo");
+      $grupo->descripcion   = $request->get("descripcion");
+      $grupo->fe_inicio     = $request->get("fe_inicio");
+      $grupo->fe_fin        = $request->get("fe_fin");
+      $grupo->num_max       = $request->get("num_max");
+      $grupo->num_min       = $request->get("num_min");
+      $grupo->activo        = $request->get("activo");
 
-        // Enviando Mensaje
-        return redirect()->route('dashboard.grupo.edit', $id)
-                                ->withErrors($validator)
-                                ->withInput();
+      if($grupo->save()){
 
-      } else {
+        //Enviando mensaje
+        return redirect()->route('dashboard.grupo.index')
+                                ->with('message', 'El grupo se ha actualizado satisfactoriamente');
 
-          // Actualizando el grupo seleccionado
-          $grupo = Grupo::find($id);
-          $grupo->cod_sede     = $request->get("cod_sede");
-          $grupo->cod_esp      = $request->get("cod_esp");
-          $grupo->cod_mod      = $request->get("cod_mod");
-          $grupo->cod_esp_tipo = $request->get("cod_esp_tipo");
-          $grupo->nom_grupo    = $request->get("nom_grupo");
-          $grupo->descripcion  = $request->get("descripcion");
-          $grupo->fe_inicio    = $request->get("fe_inicio");
-          $grupo->fe_fin       = $request->get("fe_fin");
-          $grupo->num_max      = $request->get("num_max");
-          $grupo->num_min      = $request->get("num_min");
-          $grupo->activo       = $request->get("activo");
-
-          if($grupo->save()){
-
-            //Enviando mensaje
-            return redirect()->route('dashboard.grupo.index')
-                                    ->with('message', 'El grupo se ha actualizado satisfactoriamente');
-
-          }
       }
+
 
     }
 
@@ -190,46 +167,6 @@ class GrupoController extends Controller
 
       }
     }
-    /* Reglas de validaciones */
-    public function validateRules()
-    {
 
-      /* Aplicando validación al Request */
-
-      // Reglas de validación
-      $rules = [
-        'nom_grupo'   => 'required',
-        'cod_sede'    => 'required',
-        'descripcion' => 'required',
-        'fe_inicio'   => 'required',
-        'fe_fin'      => 'required',
-        'num_min'     => 'required',
-        'num_max'     => 'required',
-        'activo'      => 'required'
-      ];
-
-      return $rules;
-
-    }
-
-    /* Mensaje personalizado */
-    public function validateMessages()
-    {
-
-      // Mensaje de validación Personalizado
-      $messages = [
-        'nom_grupo.required'   => 'Es necesario ingresar el nombre del grupo',
-        'cod_sede.required'    => 'Seleccione el la sede',
-        'descripcion.required' => 'Es necesario ingresar la descripción',
-        'fe_inicio.required'   => 'Es necesario ingresar la fecha de inicio',
-        'fe_fin.required'      => 'Es necesario ingresar la fecha de finalizacion',
-        'num_min.required'     => 'Es necesario ingresar el número mínimo de alumnos',
-        'num_max.required'     => 'Es necesario ingresar el número máximo de alumnos',
-        'activo.required'      => 'Es necesario indicar si el grupo estará activo o inactivo',
-        //'activo.integer'       => 'Solo esta permitido que sea números enteros'
-      ];
-
-      return $messages;
-    }
 
 }

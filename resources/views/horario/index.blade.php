@@ -1,12 +1,7 @@
-@extends('layouts.app_internas')
-
-@section('title', 'Dashboard - Secretaria Académica Módulos')
-
-@section('sidebar_menu')
-@include('dashboard.dashboard_sa_menu')
-@stop
+@extends('dashboard.layouts.master')
 
 @section('content')
+<div class="">
   <div class="page-title">
     @if(Session::has('message'))
         <div class="alert alert-info">
@@ -22,10 +17,15 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
       <div class="x_panel">
 
-        <a href="{{ route('dashboard.grupo.horario.crear', $id) }}" class="btn btn-success">Agregar</a>
-        <div class="ln_solid"></div>
-        <div class="x_content">
-          <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+          <div class="x_title">
+              <a href="{{ route('dashboard.grupo.horario.crear', $id) }}" class="btn btn-5 btn-5a icon-add add"><span>Agregar</span></a>
+              <div class="clearfix"></div>
+          </div>
+
+          <div class="ln_solid"></div>
+
+          <div class="x_content">
+            <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
             <thead>
               <tr>
                 <th>Código</th>
@@ -47,16 +47,21 @@
                    <td>{{ $horario->local->nom_local }}</td>
                    <td>{{ $horario->modulo->nombre }}</td>
                    <td>{{ $horario->num_horas }}</td>
-                   <td>@if($horario->activo == '1') Activo @else No Activo @endif</td>
-                   <td><a href="{{ route('dashboard.grupo.horario.edit', array("id" => $id, 'cod_horario' => $horario->id ) ) }}" class="btn btn-link">Editar</a></td>
+                   <td>
+                     <span class="label @if($horario->activo == '1') label-success @else label-danger @endif">
+                        @if($horario->activo == '1') Activo @else No Activo @endif
+                      </span>
+                   </td>
+                   <td><a href="{{ route('dashboard.grupo.horario.edit', array("id" => $id, 'cod_horario' => $horario->id ) ) }}" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a></td>
                 </tr>
               @endforeach
             </tbody>
           </table>
-        </div>
+          </div>
+
       </div>
     </div>
     <!-- FINAL TABLA FINAL -->
   </div>
-
+</div>
 @stop
