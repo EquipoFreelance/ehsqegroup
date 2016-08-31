@@ -1,6 +1,31 @@
 @extends('dashboard.layouts.master')
 
 @section('content')
+
+<!-- Custom Templates -->
+<script id="response-template" type="text/x-handlebars-template">
+    @{{#each response}}
+    <tr>
+        <td>@{{ id }}</td>
+        <td>@{{ fec_inicio}} al @{{ fec_fin}} / @{{ h_inicio }} - @{{ h_inicio }}</td>
+        <td>@{{ docente.persona.nombre }} @{{ docente.persona.ape_pat  }} @{{ docente.persona.ape_mat }}</td>
+        <td>@{{ local.nom_local }}</td>
+        <td>@{{ modulo.nombre }}</td>
+        <td>@{{ num_horas }}</td>
+        <td>
+            @{{#validate activo 1}}
+            <span class="label label-success">Activo</span>
+            @{{else}}
+            <span class="label label-danger">No activo</span>
+            @{{/validate}}
+        </td>
+        <td>
+            <a href="enrollment/@{{id}}/edit" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>
+        </td>
+    </tr>
+    @{{/each}}
+</script>
+
 <div class="">
   <div class="page-title">
     @if(Session::has('message'))
@@ -18,11 +43,16 @@
       <div class="x_panel">
 
           <div class="x_title">
-              <a href="{{ route('dashboard.grupo.horario.crear', $id) }}" class="btn btn-5 btn-5a icon-add add"><span>Agregar</span></a>
+              <a href="{{ route('dashboard.academic_schedule.create') }}" class="btn btn-5 btn-5a icon-add add"><span>Agregar</span></a>
               <div class="clearfix"></div>
           </div>
 
-          <div class="ln_solid"></div>
+          <div class="x_title">
+              <div class="form-group">
+                  <label>Grupos: </label>
+                  <select class="form-control" name="id_group" id="id_group"></select>
+              </div>
+          </div>
 
           <div class="x_content">
             <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
@@ -38,24 +68,7 @@
                 <th></th>
               </tr>
             </thead>
-            <tbody>
-              @foreach ($horarios as $horario)
-                <tr>
-                   <td>{{ $horario->id }}</td>
-                   <td>{{ $horario->fec_inicio }} y {{ $horario->fec_fin }} / {{ $horario->h_inicio }} - {{ $horario->h_inicio }}</td>
-                   <td>{{ $horario->docente->persona->nombre.", ".$horario->docente->persona->ape_pat." ".$horario->docente->persona->ape_mat }}</td>
-                   <td>{{ $horario->local->nom_local }}</td>
-                   <td>{{ $horario->modulo->nombre }}</td>
-                   <td>{{ $horario->num_horas }}</td>
-                   <td>
-                     <span class="label @if($horario->activo == '1') label-success @else label-danger @endif">
-                        @if($horario->activo == '1') Activo @else No Activo @endif
-                      </span>
-                   </td>
-                   <td><a href="{{ route('dashboard.grupo.horario.edit', array("id" => $id, 'cod_horario' => $horario->id ) ) }}" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a></td>
-                </tr>
-              @endforeach
-            </tbody>
+            <tbody class="items"></tbody>
           </table>
           </div>
 
@@ -64,4 +77,10 @@
     <!-- FINAL TABLA FINAL -->
   </div>
 </div>
+@stop
+
+@section('custom_js')
+    <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/app-horary.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/app-templates-js.js') }}"></script>
 @stop

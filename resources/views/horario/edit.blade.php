@@ -94,9 +94,9 @@
           <div class="form-group">
             <div class="row">
               <div class="col-md-6 col-sm-6 col-xs-12">
-                {{ Form::label('cod_dia', 'Días:') }}<bR>
+                {{ Form::label('cod_dia', 'Días:') }}<br>
                 @foreach ($list_semana as $dia)
-                  {{ Form::checkbox('cod_dia[]', $dia['cod_dia'], in_array($dia['cod_dia'], $get_semana) ,array('id' => 'cod_dia_'.$dia['cod_dia']) ) }}
+                  {{ Form::checkbox('cod_dia[]', $dia['cod_dia'], in_array($dia['cod_dia'], $weekend_horary) ,array('id' => 'cod_dia_'.$dia['cod_dia']) ) }}
                   {{ Form::label('cod_dia_'.$dia['cod_dia'], $dia['dia']) }}<br>
                 @endforeach
               </div>

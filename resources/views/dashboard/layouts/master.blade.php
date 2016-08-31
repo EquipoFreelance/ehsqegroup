@@ -23,7 +23,12 @@
   <link href="{{ URL::asset('assets/js/datatables/scroller.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
   <link href="{{ URL::asset('assets/css/freelanceteam/freelanceteam.css') }}" rel="stylesheet">
   <link href="{{ URL::asset('assets/css/freelanceteam/component.css') }}" rel="stylesheet">
+
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,300,700,800' rel='stylesheet' type='text/css'>
+
+  <!-- CSS - App -->
+  @yield('custom_css')
+
   <!--[if lt IE 9]>
   <script src="../assets/js/ie8-responsive-file-warning.js') }}"></script>
   <![endif]-->
@@ -109,6 +114,11 @@
   <!-- bootstrap progress js -->
   <script src="{{ URL::asset('assets/js/progressbar/bootstrap-progressbar.min.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+
+  <!-- daterangepicker -->
+  <script type="text/javascript" src="{{ URL::asset('assets/js/moment/moment.min.js') }}"></script>
+  <script type="text/javascript" src="{{ URL::asset('assets/js/datepicker_material/js/moment-with-locales.min.js') }}"></script>
+  <script type="text/javascript" src="{{ URL::asset('assets/js/datepicker_material/js/bootstrap-material-datetimepicker.js') }}"></script>
 
   <!-- icheck -->
   <script src="{{ URL::asset('assets/js/icheck/icheck.min.js') }}"></script>

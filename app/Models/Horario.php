@@ -16,6 +16,7 @@ class Horario extends Model
       'h_inicio',
       'h_fin',
       'num_horas',
+      'cod_grupo',
       'cod_sede',
       'cod_local',
       'cod_mod',

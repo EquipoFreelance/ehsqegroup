@@ -22,9 +22,9 @@ Route::group(['middleware' => ['auth']], function(){
         return redirect()->to('/dashboard');
     });
 
-    Route::get('/info', function () {
+    /*Route::get('/info', function () {
         phpinfo();
-    });
+    });*/
 
     // Dashboard
     Route::get('/dashboard', 'DashBoardController@validateDashBoard', ['as' => 'dashboard.index']);
@@ -62,10 +62,31 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
   Route::resource('/dashboard/sede/local', 'SedeLocalController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
   // Administrador de Horarios
-  Route::resource('/dashboard/horario', 'HorarioController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+  Route::resource('/dashboard/academic_schedule', 'HorarioController', ['only' => ['index', 'create', 'store'] ] );
 
   // Administrador de Grupos
   Route::resource('/dashboard/grupo', 'GrupoController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+
+    // Administrador de Horarios
+
+    // index
+    Route::get('/dashboard/grupo/{id}/horario',[
+        'as' => 'dashboard.grupo.horario.list', 'uses' => 'HorarioController@index'
+    ]);
+
+    // create
+    Route::get('/dashboard/grupo/{id}/horario/crear',[
+        'as' => 'dashboard.grupo.horario.crear', 'uses' => 'HorarioController@create'
+    ]);
+
+    // edit
+    Route::get('/dashboard/grupo/{id}/horario/{cod_horario}/edit',[
+        'as' => 'dashboard.grupo.horario.edit', 'uses' => 'HorarioController@edit'
+    ]);
+
+    Route::get('/dashboard/grupo/{id_group}/horario/testing',[
+        'uses' => 'HorarioController@testing'
+    ]);
 
   // Administrador de Auxiliares
   Route::resource('/dashboard/auxiliar', 'AuxiliarController', ['only' => ['index','create','store','edit','update','destroy'] ] );
@@ -87,22 +108,7 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
 
   /* -- Routes - Personalizados -- */
 
-  // Administrador de Horarios
 
-  // index
-  Route::get('/dashboard/grupo/{id}/horario',[
-    'as' => 'dashboard.grupo.horario.list', 'uses' => 'HorarioController@index'
-  ]);
-
-  // create
-  Route::get('/dashboard/grupo/{id}/horario/crear',[
-    'as' => 'dashboard.grupo.horario.crear', 'uses' => 'HorarioController@create'
-  ]);
-
-  // edit
-  Route::get('/dashboard/grupo/{id}/horario/{cod_horario}/edit',[
-    'as' => 'dashboard.grupo.horario.edit', 'uses' => 'HorarioController@edit'
-  ]);
 
 });
 
@@ -172,6 +178,11 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
         'as' => 'json.especializaciones', 'uses' => 'WebServiceController@wsEspecializaciones'
     ]);
 
+    // Modulos
+    Route::get('/dashboard/json/modulos/{cod_modalidad}/{cod_esp_tipo}/{cod_esp}/{q}',[
+        'as' => 'json.modulos', 'uses' => 'WebServiceController@wsModulos'
+    ]);
+
     // Modalidades
     Route::get('/dashboard/json/modalidades',[
         'as' => 'json.modalidades', 'uses' => 'WebServiceController@wsModalidades'
@@ -192,15 +203,27 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
         'as' => 'json.students.all', 'uses' => 'WebServiceController@wsStudent'
     ]);
 
+    // Busqueda de Estudiante
     Route::get('/hsqegroup/api/students/search/{q}',[
         'as' => 'json.students.all', 'uses' => 'WebServiceController@wsStudentLike'
     ]);
 
-    // Periodo Academico
-    Route::get('/hsqegroup/api/academic-schedule',[
-        'as' => 'json.students.all', 'uses' => 'WebServiceController@wsAcademicSchedule'
+    // Get List Periodo Academico
+    Route::get('/hsqegroup/api/academic-period',[
+        'as' => 'json.academic-period.all', 'uses' => 'WebServiceController@getWsAcademicPeriod'
     ]);
 
-    /*Route::get('/hsqegroup/testing',[
-        'as' => 'json.students.alls', 'uses' => 'EnrollmentController@testing'
-    ]);*/
+    // Get List Groups
+    Route::get('/hsqegroup/api/groups', [
+        'as' => 'json.groups.all', 'uses' => 'WebServiceController@getWsGroups'
+    ]);
+
+    // Get List Horarios Academicos
+    Route::get('/hsqegroup/api/academic-horary/{cod_grupo}', [
+        'as' => 'json.groups.all', 'uses' => 'WebServiceController@getWsAcademicHorary'
+    ]);
+
+    // Get LIst Groups Like by Name
+    Route::get('/hsqegroup/api/groups/search/{q}', [
+        'as' => 'json.groups.all', 'uses' => 'WebServiceController@getWsGroupsLike'
+    ]);

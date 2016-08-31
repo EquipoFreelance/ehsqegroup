@@ -1,10 +1,4 @@
-@extends('layouts.layout-student')
-
-@section('title', 'Dashboard - Secretaria Académica Módulos')
-
-@section('sidebar_menu')
-@include('dashboard.dashboard_sa_menu')
-@stop
+@extends('dashboard.layouts.master')
 
 @section('content')
 <div class="form_content_block">

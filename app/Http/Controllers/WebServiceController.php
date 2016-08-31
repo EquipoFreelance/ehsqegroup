@@ -18,6 +18,8 @@ use App\Models\EspecializacionTipo;
 
 use App\Models\Especializacion;
 
+use App\Models\Modulo;
+
 use App\Models\Modalidad;
 
 use App\Models\Enrollment;
@@ -25,6 +27,10 @@ use App\Models\Enrollment;
 use App\Models\Student;
 
 use App\Models\AcademicPeriod;
+
+use App\Models\Grupo;
+
+use App\Models\Horario;
 
 
 class WebServiceController extends Controller
@@ -75,6 +81,17 @@ class WebServiceController extends Controller
       return District::where(compact('cod_dpto','cod_prov'))->select('nom_dist as name', 'id')->get()->toJson();
     }
 
+
+    /**
+     * Modalidades,
+     * Servicio permite listar las modalidades
+     * @return Response $response  -> Json
+     */
+    public function wsModalidades()
+    {
+        return Modalidad::select('nom_mod as name', 'id')->get()->toJson();
+    }
+
     /**
     * Tipo de Especializaciones,
     * Servicio permite listar las Tipos de especializaciones
@@ -97,13 +114,38 @@ class WebServiceController extends Controller
     }
 
     /**
-    * Modalidades,
-    * Servicio permite listar las modalidades
-    * @return Response $response  -> Json
-    */
-    public function wsModalidades()
-    {
-      return Modalidad::select('nom_mod as name', 'id')->get()->toJson();
+     * Modulos,
+     * Servicio permite listar los modulos
+     * @param string $cod_modalidad - Código de la modalidad
+     * @param string $cod_esp_tipo  - Código del tipo de especialización
+     * @param string $cod_esp       - Código de la especialización
+     * @param string $q             - Nombres del Modulo
+     * @return Response $response   - Json
+     */
+    public function wsModulos($cod_modalidad, $cod_esp_tipo, $cod_esp, $q){
+
+        $response = '';
+
+        $rs = Modulo::
+        where('cod_modalidad', $cod_modalidad)->
+        where('cod_esp_tipo', $cod_esp_tipo)->
+        where('cod_esp', $cod_esp);
+
+        if($q != '-'){
+            $rs->where('nombre', 'LIKE', '%'. $q .'%');
+        }
+
+        $rs->select('nombre as name', 'id');
+
+        if($rs->count() > 0){
+            $rs = $rs->get();
+            $response = response()->json(["items" => $rs], 200);
+        } else {
+            $response = response()->json(["message" => 'empty'], 400);
+        }
+
+        return $response;
+
     }
 
     /**
@@ -205,6 +247,7 @@ class WebServiceController extends Controller
 
     }
 
+
     public function wsStudent()
     {
         $students = Student::with('persona')->orderBy('created_at', 'desc')->get();
@@ -224,12 +267,80 @@ class WebServiceController extends Controller
         return $response;
     }
 
-    public function wsAcademicSchedule(){
+    /**
+     * List Periodo Academico
+     * */
+    public function getWsAcademicPeriod(){
 
         $schedules = AcademicPeriod::select('start_date as name', 'id')->where("active", 1)->orderBy('id', 'desc')->get()->toJson();
-        //$response = response()->json(["items" => $schedules->toArray()], 200);
         return $schedules;
 
     }
 
+    /**
+     * List Grupos Activos
+     **/
+    public function getWsGroups(){
+
+        $response = '';
+
+        $rs = Grupo::select('nom_grupo as name', 'id')->where("activo", 1)->orderBy('id', 'desc');
+
+        if($rs->count() > 0){
+            $groups = $rs->get();
+            $response = response()->json($groups, 200);
+        }
+
+        return $response;
+
+    }
+
+    /**
+    * List Horario Academico por Grupo
+    * 
+    **/
+    public function getWsAcademicHorary($cod_grupo = '-'){
+
+        $response = '';
+
+        $rs = Horario::with('docente.persona')
+            ->with('local')
+            ->with('modulo')
+            ->select('id', 'fec_inicio', 'fec_fin', 'fec_fin', 'h_inicio', 'h_fin', 'cod_docente', 'cod_local', 'cod_mod', 'num_horas', 'activo');
+        $rs->where("activo", 1);
+
+        ($cod_grupo != '-')? $rs->where("cod_grupo", $cod_grupo)->orderBy('id', 'desc') : '';
+
+        $rs->orderBy('id', 'desc');
+
+        if( $count = $rs->count() > 0){
+            $response = response()->json(['response' => $rs->get()], 200);
+        } else {
+            $response = response()->json(['message' => 'Empty'], 400);
+        }
+
+        return $response;
+
+    }
+
+    /* *
+     * Busqueda de Grupo por nombres
+     *  */
+    public function getWsGroupsLike($q){
+        $response = '';
+
+        $rs = Grupo::
+        with('sede')->
+        with('modalidad')->
+        with('tipo_especializacion')->
+        with('especializacion')->
+        select('nom_grupo as name', 'id', 'cod_sede', 'cod_modalidad', 'cod_esp_tipo', 'cod_esp')->where('nom_grupo', 'LIKE', '%'. $q .'%')->orderBy('id', 'desc');
+
+        if($rs->count() > 0){
+            $groups = $rs->get();
+            $response = response()->json(["items" => $groups], 200);
+        }
+
+        return $response;
+    }
 }

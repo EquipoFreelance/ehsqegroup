@@ -106,6 +106,7 @@ function ListEspecializaciones(route){
 }
 
 function DefaultOptionSelect(element, str){
+  $(element).empty();
   $(element).attr("disabled", "disabled");
   response_html = $(element).append($('<option>', {
     value: '',
@@ -121,21 +122,40 @@ function wsUbigeo(route, element, placeholder){
      datatype: 'json',
      data:{},
      beforeSend: function(){
-       $(element).empty();
        DefaultOptionSelect(element, placeholder);
      },
      success:function(items)
      {
-       setListItems(items, element);
+       setListItems(JSON.parse(items), element);
      }
    });
+}
+
+function wsSelect(route, element, placeholder){
+    $.ajax({
+        url:route,
+        type:'get',
+        datatype: 'json',
+        data:{},
+        beforeSend: function(){
+
+            DefaultOptionSelect(element, placeholder);
+        },
+        success:function(items)
+        {
+            setListItems(items, element);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr.status);
+        }
+    });
 }
 
 function setListItems(data, element){
 
    var attr = $(element).attr("data-id-default");
 
-   $.each(JSON.parse(data), function (i, item) {
+   $.each(data, function (i, item) {
      $(element).append($('<option>', {
        value: item.id,
        text : item.name

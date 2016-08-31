@@ -16,6 +16,7 @@ use App\Models\Modulo;
 use AppHelper;
 use Validator;
 use App\Http\Requests;
+use App\Http\Requests\StoreHoraryRequest;
 use Carbon\Carbon;
 
 
@@ -24,60 +25,71 @@ class HorarioController extends Controller
 
    /**
    * Listado de Horario con su respectivo grupo
-   * @param  $id -> ID del Grupo
    * @return \Illuminate\Http\Response
    */
-   public function index($id)
+   public function index()
    {
-
-     $grupo = Grupo::find($id);
-     $data = ['horarios' => $grupo->addHorarios, "id" => $id];
-     return view('horario.index', $data);
-
+     return view('horario.index');
    }
 
    /**
     * Mostrar el formulario con su respectivo grupo
-    * @param  $id -> ID del Grupo
     * @return \Illuminate\Http\Response
     */
-   public function create($id)
+   public function create()
    {
-
-     // Get Grupo
-     $grupo = Grupo::find($id);
-     $cod_sede     = $grupo->cod_sede;      // Sede
-     $cod_mod      = $grupo->cod_mod;       // Modalidad
-     $cod_esp_tipo = $grupo->cod_esp_tipo;  // Tipo de especialización
-     $cod_esp      = $grupo->cod_esp;       // Tipo de especialización
-     $docentes     = array();
-
-     // Lists módulos
-     $list_modulos = Modulo::where('cod_esp', $cod_esp)->where("deleted", '=', 0)->get()->lists('nombre', 'id');
-     $list_modulos->prepend('-- Seleccione el Módulo --', 0);
-
-     // Lists locales
-     $list_locales = SedeLocal::where('cod_sede', $cod_sede)->where("deleted", '=', 0)->get()->lists('nom_local', 'id');
-     $list_locales->prepend('-- Seleccione El Local --', 0);
-
-     // Lists auxiliares
-     $list_auxiliares = Auxiliar::where("deleted", '=', 0)->get()->lists('persona.nombre', 'id');
-     $list_auxiliares->prepend('-- Seleccione Personal de Apoyo --', 0);
-
-     // Lists Docentes
-     $list_docentes = Docente::where("deleted", '=', 0)->get()->lists('persona.nombre', 'id');
-     $list_docentes->prepend('-- Seleccione Docente --', 0);
-
-     // Lists Días de la semana
      $list_semana = $this->dias_semana();
-
-     $data = compact('id', 'cod_mod', 'list_modulos', 'list_locales', 'list_auxiliares', 'list_docentes', 'list_semana');
-
+     $data = compact('list_semana');
      return view('horario.create', $data);
-
    }
 
-   /**
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StoreHoraryRequest $request){
+
+        // Add New Horario
+        $horario = new Horario;
+        $horario->fec_inicio  = $request->get("fec_inicio");
+        $horario->fec_fin     = $request->get("fec_fin");
+        $horario->h_inicio    = $request->get("h_inicio");
+        $horario->h_fin       = $request->get("h_fin");
+        $horario->num_horas   = $request->get("num_horas");
+        //$horario->cod_local   = $request->get("cod_local");
+        $horario->cod_mod     = $request->get("cod_mod");
+        $horario->cod_docente = $request->get("cod_docente");
+        $horario->activo      = $request->get("activo");
+
+        $week_days   = $request->get("cod_dia");
+
+        if($horario->save()){
+
+            // Add Auxiliar
+            $auxiliar_id = $request->get("cod_auxiliar");
+            Auxiliar::find($auxiliar_id)->addHorarios()->save($horario);
+
+            // Add Grupo
+            $grupo_id = $request->get("cod_grupo");
+            Grupo::find($grupo_id)->addHorarios()->save($horario);
+
+            // Add Días
+            $horario_dias = $this->HorarioIntervaloDias($request->get("fec_inicio"), $request->get("fec_fin"), $week_days, $horario->id, $request->get("activo"));
+            $horario->horariodias()->saveMany($horario_dias);
+
+            // Enviando mensaje
+            return redirect()->route('dashboard.grupo.horario.list', $request->get("cod_grupo"))
+                ->with('message', 'Los datos se registraron satisfactoriamente');
+
+        }
+
+
+    }
+
+
+    /**
     * Mostrar el formulario para editar con su respectivo grupo
     * @param  $id -> ID del Grupo
     * @return \Illuminate\Http\Response
@@ -96,102 +108,55 @@ class HorarioController extends Controller
       }
 
       // Get Días de la semana
-      $get_semana   = array();
+      // Obteniendo el id del día para ser buscado en la lista de días de la semana
+      /*$get_semana   = array();
       $horario_dias = $horario->horariodias()->get();
       foreach ($horario_dias as $dia) {
         $get_semana[] = $dia->cod_dia;
-      }
+      }*/
 
-      // Get Grupo
-      $grupo = Grupo::find($id);
-      $cod_sede     = $grupo->cod_sede;      // Sede
-      $cod_mod      = $grupo->cod_mod;       // Modalidad
-      $cod_esp_tipo = $grupo->cod_esp_tipo;  // Tipo de especialización
-      $cod_esp      = $grupo->cod_esp;       // Tipo de especialización
+        $weekend_horary = [];
+        ($horario->monday == 1)?    $weekend_horary[] = 1: '';
+        ($horario->sunday == 1)?    $weekend_horary[] = 2: '';
+        ($horario->tuesday == 1)?   $weekend_horary[] = 3: '';
+        ($horario->wednesday == 1)? $weekend_horary[] = 4: '';
+        ($horario->thursday == 1)?  $weekend_horary[] = 5: '';
+        ($horario->friday == 1)?    $weekend_horary[] = 6: '';
+        ($horario->saturday == 1)?  $weekend_horary[] = 7: '';
 
-      // Lists Módulos
-      $list_modulos = Modulo::where('cod_esp', $cod_esp)->where("deleted", '=', 0)->get()->lists('nombre', 'id');
-      $list_modulos->prepend('-- Seleccione el Módulo --', 0);
+        // Get Grupo
+        $grupo = Grupo::find($id);
+        $cod_sede     = $grupo->cod_sede;      // Sede
+        $cod_mod      = $grupo->cod_mod;       // Modalidad
+        $cod_esp_tipo = $grupo->cod_esp_tipo;  // Tipo de especialización
+        $cod_esp      = $grupo->cod_esp;       // Especialización
 
-      // Lists locales
-      $list_locales = SedeLocal::where("deleted", '=', 0)->get()->lists('nom_local', 'id');
-      $list_locales->prepend('-- Seleccione El Local --', 0);
+        // Lists Módulos
+        $list_modulos = Modulo::where('cod_esp', $cod_esp)->where("deleted", '=', 0)->get()->lists('nombre', 'id');
+        $list_modulos->prepend('-- Seleccione el Módulo --', 0);
 
-      // Lists auxiliares
-      $list_auxiliar = Auxiliar::where("deleted", '=', 0)->get()->lists('persona.nombre', 'id');
-      $list_auxiliar->prepend('-- Seleccione Personal de Apoyo --', 0);
+        // Lists locales
+        $list_locales = SedeLocal::where("deleted", '=', 0)->get()->lists('nom_local', 'id');
+        $list_locales->prepend('-- Seleccione El Local --', 0);
 
-      // Lists Docentes
-      $list_docentes = Docente::where("deleted", '=', 0)->get()->lists('persona.nombre', 'id');
-      $list_docentes->prepend('-- Seleccione Docente --', 0);
+        // Lists auxiliares
+        $list_auxiliar = Auxiliar::where("deleted", '=', 0)->get()->lists('persona.nombre', 'id');
+        $list_auxiliar->prepend('-- Seleccione Personal de Apoyo --', 0);
 
-      // Lists Días de la semana
-      $list_semana = $this->dias_semana();
+        // Lists Docentes
+        $list_docentes = Docente::where("deleted", '=', 0)->get()->lists('persona.nombre', 'id');
+        $list_docentes->prepend('-- Seleccione Docente --', 0);
 
-      $data = compact('id', 'cod_mod', 'cod_auxiliar', 'list_modulos', 'list_locales', 'list_auxiliar', 'list_docentes', 'list_semana', 'horario','get_semana');
+        // Lists Días de la semana
+        $list_semana = $this->dias_semana();
 
-      return view('horario.edit', $data );
+        $data = compact('id', 'cod_mod', 'cod_auxiliar', 'list_modulos', 'list_locales', 'list_auxiliar', 'list_docentes', 'list_semana', 'horario','weekend_horary');
 
-   }
-
-
-   /**
-    * Store a newly created resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
-    */
-   public function store(Request $request){
-
-     // Enviando los parametros necesarios para la validación
-     $validator = Validator::make( $request->all(), $this->validateRules(), $this->validateMessages() );
-
-     // Si existen errores el Sistema muestra un mensaje
-     if ($validator->fails()){
-
-       // Enviando Mensaje
-       return redirect()->route('dashboard.grupo.create')->withErrors($validator)
-       ->withInput();
-
-     } else {
-
-       // Add New Horario
-       $horario = new Horario;
-       $horario->fec_inicio  = $request->get("fec_inicio");
-       $horario->fec_fin     = $request->get("fec_fin");
-       $horario->h_inicio    = $request->get("h_inicio");
-       $horario->h_fin       = $request->get("h_fin");
-       $horario->num_horas   = $request->get("num_horas");
-       $horario->cod_local   = $request->get("cod_local");
-       $horario->cod_mod     = $request->get("cod_mod");
-       $horario->cod_docente = $request->get("cod_docente");
-       $horario->activo      = $request->get("activo");
-
-       $week_days   = $request->get("cod_dia");
-
-       if($horario->save()){
-
-         // Add Auxiliar
-         $auxiliar_id = $request->get("cod_auxiliar");
-         Auxiliar::find($auxiliar_id)->addHorarios()->save($horario);
-
-         // Add Grupo
-         $grupo_id = $request->get("cod_grupo");
-         Grupo::find($grupo_id)->addHorarios()->save($horario);
-
-         // Add Días
-         $horario_dias = $this->HorarioIntervaloDias($request->get("fec_inicio"), $request->get("fec_fin"), $week_days, $horario->id, $request->get("activo"));
-         $horario->horariodias()->saveMany($horario_dias);
-
-         // Enviando mensaje
-         return redirect()->route('dashboard.grupo.horario.list', $request->get("cod_grupo"))
-         ->with('message', 'Los datos se registraron satisfactoriamente');
-
-       }
-
-     }
+        return view('horario.edit', $data );
 
    }
+
+
 
    public function update(Request $request, $id)
    {
@@ -209,25 +174,20 @@ class HorarioController extends Controller
      $horario->updated_at  = Carbon::now();
      $horario->activo      = $request->get("activo");
 
-
-     $auxiliar_id = $request->get("cod_auxiliar");
-
-     $week_days = $request->get("cod_dia");
-
-     $horario_dias = $this->HorarioIntervaloDias($request->get("fec_inicio"), $request->get("fec_fin"), $week_days, $horario->id, $request->get("activo"));
-
      if($horario->save()){
 
        // Update auxiliares
        $horario->auxiliares()->detach();
 
        // Add Auxiliar
+       $auxiliar_id = $request->get("cod_auxiliar");
        Auxiliar::find($auxiliar_id)->addHorarios()->save($horario);
 
        // Update Días
        $horario->horariodias()->delete();
 
        // Add Dias
+       $week_days   = $request->get("cod_dia");
        $horario_dias = $this->HorarioIntervaloDias($request->get("fec_inicio"), $request->get("fec_fin"), $week_days, $horario->id, $request->get("activo"));
        $horario->horariodias()->saveMany($horario_dias);
 
@@ -279,8 +239,12 @@ class HorarioController extends Controller
      return $messages;
    }
 
-
-   // Obteniendo los días de un intervarlo de fechas
+   /**
+    * Intervalo de días
+    * -----------------
+    * Seleccionando los días de la semana dentro de un rango de fechas(Inicio y fin)
+    * se registra los días de la semana que se va a dictar las clases
+    **/
    public function HorarioIntervaloDias($fec_inicio, $fec_fin, $week_days, $horario_id, $activo)
    {
      $horario_dias = array();
@@ -323,5 +287,8 @@ class HorarioController extends Controller
 
      return $semana;
    }
-
+    
+   public function testing($id_group){
+       return $id_group;
+   } 
 }
