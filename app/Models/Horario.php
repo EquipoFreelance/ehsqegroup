@@ -11,15 +11,15 @@ class Horario extends Model
 
   // Campos activos
   protected $fillable = [
+      'cod_grupo',
+      'cod_mod',
+      'cod_docente',
+      'cod_sede',
       'fec_inicio',
       'fec_fin',
       'h_inicio',
       'h_fin',
       'num_horas',
-      'cod_grupo',
-      'cod_sede',
-      'cod_local',
-      'cod_mod',
       'activo'
   ];
 
@@ -52,9 +52,9 @@ class Horario extends Model
   }
 
   // En un horario solo puede existir una sede
-  public function local()
+  public function sede()
   {
-      return $this->belongsTo('App\Models\SedeLocal', 'cod_local', 'id');
+      return $this->belongsTo('App\Models\SedeLocal', 'cod_sede', 'id');
   }
 
   // Un Horario - Grupos

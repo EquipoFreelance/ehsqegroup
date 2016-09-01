@@ -32,6 +32,10 @@ use App\Models\Grupo;
 
 use App\Models\Horario;
 
+use App\Models\Docente;
+
+use App\Models\Auxiliar;
+
 
 class WebServiceController extends Controller
 {
@@ -247,7 +251,7 @@ class WebServiceController extends Controller
 
     }
 
-
+    /* Lista de Estudiantes Activos */
     public function wsStudent()
     {
         $students = Student::with('persona')->orderBy('created_at', 'desc')->get();
@@ -255,6 +259,7 @@ class WebServiceController extends Controller
         return $response;
     }
 
+    /* Lista de Estudiantes por nombres */
     public function wsStudentLike($q)
     {
 
@@ -278,35 +283,36 @@ class WebServiceController extends Controller
     }
 
     /**
-     * List Grupos Activos
+     * Lista Grupos Activos
      **/
     public function getWsGroups(){
 
-        $response = '';
+        $response = ''; $fills = array();
 
         $rs = Grupo::select('nom_grupo as name', 'id')->where("activo", 1)->orderBy('id', 'desc');
 
         if($rs->count() > 0){
-            $groups = $rs->get();
-            $response = response()->json($groups, 200);
+            $fills = $rs->get();
         }
+
+        $response = response()->json($fills, 200);
 
         return $response;
 
     }
 
     /**
-    * List Horario Academico por Grupo
+    * Lista Horario Academico por Grupo
     * 
     **/
     public function getWsAcademicHorary($cod_grupo = '-'){
 
-        $response = '';
+        $response = ''; $fills = array();
 
         $rs = Horario::with('docente.persona')
-            ->with('local')
+            ->with('sede')
             ->with('modulo')
-            ->select('id', 'fec_inicio', 'fec_fin', 'fec_fin', 'h_inicio', 'h_fin', 'cod_docente', 'cod_local', 'cod_mod', 'num_horas', 'activo');
+            ->select('id', 'fec_inicio', 'fec_fin', 'fec_fin', 'h_inicio', 'h_fin', 'cod_docente', 'cod_sede', 'cod_mod', 'num_horas', 'activo');
         $rs->where("activo", 1);
 
         ($cod_grupo != '-')? $rs->where("cod_grupo", $cod_grupo)->orderBy('id', 'desc') : '';
@@ -314,10 +320,11 @@ class WebServiceController extends Controller
         $rs->orderBy('id', 'desc');
 
         if( $count = $rs->count() > 0){
-            $response = response()->json(['response' => $rs->get()], 200);
-        } else {
-            $response = response()->json(['message' => 'Empty'], 400);
+            $fills = $rs->get();
+
         }
+
+        $response = response()->json(['response' => $fills], 200);
 
         return $response;
 
@@ -327,7 +334,7 @@ class WebServiceController extends Controller
      * Busqueda de Grupo por nombres
      *  */
     public function getWsGroupsLike($q){
-        $response = '';
+        $response = ''; $fills = array();
 
         $rs = Grupo::
         with('sede')->
@@ -337,10 +344,64 @@ class WebServiceController extends Controller
         select('nom_grupo as name', 'id', 'cod_sede', 'cod_modalidad', 'cod_esp_tipo', 'cod_esp')->where('nom_grupo', 'LIKE', '%'. $q .'%')->orderBy('id', 'desc');
 
         if($rs->count() > 0){
-            $groups = $rs->get();
-            $response = response()->json(["items" => $groups], 200);
+            $fills = $rs->get();
         }
+
+        $response = response()->json(["items" => $fills], 200);
 
         return $response;
     }
+
+    /* *
+     * Búsqueda de Docentes por nombres
+     *  */
+    public function getWsTeachersLike($q){
+
+        $response = ''; $fills = array();
+
+        $rs = Docente::
+        with('persona')->
+        whereHas('persona', function ($query) use($q) {
+            if($q != '-'){
+                $query->where('nombre', 'LIKE', '%'. $q .'%');
+            }
+        });
+
+        if($rs->count() > 0){
+            $fills = $rs->get();
+        }
+
+        $response = response()->json(["items" => $fills], 200);
+
+        return $response;
+
+    }
+
+    /* *
+     * Búsqueda de Auxiliares por nombres
+     *  */
+    public function getWsAuxiliaryLike($q){
+
+        $response = ''; $fills = array();
+
+        $rs = Auxiliar::
+        with('persona')->
+        whereHas('persona', function ($query) use($q) {
+
+            if($q != '-'){
+                $query->where('nombre', 'LIKE', '%'. $q .'%');
+            }
+
+        });
+
+        if($rs->count() > 0){
+            $fills = $rs->get();
+        }
+
+        $response = response()->json(["items" => $fills], 200);
+
+        return $response;
+
+    }
+
 }

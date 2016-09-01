@@ -9,7 +9,7 @@
         <td>@{{ id }}</td>
         <td>@{{ fec_inicio}} al @{{ fec_fin}} / @{{ h_inicio }} - @{{ h_inicio }}</td>
         <td>@{{ docente.persona.nombre }} @{{ docente.persona.ape_pat  }} @{{ docente.persona.ape_mat }}</td>
-        <td>@{{ local.nom_local }}</td>
+        <td>@{{ sede.nom_local }}</td>
         <td>@{{ modulo.nombre }}</td>
         <td>@{{ num_horas }}</td>
         <td>

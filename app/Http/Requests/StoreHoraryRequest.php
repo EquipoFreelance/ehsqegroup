@@ -29,9 +29,9 @@ class StoreHoraryRequest extends Request
             'cod_docente' => 'required',
             'fec_inicio'  => 'required',
             'h_inicio'    => 'required',
+            'fec_fin'     => 'required',
             'h_fin'       => 'required',
             'cod_dia'     => 'required',
-            'fec_fin'     => 'required',
             'num_horas'   => 'required',
             'activo'      => 'required'
         ];
@@ -44,8 +44,8 @@ class StoreHoraryRequest extends Request
             'cod_mod.required'     => 'Es necesario seleccionar el módulo',
             'cod_docente.required' => 'Es necesario seleccionar el docente',
             'fec_inicio.required'  => 'Es necesario ingresar la fecha de inicio',
-            'fec_fin.required'     => 'Es necesario ingresar la fecha de finalización',
             'h_inicio.required'    => 'Es necesario ingresar la hora de inicio',
+            'fec_fin.required'     => 'Es necesario ingresar la fecha de finalización',
             'h_fin.required'       => 'Es necesario ingresar la hora de finalización',
             'cod_dia.required'     => 'Seleccione los días de la semana',
             'num_horas.required'   => 'Es necesario indicar el número de horas',

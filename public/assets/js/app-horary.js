@@ -10,6 +10,8 @@ if( $("#id_group").length > 0 ){
 }
 
 
+
+
 $("#id_group").change(function(){
 
     listHorary($(this).val());
@@ -20,12 +22,14 @@ $("#id_group").change(function(){
 
 // Init JS Plugin Select2
 var data_set = [];
-var cod_modalidad = '';
+var cod_grupo     = '';
+var cod_modalidad       = '';
 var cod_esp_tipo  = '';
 var cod_esp       = '';
 var url = '';
 
 $("#cod_mod").prop("disabled", true);
+
 
 /*
 * Genera un Elemento Select2 con datos remotos
@@ -79,7 +83,7 @@ function ajax_modulo(){
             if (typeof(params.term) == "undefined"){
                 return '/dashboard/json/modulos/' + cod_modalidad + "/" + cod_esp_tipo + "/" + cod_esp+ "/-";
             } else {
-                return '/dashboard/json/modulos/' + cod_modalidad + "/" + cod_esp_tipo + "/" + cod_esp + "/"+ params.term;
+                return '/dashboard/json/modulos/' + cod_modalidad + "/" + cod_esp_tipo + "/" + cod_esp + "/" + params.term;
             }
 
         },
@@ -138,6 +142,81 @@ function ajax_grupo(){
         },
         cache: true
     }
+}
+
+/*
+ * Función Definida para cargar Docentes
+ * */
+function ajax_teachers(){
+    data_set = [];
+    return {
+        url: function (params) {
+
+            if (typeof(params.term) == "undefined"){
+                return '/hsqegroup/api/teachers/search/-';
+            } else {
+                return '/hsqegroup/api/teachers/search/' + params.term;
+            }
+
+        },
+        dataType: 'json',
+        delay: 250,
+        processResults: function (data, params) {
+            data_set = [];
+            $.each(data.items, function(i, item) {
+                data_set.push(
+                    {
+                        id : item.id,
+                        text : item.persona.nombre
+                    }
+                );
+            });
+            return {
+                results: data_set
+            };
+        },
+        cache: true
+    }
+
+}
+
+/*
+ * Función Definida para cargar Auxiliares
+ * */
+function ajax_auxiliary(){
+    data_set = [];
+    return {
+        url: function (params) {
+
+            if (typeof(params.term) == "undefined"){
+                return '/hsqegroup/api/auxiliary/search/-';
+            } else {
+                return '/hsqegroup/api/auxiliary/search/' + params.term;
+            }
+
+        },
+        dataType: 'json',
+        delay: 250,
+        processResults: function (data, params) {
+            data_set = [];
+            if(data.items){
+                $.each(data.items, function(i, item) {
+                    data_set.push(
+                        {
+                            id : item.id,
+                            text : item.persona.nombre
+                        }
+                    );
+                });
+                return {
+                    results: data_set
+                };
+            }
+
+        },
+        cache: true
+    }
+
 }
 
 /*

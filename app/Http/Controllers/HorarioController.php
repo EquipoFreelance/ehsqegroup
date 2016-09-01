@@ -53,14 +53,15 @@ class HorarioController extends Controller
 
         // Add New Horario
         $horario = new Horario;
-        $horario->fec_inicio  = $request->get("fec_inicio");
-        $horario->fec_fin     = $request->get("fec_fin");
-        $horario->h_inicio    = $request->get("h_inicio");
-        $horario->h_fin       = $request->get("h_fin");
-        $horario->num_horas   = $request->get("num_horas");
-        //$horario->cod_local   = $request->get("cod_local");
+        $horario->cod_grupo   = $request->get("cod_grupo");
         $horario->cod_mod     = $request->get("cod_mod");
         $horario->cod_docente = $request->get("cod_docente");
+        $horario->fec_inicio  = $request->get("fec_inicio");
+        $horario->h_inicio    = $request->get("h_inicio");
+        $horario->fec_fin     = $request->get("fec_fin");
+        $horario->h_fin       = $request->get("h_fin");
+        $horario->num_horas   = $request->get("num_horas");
+        $horario->cod_sede    = $request->get("cod_sede");
         $horario->activo      = $request->get("activo");
 
         $week_days   = $request->get("cod_dia");
@@ -72,15 +73,15 @@ class HorarioController extends Controller
             Auxiliar::find($auxiliar_id)->addHorarios()->save($horario);
 
             // Add Grupo
-            $grupo_id = $request->get("cod_grupo");
-            Grupo::find($grupo_id)->addHorarios()->save($horario);
+            //$grupo_id = $request->get("cod_grupo");
+            //Grupo::find($grupo_id)->addHorarios()->save($horario);
 
             // Add Días
             $horario_dias = $this->HorarioIntervaloDias($request->get("fec_inicio"), $request->get("fec_fin"), $week_days, $horario->id, $request->get("activo"));
             $horario->horariodias()->saveMany($horario_dias);
 
             // Enviando mensaje
-            return redirect()->route('dashboard.grupo.horario.list', $request->get("cod_grupo"))
+            return redirect()->route('dashboard.academic_schedule.index')
                 ->with('message', 'Los datos se registraron satisfactoriamente');
 
         }
@@ -200,44 +201,7 @@ class HorarioController extends Controller
 
    }
 
-   /* Reglas de validaciones */
-   public function validateRules()
-   {
 
-     /* Aplicando validación al Request */
-
-     // Reglas de validación
-     $rules = [
-       'cod_mod'     => 'required',
-       'cod_docente' => 'required',
-       'fec_inicio'  => 'required',
-       'fec_fin'     => 'required',
-       'num_horas'   => 'required',
-       'cod_local'   => 'required',
-       'activo'      => 'required'
-     ];
-
-     return $rules;
-
-   }
-
-   /* Mensaje personalizado */
-   public function validateMessages()
-   {
-
-     // Mensaje de validación Personalizado
-     $messages = [
-       'cod_mod.required'     => 'Es necesario seleccionar el módulo',
-       'cod_docente.required' => 'Es necesario seleccionar el docente',
-       'fec_inicio.required'  => 'Es necesario ingresar la fecha de inicio',
-       'fec_fin.required'     => 'Es necesario ingresar la fecha de finalización',
-       'num_horas.required'   => 'Es necesario indicar el número de horas',
-       'cod_local.required'   => 'Es necesario seleccionar el local',
-       'activo.integer'       => 'Solo esta permitido que sea números enteros'
-     ];
-
-     return $messages;
-   }
 
    /**
     * Intervalo de días
@@ -288,7 +252,5 @@ class HorarioController extends Controller
      return $semana;
    }
     
-   public function testing($id_group){
-       return $id_group;
-   } 
+
 }

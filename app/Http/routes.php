@@ -227,3 +227,13 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
     Route::get('/hsqegroup/api/groups/search/{q}', [
         'as' => 'json.groups.all', 'uses' => 'WebServiceController@getWsGroupsLike'
     ]);
+
+    // Get List Docentes Like by Name
+    Route::get('/hsqegroup/api/teachers/search/{q}', [
+        'as' => 'json.teacher.all', 'uses' => 'WebServiceController@getWsTeachersLike'
+    ]);
+
+    // Get List Auxiliares Like by Name
+    Route::get('/hsqegroup/api/auxiliary/search/{q}', [
+        'as' => 'json.teacher.all', 'uses' => 'WebServiceController@getWsAuxiliaryLike'
+    ]);
