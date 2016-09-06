@@ -183,6 +183,11 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
         'as' => 'json.modulos', 'uses' => 'WebServiceController@wsModulos'
     ]);
 
+    // Modulos - Groups of attributes with parameteres
+    Route::get('/api/horary-modules/{cod_group}',[
+        'as' => 'json.modulos', 'uses' => 'WebServiceController@GetHoraryModules'
+    ]);
+
     // Modalidades
     Route::get('/dashboard/json/modalidades',[
         'as' => 'json.modalidades', 'uses' => 'WebServiceController@wsModalidades'
@@ -233,7 +238,17 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
         'as' => 'json.teacher.all', 'uses' => 'WebServiceController@getWsTeachersLike'
     ]);
 
+    // Get List Docentes All
+    Route::get('/api/horary-teachers/{cod_teacher}', [
+        'as' => 'json.teacher.all', 'uses' => 'WebServiceController@getWsTeachers'
+    ]);
+
     // Get List Auxiliares Like by Name
     Route::get('/hsqegroup/api/auxiliary/search/{q}', [
         'as' => 'json.teacher.all', 'uses' => 'WebServiceController@getWsAuxiliaryLike'
+    ]);
+
+    // Get List Auxiliares All
+    Route::get('/api/horary-auxiliary/{cod_teacher}', [
+        'as' => 'json.teacher.all', 'uses' => 'WebServiceController@getWsAuxiliary'
     ]);

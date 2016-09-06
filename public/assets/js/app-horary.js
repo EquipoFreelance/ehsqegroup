@@ -10,25 +10,67 @@ if( $("#id_group").length > 0 ){
 }
 
 
-
-
 $("#id_group").change(function(){
-
     listHorary($(this).val());
-
 });
 
 // JS - Form Create and Form Update
 
+// Init JS Plugin TimePicker
+$('#h_inicio, #h_fin').timepicker({
+    defaultTime: false
+});
+
+// Init JS Plugin Material Date Picker
+$(function(){
+    if($('#fec_inicio').length){
+        $('#fec_inicio').bootstrapMaterialDatePicker({ weekStart : 0, time: false, format : 'DD-MM-YYYY', lang : 'es'});
+    }
+    if($('#fec_fin').length){
+        $('#fec_fin').bootstrapMaterialDatePicker({ weekStart : 0, time: false, format : 'DD-MM-YYYY', lang : 'es'});
+    }
+});
+
+// Init JS Selects
+
+// Groups
+if( $("#cod_grupo").length > 0 ) {
+
+    // Load Data
+    wsSelect('/hsqegroup/api/groups', "#cod_grupo", " -- Seleccione el Grupo -- ");
+
+    $("#cod_mod").attr("disabled", true);
+
+    // Event Change
+    $("#cod_grupo").change(function(){
+        wsSelect('/api/horary-modules/' + $(this).val(), "#cod_mod", " -- Seleccione el Módulo -- ");
+    });
+
+}
+
+// Profesors
+( $("#cod_docente").length > 0 )?
+
+// Load Data
+wsSelect('/api/horary-teachers/all', "#cod_docente", " -- Seleccione el Docente -- ") : true ;
+
+
+// Auxiliar
+($("#cod_auxiliar").length > 0 )?
+// Load Data
+wsSelect('/api/horary-auxiliary/all', "#cod_auxiliar", " -- Seleccione el Auxiliar -- ") : true ;
+
+
 // Init JS Plugin Select2
-var data_set = [];
+/*var data_set = [];
 var cod_grupo     = '';
 var cod_modalidad       = '';
 var cod_esp_tipo  = '';
 var cod_esp       = '';
-var url = '';
+var url = '';*/
 
-$("#cod_mod").prop("disabled", true);
+
+//$("#cod_mod").prop("disabled", true);
 
 
 /*
@@ -38,14 +80,14 @@ $("#cod_mod").prop("disabled", true);
 * placeholder        : Mostrar el valor por defecto
 * minimumInputLength : Definiendo si el buscador tendrá un minimo de palabras en su busqueda
 * */
-function select2Generate(element, asinc, placeholder, minimumInputLength){
+function select2Generate(element, asinc, placeholder, minimumInputLength, params){
 
     if($(element).length){
         return $(element).select2({
             minimumInputLength: minimumInputLength,
             theme: "classic",
             placeholder: placeholder,
-            ajax: asinc(),
+            ajax: asinc(params),
             allowClear: true,
             templateResult : function (repo) {
                 return repo.text;
@@ -75,15 +117,16 @@ function select2Default(element, placeholder){
 /*
 * Función Definida para cargar modulos
 * */
-function ajax_modulo(){
+function ajax_modulo(p){
+    //console.log(params);
     data_set = [];
     return {
         url: function (params) {
 
             if (typeof(params.term) == "undefined"){
-                return '/dashboard/json/modulos/' + cod_modalidad + "/" + cod_esp_tipo + "/" + cod_esp+ "/-";
+                return '/dashboard/json/modulos/' + p.cod_modalidad + "/" + p.cod_esp_tipo + "/" + p.cod_esp+ "/-";
             } else {
-                return '/dashboard/json/modulos/' + cod_modalidad + "/" + cod_esp_tipo + "/" + cod_esp + "/" + params.term;
+                return '/dashboard/json/modulos/' + p.cod_modalidad + "/" + p.cod_esp_tipo + "/" + p.cod_esp + "/" + p.term;
             }
 
         },
@@ -112,7 +155,7 @@ function ajax_modulo(){
  * Función Definida para cargar Grupos
  * */
 function ajax_grupo(){
-    return {
+    /*return {
         url: function (params) {
             return '/hsqegroup/api/groups/search/' + params.term;
         },
@@ -141,7 +184,7 @@ function ajax_grupo(){
             };
         },
         cache: true
-    }
+    }*/
 }
 
 /*

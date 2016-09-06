@@ -152,6 +152,31 @@ class WebServiceController extends Controller
 
     }
 
+    /* Dependiendo el grupo seleccionado se listarán los módulos */
+    public function GetHoraryModules($cod_grupo){
+
+        $rs = Grupo::where("id", $cod_grupo)->where("activo", 1)->select("cod_modalidad", "cod_esp_tipo", "cod_esp");
+
+        if ($rs->count() > 0){
+
+            $group = $rs->first();
+
+            $rs = Modulo::where("cod_modalidad", $group->cod_modalidad)->
+            where("cod_esp_tipo", $group->cod_esp_tipo)->
+            where("cod_esp", $group->cod_esp)->select("nombre as name", "id");
+
+            ($rs->count() > 0)?
+                $response = response()->json($rs->get(), 200) : $response = response()->json(["message" => 'empty'], 400);
+
+
+        }else {
+            $response = response()->json(["message" => 'empty'], 400);
+        }
+
+        return $response;
+
+    }
+
     /**
     * Lista de Matriculados,
     * Servicio permite listar las matriculas realizadas filtradas por le fecha de inicio
@@ -372,6 +397,60 @@ class WebServiceController extends Controller
         }
 
         $response = response()->json(["items" => $fills], 200);
+
+        return $response;
+
+    }
+
+    /* *
+     * Búsqueda de Todos los Docentes
+     *  */
+    public function getWsTeachers($cod_teacher){
+
+        $response = ''; $fills = array();
+
+        $rs = Docente::where('activo', 1)->select("id", "cod_persona");
+
+        ( $cod_teacher != 'all')? $rs->where('id', $cod_teacher) : false;
+
+        $rs->with('persona');
+
+        if($rs->count() > 0){
+
+            $fills = array();
+            foreach ($rs->get() as $item) {
+                $fills[] = array("name" => $item->persona->nombre, "id" => $item->id);
+            }
+        }
+
+        $response = response()->json($fills, 200);
+
+        return $response;
+
+    }
+
+    /* *
+     * Búsqueda de Todos los Docentes
+     *  */
+    public function getWsAuxiliary($cod_teacher){
+
+        $response = ''; $fills = array();
+
+        $rs = Auxiliar::where('activo', 1)->select("id", "cod_persona");
+
+        ( $cod_teacher != 'all')? $rs->where('id', $cod_teacher) : false;
+
+        $rs->with('persona');
+
+        if($rs->count() > 0){
+
+            $fills = array();
+            foreach ($rs->get() as $item) {
+                $fills[] = array("name" => $item->persona->nombre, "id" => $item->id);
+            }
+        }
+
+        $response = response()->json($fills, 200);
 
         return $response;
 
