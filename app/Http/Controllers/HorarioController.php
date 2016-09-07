@@ -29,7 +29,11 @@ class HorarioController extends Controller
    */
    public function index()
    {
-     return view('horario.index');
+        return view('horario.index');
+   }
+
+   public function getIndexHorarios($cod_group){
+        return view('horario.horary-group', compact('cod_group'));
    }
 
    /**
@@ -181,7 +185,7 @@ class HorarioController extends Controller
        $horario->thursday = 0;
        $horario->friday = 0;
        $horario->saturday = 0;
-       
+
         // Días seleccionados en la tabla
         foreach ($week_days as $week_day) {
 

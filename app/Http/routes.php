@@ -62,7 +62,11 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
   Route::resource('/dashboard/sede/local', 'SedeLocalController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
   // Administrador de Horarios
-  Route::resource('/dashboard/academic_schedule', 'HorarioController', ['only' => ['index', 'create', 'store', 'edit','update'] ] );
+  Route::resource('/dashboard/academic_schedule', 'HorarioController', ['only' => ['index', 'create', 'store', 'edit', 'update'] ] );
+
+    Route::get('/dashboard/academic_schedule/{cod_group}',[
+        'as' => 'dashboard.academic_schedule.horario.group', 'uses' => 'HorarioController@getIndexHorarios'
+    ]);
 
   // Administrador de Grupos
   Route::resource('/dashboard/grupo', 'GrupoController', ['only' => ['index','create','store','edit','update','destroy'] ] );
@@ -75,18 +79,18 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
     ]);
 
     // create
-    Route::get('/dashboard/grupo/{id}/horario/crear',[
+    /*Route::get('/dashboard/grupo/{id}/horario/crear',[
         'as' => 'dashboard.grupo.horario.crear', 'uses' => 'HorarioController@create'
-    ]);
+    ]);*/
 
     // edit
-    Route::get('/dashboard/grupo/{id}/horario/{cod_horario}/edit',[
+    /*Route::get('/dashboard/grupo/{id}/horario/{cod_horario}/edit',[
         'as' => 'dashboard.grupo.horario.edit', 'uses' => 'HorarioController@edit'
-    ]);
+    ]);*/
 
-    Route::get('/dashboard/grupo/{id_group}/horario/testing',[
+    /*Route::get('/dashboard/grupo/{id_group}/horario/testing',[
         'uses' => 'HorarioController@testing'
-    ]);
+    ]);*/
 
   // Administrador de Auxiliares
   Route::resource('/dashboard/auxiliar', 'AuxiliarController', ['only' => ['index','create','store','edit','update','destroy'] ] );
