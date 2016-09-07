@@ -20,7 +20,7 @@
             @{{/validate}}
         </td>
         <td>
-            <a href="enrollment/@{{id}}/edit" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>
+            <a href="academic_schedule/@{{id}}/edit" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>
         </td>
     </tr>
     @{{/each}}

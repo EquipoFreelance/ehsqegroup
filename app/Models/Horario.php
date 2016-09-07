@@ -19,13 +19,26 @@ class Horario extends Model
       'fec_fin',
       'h_inicio',
       'h_fin',
+      'monday',
+      'sunday',
+      'tuesday',
+      'wednesday',
+      'thursday',
+      'friday',
+      'saturday',
       'num_horas',
       'activo'
   ];
 
   // Atributos con valores por defecto
   protected $attributes = array(
-     'deleted' => 0
+      'monday'    => 0,
+      'sunday'    => 0,
+      'tuesday'   => 0,
+      'wednesday' => 0,
+      'thursday'  => 0,
+      'friday'    => 0,
+      'saturday'  => 0
   );
 
   // Horario - Dias

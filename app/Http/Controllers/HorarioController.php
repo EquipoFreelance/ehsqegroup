@@ -57,28 +57,51 @@ class HorarioController extends Controller
         $horario->cod_mod     = $request->get("cod_mod");
         $horario->cod_docente = $request->get("cod_docente");
         $horario->fec_inicio  = $request->get("fec_inicio");
-        $horario->h_inicio    = $request->get("h_inicio");
         $horario->fec_fin     = $request->get("fec_fin");
+        $horario->h_inicio    = $request->get("h_inicio");
         $horario->h_fin       = $request->get("h_fin");
         $horario->num_horas   = $request->get("num_horas");
-        $horario->cod_sede    = $request->get("cod_sede");
-        $horario->activo      = $request->get("activo");
 
-        $week_days   = $request->get("cod_dia");
+        $group = Grupo::find($request->get("cod_grupo"));
+        $horario->cod_sede    = $group->cod_sede;
+
+        $horario->activo      = $request->get("activo");
+        $week_days            = $request->get("cod_dia");
+
+        // Días seleccionados en la tabla
+        foreach ($week_days as $week_day) {
+
+            switch ($week_day) {
+                case 1:
+                    $horario->monday = 1;
+                    break;
+                case 2:
+                    $horario->sunday = 1;
+                    break;
+                case 3:
+                    $horario->tuesday = 1;
+                    break;
+                case 4:
+                    $horario->wednesday = 1;
+                    break;
+                case 5:
+                    $horario->thursday = 1;
+                    break;
+                case 6:
+                    $horario->friday = 1;
+                    break;
+                case 7:
+                    $horario->saturday = 1;
+                    break;
+            }
+
+        }
 
         if($horario->save()){
 
             // Add Auxiliar
             $auxiliar_id = $request->get("cod_auxiliar");
             Auxiliar::find($auxiliar_id)->addHorarios()->save($horario);
-
-            // Add Grupo
-            //$grupo_id = $request->get("cod_grupo");
-            //Grupo::find($grupo_id)->addHorarios()->save($horario);
-
-            // Add Días
-            $horario_dias = $this->HorarioIntervaloDias($request->get("fec_inicio"), $request->get("fec_fin"), $week_days, $horario->id, $request->get("activo"));
-            $horario->horariodias()->saveMany($horario_dias);
 
             // Enviando mensaje
             return redirect()->route('dashboard.academic_schedule.index')
@@ -95,26 +118,18 @@ class HorarioController extends Controller
     * @param  $id -> ID del Grupo
     * @return \Illuminate\Http\Response
     */
-   public function edit($id, $cod_horario)
+   public function edit($id)
    {
 
-      // Get Horario
-      $horario = Horario::find($cod_horario);
+        // Get Horario
+        $horario = Horario::find($id);
 
-      // Get Auxiliar
-      $cod_auxiliar = '';
-      foreach ($horario->auxiliares as $auxiliar) {
-        $cod_auxiliar = $auxiliar->pivot->cod_auxiliar;
-        break;
-      }
-
-      // Get Días de la semana
-      // Obteniendo el id del día para ser buscado en la lista de días de la semana
-      /*$get_semana   = array();
-      $horario_dias = $horario->horariodias()->get();
-      foreach ($horario_dias as $dia) {
-        $get_semana[] = $dia->cod_dia;
-      }*/
+        // Get Auxiliar
+        $cod_auxiliar = '';
+        foreach ($horario->auxiliares as $auxiliar) {
+            $cod_auxiliar = $auxiliar->pivot->cod_auxiliar;
+            break;
+        }
 
         $weekend_horary = [];
         ($horario->monday == 1)?    $weekend_horary[] = 1: '';
@@ -125,33 +140,11 @@ class HorarioController extends Controller
         ($horario->friday == 1)?    $weekend_horary[] = 6: '';
         ($horario->saturday == 1)?  $weekend_horary[] = 7: '';
 
-        // Get Grupo
-        $grupo = Grupo::find($id);
-        $cod_sede     = $grupo->cod_sede;      // Sede
-        $cod_mod      = $grupo->cod_mod;       // Modalidad
-        $cod_esp_tipo = $grupo->cod_esp_tipo;  // Tipo de especialización
-        $cod_esp      = $grupo->cod_esp;       // Especialización
-
-        // Lists Módulos
-        $list_modulos = Modulo::where('cod_esp', $cod_esp)->where("deleted", '=', 0)->get()->lists('nombre', 'id');
-        $list_modulos->prepend('-- Seleccione el Módulo --', 0);
-
-        // Lists locales
-        $list_locales = SedeLocal::where("deleted", '=', 0)->get()->lists('nom_local', 'id');
-        $list_locales->prepend('-- Seleccione El Local --', 0);
-
-        // Lists auxiliares
-        $list_auxiliar = Auxiliar::where("deleted", '=', 0)->get()->lists('persona.nombre', 'id');
-        $list_auxiliar->prepend('-- Seleccione Personal de Apoyo --', 0);
-
-        // Lists Docentes
-        $list_docentes = Docente::where("deleted", '=', 0)->get()->lists('persona.nombre', 'id');
-        $list_docentes->prepend('-- Seleccione Docente --', 0);
 
         // Lists Días de la semana
         $list_semana = $this->dias_semana();
 
-        $data = compact('id', 'cod_mod', 'cod_auxiliar', 'list_modulos', 'list_locales', 'list_auxiliar', 'list_docentes', 'list_semana', 'horario','weekend_horary');
+        $data = compact('horario', 'list_semana', 'cod_auxiliar', 'weekend_horary');
 
         return view('horario.edit', $data );
 
@@ -159,44 +152,79 @@ class HorarioController extends Controller
 
 
 
-   public function update(Request $request, $id)
+   public function update(StoreHoraryRequest $request, $id)
    {
 
-     // Update Horario
-     $horario = Horario::find($id);
-     $horario->fec_inicio  = $request->get("fec_inicio");
-     $horario->fec_fin     = $request->get("fec_fin");
-     $horario->h_inicio    = $request->get("h_inicio");
-     $horario->h_fin       = $request->get("h_fin");
-     $horario->num_horas   = $request->get("num_horas");
-     $horario->cod_local   = $request->get("cod_local");
-     $horario->cod_mod     = $request->get("cod_mod");
-     $horario->cod_docente = $request->get("cod_docente");
-     $horario->updated_at  = Carbon::now();
-     $horario->activo      = $request->get("activo");
+        // Update Horario
+        $horario = Horario::find($id);
+        $horario->cod_grupo   = $request->get("cod_grupo");
+        $horario->cod_mod     = $request->get("cod_mod");
+        $horario->cod_docente = $request->get("cod_docente");
+        $horario->fec_inicio  = $request->get("fec_inicio");
+        $horario->fec_fin     = $request->get("fec_fin");
+        $horario->h_inicio    = $request->get("h_inicio");
+        $horario->h_fin       = $request->get("h_fin");
+        $horario->num_horas   = $request->get("num_horas");
 
-     if($horario->save()){
+        $group = Grupo::find($request->get("cod_grupo"));
+        $horario->cod_sede    = $group->cod_sede;
 
-       // Update auxiliares
-       $horario->auxiliares()->detach();
+        $horario->updated_at  = Carbon::now();
+        $horario->activo      = $request->get("activo");
 
-       // Add Auxiliar
-       $auxiliar_id = $request->get("cod_auxiliar");
-       Auxiliar::find($auxiliar_id)->addHorarios()->save($horario);
+        $week_days            = $request->get("cod_dia");
 
-       // Update Días
-       $horario->horariodias()->delete();
+       $horario->monday = 0;
+       $horario->sunday = 0;
+       $horario->tuesday = 0;
+       $horario->wednesday = 0;
+       $horario->thursday = 0;
+       $horario->friday = 0;
+       $horario->saturday = 0;
+       
+        // Días seleccionados en la tabla
+        foreach ($week_days as $week_day) {
 
-       // Add Dias
-       $week_days   = $request->get("cod_dia");
-       $horario_dias = $this->HorarioIntervaloDias($request->get("fec_inicio"), $request->get("fec_fin"), $week_days, $horario->id, $request->get("activo"));
-       $horario->horariodias()->saveMany($horario_dias);
+           switch ($week_day) {
+               case 1:
+                   $horario->monday = 1;
+                   break;
+               case 2:
+                   $horario->sunday = 1;
+                   break;
+               case 3:
+                   $horario->tuesday = 1;
+                   break;
+               case 4:
+                   $horario->wednesday = 1;
+                   break;
+               case 5:
+                   $horario->thursday = 1;
+                   break;
+               case 6:
+                   $horario->friday = 1;
+                   break;
+               case 7:
+                   $horario->saturday = 1;
+                   break;
+           }
 
-       //Enviando mensaje
-       return redirect()->route('dashboard.grupo.horario.list', $request->get("cod_grupo"))
-       ->with('message', 'Los datos se actualizaron satisfactoriamente');
+        }
 
-     }
+        if($horario->save()){
+
+            // Update auxiliares
+            $horario->auxiliares()->detach();
+
+            // Add Auxiliar
+            $auxiliar_id = $request->get("cod_auxiliar");
+            Auxiliar::find($auxiliar_id)->addHorarios()->save($horario);
+
+            //Enviando mensaje
+            return redirect()->route('dashboard.academic_schedule.index')
+            ->with('message', 'Los datos se actualizaron satisfactoriamente');
+
+        }
 
 
    }

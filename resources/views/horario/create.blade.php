@@ -95,7 +95,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <label for="cod_mod">Modulo</label>
                 <select name="cod_mod" id="cod_mod" class="form-control" data-id-default="{{ old('cod_mod') }}">
-                  <option value="">-- Seleccion el Módulo --</option>
+                  <option value="">-- Seleccione el Módulo --</option>
                 </select>
                 @if ($errors->has('cod_mod'))
                   <label for="cod_mod" generated="true" class="error">{{ $errors->first('cod_mod') }}</label>
@@ -133,6 +133,18 @@
                 @endif
               </div>
               <div class="col-md-6 col-sm-6 col-xs-12">
+                {{ Form::label('fec_fin', 'Fecha de finalización:') }}
+                {{ Form::text('fec_fin', old('fec_fin'), ['class' => 'form-control', 'placeholder' => 'Fecha de Finalización'] ) }}
+                @if ($errors->has('fec_fin'))
+                  <label for="fec_fin" generated="true" class="error">{{ $errors->first('fec_fin') }}</label>
+                @endif
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
                 {{ Form::label('h_inicio', 'Hora de inicio:') }}
                 <div class="input-group bootstrap-timepicker timepicker">
                   {{ Form::text('h_inicio', old('h_inicio'), ['class' => 'form-control', 'placeholder' => 'Hora de Inicio'] ) }}
@@ -142,21 +154,7 @@
                   <label for="h_inicio" generated="true" class="error">{{ $errors->first('h_inicio') }}</label>
                 @endif
               </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="row">
               <div class="col-md-6 col-sm-6 col-xs-12">
-                {{ Form::label('fec_fin', 'Fecha de finalización:') }}
-                {{ Form::text('fec_fin', old('fec_fin'), ['class' => 'form-control', 'placeholder' => 'Fecha de Finalización'] ) }}
-                @if ($errors->has('fec_fin'))
-                  <label for="fec_fin" generated="true" class="error">{{ $errors->first('fec_fin') }}</label>
-                @endif
-              </div>
-
-              <div class="col-md-6 col-sm-6 col-xs-12">
-
                 {{ Form::label('h_fin', 'Hora de finalización:') }}
                 <div class="input-group bootstrap-timepicker timepicker">
                   {{ Form::text('h_fin', old('h_fin'), ['class' => 'form-control input-small', 'placeholder' => 'Hora de Finalización'] ) }}

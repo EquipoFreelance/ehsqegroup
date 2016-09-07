@@ -62,7 +62,7 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
   Route::resource('/dashboard/sede/local', 'SedeLocalController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
   // Administrador de Horarios
-  Route::resource('/dashboard/academic_schedule', 'HorarioController', ['only' => ['index', 'create', 'store'] ] );
+  Route::resource('/dashboard/academic_schedule', 'HorarioController', ['only' => ['index', 'create', 'store', 'edit','update'] ] );
 
   // Administrador de Grupos
   Route::resource('/dashboard/grupo', 'GrupoController', ['only' => ['index','create','store','edit','update','destroy'] ] );
