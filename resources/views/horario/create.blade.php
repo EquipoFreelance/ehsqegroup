@@ -195,6 +195,20 @@
           <div class="form-group">
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
+                <label for="num_taller">Talleres</label>
+                <select name="num_taller" id="num_taller" class="form-control">
+                  <option value="" >-- Seleccione el número de Talleres --</option>
+                  @foreach ($talleres as $key => $value)
+                    <option value="{{ $key }}">{{ $key }}</option>
+                  @endforeach
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
                 <label for="activo">Estado:</label>
                 {{ Form::select('activo', ['1' => 'Activo','0' => 'No Activo'], old('activo'), ['class' => 'form-control'] ) }}
                 @if ($errors->has('activo'))

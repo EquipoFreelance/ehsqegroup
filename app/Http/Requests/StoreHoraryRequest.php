@@ -33,6 +33,7 @@ class StoreHoraryRequest extends Request
             'h_fin'       => 'required',
             'cod_dia'     => 'required',
             'num_horas'   => 'required',
+            'num_taller'  => 'required',
             'activo'      => 'required'
         ];
     }
@@ -49,6 +50,7 @@ class StoreHoraryRequest extends Request
             'h_fin.required'       => 'Es necesario ingresar la hora de finalización',
             'cod_dia.required'     => 'Seleccione los días de la semana',
             'num_horas.required'   => 'Es necesario indicar el número de horas',
+            'num_taller.required'  => 'Es necesario seleccionar el número de talleres',
             'activo.integer'       => 'Solo esta permitido que sea números enteros'
         ];
     }

@@ -7,14 +7,12 @@ use Illuminate\Http\Response;
 
 use App\Models\Horario;
 use App\Models\HorarioDia;
-use App\Models\Sede;
-use App\Models\SedeLocal;
 use App\Models\Grupo;
 use App\Models\Auxiliar;
-use App\Models\Docente;
-use App\Models\Modulo;
+use App\Models\Taller;
 use AppHelper;
 use Validator;
+use Auth;
 use App\Http\Requests;
 use App\Http\Requests\StoreHoraryRequest;
 use Carbon\Carbon;
@@ -43,7 +41,8 @@ class HorarioController extends Controller
    public function create()
    {
      $list_semana = $this->dias_semana();
-     $data = compact('list_semana');
+     $talleres    = Taller::lists('nom_taller','id');
+     $data = compact('list_semana', 'talleres');
      return view('horario.create', $data);
    }
 
@@ -65,11 +64,13 @@ class HorarioController extends Controller
         $horario->h_inicio    = $request->get("h_inicio");
         $horario->h_fin       = $request->get("h_fin");
         $horario->num_horas   = $request->get("num_horas");
+        $horario->num_taller  = $request->get("num_taller");
 
         $group = Grupo::find($request->get("cod_grupo"));
         $horario->cod_sede    = $group->cod_sede;
 
         $horario->activo      = $request->get("activo");
+        $horario->created_by  =  Auth::user()->id;
         $week_days            = $request->get("cod_dia");
 
         // Días seleccionados en la tabla
@@ -148,7 +149,9 @@ class HorarioController extends Controller
         // Lists Días de la semana
         $list_semana = $this->dias_semana();
 
-        $data = compact('horario', 'list_semana', 'cod_auxiliar', 'weekend_horary');
+        $talleres    = Taller::lists('nom_taller','id');
+
+        $data = compact('horario', 'list_semana', 'cod_auxiliar', 'weekend_horary', 'talleres');
 
         return view('horario.edit', $data );
 
@@ -169,22 +172,26 @@ class HorarioController extends Controller
         $horario->h_inicio    = $request->get("h_inicio");
         $horario->h_fin       = $request->get("h_fin");
         $horario->num_horas   = $request->get("num_horas");
+        $horario->num_taller  = $request->get("num_taller");
+
 
         $group = Grupo::find($request->get("cod_grupo"));
         $horario->cod_sede    = $group->cod_sede;
 
         $horario->updated_at  = Carbon::now();
         $horario->activo      = $request->get("activo");
-
+        $horario->updated_by  =  Auth::user()->id;
         $week_days            = $request->get("cod_dia");
 
-       $horario->monday = 0;
-       $horario->sunday = 0;
-       $horario->tuesday = 0;
-       $horario->wednesday = 0;
-       $horario->thursday = 0;
-       $horario->friday = 0;
-       $horario->saturday = 0;
+
+
+        $horario->monday = 0;
+        $horario->sunday = 0;
+        $horario->tuesday = 0;
+        $horario->wednesday = 0;
+        $horario->thursday = 0;
+        $horario->friday = 0;
+        $horario->saturday = 0;
 
         // Días seleccionados en la tabla
         foreach ($week_days as $week_day) {

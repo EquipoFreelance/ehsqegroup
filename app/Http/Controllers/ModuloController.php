@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Modulo;
-use App\Models\Especializacion;
-use App\Models\Taller;
 use App\Http\Requests;
 use App\Http\Requests\StoreModuloRequest;
 use Validator;
@@ -34,11 +32,7 @@ class ModuloController extends Controller
      */
     public function create()
     {
-        $data = [
-                'especializacion' => Especializacion::lists('nom_esp', 'id'),
-                'talleres'        => Taller::lists('nom_taller','id')
-                ];
-        return view('modulo.create', $data);
+        return view('modulo.create');
     }
 
     /**

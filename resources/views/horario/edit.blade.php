@@ -195,6 +195,20 @@
             <div class="form-group">
               <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
+                  <label for="num_taller">Talleres</label>
+                  <select name="num_taller" id="num_taller" class="form-control" data-id-default="{{ $horario->num_taller }}">
+                    <option value="" >-- Seleccione el número de Talleres --</option>
+                    @foreach ($talleres as $key => $value)
+                      <option value="{{ $key }}" @if($horario->num_taller == $key) selected="selected" @else @endif>{{ $key }}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
                   <label for="activo">Estado:</label>
                   {{ Form::select('activo', ['1' => 'Activo','0' => 'No Activo'], $horario->activo, ['class' => 'form-control'] ) }}
                   @if ($errors->has('activo'))

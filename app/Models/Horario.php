@@ -27,7 +27,10 @@ class Horario extends Model
       'friday',
       'saturday',
       'num_horas',
-      'activo'
+      'num_taller',
+      'activo',
+      'updated_by',
+      'created_by',
   ];
 
   // Atributos con valores por defecto
@@ -38,7 +41,7 @@ class Horario extends Model
       'wednesday' => 0,
       'thursday'  => 0,
       'friday'    => 0,
-      'saturday'  => 0
+      'saturday'  => 0,
   );
 
   // Horario - Dias
