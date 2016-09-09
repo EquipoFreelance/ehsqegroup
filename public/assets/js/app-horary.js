@@ -17,9 +17,21 @@ $("#id_group").change(function(){
 // JS - Form Create and Form Update
 
 // Init JS Plugin TimePicker
-$('#h_inicio, #h_fin').timepicker({
-    defaultTime: false
-});
+if( $('#h_inicio').length > 0 ){
+
+    $('#h_inicio').timepicker({
+        defaultTime: false
+    });
+
+}
+
+if( $('#h_fin').length > 0 ){
+
+    $('#h_fin').timepicker({
+        defaultTime: false
+    });
+
+}
 
 // Init JS Plugin Material Date Picker
 $(function(){

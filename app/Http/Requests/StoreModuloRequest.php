@@ -30,7 +30,6 @@ class StoreModuloRequest extends Request
             'cod_esp_tipo'  => 'required',
             'cod_esp'       => 'required',
             'descripcion'   => 'required',
-            'num_taller'    => 'required',
             'activo'        => 'required|integer'
         ];
     }
@@ -44,7 +43,6 @@ class StoreModuloRequest extends Request
             'nombre.required'        => 'Es necesario ingresar el nombre del módulo',
             'nom_corto.required'     => 'Es necesario ingresar el nombre corto del módulo',
             'descripcion.required'   => 'Es necesario ingresar una descripción breve del módulo',
-            'num_taller.required'    => 'Es necesario seleccionar el número de tallares',
             'activo.required'        => 'Es necesario indicar si el el módulo estará activo o inactivo',
             'activo.integer'         => 'Solo esta permitido que sea números enteros'
         ];

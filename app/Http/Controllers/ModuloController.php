@@ -59,7 +59,6 @@ class ModuloController extends Controller
         $obj->nom_corto     = AppHelper::strNomCorto( Str::slug($request->get("nom_corto"), '_') );
         $obj->descripcion   = $request->get("descripcion");
         $obj->activo        = $request->get("activo");
-        $obj->num_taller    = $request->get("num_taller");
         $obj->created_at    = Carbon::now();
 
         if($obj->save()){
@@ -91,11 +90,7 @@ class ModuloController extends Controller
     public function edit($id)
     {
       $modulo = Modulo::find($id);
-      $data = [
-              "modulo"          => $modulo,
-              "especializacion" => Especializacion::lists('nom_esp', 'id'),
-              "talleres"        => Taller::lists('nom_taller','id')
-          ];
+      $data = ["modulo" => $modulo];
       return view('modulo.edit', $data);
     }
 
@@ -118,7 +113,6 @@ class ModuloController extends Controller
         $obj->nom_corto     = AppHelper::strNomCorto( Str::slug($request->get("nom_corto"), '_') );
         $obj->descripcion   = $request->get("descripcion");
         $obj->activo        = $request->get("activo");
-        $obj->num_taller    = $request->get("num_taller");
         $obj->created_at    = Carbon::now();
 
         if($obj->save()){

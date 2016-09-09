@@ -19,7 +19,6 @@ class Modulo extends Model
         'nombre',
         'nom_corto',
         'descripcion',
-        'num_taller',
         'activo'
     ];
 
