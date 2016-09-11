@@ -18,6 +18,8 @@ class Docente extends Model
        'deleted' => 0,
     );
 
+    protected $visible = ['id', 'cod_persona', 'persona'];
+
     // Un Docente pertence a una persona
     public function persona()
     {

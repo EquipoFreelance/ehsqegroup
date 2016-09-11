@@ -26,6 +26,7 @@ class Grupo extends Model
        'deleted' => 0,
     );
 
+    protected $visible = ['nom_grupo', 'id', 'name', 'cod_sede', 'cod_modalidad', 'cod_esp_tipo', 'cod_esp'];
 
     /**
      * Pertenece a una Sede

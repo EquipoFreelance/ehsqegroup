@@ -7,6 +7,7 @@
     @{{#each response}}
     <tr>
         <td>@{{ id }}</td>
+        <td>@{{ academic_period.start_date }}</td>
         <td>@{{ fec_inicio}} al @{{ fec_fin}} / @{{ h_inicio }} - @{{ h_inicio }}</td>
         <td>@{{ docente.persona.nombre }} @{{ docente.persona.ape_pat  }} @{{ docente.persona.ape_mat }}</td>
         <td>@{{ sede.nom_local }}</td>
@@ -59,6 +60,7 @@
             <thead>
               <tr>
                 <th>Código</th>
+                <th>Periodo académico</th>
                 <th>Horario</th>
                 <th>Docente</th>
                 <th>Local</th>

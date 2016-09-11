@@ -20,6 +20,8 @@ class Modalidad extends Model
        'deleted' => 0,
     );
 
+    protected $visible = ['nom_mod', 'id', 'name'];
+
     //Una Modalidad tiene de uno a muchas Especializaciones
     public function especializaciones()
     {

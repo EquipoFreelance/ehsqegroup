@@ -11,6 +11,7 @@ class Horario extends Model
 
   // Campos activos
   protected $fillable = [
+      'id_academic_period',
       'cod_grupo',
       'cod_mod',
       'cod_docente',
@@ -44,40 +45,44 @@ class Horario extends Model
       'saturday'  => 0,
   );
 
-  // Horario - Dias
-  public function horariodias()
-  {
+    // Horario - Dias
+    /*public function horariodias()
+    {
       return $this->hasMany('App\Models\HorarioDia', 'cod_horario', 'id');
-  }
+    }*/
 
-  // Horarios - Auxiliares
-  public function auxiliares()
-  {
+    // Horarios - Auxiliares
+    public function auxiliares()
+    {
       return $this->belongsToMany('App\Models\Auxiliar', 'horario_auxiliar', 'cod_horario', 'cod_auxiliar')->withTimestamps();
-  }
+    }
 
-  // En un horario solo puede existir un docente
-  public function docente(){
+    // En un horario solo puede existir un docente
+    public function docente(){
       return $this->belongsTo('App\Models\Docente', 'cod_docente', 'id');
-  }
+    }
 
-  // En un horario solo puede existir un modulo
-  public function modulo()
-  {
+    // En un horario solo puede existir un modulo
+    public function modulo()
+    {
       return $this->belongsTo('App\Models\Modulo', 'cod_mod', 'id');
-  }
+    }
 
-  // En un horario solo puede existir una sede
-  public function sede()
-  {
+    // En un horario solo puede existir una sede
+    public function sede()
+    {
       return $this->belongsTo('App\Models\SedeLocal', 'cod_sede', 'id');
-  }
+    }
 
-  // Un Horario - Grupos
-  public function grupos()
-  {
+    // Un Horario - Grupos
+    public function grupos()
+    {
       return $this->belongsToMany('App\Models\Grupo', 'horario_grupo', 'cod_horario', 'cod_grupo')->withTimestamps();
-  }
+    }
 
+    public function academic_period()
+    {
+        return $this->belongsTo('App\Models\AcademicPeriod', 'id_academic_period', 'id');
+    }
 
 }

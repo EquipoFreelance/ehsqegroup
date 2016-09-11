@@ -75,6 +75,18 @@
             <div class="form-group">
               <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
+                  <label for="id_academic_period">Periodo Académico</label>
+                  <select class="select2 form-control id_academic_period" name="id_academic_period" id="id_academic_period" data-id-default="{{ $horario->id_academic_period }}"></select>
+                  @if ($errors->has('cod_grupo'))
+                    <label for="id_academic_period" generated="true" class="error">{{ $errors->first('cod_grupo') }}</label>
+                  @endif
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
                   <label for="cod_grupo">Grupo</label>
                   <select class="select2 form-control cod_grupo" name="cod_grupo" id="cod_grupo" data-id-default="{{ $horario->cod_grupo }}"></select>
                   @if ($errors->has('cod_grupo'))
@@ -235,9 +247,9 @@
 @stop
 
 @section('custom_js')
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js"></script>
   <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/app-academic-period.js') }}"></script>
   <script src="{{ URL::asset('assets/js/app-horary.js') }}"></script>
   <script>
     $(function(){

@@ -22,6 +22,8 @@ class Modulo extends Model
         'activo'
     ];
 
+    protected $visible = ['nombre', 'id', 'name'];
+
     // Relación de uno a muchos
     public function especializacion(){
       return $this->belongsTo('App\Models\Especializacion', 'cod_esp');

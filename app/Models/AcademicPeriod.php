@@ -19,4 +19,6 @@ class AcademicPeriod extends Model
         'deleted_at'
     ];
 
+    protected $visible = ['start_date', 'finish_date', 'id', 'name'];
+
 }

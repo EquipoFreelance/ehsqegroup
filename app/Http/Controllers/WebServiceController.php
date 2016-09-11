@@ -337,7 +337,8 @@ class WebServiceController extends Controller
         $rs = Horario::with('docente.persona')
             ->with('sede')
             ->with('modulo')
-            ->select('id', 'fec_inicio', 'fec_fin', 'fec_fin', 'h_inicio', 'h_fin', 'cod_docente', 'cod_sede', 'cod_mod', 'num_horas', 'activo');
+            ->with('academic_period')
+            ->select('id', 'id_academic_period', 'fec_inicio', 'fec_fin', 'fec_fin', 'h_inicio', 'h_fin', 'cod_docente', 'cod_sede', 'cod_mod', 'num_horas', 'activo');
         $rs->where("activo", 1);
 
         ($cod_grupo != '-')? $rs->where("cod_grupo", $cod_grupo)->orderBy('id', 'desc') : '';
@@ -346,7 +347,6 @@ class WebServiceController extends Controller
 
         if( $count = $rs->count() > 0){
             $fills = $rs->get();
-
         }
 
         $response = response()->json(['response' => $fills], 200);

@@ -24,6 +24,7 @@ class StoreHoraryRequest extends Request
     public function rules()
     {
         return [
+            'id_academic_period'   => 'required',
             'cod_grupo'   => 'required',
             'cod_mod'     => 'required',
             'cod_docente' => 'required',
@@ -41,6 +42,7 @@ class StoreHoraryRequest extends Request
     public function messages()
     {
         return [
+            'id_academic_period'   => 'Es necesario seleccionar el Periodo Académico',
             'cod_grupo.required'   => 'Es necesario seleccionar el Grupo',
             'cod_mod.required'     => 'Es necesario seleccionar el módulo',
             'cod_docente.required' => 'Es necesario seleccionar el docente',

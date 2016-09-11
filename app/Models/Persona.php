@@ -29,6 +29,8 @@ class Persona extends Model
       'activo'
     ];
 
+    protected $visible = ['nombre', 'ape_pat', 'ape_mat', 'num_doc', 'correo', 'num_phone', 'num_cellphone', 'id'];
+
     // Una persona puede tener de uno a muchos cargos
     /*public function cargos()
     {

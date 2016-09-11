@@ -54,8 +54,12 @@ class HorarioController extends Controller
      */
     public function store(StoreHoraryRequest $request){
 
+        // Buscando atributos del grupo
+        $group = Grupo::find($request->get("cod_grupo"));
+
         // Add New Horario
         $horario = new Horario;
+        $horario->cod_grupo   = $request->get("id_academic_period");
         $horario->cod_grupo   = $request->get("cod_grupo");
         $horario->cod_mod     = $request->get("cod_mod");
         $horario->cod_docente = $request->get("cod_docente");
@@ -65,16 +69,12 @@ class HorarioController extends Controller
         $horario->h_fin       = $request->get("h_fin");
         $horario->num_horas   = $request->get("num_horas");
         $horario->num_taller  = $request->get("num_taller");
-
-        $group = Grupo::find($request->get("cod_grupo"));
         $horario->cod_sede    = $group->cod_sede;
-
         $horario->activo      = $request->get("activo");
-        $horario->created_by  =  Auth::user()->id;
-        $week_days            = $request->get("cod_dia");
+        $horario->created_by  = Auth::user()->id;
 
         // Días seleccionados en la tabla
-        foreach ($week_days as $week_day) {
+        foreach ($request->get("cod_dia") as $week_day) {
 
             switch ($week_day) {
                 case 1:
@@ -110,7 +110,7 @@ class HorarioController extends Controller
 
             // Enviando mensaje
             return redirect()->route('dashboard.academic_schedule.index')
-                ->with('message', 'Los datos se registraron satisfactoriamente');
+                ->with('message', 'El horario fue registraron satisfactoriamente');
 
         }
 
@@ -145,7 +145,6 @@ class HorarioController extends Controller
         ($horario->friday == 1)?    $weekend_horary[] = 6: '';
         ($horario->saturday == 1)?  $weekend_horary[] = 7: '';
 
-
         // Lists Días de la semana
         $list_semana = $this->dias_semana();
 
@@ -162,8 +161,13 @@ class HorarioController extends Controller
    public function update(StoreHoraryRequest $request, $id)
    {
 
+
+        // Buscando atributos del grupo
+        $group = Grupo::find($request->get("cod_grupo"));
+
         // Update Horario
         $horario = Horario::find($id);
+        $horario->cod_grupo   = $request->get("id_academic_period");
         $horario->cod_grupo   = $request->get("cod_grupo");
         $horario->cod_mod     = $request->get("cod_mod");
         $horario->cod_docente = $request->get("cod_docente");
@@ -173,28 +177,20 @@ class HorarioController extends Controller
         $horario->h_fin       = $request->get("h_fin");
         $horario->num_horas   = $request->get("num_horas");
         $horario->num_taller  = $request->get("num_taller");
-
-
-        $group = Grupo::find($request->get("cod_grupo"));
         $horario->cod_sede    = $group->cod_sede;
-
         $horario->updated_at  = Carbon::now();
         $horario->activo      = $request->get("activo");
         $horario->updated_by  =  Auth::user()->id;
-        $week_days            = $request->get("cod_dia");
-
-
-
-        $horario->monday = 0;
-        $horario->sunday = 0;
-        $horario->tuesday = 0;
-        $horario->wednesday = 0;
-        $horario->thursday = 0;
-        $horario->friday = 0;
-        $horario->saturday = 0;
+        $horario->monday      = 0;
+        $horario->sunday      = 0;
+        $horario->tuesday     = 0;
+        $horario->wednesday   = 0;
+        $horario->thursday    = 0;
+        $horario->friday      = 0;
+        $horario->saturday    = 0;
 
         // Días seleccionados en la tabla
-        foreach ($week_days as $week_day) {
+        foreach ($request->get("cod_dia") as $week_day) {
 
            switch ($week_day) {
                case 1:
@@ -233,7 +229,7 @@ class HorarioController extends Controller
 
             //Enviando mensaje
             return redirect()->route('dashboard.academic_schedule.index')
-            ->with('message', 'Los datos se actualizaron satisfactoriamente');
+            ->with('message', 'El horario fue actualizado satisfactoriamente');
 
         }
 
@@ -290,6 +286,9 @@ class HorarioController extends Controller
 
      return $semana;
    }
-    
 
+   /*public function findGroup($id_group, &$group){
+       $group = Grupo::find($id_group);
+       return $group;
+   }*/
 }

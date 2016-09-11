@@ -19,6 +19,8 @@ class SedeLocal extends Model
        'deleted' => 0,
     );
 
+    protected $visible = ['id', 'nom_local', 'cod_sede'];
+
     /* Un local pertenece a una Sede */
     public function sede()
     {
