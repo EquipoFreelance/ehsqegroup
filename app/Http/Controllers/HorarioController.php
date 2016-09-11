@@ -44,6 +44,7 @@ class HorarioController extends Controller
      $talleres    = Taller::lists('nom_taller','id');
      $data = compact('list_semana', 'talleres');
      return view('horario.create', $data);
+
    }
 
     /**
@@ -59,7 +60,7 @@ class HorarioController extends Controller
 
         // Add New Horario
         $horario = new Horario;
-        $horario->cod_grupo   = $request->get("id_academic_period");
+        $horario->id_academic_period = $request->get("id_academic_period");
         $horario->cod_grupo   = $request->get("cod_grupo");
         $horario->cod_mod     = $request->get("cod_mod");
         $horario->cod_docente = $request->get("cod_docente");
@@ -156,9 +157,7 @@ class HorarioController extends Controller
 
    }
 
-
-
-   public function update(StoreHoraryRequest $request, $id)
+    public function update(StoreHoraryRequest $request, $id)
    {
 
 
@@ -167,7 +166,7 @@ class HorarioController extends Controller
 
         // Update Horario
         $horario = Horario::find($id);
-        $horario->cod_grupo   = $request->get("id_academic_period");
+        $horario->id_academic_period = $request->get("id_academic_period");
         $horario->cod_grupo   = $request->get("cod_grupo");
         $horario->cod_mod     = $request->get("cod_mod");
         $horario->cod_docente = $request->get("cod_docente");
@@ -237,6 +236,34 @@ class HorarioController extends Controller
    }
 
 
+    /* Edit Talleres */
+
+    public function getEditProfesor($id){
+
+        $horario = Horario::find($id);
+
+        $talleres = Taller::lists('nom_taller','id');
+
+        //dd($horario);
+        return view('horario.update-profesor', compact('horario', 'talleres') );
+
+    }
+
+    public function getIndexProfesor(){
+        return view('horario.index-profesor');
+    }
+
+    public function putUpdateProfesor(Request $request, $id){
+
+        $horario = Horario::find($id);
+        $horario->updated_by = Auth::user()->id;
+        $horario->update($request->all());
+
+        //Enviando mensaje
+        return redirect()->route('teacher.academic_schedule.index')
+            ->with('message', 'El número de talleres fue actualizado');
+
+    }
 
    /**
     * Intervalo de días

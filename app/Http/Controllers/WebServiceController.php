@@ -36,6 +36,10 @@ use App\Models\Docente;
 
 use App\Models\Auxiliar;
 
+use App\Models\Persona;
+
+use Auth;
+
 
 class WebServiceController extends Controller
 {
@@ -478,6 +482,41 @@ class WebServiceController extends Controller
         }
 
         $response = response()->json(["items" => $fills], 200);
+
+        return $response;
+
+    }
+
+    public function getWsScheduleAvailable($id_academic_period, $cod_persona){
+
+        $response = ''; $fills = array();
+
+        $persona = Persona::where("id", $cod_persona)->with('docente')->first();
+
+        $cod_docente = $persona->docente->id;
+
+        $rs = Horario::
+            with('sede')
+            ->with('modulo')
+            ->with('academic_period')
+            ->select('id', 'id_academic_period', 'fec_inicio', 'fec_fin', 'fec_fin', 'h_inicio', 'h_fin', 'cod_docente', 'cod_sede', 'cod_mod', 'num_horas', 'num_taller', 'activo');
+        $rs->where("activo", 1);
+
+        // Si el periodo no ha sido seleccionado mostramos todos los horarios disponibles
+        if($id_academic_period != 0){
+            $rs->where('id_academic_period', $id_academic_period)->where('cod_docente', $cod_docente);    
+        } else {
+            $rs->where('cod_docente', $cod_docente);
+        }
+        
+
+        $rs->orderBy('id', 'desc');
+
+        if( $count = $rs->count() > 0){
+            $fills = $rs->get();
+        }
+
+        $response = response()->json(['response' => $fills], 200);
 
         return $response;
 

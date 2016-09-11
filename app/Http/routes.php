@@ -127,11 +127,26 @@ Route::group(['middleware' => ['auth','role.marketing']], function(){
 // Sistema Docentes
 Route::group(['middleware' => ['auth','role.docente']], function(){
 
-  // Recursos de Report Card
-  Route::resource('dashboard/teacher/report-card', 'ReportCardController', ['only' => ['create','store','show','index','edit','update'] ]);
+    // Recursos de Report Card
+    Route::resource('dashboard/teacher/report-card', 'ReportCardController', ['only' => ['create','store','show','index','edit','update'] ]);
 
-  // Recursos de Assistance
-  Route::resource('dashboard/teacher/assistance', 'AssistanceController', ['only' => ['create','store','show','index','edit','update'] ]);
+    // Recursos de Assistance
+    Route::resource('dashboard/teacher/assistance', 'AssistanceController', ['only' => ['create','store','show','index','edit','update'] ]);
+
+    // GET - Lista de Horarios Disponibles por docente
+    Route::get('dashboard/teacher/academic_schedule', [
+        'as' => 'teacher.academic_schedule.index', 'uses' => 'HorarioController@getIndexProfesor'
+    ]);
+
+    // GET - Lista de Horarios Disponibles por docente
+    Route::get('dashboard/teacher/academic_schedule/{id}/edit', [
+        'as' => 'teacher.academic_schedule.edit', 'uses' => 'HorarioController@getEditProfesor'
+    ]);
+
+    // GET - Lista de Horarios Disponibles por docente
+    Route::put('dashboard/teacher/academic-schedule/update/{id}', [
+        'as' => 'teacher.academic_schedule.update', 'uses' => 'HorarioController@putUpdateProfesor'
+    ]);
 
 
 });
@@ -230,6 +245,11 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
     // Get List Horarios Academicos
     Route::get('/hsqegroup/api/academic-horary/{cod_grupo}', [
         'as' => 'json.groups.all', 'uses' => 'WebServiceController@getWsAcademicHorary'
+    ]);
+
+    // Get List Horarios Academico para docentes
+    Route::get('/hsqegroup/api/teacher/academic-horary/{id_academic_period}/{cod_docente}', [
+        'as' => 'json.teacher.academic-horary', 'uses' => 'WebServiceController@getWsScheduleAvailable'
     ]);
 
     // Get LIst Groups Like by Name
