@@ -214,6 +214,9 @@
                       <option value="{{ $key }}" @if($horario->num_taller == $key) selected="selected" @else @endif>{{ $key }}</option>
                     @endforeach
                   </select>
+                  @if ($errors->has('num_taller'))
+                    <label for="activo" generated="true" class="error">{{ $errors->first('num_taller') }}</label>
+                  @endif
                 </div>
               </div>
             </div>

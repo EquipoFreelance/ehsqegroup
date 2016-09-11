@@ -27,7 +27,9 @@
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <label for="id_academic_period">Periodo Académico:</label>
-                                    {{ $horario->academic_period->start_date  }}
+                                    <div>
+                                        <p class="form-control-static">{{ $horario->academic_period->start_date  }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -36,14 +38,10 @@
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <label for="cod_grupo">Grupo:</label>
-                                    {{ $horario->grupo->nom_grupo  }}
+                                    <div>
+                                        <p class="form-control-static">{{ $horario->grupo->nom_grupo  }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group content_info_group hide">
-                            <div class="row">
-                                <div class="col-md-12 col-sm-12 col-xs-12 set_info_group"></div>
                             </div>
                         </div>
 
@@ -51,7 +49,10 @@
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <label for="cod_mod">Modulo:</label>
-                                    {{ $horario->modulo->nombre  }}
+                                    <div>
+                                        <p class="form-control-static">
+                                    {{ $horario->modulo->nombre  }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -60,18 +61,22 @@
                             <div class="row">
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <label for="cod_docente">Docente:</label>
-                                    {{ $horario->docente->persona->nombre  }},
+                                    <div>
+                                        <p class="form-control-static">{{ $horario->docente->persona->nombre  }},
                                     {{ $horario->docente->persona->ape_pat  }}
-                                    {{ $horario->docente->persona->ape_mat  }}
+                                    {{ $horario->docente->persona->ape_mat  }}</p>
+                                    </div>
 
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <label for="cod_auxiliar">Auxiliar:</label>
-                                    @foreach ($horario->auxiliares as $key => $value)
+                                    <div>
+                                        <p class="form-control-static">@foreach ($horario->auxiliares as $key => $value)
                                         {{ $value->persona->nombre  }},
                                         {{ $value->persona->ape_pat  }}
                                         {{ $value->persona->ape_mat  }}
-                                    @endforeach
+                                    @endforeach</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -80,11 +85,15 @@
                             <div class="row">
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     {{ Form::label('fec_inicio', 'Fecha de inicio:') }}
-                                    {{ $horario->fec_inicio }}
+                                    <div>
+                                        <p class="form-control-static">{{ $horario->fec_inicio }}</p>
+                                    </div>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     {{ Form::label('fec_fin', 'Fecha de finalización:') }}
-                                    {{ $horario->fec_fin }}
+                                    <div>
+                                        <p class="form-control-static">{{ $horario->fec_fin }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -93,11 +102,15 @@
                             <div class="row">
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     {{ Form::label('h_inicio', 'Hora de inicio:') }}
-                                    {{ $horario->h_inicio }}
+                                    <div>
+                                        <p class="form-control-static">{{ $horario->h_inicio }}</p>
+                                    </div>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     {{ Form::label('h_fin', 'Hora de finalización:') }}
-                                    {{ $horario->h_fin }}
+                                    <div>
+                                        <p class="form-control-static">{{ $horario->h_fin }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -106,7 +119,9 @@
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     {{ Form::label('num_horas', 'Número de horas:') }}
-                                    {{ $horario->num_horas }}
+                                    <div>
+                                        <p class="form-control-static">{{ $horario->num_horas }}</p>
+                                    </div>
 
                                 </div>
                             </div>
@@ -123,6 +138,9 @@
                                             <option value="{{ $key }}" @if($horario->num_taller == $key) selected="selected" @else @endif>{{ $key }}</option>
                                         @endforeach
                                     </select>
+                                    @if ($errors->has('num_taller'))
+                                        <label for="activo" generated="true" class="error">{{ $errors->first('num_taller') }}</label>
+                                    @endif
                                 </div>
                             </div>
                         </div>

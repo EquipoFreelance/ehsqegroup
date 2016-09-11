@@ -15,6 +15,7 @@ use Validator;
 use Auth;
 use App\Http\Requests;
 use App\Http\Requests\StoreHoraryRequest;
+use App\Http\Requests\StoreHoraryProfesorRequest;
 use Carbon\Carbon;
 
 
@@ -245,7 +246,7 @@ class HorarioController extends Controller
         $talleres = Taller::lists('nom_taller','id');
 
         //dd($horario);
-        return view('horario.update-profesor', compact('horario', 'talleres') );
+        return view('horario.edit-profesor', compact('horario', 'talleres') );
 
     }
 
@@ -253,7 +254,7 @@ class HorarioController extends Controller
         return view('horario.index-profesor');
     }
 
-    public function putUpdateProfesor(Request $request, $id){
+    public function putUpdateProfesor(StoreHoraryProfesorRequest $request, $id){
 
         $horario = Horario::find($id);
         $horario->updated_by = Auth::user()->id;
