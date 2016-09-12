@@ -32,6 +32,10 @@ class StudentController extends Controller
     return view('student.create', $data);
 
   }
+    
+    public function getIndexGroup($cod_grupo){
+        return view('student.index-group', compact('cod_grupo'));
+    }
 
   public function show()
   {

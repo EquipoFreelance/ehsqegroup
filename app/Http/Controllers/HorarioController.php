@@ -22,37 +22,46 @@ use Carbon\Carbon;
 class HorarioController extends Controller
 {
 
-   /**
-   * Listado de Horario con su respectivo grupo
-   * @return \Illuminate\Http\Response
-   */
-   public function index()
-   {
+    /**
+    * Listado de Horario con su respectivo grupo
+    * @return \Illuminate\Http\Response
+    */
+    public function index()
+    {
         return view('horario.index');
-   }
+    }
 
-   public function getIndexHorarios($cod_group){
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getIndexProfesor(){
+        return view('horario.index-profesor');
+    }
+
+    /**
+     * @param $cod_group
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getIndexHorarios($cod_group){
         return view('horario.horary-group', compact('cod_group'));
-   }
+    }
 
-   /**
+    /**
     * Mostrar el formulario con su respectivo grupo
     * @return \Illuminate\Http\Response
     */
-   public function create()
-   {
+    public function create()
+    {
      $list_semana = $this->dias_semana();
      $talleres    = Taller::lists('nom_taller','id');
      $data = compact('list_semana', 'talleres');
      return view('horario.create', $data);
 
-   }
+    }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreHoraryRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreHoraryRequest $request){
 
@@ -125,7 +134,7 @@ class HorarioController extends Controller
     * @param  $id -> ID del Grupo
     * @return \Illuminate\Http\Response
     */
-   public function edit($id)
+    public function edit($id)
    {
 
         // Get Horario
@@ -158,9 +167,25 @@ class HorarioController extends Controller
 
    }
 
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getEditProfesor($id){
+
+        $horario = Horario::find($id);
+
+        $talleres = Taller::lists('nom_taller','id');
+
+        //dd($horario);
+        return view('horario.edit-profesor', compact('horario', 'talleres') );
+
+    }
+
+
     public function update(StoreHoraryRequest $request, $id)
    {
-
 
         // Buscando atributos del grupo
         $group = Grupo::find($request->get("cod_grupo"));
@@ -236,24 +261,11 @@ class HorarioController extends Controller
 
    }
 
-
-    /* Edit Talleres */
-
-    public function getEditProfesor($id){
-
-        $horario = Horario::find($id);
-
-        $talleres = Taller::lists('nom_taller','id');
-
-        //dd($horario);
-        return view('horario.edit-profesor', compact('horario', 'talleres') );
-
-    }
-
-    public function getIndexProfesor(){
-        return view('horario.index-profesor');
-    }
-
+    /**
+     * @param StoreHoraryProfesorRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function putUpdateProfesor(StoreHoraryProfesorRequest $request, $id){
 
         $horario = Horario::find($id);
@@ -315,8 +327,4 @@ class HorarioController extends Controller
      return $semana;
    }
 
-   /*public function findGroup($id_group, &$group){
-       $group = Grupo::find($id_group);
-       return $group;
-   }*/
 }

@@ -30,6 +30,8 @@ use App\Models\AcademicPeriod;
 
 use App\Models\Grupo;
 
+use App\Models\GroupStudent;
+
 use App\Models\Horario;
 
 use App\Models\Docente;
@@ -301,6 +303,34 @@ class WebServiceController extends Controller
         return $response;
     }
 
+    /* Lista de alumnos para el asignamiento de Grupos */
+    public function wsStudentGrouptLike($q)
+    {
+
+        // Buscando alumnos que se hayan matriculado
+        $rs = Enrollment::with('student.persona')->whereHas('student.persona', function ($query) use($q) {
+            $query->orWhere('nombre', 'LIKE', '%'. $q .'%')
+                ->orWhere('ape_pat', 'LIKE', '%'. $q .'%')->orWhere('ape_mat', 'LIKE', '%'. $q .'%');
+        })->where('activo', 1);
+
+        $enrollments = $rs->get();
+
+        // Realizando una busqueda de cada matriculado para saber si ya fue asignado al grupo correspondiente
+        foreach ($enrollments as $item) {
+
+            $item->is_asignemnt = 0;
+
+            if( GroupStudent::where("cod_alumno", $item->cod_alumno)->count() > 0){
+                $item->is_asignemnt = 1;
+            }
+
+        }
+
+        $response = response()->json(["response" => $enrollments], 200);
+
+        return $response;
+    }
+
     /**
      * List Periodo Academico
      * */
@@ -325,6 +355,33 @@ class WebServiceController extends Controller
         }
 
         $response = response()->json($fills, 200);
+
+        return $response;
+
+    }
+
+
+    /**
+     * Lista Alumnos asignados a cierto grupo
+     **/
+    public function getWsGroupsAssignedStudents($cod_grupo){
+
+        $response = ''; $fills = array();
+
+        $rs = Grupo::where('id', $cod_grupo)->with('students');
+
+        if($rs->count() > 0){
+
+            $g = $rs->first();
+
+            foreach ($g->students as $item) {
+                $student = Student::find($item->cod_alumno)->with('persona')->first();
+                $fills[] = array("name" => $student->persona->nombre.", ".$student->persona->ape_pat." ".$student->persona->ape_mat, "id" => $item->cod_alumno);
+            }
+
+        }
+
+        $response = response()->json(["response" => $fills], 200);
 
         return $response;
 

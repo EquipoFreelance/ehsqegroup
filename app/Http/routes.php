@@ -78,19 +78,12 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
         'as' => 'dashboard.grupo.horario.list', 'uses' => 'HorarioController@index'
     ]);
 
-    // create
-    /*Route::get('/dashboard/grupo/{id}/horario/crear',[
-        'as' => 'dashboard.grupo.horario.crear', 'uses' => 'HorarioController@create'
-    ]);*/
+    Route::get('/dashboard/grupo/{cod_grupo}/students',[
+        'as' => 'dashboard.grupo.students.list', 'uses' => 'StudentController@getIndexGroup'
+    ]);
 
-    // edit
-    /*Route::get('/dashboard/grupo/{id}/horario/{cod_horario}/edit',[
-        'as' => 'dashboard.grupo.horario.edit', 'uses' => 'HorarioController@edit'
-    ]);*/
 
-    /*Route::get('/dashboard/grupo/{id_group}/horario/testing',[
-        'uses' => 'HorarioController@testing'
-    ]);*/
+
 
   // Administrador de Auxiliares
   Route::resource('/dashboard/auxiliar', 'AuxiliarController', ['only' => ['index','create','store','edit','update','destroy'] ] );
@@ -232,6 +225,11 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
         'as' => 'json.students.all', 'uses' => 'WebServiceController@wsStudentLike'
     ]);
 
+    // Busqueda de Estudiante para el asignamiento de Grupos
+    Route::get('/hsqegroup/api/groups/students/search/{q}',[
+        'as' => 'json.groups.students.search', 'uses' => 'WebServiceController@wsStudentGrouptLike'
+    ]);
+
     // Get List Periodo Academico
     Route::get('/hsqegroup/api/academic-period',[
         'as' => 'json.academic-period.all', 'uses' => 'WebServiceController@getWsAcademicPeriod'
@@ -240,6 +238,11 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
     // Get List Groups
     Route::get('/hsqegroup/api/groups', [
         'as' => 'json.groups.all', 'uses' => 'WebServiceController@getWsGroups'
+    ]);
+
+    // Lista de Alumnos dentro del grupo
+    Route::get('/hsqegroup/api/groups/{cod_grupo}/students', [
+        'as' => 'json.groups.students.assigned', 'uses' => 'WebServiceController@getWsGroupsAssignedStudents'
     ]);
 
     // Get List Horarios Academicos

@@ -74,10 +74,4 @@ class Persona extends Model
         return $this->hasOne('App\Models\Docente', 'cod_persona', 'id');
     }
 
-    // Una persona puede ser un administrativo
-    /*public function administrativo()
-    {
-        return $this->hasOne('App\Models\Administrativo', 'cod_persona', 'id');
-    }*/
-
 }

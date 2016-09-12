@@ -1,11 +1,7 @@
-/* -- Routes -- */
-/*var routes = {
-  student     : '/hsqegroup/api/students',
-};*/
 
 /* -- App Students -- */
 $(function(){
-  if($('#fe_nacimiento').length){
+  if($('#fe_nacimiento').length > 0){
     $('#fe_nacimiento').bootstrapMaterialDatePicker({ weekStart : 0, time: false, format : 'DD-MM-YYYY', lang : 'es'});
   }
 });
@@ -77,6 +73,82 @@ function listStudents(){
             }],
           });
     }
+
+    });
+}
+
+/*
+ * Lista de Alumnos Asignados al Grupo
+ * */
+function listAssignedStudents(cod_grupo){
+
+    var source   = '<tr><td colspan="2"><center>{{ message }}</center><td></tr>';
+    var template = Handlebars.compile(source);
+    var html     = template({message: "Loading..."});
+
+    $.ajax({
+        url:'/hsqegroup/api/groups/'+cod_grupo+'/students',
+        type:'get',
+        datatype: 'json',
+        data:{},
+        beforeSend: function(){
+            $(".items").empty().append(html);
+        },
+        success:function(response)
+        {
+            console.log(response);
+            var source   = $("#response-template").html();
+            var template = Handlebars.compile(source);
+            var html     = template(response);
+            $(".items").empty().append(html);
+        },
+        error:function(response)
+        {
+            if(  response.status == 400){
+                var source   = '<tr><td colspan="2"><center>{{ message }}</center><td></tr>';
+                var template = Handlebars.compile(source);
+                var html    = template(response.responseJSON);
+                $(".items").empty().append(html);
+            }
+        }
+    }).done(function(data){
+
+    });
+}
+
+/*
+* Búsqueda de alumnos
+* */
+function listStudentsSearch(search){
+
+    var source   = '<tr><td colspan="2"><center>{{ message }}</center><td></tr>';
+    var template = Handlebars.compile(source);
+    var html     = template({message: "Loading..."});
+
+    $.ajax({
+        url:'/hsqegroup/api/groups/students/search/'+search,
+        type:'get',
+        datatype: 'json',
+        data:{},
+        beforeSend: function(){
+            $(".modal_items").empty().append(html);
+        },
+        success:function(response)
+        {
+            console.log(response);
+            var source   = $("#response-template-1").html();
+            var template = Handlebars.compile(source);
+            var html     = template(response);
+            $(".modal_items").empty().append(html);
+        },
+        error:function(response)
+        {
+            /*if(  response.status == 400){
+                GridError(response);
+            }*/
+        }
+    }).done(function(data){
+       
 
     });
 }

@@ -25,5 +25,6 @@ class Student extends Model
     {
       return $this->hasMany('App\Models\Enrollment', 'cod_alumno', 'id');
     }
+    
 
 }

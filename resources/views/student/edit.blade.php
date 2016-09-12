@@ -1,5 +1,17 @@
 @extends('dashboard.layouts.master')
 
+@section('custom_css')
+
+  <!-- CSS Plugin TimePicker -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css" rel="stylesheet">
+
+  <!-- CSS Plugin DatePicker Material -->
+  <link href="{{ URL::asset('assets/js/datepicker_material/css/bootstrap-material-datetimepicker.css') }}" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+@stop
+
 @section('content')
 <div class="form_content_block">
   <div class="clearfix"></div>

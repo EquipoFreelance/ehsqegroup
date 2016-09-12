@@ -26,7 +26,7 @@ class Grupo extends Model
        'deleted' => 0,
     );
 
-    protected $visible = ['nom_grupo', 'id', 'name', 'cod_sede', 'cod_modalidad', 'cod_esp_tipo', 'cod_esp'];
+    protected $visible = ['nom_grupo', 'id', 'name', 'cod_sede', 'cod_modalidad', 'cod_esp_tipo', 'cod_esp', 'students'];
 
     /**
      * Pertenece a una Sede
@@ -59,9 +59,10 @@ class Grupo extends Model
         return $this->belongsTo('App\Models\Especializacion', 'cod_esp');
     }
 
-    public function addHorarios()
-    {
-        return $this->belongsToMany('App\Models\Horario', 'horario_grupo', 'cod_grupo', 'cod_horario')->withTimestamps();
-    }
+    /* Grupo - Alumnos */
+    public function students(){
 
+        return $this->hasMany('App\Models\GroupStudent', 'cod_grupo', 'id');
+
+    }
 }

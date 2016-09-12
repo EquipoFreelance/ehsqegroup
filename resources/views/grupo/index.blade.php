@@ -40,7 +40,7 @@
                     <td>{{ $grupo->id }}</td>
                     <td>{{ $grupo->sede->nom_local }} - {{ $grupo->nom_grupo }}</td>
                     <td><a href="{{ route('dashboard.academic_schedule.horario.group', $grupo->id) }}" class="btn btn-5 btn-5a icon-add add"><span>Horario Disponible</span></a></td>
-                    <td><a href="{{ route('dashboard.grupo.edit', $grupo->id) }}" class="btn btn-5 btn-5a icon-return return"><span>Alumnos</span></a></td>
+                    <td><a href="{{ route('dashboard.grupo.students.list', $grupo->id) }}" class="btn btn-5 btn-5a icon-return return"><span>Alumnos</span></a></td>
                     <td>
                       <span class="label @if($grupo->activo == '1') label-success @else label-danger @endif ">
                         @if($grupo->activo == '1') Activo @else No Activo @endif
