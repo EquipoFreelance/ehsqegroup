@@ -96,7 +96,6 @@ function listAssignedStudents(cod_grupo){
         },
         success:function(response)
         {
-            console.log(response);
             var source   = $("#response-template").html();
             var template = Handlebars.compile(source);
             var html     = template(response);
@@ -118,37 +117,64 @@ function listAssignedStudents(cod_grupo){
 
 /*
 * Búsqueda de alumnos
+* @param string group  Id del grupo
+* @param string search nonbre, apellido del alumnos
+* @return response json
 * */
-function listStudentsSearch(search){
+function listStudentsSearch(group, search){
 
-    var source   = '<tr><td colspan="2"><center>{{ message }}</center><td></tr>';
+    var source   = '<tr><td colspan="3"><center>{{ message }}</center><td></tr>';
     var template = Handlebars.compile(source);
     var html     = template({message: "Loading..."});
 
     $.ajax({
-        url:'/hsqegroup/api/groups/students/search/'+search,
+        url:'/hsqegroup/api/groups/students/search/'+group+'/'+ search,
         type:'get',
         datatype: 'json',
         data:{},
         beforeSend: function(){
             $(".modal_items").empty().append(html);
         },
-        success:function(response)
+        success:function(r)
         {
-            console.log(response);
-            var source   = $("#response-template-1").html();
-            var template = Handlebars.compile(source);
-            var html     = template(response);
-            $(".modal_items").empty().append(html);
+
+            if(r.response == ''){
+                $(".modal_items").empty().append('<tr><td colspan="3"><center>Empty</center><td></tr>');
+            } else {
+
+                source   = $("#response-template-1").html();
+                template = Handlebars.compile(source);
+                html     = template(r);
+
+                $(".modal_items").empty().append(html);
+            }
+
         },
         error:function(response)
         {
-            /*if(  response.status == 400){
-                GridError(response);
-            }*/
+            $(".modal_items").empty().append('<tr><td colspan="3"><center>Error</center><td></tr>');
         }
-    }).done(function(data){
-       
+    });
+}
 
+function storeAssignGroup(params){
+    $.ajax({
+        url:'/hsqegroup/api/groups/students/assign',
+        type:'post',
+        datatype: 'json',
+        data:params,
+        beforeSend: function(){
+
+        },
+        success:function(r)
+        {
+
+            console.log(r);
+
+        },
+        error:function(r)
+        {
+
+        }
     });
 }

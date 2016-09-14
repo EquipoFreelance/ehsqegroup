@@ -86,6 +86,7 @@ class StudentController extends Controller
     }
   }
 
+
   public function update(StudentUpdateRequest $request, $id)
   {
 

@@ -40,6 +40,8 @@ use App\Models\Auxiliar;
 
 use App\Models\Persona;
 
+use Carbon\Carbon;
+
 use Auth;
 
 
@@ -303,15 +305,35 @@ class WebServiceController extends Controller
         return $response;
     }
 
-    /* Lista de alumnos para el asignamiento de Grupos */
-    public function wsStudentGrouptLike($q)
+    /* *
+     * Lista de Alumnos matriculados que tengan los mismo parametros del grupo
+     * */
+    public function wsStudentGroupLike($cod_grupo, $q)
     {
 
+        // Para considerar coincidencias tomamos el periodo academico, la modalidad, tipo de especialización y la especialización
+
+        $g = Grupo::find($cod_grupo);
+
         // Buscando alumnos que se hayan matriculado
-        $rs = Enrollment::with('student.persona')->whereHas('student.persona', function ($query) use($q) {
-            $query->orWhere('nombre', 'LIKE', '%'. $q .'%')
-                ->orWhere('ape_pat', 'LIKE', '%'. $q .'%')->orWhere('ape_mat', 'LIKE', '%'. $q .'%');
-        })->where('activo', 1);
+        $rs = Enrollment::where('id_academic_period', $g->id_academic_period)
+            ->where('cod_modalidad', $g->cod_modalidad)
+            ->where('cod_esp_tipo', $g->cod_esp_tipo)
+            ->where('cod_esp',  $g->cod_esp)
+            ->where('activo', 1);
+
+        $rs->with('student.persona');
+
+        if($q != '-'){
+
+            $rs->whereHas('student.persona', function ($query) use($q) {
+                $query
+                    ->orWhere('nombre', 'LIKE', '%'. $q .'%')
+                    ->orWhere('ape_pat', 'LIKE', '%'. $q .'%')
+                    ->orWhere('ape_mat', 'LIKE', '%'. $q .'%');
+            });
+
+        }
 
         $enrollments = $rs->get();
 
@@ -323,6 +345,7 @@ class WebServiceController extends Controller
             if( GroupStudent::where("cod_alumno", $item->cod_alumno)->count() > 0){
                 $item->is_asignemnt = 1;
             }
+
 
         }
 
@@ -362,7 +385,7 @@ class WebServiceController extends Controller
 
 
     /**
-     * Lista Alumnos asignados a cierto grupo
+     * Lista de Alumnos asignados a un determinado grupo
      **/
     public function getWsGroupsAssignedStudents($cod_grupo){
 
@@ -375,7 +398,7 @@ class WebServiceController extends Controller
             $g = $rs->first();
 
             foreach ($g->students as $item) {
-                $student = Student::find($item->cod_alumno)->with('persona')->first();
+                $student = Student::find($item->cod_alumno);
                 $fills[] = array("name" => $student->persona->nombre.", ".$student->persona->ape_pat." ".$student->persona->ape_mat, "id" => $item->cod_alumno);
             }
 
@@ -386,6 +409,26 @@ class WebServiceController extends Controller
         return $response;
 
     }
+
+    /**
+     * Asignar Grupos
+     **/
+    public function postWsStoreAssignGroup(Request $request){
+
+        $cod_grupo = $request->get('cod_grupo');
+
+        foreach ($request->get('student') as $cod_alumno) {
+            $student = new GroupStudent();
+            $student->cod_grupo  = $cod_grupo;
+            $student->cod_alumno = $cod_alumno;
+            $student->created_by = Auth::user()->id;
+            $student->created_at = Carbon::now();
+            $student->save();
+        }
+
+    }
+
+
 
     /**
     * Lista Horario Academico por Grupo
@@ -544,6 +587,11 @@ class WebServiceController extends Controller
 
     }
 
+    /*
+        Listado de horarios disponibles
+        @param $id_academic_period  string Periodo academico
+        @param $cod_persona         string Código de la persona(Docente)
+     */
     public function getWsScheduleAvailable($id_academic_period, $cod_persona){
 
         $response = ''; $fills = array();

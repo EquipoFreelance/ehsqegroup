@@ -83,8 +83,6 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
     ]);
 
 
-
-
   // Administrador de Auxiliares
   Route::resource('/dashboard/auxiliar', 'AuxiliarController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
@@ -140,6 +138,9 @@ Route::group(['middleware' => ['auth','role.docente']], function(){
     Route::put('dashboard/teacher/academic-schedule/update/{id}', [
         'as' => 'teacher.academic_schedule.update', 'uses' => 'HorarioController@putUpdateProfesor'
     ]);
+
+
+
 
 
 });
@@ -225,10 +226,7 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
         'as' => 'json.students.all', 'uses' => 'WebServiceController@wsStudentLike'
     ]);
 
-    // Busqueda de Estudiante para el asignamiento de Grupos
-    Route::get('/hsqegroup/api/groups/students/search/{q}',[
-        'as' => 'json.groups.students.search', 'uses' => 'WebServiceController@wsStudentGrouptLike'
-    ]);
+
 
     // Get List Periodo Academico
     Route::get('/hsqegroup/api/academic-period',[
@@ -244,6 +242,16 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
     Route::get('/hsqegroup/api/groups/{cod_grupo}/students', [
         'as' => 'json.groups.students.assigned', 'uses' => 'WebServiceController@getWsGroupsAssignedStudents'
     ]);
+
+    // Búsqueda de Alumnos quienes tienen la matricula asociada con los parametros del grupo
+    Route::get('/hsqegroup/api/groups/students/search/{cod_grupo}/{q}',[
+        'as' => 'api.groups.students.search', 'uses' => 'WebServiceController@wsStudentGroupLike'
+    ]);
+
+    Route::post('/hsqegroup/api/groups/students/assign',[
+        'as' => 'api.groups.students.assign', 'uses' => 'WebServiceController@postWsStoreAssignGroup'
+    ]);
+
 
     // Get List Horarios Academicos
     Route::get('/hsqegroup/api/academic-horary/{cod_grupo}', [

@@ -18,7 +18,7 @@ filtro_fecha_inicio.change(function(){
 /*
 * Enrollments Lists
 */
-function listInscriptions(fecha_inicio = '-'){
+function listInscriptions(fecha_inicio){
   $.ajax({
      url:routes.inscriptions+fecha_inicio,
      type:'get',

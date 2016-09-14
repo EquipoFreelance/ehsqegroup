@@ -10,15 +10,18 @@
                     <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal form-label-left">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <label for="search">Buscar:</label>
-                                    <input type="text" id="search" name="search" class="form-control">
-                                </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <label for="search">Buscar:</label>
+                                <input type="text" id="search" name="search" class="form-control">
                             </div>
                         </div>
+                    </div>
+                    <br>
+                    <form action="#" class="form-horizontal form-label-left" name="group_students" id="group_students" method="post">
+                        {!! Form::token() !!}
+                        <input type="hidden" name="cod_grupo" value="{{ $cod_grupo }}">
                         <label>Resultado</label>
                         <table id="datatable-responsive" class="table table-stripedx table-borderedx dt-responsive nowrap" cellspacing="0" width="100%">
                             <thead>
@@ -32,12 +35,11 @@
 
                             </tbody>
                         </table>
-
-                    </form>
+                    {!! Form::close() !!}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-primary btn_store">Guardar</button>
                 </div>
             </div>
         </div>
@@ -57,7 +59,7 @@
         <script id="response-template-1" type="text/x-handlebars-template">
             @{{#each response}}
             <tr>
-                <td><input type="checkbox" name="students[]" value="@{{ cod_alumno }}"></td>
+                <td><input type="checkbox" name="student[]" value="@{{ cod_alumno }}" @{{#if is_asignemnt}} checked @{{/if}}></td>
                 <td>@{{ cod_alumno }}</td>
                 <td>@{{ student.persona.ape_pat }} @{{ student.persona.ape_mat }}, @{{ student.persona.nombre }}</td>
             </tr>
@@ -108,18 +110,29 @@
     <script src="{{ URL::asset('assets/js/app-templates-js.js') }}"></script>
     <script src="{{ URL::asset('assets/js/app-students.js') }}"></script>
     <script>
-        listAssignedStudents({{ $cod_grupo }});
-
         $(function(){
+
+            listAssignedStudents({{ $cod_grupo }});
+            listStudentsSearch({{ $cod_grupo }}, '-');
+
+
             $( "#search" ).keyup(function( event ) {
 
             }).keydown(function( event ) {
                 if ( event.which == 13 ) {
                     event.preventDefault();
-                    listStudentsSearch($(this).val());
+                    listStudentsSearch({{ $cod_grupo }}, $(this).val());
                 }
             });
+
+            $(".btn_store").click(function(){
+                console.log($("#group_students").serializeArray());
+                storeAssignGroup($("#group_students").serializeArray());
+            });
+
+
         });
+
     </script>
 @stop
 

@@ -23,6 +23,18 @@
 
           <div class="form-group">
             <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <label for="cod_modalidad">Periódo académico:</label>
+                <select name="id_academic_period" id="id_academic_period" class="form-control" data-id-default="{{ old('id_academic_period') }}"></select>
+                @if ($errors->has('id_academic_period'))
+                  <label for="id_academic_period" generated="true" class="error">{{ $errors->first('cod_modalidad') }}</label>
+                @endif
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
               <div class="col-md-6 col-sm-6 col-xs-12">
                 <label for="cod_modalidad">Modalidad:</label>
                 <select name="cod_modalidad" id="cod_modalidad" class="form-control" data-id-default="{{ old('cod_modalidad') }}"></select>
@@ -154,4 +166,5 @@
 @stop
 @section('custom_js')
   <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/app-academic-period.js') }}"></script>
 @stop
