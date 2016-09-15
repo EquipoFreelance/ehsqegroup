@@ -415,15 +415,68 @@ class WebServiceController extends Controller
      **/
     public function postWsStoreAssignGroup(Request $request){
 
-        $cod_grupo = $request->get('cod_grupo');
+        // Al quitar el check debería actualizar la lista
 
-        foreach ($request->get('student') as $cod_alumno) {
-            $student = new GroupStudent();
-            $student->cod_grupo  = $cod_grupo;
-            $student->cod_alumno = $cod_alumno;
-            $student->created_by = Auth::user()->id;
-            $student->created_at = Carbon::now();
-            $student->save();
+        $checkeds  = $request->get('student');
+        $cod_grupo = $request->get('cod_grupo');
+        $registers = [];
+
+        // Existe elementos seleccionados?
+        if( count($checkeds) > 0){
+
+            // Caso 1: Aquellos que no se encuentren en la base de datos
+            $rs = GroupStudent::select("cod_alumno", "id")->where("cod_grupo", $cod_grupo)->whereNotIn('cod_alumno', $checkeds);
+
+            ($rs->count() > 0)? $rs->delete() : false;
+
+
+            // Caso 2: Aquellos se encuentren en la base de datos, validamos
+            $rs = GroupStudent::select("cod_alumno", "id")->where("cod_grupo", $cod_grupo);
+
+            if( $rs->count() > 0 ){
+
+                $old_register = $rs->lists('cod_alumno')->toArray();
+
+                foreach ($request->get('student') as $cod_alumno) {
+
+                    // Si los estudiantes seleccionados no existen en la tabla grupo_alumnos,
+                    // los registramos
+                    if( in_array($cod_alumno, $old_register) == false){
+                        $registers[] = $cod_alumno;
+                    }
+
+                }
+
+            } else {
+
+                $registers = $request->get('student');
+
+            }
+
+
+            if( count($registers) > 0){
+
+                foreach ($registers as $cod_alumno) {
+                    $student = new GroupStudent();
+                    $student->cod_grupo  = $cod_grupo;
+                    $student->cod_alumno = $cod_alumno;
+                    $student->created_by = Auth::user()->id;
+                    $student->created_at = Carbon::now();
+                    $student->save();
+                }
+
+
+            }
+
+
+
+
+        } else {
+
+            // Caso 4: Como el usuario deselecciono a los alumnos del grupo, eliminamos a todos
+            $rs = GroupStudent::select("cod_alumno", "id")->where("cod_grupo", $cod_grupo);
+            $rs->delete();
+
         }
 
     }

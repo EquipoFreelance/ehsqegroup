@@ -38,8 +38,8 @@
                     {!! Form::close() !!}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary btn_store">Guardar</button>
+                    <button type="button" class="btn btn-5 btn-5a icon-return return" data-dismiss="modal"><span>Cerrar</span></button>
+                    <button type="button" class="btn btn-5 btn-5a icon-save save btn_store"><span>Guardar</span></button>
                 </div>
             </div>
         </div>
@@ -115,10 +115,7 @@
             listAssignedStudents({{ $cod_grupo }});
             listStudentsSearch({{ $cod_grupo }}, '-');
 
-
-            $( "#search" ).keyup(function( event ) {
-
-            }).keydown(function( event ) {
+            $( "#search" ).keydown(function( event ) {
                 if ( event.which == 13 ) {
                     event.preventDefault();
                     listStudentsSearch({{ $cod_grupo }}, $(this).val());
@@ -126,10 +123,8 @@
             });
 
             $(".btn_store").click(function(){
-                console.log($("#group_students").serializeArray());
-                storeAssignGroup($("#group_students").serializeArray());
+                storeAssignGroup($("#group_students").serializeArray(), $(this));
             });
-
 
         });
 

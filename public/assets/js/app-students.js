@@ -156,21 +156,26 @@ function listStudentsSearch(group, search){
         }
     });
 }
-
-function storeAssignGroup(params){
+/*
+ * Almacena los alumnos seleccionados
+ * @param string params varios parametros del formulario(cod_grupo, students)
+ * @return response json
+ * */
+function storeAssignGroup(params, obj){
     $.ajax({
         url:'/hsqegroup/api/groups/students/assign',
         type:'post',
         datatype: 'json',
         data:params,
         beforeSend: function(){
-
+            obj.attr("disabled", "disabled");
         },
         success:function(r)
         {
-
-            console.log(r);
-
+            obj.removeAttr("disabled");
+        },
+        complete: function(){
+            listAssignedStudents(params[1].value, '-');
         },
         error:function(r)
         {
