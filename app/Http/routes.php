@@ -249,7 +249,7 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
     ]);
 
     Route::post('/hsqegroup/api/groups/students/assign',[
-        'as' => 'api.groups.students.assign', 'uses' => 'WebServiceController@postWsStoreAssignGroup'
+        'as' => 'api.groups.students.assign', 'uses' => 'WebService\WSStudentController@postWsStoreAssignGroup'
     ]);
 
 

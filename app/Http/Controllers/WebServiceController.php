@@ -47,12 +47,11 @@ use Auth;
 
 class WebServiceController extends Controller
 {
-  /**
-  * Países
-  * Servicio permite listar los países
-  * @param string $cod_pais -> Código del país
-  * @return Response $response  -> Json
-  */
+    /**
+    * Países
+    * Servicio permite listar los países
+    * @return json $response  -> Json
+    */
     public function wsCountries()
     {
       return $departament = Country::select('nom_pais as name', 'id')->get()->toJson();

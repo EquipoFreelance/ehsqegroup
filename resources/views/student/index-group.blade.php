@@ -22,6 +22,7 @@
                     <form action="#" class="form-horizontal form-label-left" name="group_students" id="group_students" method="post">
                         {!! Form::token() !!}
                         <input type="hidden" name="cod_grupo" value="{{ $cod_grupo }}">
+                        <input type="hidden" name="set_students" value="">
                         <label>Resultado</label>
                         <table id="datatable-responsive" class="table table-stripedx table-borderedx dt-responsive nowrap" cellspacing="0" width="100%">
                             <thead>
@@ -59,7 +60,7 @@
         <script id="response-template-1" type="text/x-handlebars-template">
             @{{#each response}}
             <tr>
-                <td><input type="checkbox" name="student[]" value="@{{ cod_alumno }}" @{{#if is_asignemnt}} checked @{{/if}}></td>
+                <td><input type="checkbox" name="student[]" id="student" class="student" data-id="@{{ cod_alumno }}" value="@{{ cod_alumno }}-@{{#if is_asignemnt}}true@{{else}}false@{{/if}}" @{{#if is_asignemnt}} checked @{{/if}}></td>
                 <td>@{{ cod_alumno }}</td>
                 <td>@{{ student.persona.ape_pat }} @{{ student.persona.ape_mat }}, @{{ student.persona.nombre }}</td>
             </tr>
@@ -110,6 +111,7 @@
     <script src="{{ URL::asset('assets/js/app-templates-js.js') }}"></script>
     <script src="{{ URL::asset('assets/js/app-students.js') }}"></script>
     <script>
+
         $(function(){
 
             listAssignedStudents({{ $cod_grupo }});
@@ -118,12 +120,35 @@
             $( "#search" ).keydown(function( event ) {
                 if ( event.which == 13 ) {
                     event.preventDefault();
-                    listStudentsSearch({{ $cod_grupo }}, $(this).val());
+                    var search = '-';
+                    if($(this).val() != ''){
+                        search = $(this).val();
+                    }
+
+                    listStudentsSearch({{ $cod_grupo }}, search);
                 }
             });
 
+            $(document).delegate(".student", "click", function(){
+                $(this).attr("value", "");
+                if($(this).is(':checked')){
+                    $(this).attr("value", $(this).attr("data-id") + "-true");
+                } else {
+                    $(this).attr("value", $(this).attr("data-id") + "-false");
+                }
+
+            });
+
             $(".btn_store").click(function(){
+
+                var searchIDs = $('input[name="student[]"]').map(function(){
+                    return $(this).val();
+                }).get();
+
+                $('input[name="set_students"]').val(searchIDs).attr("value", searchIDs);
+
                 storeAssignGroup($("#group_students").serializeArray(), $(this));
+
             });
 
         });
