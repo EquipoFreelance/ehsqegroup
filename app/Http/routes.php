@@ -284,6 +284,6 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
     ]);
 
     // Get List Auxiliares All
-    Route::get('/api/horary-auxiliary/{cod_teacher}', [
+    Route::get('/api/horary-auxiliary/{cod_auxiliar}', [
         'as' => 'json.teacher.all', 'uses' => 'WebServiceController@getWsAuxiliary'
     ]);

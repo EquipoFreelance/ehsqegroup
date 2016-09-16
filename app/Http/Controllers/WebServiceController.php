@@ -160,7 +160,11 @@ class WebServiceController extends Controller
 
     }
 
-    /* Dependiendo el grupo seleccionado se listarán los módulos */
+    /**
+     * Muestra los Horarios por Grupo
+     * @param string $cod_grupo, Id del Grupo
+     * @return json $response
+     * */
     public function GetHoraryModules($cod_grupo){
 
         $rs = Grupo::where("id", $cod_grupo)->where("activo", 1)->select("cod_modalidad", "cod_esp_tipo", "cod_esp");
@@ -186,10 +190,10 @@ class WebServiceController extends Controller
     }
 
     /**
-    * Lista de Matriculados,
+    * Lista de Matriculados
     * Servicio permite listar las matriculas realizadas filtradas por le fecha de inicio
-    * @param string $fecha_inicio -> Fecha de Inicio
-    * @return Response $response  -> Json
+    * @param string $id_academic_period, Id del periodo academico
+    * @return json $response, Muestra el resultado en formaro JSON
     */
     public function wsEnrollments($id_academic_period)
     {
@@ -237,7 +241,11 @@ class WebServiceController extends Controller
 
     }
 
-    /* WS - List of inscriptions */
+    /**
+     * Listado de Inscritos
+     * @param $id_academic_period
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function wsInscriptions($id_academic_period){
 
       if($id_academic_period){
@@ -284,7 +292,11 @@ class WebServiceController extends Controller
 
     }
 
-    /* Lista de Estudiantes Activos */
+
+    /**
+     * Listado de Estudiantes
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function wsStudent()
     {
         $students = Student::with('persona')->orderBy('created_at', 'desc')->get();
@@ -292,7 +304,11 @@ class WebServiceController extends Controller
         return $response;
     }
 
-    /* Lista de Estudiantes por nombres */
+    /**
+     * Búsqueda de Estudiantes por su nombres
+     * @param $q
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function wsStudentLike($q)
     {
 
@@ -305,8 +321,11 @@ class WebServiceController extends Controller
         return $response;
     }
 
-    /* *
-     * Lista de Alumnos matriculados que tengan los mismo parametros del grupo
+    /**
+     * Búsqueda de Alumnos por su nombre, dentro de un grupo determinado
+     * @param $cod_grupo, Código del Grupo
+     * @param $q, Palabra de búsqueda
+     * @return json $response Resultado en Formato JSON
      * */
     public function wsStudentGroupLike($cod_grupo, $q)
     {
@@ -356,6 +375,7 @@ class WebServiceController extends Controller
 
     /**
      * List Periodo Academico
+     * @return json $schedules, Resultado en Formato JSON
      * */
     public function getWsAcademicPeriod(){
 
@@ -366,6 +386,7 @@ class WebServiceController extends Controller
 
     /**
      * Lista Grupos Activos
+     * @return json $response, Resultado en Formato JSON
      **/
     public function getWsGroups(){
 
@@ -383,9 +404,10 @@ class WebServiceController extends Controller
 
     }
 
-
     /**
      * Lista de Alumnos asignados a un determinado grupo
+     * @param string $cod_grupo Id del grupo
+     * @return string $response Resultado en Formato JSON
      **/
     public function getWsGroupsAssignedStudents($cod_grupo){
 
@@ -411,7 +433,8 @@ class WebServiceController extends Controller
     }
 
     /**
-     * Asignar Grupos
+     * Asignar Estudiantes a Grupos
+     * @param $request Request
      **/
     public function postWsStoreAssignGroup(Request $request){
 
@@ -427,8 +450,9 @@ class WebServiceController extends Controller
             // Caso 1: Aquellos que no se encuentren en la base de datos
             $rs = GroupStudent::select("cod_alumno", "id")->where("cod_grupo", $cod_grupo)->whereNotIn('cod_alumno', $checkeds);
 
-            ($rs->count() > 0)? $rs->delete() : false;
+            // Aquellos que estan en la lista y se les ha quitado el check....
 
+            ($rs->count() > 0)? $rs->delete() : false;
 
             // Caso 2: Aquellos se encuentren en la base de datos, validamos
             $rs = GroupStudent::select("cod_alumno", "id")->where("cod_grupo", $cod_grupo);
@@ -481,13 +505,12 @@ class WebServiceController extends Controller
 
     }
 
-
-
     /**
-    * Lista Horario Academico por Grupo
-    * 
-    **/
-    public function getWsAcademicHorary($cod_grupo = '-'){
+     * Lista de Horarios Academicos por el ID del grupo
+     * @param string $cod_grupo Id del Grupo
+     * @return string $response, retorna un resultado en formaro JSON
+     * */
+    public function getWsAcademicHorary($cod_grupo){
 
         $response = ''; $fills = array();
 
@@ -512,9 +535,11 @@ class WebServiceController extends Controller
 
     }
 
-    /* *
-     * Busqueda de Grupo por nombres
-     *  */
+    /**
+     * Búsqueda de Grupos por su nombre
+     * @param string $q Palabra
+     * @return string $response, retorna un resultado en formaro JSON
+     * */
     public function getWsGroupsLike($q){
         $response = ''; $fills = array();
 
@@ -534,9 +559,11 @@ class WebServiceController extends Controller
         return $response;
     }
 
-    /* *
-     * Búsqueda de Docentes por nombres
-     *  */
+    /**
+     * Búsqueda de Docentes por su nombre
+     * @param string $q Palabra
+     * @return string $response, retorna un resultado en formaro JSON
+     * */
     public function getWsTeachersLike($q){
 
         $response = ''; $fills = array();
@@ -559,9 +586,11 @@ class WebServiceController extends Controller
 
     }
 
-    /* *
-     * Búsqueda de Todos los Docentes
-     *  */
+    /**
+     * Búsqueda de Docentes o Todos los Docentes
+     * @param string $cod_teacher Id del auxiliar
+     * @return string $response, retorna un resultado en formaro JSON
+     **/
     public function getWsTeachers($cod_teacher){
 
         $response = ''; $fills = array();
@@ -586,16 +615,18 @@ class WebServiceController extends Controller
 
     }
 
-    /* *
-     * Búsqueda de Todos los Docentes
-     *  */
-    public function getWsAuxiliary($cod_teacher){
+    /**
+     * Búsqueda de Auxiliares o Todos los auxiliares
+     * @param string $cod_auxiliar Id del auxiliar
+     * @return string $response, retorna un resultado en formaro JSON
+     * */
+    public function getWsAuxiliary($cod_auxiliar){
 
         $response = ''; $fills = array();
 
         $rs = Auxiliar::where('activo', 1)->select("id", "cod_persona");
 
-        ( $cod_teacher != 'all')? $rs->where('id', $cod_teacher) : false;
+        ( $cod_auxiliar != 'all')? $rs->where('id', $cod_auxiliar) : false;
 
         $rs->with('persona');
 
@@ -613,9 +644,11 @@ class WebServiceController extends Controller
 
     }
 
-    /* *
-     * Búsqueda de Auxiliares por nombres
-     *  */
+    /**
+     * Búsqueda de Auxiliares por su nombre
+     * @param string $q Palabra
+     * @return string $response, retorna un resultado en formaro JSON
+     * */
     public function getWsAuxiliaryLike($q){
 
         $response = ''; $fills = array();
@@ -640,11 +673,12 @@ class WebServiceController extends Controller
 
     }
 
-    /*
-        Listado de horarios disponibles
-        @param $id_academic_period  string Periodo academico
-        @param $cod_persona         string Código de la persona(Docente)
-     */
+    /**
+     * Listado de Horarios Disponibles
+     * @param string $id_academic_period, Id del periodo academico
+     * @param string $cod_persona, Id de la persona
+     * @return json $response, retorna un resultado en formaro JSON
+     * */
     public function getWsScheduleAvailable($id_academic_period, $cod_persona){
 
         $response = ''; $fills = array();
