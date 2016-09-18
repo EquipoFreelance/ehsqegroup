@@ -10,7 +10,6 @@ class Enrollment extends Model
     protected $table = 'matricula';
 
     protected $fillable = [
-      "cod_alumno",
       "id_academic_period",
       "cod_modalidad",
       "cod_esp_tipo",

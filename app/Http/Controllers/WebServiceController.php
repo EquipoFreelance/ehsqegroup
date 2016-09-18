@@ -309,8 +309,8 @@ class WebServiceController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function wsStudentLike($q)
-    {
-
+    {   
+        
         $students = Student::with('persona')->whereHas('persona', function ($query) use($q) {
             $query->where('nombre', 'LIKE', '%'. $q .'%');
         })->get();
@@ -318,6 +318,7 @@ class WebServiceController extends Controller
         $response = response()->json(["items" => $students->toArray()], 200);
 
         return $response;
+        
     }
 
     /**

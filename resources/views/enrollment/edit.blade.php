@@ -8,13 +8,12 @@
         <br>
         <div class="x_panel">
           <div class="y_title">
-            <h2><i class="fa fa-edit"></i> Nueva</h2>
+            <h2><i class="fa fa-edit"></i> Ratificar Matricula</h2>
             <div class="clearfix"></div>
           </div>
 
           <div class="x_content">
-
-            {!! Form::open(['route' => 'dashboard.enrollment.store', 'class' => 'form-horizontal form-label-left']) !!}
+            {!! Form::model($enrollment, [ 'method' => 'PUT', 'route' => ['dashboard.enrollment.update', $enrollment->id], 'class' => 'form-horizontal form-label-left' ]) !!}
 
             @if(Session::has('message'))
               <div class="alert alert-success alert-dismissible fade in" role="alert">
@@ -25,14 +24,21 @@
 
             <div class="form-group">
               <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                  <label for="cod_alumno">Asignar alumno:</label>
-                  <select class="select2 form-control cod_alumno" id="cod_alumno" name="cod_alumno">
-                    <option value="-" selected="selected">Seleccione el alumno</option>
-                  </select>
-                  @if ($errors->has('cod_alumno'))
-                    <label for="cod_alumno" generated="true" class="error">{{ $errors->first('cod_alumno') }}</label>
-                  @endif
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                  <label for="cod_alumno">Código de Alumno:</label>
+                  <div>
+                    {{ $enrollment->cod_alumno }}
+                  </div>
+
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                  <label for="cod_alumno">Alumno:</label>
+                  <div>
+                    {{ $enrollment->student->persona->ape_pat }}
+                    {{ $enrollment->student->persona->ape_mat}},
+                    {{ $enrollment->student->persona->nombre }}
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -40,8 +46,8 @@
             <div class="form-group">
               <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                  <label for="id_academic_period">Fecha de Inicio</label>
-                  <select name="id_academic_period" id="id_academic_period" class="form-control"></select>
+                  <label for="id_academic_period">Periódo Académico:</label>
+                  <select name="id_academic_period" id="id_academic_period" data-id-default="{{ $enrollment->id_academic_period }}" class="form-control"></select>
                   @if ($errors->has('id_academic_period'))
                     <label for="id_academic_period" generated="true" class="error">{{ $errors->first('id_academic_period') }}</label>
                   @endif
@@ -53,7 +59,7 @@
               <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                   <label for="cod_modalidad">Modalidad</label>
-                  <select class="form-control" name="cod_modalidad" id="cod_modalidad" data-id-default="{{ old('cod_modalidad') }}"><option value="">-- Seleccione la modalidad --</option></select>
+                  <select class="form-control" name="cod_modalidad" id="cod_modalidad" data-id-default="{{ $enrollment->cod_modalidad }}"><option value="">-- Seleccione la modalidad --</option></select>
                   @if ($errors->has('cod_modalidad'))
                     <label for="cod_modalidad" generated="true" class="error">{{ $errors->first('cod_modalidad') }}</label>
                   @endif
@@ -65,7 +71,7 @@
               <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                   <label for="cod_esp_tipo">Tipo de Especialización</label>
-                  <select class="form-control" name="cod_esp_tipo" id="cod_esp_tipo" data-id-default="{{ old('cod_esp_tipo') }}"><option>-- Seleccione el tipo de especialización --</option></select>
+                  <select class="form-control" name="cod_esp_tipo" id="cod_esp_tipo" data-id-default="{{ $enrollment->cod_esp_tipo }}"><option>-- Seleccione el tipo de especialización --</option></select>
                   @if ($errors->has('cod_esp_tipo'))
                     <label for="cod_esp_tipo" generated="true" class="error">{{ $errors->first('cod_esp_tipo') }}</label>
                   @endif
@@ -77,7 +83,7 @@
               <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                   <label for="cod_esp">Especialización</label>
-                  <select class="form-control" name="cod_esp" id="cod_esp" data-id-default="{{ old('cod_esp') }}"><option value="">-- Seleccione la especialización --</option></select>
+                  <select class="form-control" name="cod_esp" id="cod_esp" data-id-default="{{ $enrollment->cod_esp }}"><option value="">-- Seleccione la especialización --</option></select>
                   @if ($errors->has('cod_esp'))
                     <label for="cod_esp" generated="true" class="error">{{ $errors->first('cod_esp') }}</label>
                   @endif
@@ -86,21 +92,63 @@
             </div>
 
 
+            <div class="ln_solid"></div>
+
+            <div class="form-group">
+              <div class="x_title" style="border-bottom:none">
+                <h2>Pagos realizados</h2>
+                <div class="clearfix"></div>
+              </div>
+
+              <tfooter>
+              </tfooter><table id="datatable-responsive-price" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%" style="margin-bottom: 0">
+                <thead>
+                <tr>
+                  <th>Concepto</th>
+                  <th>Monto</th>
+                  <th>Validación</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>Matrícula</td>
+                  <td>100.00</td>
+                  <td><i class="fa fa-check green"></i></td>
+                </tr>
+                <tr>
+                  <td>1ra Cuota</td>
+                  <td>320.00</td>
+                  <td><i class="fa fa-check green"></i></td>
+                </tr>
+                </tbody>
+                <tbody><tr>
+                  <td><strong>Total</strong></td>
+                  <td><strong>S/. 420.00</strong></td>
+                  <td></td>
+                </tr>
+
+                </tbody></table>
+            </div>
+            <div class="form-group">
+              <label>Observación:</label>
+              <textarea id="message" class="form-control" name="message"></textarea>
+            </div>
+            <div class="ln_solid"></div>
+
             <div class="chkContent">
-              {{ Form::checkbox('activo', 1, ( old('activo') == 1)? true : false, ['class' => 'flat'] ) }}
+              {{ Form::checkbox('activo', 1, ( $enrollment->activo == 1)? true : false, ['class' => 'flat'] ) }}
               Validar matricula
               @if ($errors->has('activo'))
-                <label for="activo" generated="true" class="error">{{ $errors->first('activo') }}</label>
+                <div class="hidden" id="chkvalid" style="display:block !important">
+                  <label for="proteccion_datos" generated="true" class="error" style="display:block !important">Es necesario este campo</label>
+                </div>
               @endif
             </div>
-
-            <div class="ln_solid"></div>
 
             <div class="form-group btncontrol">
               <a href="{{ route('dashboard.enrollment.index') }}" class="btn btn-5 btn-5a icon-return return"><span>Retornar</span></a>
               <button type="submit" class="btn btn-5 btn-5a icon-save save"><span>Guardar</span></button>
             </div>
-
 
             {!! Form::close() !!}
 
@@ -116,7 +164,7 @@
   <script src="{{ URL::asset('assets/js/app.js') }}"></script>
   <script src="{{ URL::asset('assets/js/app-academic-period.js') }}"></script>
   <script>
-    $(".cod_alumno").select2({
+    /*$(".cod_alumno").select2({
       theme: "classic",
       placeholder: 'Seleccione',
       ajax: {
@@ -142,7 +190,7 @@
       }
     }).on('select2:select', function (evt) {
       console.log($('.cod_alumno').val());
-    });
+    });*/
   </script>
 
 @stop

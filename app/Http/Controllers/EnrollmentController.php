@@ -5,13 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-
+use App\Http\Requests\StoreEnrollmentRequest;
 use App\Models\Modulo;
-
 use App\Models\Enrollment;
-
 use App\Models\ReportCard;
-
+use Auth;
 
 class EnrollmentController extends Controller
 {
@@ -71,7 +69,7 @@ class EnrollmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreEnrollmentRequest $request, $id)
     {
 
       $enrollment = Enrollment::find($id);
@@ -79,16 +77,11 @@ class EnrollmentController extends Controller
       $enrollment->cod_modalidad      = $request->get("cod_modalidad");
       $enrollment->cod_esp_tipo       = $request->get("cod_esp_tipo");
       $enrollment->cod_esp            = $request->get("cod_esp");
+      $enrollment->created_by         = Auth::user()->id;
       $enrollment->activo             = ($request->get("activo") == '' || $request->get("activo") == 0)? 0 : $request->get("activo");
 
       if( $enrollment->save() )
       {
-          // Deleted Old Register
-          $enrollment->report_card()->delete();
-
-          // Create new Report Cards
-          $this->setCreateReportCard($enrollment->cod_modalidad, $enrollment->cod_esp_tipo, $enrollment->cod_esp, $enrollment->id);
-
           // Sending Message
           return redirect()->route('dashboard.enrollment.edit', $id)
                                 ->with('message', 'La matricula fue actualizada satisfactoriamente');

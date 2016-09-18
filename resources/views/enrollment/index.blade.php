@@ -43,10 +43,11 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
 
-          <div class="x_title">
+          <!--<div class="x_title">
               <a href="{{ route('dashboard.enrollment.create') }}" class="btn btn-5 btn-5a icon-add add"><span>Agregar</span></a>
               <div class="clearfix"></div>
-          </div>
+          </div>-->
+
           <div class="x_title">
               <form class="form-inline">
                 <div class="form-group">
