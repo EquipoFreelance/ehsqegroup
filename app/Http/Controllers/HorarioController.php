@@ -205,7 +205,7 @@ class HorarioController extends Controller
         $horario->cod_sede    = $group->cod_sede;
         $horario->updated_at  = Carbon::now();
         $horario->activo      = $request->get("activo");
-        $horario->updated_by  =  Auth::user()->id;
+        $horario->updated_by  = Auth::user()->id;
         $horario->monday      = 0;
         $horario->sunday      = 0;
         $horario->tuesday     = 0;

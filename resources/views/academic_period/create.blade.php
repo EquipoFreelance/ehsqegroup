@@ -1,5 +1,14 @@
 @extends('dashboard.layouts.master')
 
+@section('custom_css')
+
+    <!-- CSS Plugin DatePicker Material -->
+    <link href="{{ URL::asset('assets/js/datepicker_material/css/bootstrap-material-datetimepicker.css') }}" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+@stop
+
 @section('content')
 <div class="form_content_block">
     <div class="row">
@@ -74,5 +83,5 @@
 @stop
 
 @section('custom_js')
-    <script src="{{ URL::asset('app-academic-period.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/app-academic-period.js') }}"></script>
 @stop

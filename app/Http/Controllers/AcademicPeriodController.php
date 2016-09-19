@@ -30,7 +30,7 @@ class AcademicPeriodController extends Controller
     {
         AcademicPeriod::create($request->all());
         return redirect()->route('dashboard.academic_period.index')
-            ->with('message', 'El periodo academico fue registrado satisfactoriamente');
+            ->with('message', 'El periódo académico fue registrado satisfactoriamente');
     }
 
     public function edit($id)
@@ -45,7 +45,7 @@ class AcademicPeriodController extends Controller
         $schedule = AcademicPeriod::findOrFail($id);
         $schedule->fill($request->all())->save();
         return redirect()->route('dashboard.academic_period.edit', $id)
-            ->with('message', 'El periodo academico fue actualizado satisfactoriamente');
+            ->with('message', 'El periódo académico fue actualizado satisfactoriamente');
     }
 
     public function show()

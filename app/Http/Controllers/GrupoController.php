@@ -28,7 +28,7 @@ class GrupoController extends Controller
    * @return \Illuminate\Http\Response
    */
     public function index(){
-      $grupos = Grupo::where("deleted", '=', 0)->get();
+      $grupos = Grupo::where("deleted", '=', 0)->orderBy('id', 'desc')->get();
       return view('grupo.index', array('grupos' => $grupos));
     }
 
@@ -58,6 +58,7 @@ class GrupoController extends Controller
         // Registramos el grupo
         $grupo = new Grupo;
 
+        $grupo->id_academic_period = $request->get("id_academic_period");
         $grupo->cod_esp       = $request->get("cod_esp");
         $grupo->cod_modalidad = $request->get("cod_modalidad");
         $grupo->cod_esp_tipo  = $request->get("cod_esp_tipo");
@@ -124,6 +125,7 @@ class GrupoController extends Controller
       // Actualizando el grupo seleccionado
       $grupo = Grupo::find($id);
 
+      $grupo->id_academic_period = $request->get("id_academic_period");
       $grupo->cod_esp       = $request->get("cod_esp");
       $grupo->cod_modalidad = $request->get("cod_modalidad");
       $grupo->cod_esp_tipo  = $request->get("cod_esp_tipo");

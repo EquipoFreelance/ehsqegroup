@@ -16,7 +16,13 @@
           {!! Form::open(['route' => 'dashboard.inscription.store', 'class' => 'form-horizontal form-label-left']) !!}
 
           @if(Session::has('message'))
-          <div class="alert alert-success alert-dismissible fade in" role="alert">
+          <div class="alert
+          @if(Session::has('class'))
+          {{ Session::get('message') }}
+          @else
+          alert-success
+          @endif
+          alert-dismissible fade in" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
             {{ Session::get('message') }}
           </div>
@@ -25,7 +31,7 @@
           <div class="form-group">
             <div class="row">
               <div class="col-md-6 col-sm-6 col-xs-12">
-                <label for="id_academic_period">Fecha de inicio</label>
+                <label for="id_academic_period">Periódo Académico</label>
                 <select name="id_academic_period" id="id_academic_period" class="form-control"></select>
                 @if ($errors->has('id_academic_period'))
                 <label for="id_academic_period" generated="true" class="error">{{ $errors->first('id_academic_period') }}</label>
@@ -163,8 +169,8 @@
                 <label for="cod_prov" generated="true" class="error">{{ $errors->first('cod_prov') }}</label>
                 @endif
               </div>
-              <label for="cod_dist">Distrito</label>
               <div class="col-md-6 col-sm-6 col-xs-12">
+                <label for="cod_dist">Distrito</label>
                 <select class="form-control" name="cod_dist" id="cod_dist"><option value="">-- Seleccione el distrito --</option></select>
                 @if ($errors->has('direccion'))
                 <label for="cod_dist" generated="true" class="error">{{ $errors->first('cod_dist') }}</label>

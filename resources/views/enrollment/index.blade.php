@@ -51,7 +51,7 @@
           <div class="x_title">
               <form class="form-inline">
                 <div class="form-group">
-                    <label>Fecha de inicio: </label>
+                    <label>Periódo Académico: </label>
                     <select class="form-control" name="id_academic_period" id="id_academic_period">
                       <option value="-">-- Seleccione el periodo académico --</option>
                     </select>

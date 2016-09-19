@@ -26,7 +26,11 @@ class Persona extends Model
       'num_cellphone',
       'num_phone',
       'proteccion_datos',
-      'activo'
+      'activo',
+      'created_at',
+      'created_by',
+      'updated_at',
+      'updated_by'
     ];
 
     protected $visible = ['nombre', 'ape_pat', 'ape_mat', 'num_doc', 'correo', 'num_phone', 'num_cellphone', 'id'];

@@ -1,13 +1,22 @@
 @extends('dashboard.layouts.master')
 
+@section('custom_css')
+
+  <!-- CSS Plugin DatePicker Material -->
+  <link href="{{ URL::asset('assets/js/datepicker_material/css/bootstrap-material-datetimepicker.css') }}" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+@stop
+
 @section('content')
 <div class="form_content_block">
   <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
       <br>
       <div class="x_panel">
-        <div class="x_title">
-          <h1 style="font-size: 18px">Editar</h1>
+        <div class="y_title">
+          <h2><i class="fa fa-edit"></i>Editar</h2>
           <div class="clearfix"></div>
         </div>
 
@@ -152,7 +161,6 @@
           <div class="form-group btncontrol">
             <a href="{{ route('dashboard.grupo.index') }}" class="btn btn-5 btn-5a icon-return return"><span>Retornar</span></a>
             {{ Form::button('<span>Guardar</span>', array('class' => 'btn btn-5 btn-5a icon-save save', 'type' => 'submit')) }}
-            <a href="{{ route('dashboard.grupo.horario.list', $grupo->id) }}" class="btn btn-5 btn-5a icon-return return"><span>Horarios</span></a>
           </div>
 
         {!! Form::close() !!}
@@ -172,4 +180,5 @@
 @section('custom_js')
   <script src="{{ URL::asset('assets/js/app.js') }}"></script>
   <script src="{{ URL::asset('assets/js/app-academic-period.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/app-group.js') }}"></script>
 @stop

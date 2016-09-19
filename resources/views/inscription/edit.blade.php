@@ -26,7 +26,7 @@
         <div class="form-group">
           <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <label for="id_academic_period">Fecha de inicio</label>
+              <label for="id_academic_period">Periódo Académico</label>
               <select name="id_academic_period" id="id_academic_period" data-id-default="{{ $student->enrollments()->first()->id_academic_period }}" class="form-control"></select>
               @if ($errors->has('id_academic_period'))
               <label for="id_academic_period" generated="true" class="error">{{ $errors->first('id_academic_period') }}</label>

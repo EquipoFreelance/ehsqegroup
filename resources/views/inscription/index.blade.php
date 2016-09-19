@@ -32,10 +32,11 @@
 
     <div class="page-title">
       @if(Session::has('message'))
-          <div class="alert alert-info">
+          <div class="alert @if(Session::has('class')) {{ Session::get('class') }} @else alert-info @endif ">
               {{ Session::get('message') }}
           </div>
       @endif
+
       <h1>Administrador de Inscritos</h1>
       <p style="margin-top: 15px">Información administrable de Inscritos.</p>
     </div>
