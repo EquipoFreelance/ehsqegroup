@@ -72,7 +72,7 @@
 
             <div class="col-md-6 col-sm-6 col-xs-12">
               <label for="cod_doc_tip">Tipo de Documento</label>
-              {{ Form::select('cod_doc_tip', array('' => '-- Seleccione el tipo de documento --','1' => 'DNI', '2' => 'Carnet de Extranjeria'), $student->persona->cod_doc_tip, ['class' => 'form-control'] ) }}
+              <select class="form-control" name="cod_doc_tip" id="cod_doc_tip" data-id-default="{{ $student->persona->cod_doc_tip }}"><option value="">-- Seleccione el Tipo de Documento --</option></select>
               @if ($errors->has('cod_doc_tip'))
               <label for="cod_doc_tip" generated="true" class="error">{{ $errors->first('cod_doc_tip') }}</label>
               @endif
@@ -238,4 +238,5 @@
 @section('custom_js')
   <script src="{{ URL::asset('assets/js/app.js') }}"></script>
   <script src="{{ URL::asset('assets/js/app-students.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/app-document-type.js') }}"></script>
 @stop
