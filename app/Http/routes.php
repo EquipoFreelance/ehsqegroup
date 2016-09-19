@@ -287,3 +287,8 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
     Route::get('/api/horary-auxiliary/{cod_auxiliar}', [
         'as' => 'json.teacher.all', 'uses' => 'WebServiceController@getWsAuxiliary'
     ]);
+
+    // Get List Document Type
+    Route::get('/api/document_type', [
+        'as' => 'json.teacher.all', 'uses' => 'WebService\WSDocumentTypeController@getIndex'
+    ]);

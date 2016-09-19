@@ -260,8 +260,8 @@ class WebServiceController extends Controller
                 ->with('specialization')
                 ->with('modality')
                 ->with('student')
+                ->with('student.persona.persona_document_type')
                 ->with('student.persona')->orderBy('created_at', 'desc')->get();
-
                 $response = response()->json(["response" => $enrollment->toArray()], 200);
 
             } else {
@@ -275,6 +275,7 @@ class WebServiceController extends Controller
             ->with('specialization')
             ->with('modality')
             ->with('student')
+            ->with('student.persona.persona_document_type')
             ->with('student.persona')->orderBy('created_at', 'desc')->get();
 
             $response = response()->json(["response" => $enrollment->toArray()], 200);

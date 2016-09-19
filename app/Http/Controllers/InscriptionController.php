@@ -84,7 +84,8 @@ class InscriptionController extends Controller
             "cod_sede"    => 1,
             "activo"      => 1
         ));
-
+        $student->created_at = Carbon::now();
+        $student->created_by = Auth::user()->id;
         $student->save();
 
     } else {
@@ -108,8 +109,12 @@ class InscriptionController extends Controller
             "cod_modalidad"       => $request->get("cod_modalidad"),
             "cod_esp_tipo"        => $request->get("cod_esp_tipo"),
             "cod_esp"             => $request->get("cod_esp"),
-            "activo"              => ($request->get("activo") == '' || $request->get("activo") == 0)? 0 : $request->get("activo")
+            "activo"              => ($request->get("activo") == '' || $request->get("activo") == 0)? 0 : $request->get("activo"),
         ));
+
+        $enrollment->created_at = Carbon::now();
+        $enrollment->created_by = Auth::user()->id;
+
         $student->enrollments()->save($enrollment);
 
         return redirect()->route('dashboard.inscription.edit', $student->id)
@@ -120,7 +125,7 @@ class InscriptionController extends Controller
         return redirect()->route('dashboard.inscription.index')
             ->with('message', 'La persona ya se encuentra inscrita')
             ->with('class', 'alert-error');
-        
+
     }
 
 

@@ -33,7 +33,18 @@ class Persona extends Model
       'updated_by'
     ];
 
-    protected $visible = ['nombre', 'ape_pat', 'ape_mat', 'num_doc', 'correo', 'num_phone', 'num_cellphone', 'id'];
+    protected $visible = [
+        'id',
+        'nombre',
+        'ape_pat',
+        'ape_mat',
+        'cod_doc_tip',
+        'num_doc',
+        'correo',
+        'num_phone',
+        'num_cellphone',
+        'persona_document_type'
+    ];
 
     // Una persona puede tener de uno a muchos cargos
     /*public function cargos()
@@ -65,9 +76,13 @@ class Persona extends Model
         return $this->hasOne('App\Models\Student', 'cod_persona', 'id');
     }
 
+    public function persona_document_type(){
+        return $this->belongsTo('App\Models\DocumentType', 'cod_doc_tip', 'id');
+    }
+
 
     // Una persona puede ser un auxiliar
-  /*  public function auxiliar()
+    /*  public function auxiliar()
     {
         return $this->hasOne('App\Models\Auxiliar', 'cod_persona', 'id');
     }*/

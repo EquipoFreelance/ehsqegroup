@@ -32,7 +32,7 @@
             <div class="row">
               <div class="col-md-6 col-sm-6 col-xs-12">
                 <label for="id_academic_period">Periódo Académico</label>
-                <select name="id_academic_period" id="id_academic_period" class="form-control"></select>
+                <select name="id_academic_period" id="id_academic_period" class="form-control" data-id-default="{{ old('id_academic_period') }}"></select>
                 @if ($errors->has('id_academic_period'))
                 <label for="id_academic_period" generated="true" class="error">{{ $errors->first('id_academic_period') }}</label>
                 @endif
@@ -40,7 +40,7 @@
 
               <div class="col-md-6 col-sm-6 col-xs-12">
                 <label for="cod_modalidad">Modalidad</label>
-                <select name="cod_modalidad" id="cod_modalidad" class="form-control">
+                <select name="cod_modalidad" id="cod_modalidad" class="form-control" data-id-default="{{ old('cod_modalidad') }}">
                   <option value=""></option>
                 </select>
                 @if ($errors->has('cod_modalidad'))
@@ -55,7 +55,7 @@
             <div class="row">
               <div class="col-md-6 col-sm-6 col-xs-12">
                 <label for="cod_esp_tipo">Tipo de Especialización</label>
-                <select name="cod_esp_tipo" id="cod_esp_tipo" class="form-control">
+                <select name="cod_esp_tipo" id="cod_esp_tipo" class="form-control" data-id-default="{{ old('cod_esp_tipo') }}">
                   <option value=""></option>
                 </select>
                 @if ($errors->has('cod_esp_tipo'))
@@ -64,7 +64,7 @@
               </div>
               <div class="col-md-6 col-sm-6 col-xs-12">
                 <label for="cod_esp">Especialización</label>
-                <select name="cod_esp" id="cod_esp" class="form-control">
+                <select name="cod_esp" id="cod_esp" class="form-control" data-id-default="{{ old('cod_esp') }}">
                   <option value="">-- Seleccione la especialización --</option>
                 </select>
                 @if ($errors->has('cod_esp'))
@@ -114,7 +114,7 @@
             <div class="row">
               <div class="col-md-6 col-sm-6 col-xs-12">
                 <label  for="cod_doc_tip">Tipo de Documento</label>
-                {{ Form::select('cod_doc_tip', array('' => '-- Seleccione el tipo de documento --','1' => 'DNI', '2' => 'Carnet de Extranjeria'), old('cod_doc_tip'), ['class' => 'form-control'] ) }}
+                <select class="form-control" name="cod_doc_tip" id="cod_doc_tip" data-id-default="{{ old('cod_doc_tip') }}"><option value="">-- Seleccione el Tipo de Documento --</option></select>
                 @if ($errors->has('cod_doc_tip'))
                 <label for="cod_doc_tip" generated="true" class="error">{{ $errors->first('cod_doc_tip') }}</label>
                 @endif
@@ -145,14 +145,14 @@
             <div class="row">
               <div class="col-md-6 col-sm-6 col-xs-12">
                 <label for="cod_pais">País</label>
-                <select class="form-control" name="cod_pais" id="cod_pais"><option value="">-- Seleccione el País --</option></select>
+                <select class="form-control" name="cod_pais" id="cod_pais" data-id-default="{{ old('cod_pais') }}"><option value="">-- Seleccione el País --</option></select>
                 @if ($errors->has('cod_pais'))
                 <label for="cod_pais" generated="true" class="error">{{ $errors->first('cod_pais') }}</label>
                 @endif
               </div>
               <div class="col-md-6 col-sm-6 col-xs-12">
                 <label for="cod_dpto">Departamento</label>
-                <select class="form-control" name="cod_dpto" id="cod_dpto"><option value="">-- Seleccione el Departamento --</option></select>
+                <select class="form-control" name="cod_dpto" id="cod_dpto" data-id-default="{{ old('cod_dpto') }}"><option value="">-- Seleccione el Departamento --</option></select>
                 @if ($errors->has('cod_dpto'))
                 <label for="cod_dpto" generated="true" class="error">{{ $errors->first('cod_dpto') }}</label>
                 @endif
@@ -164,14 +164,14 @@
             <div class="row">
               <div class="col-md-6 col-sm-6 col-xs-12">
                 <label for="cod_prov">Provincia</label>
-                <select class="form-control" name="cod_prov" id="cod_prov"><option value="">-- Seleccione la provincia --</option></select>
+                <select class="form-control" name="cod_prov" id="cod_prov" data-id-default="{{ old('cod_prov') }}"><option value="">-- Seleccione la provincia --</option></select>
                 @if ($errors->has('cod_prov'))
                 <label for="cod_prov" generated="true" class="error">{{ $errors->first('cod_prov') }}</label>
                 @endif
               </div>
               <div class="col-md-6 col-sm-6 col-xs-12">
                 <label for="cod_dist">Distrito</label>
-                <select class="form-control" name="cod_dist" id="cod_dist"><option value="">-- Seleccione el distrito --</option></select>
+                <select class="form-control" name="cod_dist" id="cod_dist" data-id-default="{{ old('cod_dist') }}"><option value="">-- Seleccione el distrito --</option></select>
                 @if ($errors->has('direccion'))
                 <label for="cod_dist" generated="true" class="error">{{ $errors->first('cod_dist') }}</label>
                 @endif
@@ -242,4 +242,5 @@
 @section('custom_js')
   <script src="{{ URL::asset('assets/js/app.js') }}"></script>
   <script src="{{ URL::asset('assets/js/app-academic-period.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/app-document-type.js') }}"></script>
 @stop

@@ -15,7 +15,7 @@
         <tr>
           <td>@{{ student.id }}</td>
           <td>@{{ created_at }}</td>
-          <td>@{{ student.persona.cod_doc_tip }}</td>
+          <td>@{{ student.persona.persona_document_type.document_type_name }}</td>
           <td>@{{ student.persona.num_doc }}</td>
           <td>@{{ student.persona.nombre }}</td>
           <td>@{{ student.persona.ape_pat }} @{{ student.persona.ape_mat }}</td>
