@@ -6,18 +6,18 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 use App\Models\Horario;
-use App\Models\HorarioDia;
 use App\Models\Grupo;
 use App\Models\Auxiliar;
 use App\Models\Taller;
-use AppHelper;
-use Validator;
-use Auth;
+use App\Models\GroupTeacher;
+
 use App\Http\Requests;
 use App\Http\Requests\StoreHoraryRequest;
 use App\Http\Requests\StoreHoraryProfesorRequest;
 use Carbon\Carbon;
-
+use AppHelper;
+use Validator;
+use Auth;
 
 class HorarioController extends Controller
 {
@@ -71,18 +71,21 @@ class HorarioController extends Controller
         // Add New Horario
         $horario = new Horario;
         $horario->id_academic_period = $request->get("id_academic_period");
-        $horario->cod_grupo   = $request->get("cod_grupo");
-        $horario->cod_mod     = $request->get("cod_mod");
-        $horario->cod_docente = $request->get("cod_docente");
-        $horario->fec_inicio  = $request->get("fec_inicio");
-        $horario->fec_fin     = $request->get("fec_fin");
-        $horario->h_inicio    = $request->get("h_inicio");
-        $horario->h_fin       = $request->get("h_fin");
-        $horario->num_horas   = $request->get("num_horas");
-        $horario->num_taller  = $request->get("num_taller");
-        $horario->cod_sede    = $group->cod_sede;
-        $horario->activo      = $request->get("activo");
-        $horario->created_by  = Auth::user()->id;
+        $horario->cod_grupo     = $request->get("cod_grupo");
+        $horario->cod_modalidad = $group->cod_modalidad;
+        $horario->cod_esp_tipo  = $group->cod_esp_tipo;
+        $horario->cod_esp       = $group->cod_esp;
+        $horario->cod_mod       = $request->get("cod_mod");
+        $horario->cod_docente   = $request->get("cod_docente");
+        $horario->fec_inicio    = $request->get("fec_inicio");
+        $horario->fec_fin       = $request->get("fec_fin");
+        $horario->h_inicio      = $request->get("h_inicio");
+        $horario->h_fin         = $request->get("h_fin");
+        $horario->num_horas     = $request->get("num_horas");
+        $horario->num_taller    = $request->get("num_taller");
+        $horario->cod_sede      = $group->cod_sede;
+        $horario->activo        = $request->get("activo");
+        $horario->created_by    = Auth::user()->id;
 
         // Días seleccionados en la tabla
         foreach ($request->get("cod_dia") as $week_day) {
@@ -115,9 +118,11 @@ class HorarioController extends Controller
 
         if($horario->save()){
 
+            $this->storeGroupTeacher($horario->cod_grupo, $horario->cod_docente);
+
             // Add Auxiliar
-            $auxiliar_id = $request->get("cod_auxiliar");
-            Auxiliar::find($auxiliar_id)->addHorarios()->save($horario);
+            /*$auxiliar_id = $request->get("cod_auxiliar");
+            Auxiliar::find($auxiliar_id)->addHorarios()->save($horario);*/
 
             // Enviando mensaje
             return redirect()->route('dashboard.academic_schedule.index')
@@ -128,14 +133,13 @@ class HorarioController extends Controller
 
     }
 
-
     /**
     * Mostrar el formulario para editar con su respectivo grupo
     * @param  $id -> ID del Grupo
     * @return \Illuminate\Http\Response
     */
     public function edit($id)
-   {
+    {
 
         // Get Horario
         $horario = Horario::find($id);
@@ -165,8 +169,7 @@ class HorarioController extends Controller
 
         return view('horario.edit', $data );
 
-   }
-
+    }
 
     /**
      * @param $id
@@ -185,7 +188,7 @@ class HorarioController extends Controller
 
 
     public function update(StoreHoraryRequest $request, $id)
-   {
+    {
 
         // Buscando atributos del grupo
         $group = Grupo::find($request->get("cod_grupo"));
@@ -193,26 +196,29 @@ class HorarioController extends Controller
         // Update Horario
         $horario = Horario::find($id);
         $horario->id_academic_period = $request->get("id_academic_period");
-        $horario->cod_grupo   = $request->get("cod_grupo");
-        $horario->cod_mod     = $request->get("cod_mod");
-        $horario->cod_docente = $request->get("cod_docente");
-        $horario->fec_inicio  = $request->get("fec_inicio");
-        $horario->fec_fin     = $request->get("fec_fin");
-        $horario->h_inicio    = $request->get("h_inicio");
-        $horario->h_fin       = $request->get("h_fin");
-        $horario->num_horas   = $request->get("num_horas");
-        $horario->num_taller  = $request->get("num_taller");
-        $horario->cod_sede    = $group->cod_sede;
-        $horario->updated_at  = Carbon::now();
-        $horario->activo      = $request->get("activo");
-        $horario->updated_by  = Auth::user()->id;
-        $horario->monday      = 0;
-        $horario->sunday      = 0;
-        $horario->tuesday     = 0;
-        $horario->wednesday   = 0;
-        $horario->thursday    = 0;
-        $horario->friday      = 0;
-        $horario->saturday    = 0;
+        $horario->cod_modalidad = $group->cod_modalidad;
+        $horario->cod_esp_tipo  = $group->cod_esp_tipo;
+        $horario->cod_esp       = $group->cod_esp;
+        $horario->cod_grupo     = $request->get("cod_grupo");
+        $horario->cod_mod       = $request->get("cod_mod");
+        $horario->cod_docente   = $request->get("cod_docente");
+        $horario->fec_inicio    = $request->get("fec_inicio");
+        $horario->fec_fin       = $request->get("fec_fin");
+        $horario->h_inicio      =  $request->get("h_inicio");
+        $horario->h_fin         = $request->get("h_fin");
+        $horario->num_horas     = $request->get("num_horas");
+        $horario->num_taller    = $request->get("num_taller");
+        $horario->cod_sede      = $group->cod_sede;
+        $horario->updated_at    = Carbon::now();
+        $horario->activo        = $request->get("activo");
+        $horario->updated_by    = Auth::user()->id;
+        $horario->monday        = 0;
+        $horario->sunday        = 0;
+        $horario->tuesday       = 0;
+        $horario->wednesday     = 0;
+        $horario->thursday      = 0;
+        $horario->friday        = 0;
+        $horario->saturday      = 0;
 
         // Días seleccionados en la tabla
         foreach ($request->get("cod_dia") as $week_day) {
@@ -259,7 +265,7 @@ class HorarioController extends Controller
         }
 
 
-   }
+    }
 
     /**
      * @param StoreHoraryProfesorRequest $request
@@ -278,42 +284,11 @@ class HorarioController extends Controller
 
     }
 
-   /**
-    * Intervalo de días
-    * -----------------
-    * Seleccionando los días de la semana dentro de un rango de fechas(Inicio y fin)
-    * se registra los días de la semana que se va a dictar las clases
-    **/
-   public function HorarioIntervaloDias($fec_inicio, $fec_fin, $week_days, $horario_id, $activo)
-   {
-     $horario_dias = array();
 
-     // Formato necesario para obtener el rango de fechas
-     $fec_inicio      = AppHelper::replaceFormat("/", $fec_inicio);
-     $fec_fin         = AppHelper::replaceFormat("/", $fec_fin);
-
-     // Retornar un JSOn con los días obtenidos
-     $intervalos_dias = json_decode(AppHelper::rangeInterval($fec_inicio, $fec_fin, $week_days), true);
-
-     // Asignado los objectos para ser registrados
-     $horario_dias    = array();
-
-     foreach ($intervalos_dias as $key => $value) {
-        $horario_dia =  new HorarioDia([
-          'cod_horario' => $horario_id,
-          'cod_dia'     => $value['cod_dia'],
-          'fecha'       => $value['fecha'],
-          'activo'      => $activo
-        ]);
-        $horario_dias[] = $horario_dia;
-     }
-
-     return $horario_dias;
-
-   }
-
-   // Array Días de la semana
-   public function dias_semana(){
+    /**
+     * @return array
+     */
+    public function dias_semana(){
 
      // Días de la semana
      $semana[] = array("cod_dia" => 1, "dia" => "Lunes");
@@ -326,5 +301,40 @@ class HorarioController extends Controller
 
      return $semana;
    }
+
+    /**
+     * Registra al Grupo con el Docente
+     * @param $id_group
+     * @param $id_teacher
+     */
+    public function storeGroupTeacher($id_group, $id_teacher){
+
+        $find_group_teacher = GroupTeacher::where("id_group", $id_group)->where("id_teacher", $id_teacher);
+
+        if($find_group_teacher->count() == 0){
+
+            GroupTeacher::create(
+                [
+                    "id_group"   => $id_group,
+                    "id_teacher" => $id_teacher
+                ]
+            );
+
+        }
+
+    }
+
+    /**
+     * Eliminar el registro del grupo y el docente
+     * @param $id_group
+     * @param $id_teacher
+     */
+    public function deleteGroupTeacher($id_group, $id_teacher)
+    {
+        $find_group_teacher = GroupTeacher::where("id_group", $id_group)->where("id_teacher", $id_teacher)->first();
+        $find = GroupTeacher::findOrFail($find_group_teacher->id);
+        $find->delete();
+
+    }
 
 }
