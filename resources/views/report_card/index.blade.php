@@ -35,13 +35,13 @@
                      <div class="row">
                         <div class="col-md-6 col-sm-6 col-xs-12">
                            <label for="profesor_codigo_ca">Grupos</label>
-                           <select class="select2 form-control" id="modulo_especializacion" name="modulo_especializacion" data-placeholder="Seleccione la Especialización" onpaste="return false;">
+                           <select class="select2 form-control" id="group" name="group" data-placeholder="Seleccione la Especialización" onpaste="return false;">
                               <option>-- Seleccione el grupo asignado --</option>
                            </select>
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                            <label for="profesor_codigo_ca">Módulos Disponibles</label>
-                           <select class="select2 form-control" id="nombre_modulo" name="nombre_modulo" data-placeholder="Seleccione el Módulo" onpaste="return false;">
+                           <select class="select2 form-control" id="cod_mod" name="cod_mod" data-placeholder="Seleccione el Módulo" onpaste="return false;">
                               <option>-- Seleccione el Módulo --</option>
                            </select>
                         </div>
@@ -192,5 +192,22 @@
 @stop
 
 @section('custom_js')
+   <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+   <script src="{{ URL::asset('assets/js/app-report-card.js') }}"></script>
+   <script>
+      $(function(){
 
+         var teacher_id = {{ Auth::user()->cod_persona  }};
+
+         listAssignedStudents({{ $cod_grupo }});
+
+         wsSelectGroupTeacher('/api/report-card/group-teacher/'+ teacher_id, '#group', '-- Seleccione el grupo asignado --');
+
+         // Event Change
+         $("#group").change(function(){
+            wsSelectGroupModules('/api/report-card/group-horary-modules/' + $(this).val() + '/' + teacher_id, "#cod_mod", " -- Seleccione el Módulo -- ");
+         });
+
+      });
+   </script>
 @stop

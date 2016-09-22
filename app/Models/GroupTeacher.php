@@ -13,4 +13,15 @@ class GroupTeacher extends Model
         'id_teacher'
     ];
 
+    protected $visible = [
+        'id_group',
+        'id_teacher',
+        'group'
+    ];
+
+    public function group()
+    {
+        return $this->belongsTo('App\Models\Grupo', 'id_group', 'id');
+    }
+
 }

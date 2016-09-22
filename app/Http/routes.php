@@ -140,9 +140,6 @@ Route::group(['middleware' => ['auth','role.docente']], function(){
     ]);
 
 
-
-
-
 });
 
 // Sistema Alumnos
@@ -240,18 +237,18 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
 
     // Lista de Alumnos dentro del grupo
     Route::get('/hsqegroup/api/groups/{cod_grupo}/students', [
-        'as' => 'json.groups.students.assigned', 'uses' => 'WebServiceController@getWsGroupsAssignedStudents'
+        'as' => 'json.groups.students.assigned', 'uses' => 'WebService\WSGroupController@getWsGroupsAssignedStudents'
     ]);
 
     // Búsqueda de Alumnos quienes tienen la matricula asociada con los parametros del grupo
     Route::get('/hsqegroup/api/groups/students/search/{cod_grupo}/{q}',[
-        'as' => 'api.groups.students.search', 'uses' => 'WebServiceController@wsStudentGroupLike'
+        'as' => 'api.groups.students.search', 'uses' => 'WebService\WSGroupController@wsStudentGroupLike'
     ]);
 
+    // Asignamiento de Matriculas
     Route::post('/hsqegroup/api/groups/students/assign',[
-        'as' => 'api.groups.students.assign', 'uses' => 'WebService\WSStudentController@postWsStoreAssignGroup'
+        'as' => 'api.groups.students.assign', 'uses' => 'WebService\WSGroupController@postWsStoreAssignGroup'
     ]);
-
 
     // Get List Horarios Academicos
     Route::get('/hsqegroup/api/academic-horary/{cod_grupo}', [
@@ -292,3 +289,14 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
     Route::get('/api/document_type', [
         'as' => 'json.teacher.all', 'uses' => 'WebService\WSDocumentTypeController@getIndex'
     ]);
+
+    // Get List Group Teacher
+    Route::get('/api/report-card/group-teacher/{id_person}', [
+        'as' => 'json.group-teacher.all', 'uses' => 'WebService\WSGroupController@GrouTeacher'
+    ]);
+
+    // Get List Group Teacher
+    Route::get('/api/report-card/group-horary-modules/{id_group}/{id_person}', [
+        'as' => 'json.group-teacher.all', 'uses' => 'WebService\WSGroupController@GroupHoraryModulo'
+    ]);
+

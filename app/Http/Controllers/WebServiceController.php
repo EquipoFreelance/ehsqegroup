@@ -322,57 +322,7 @@ class WebServiceController extends Controller
         
     }
 
-    /**
-     * Búsqueda de Alumnos por su nombre, dentro de un grupo determinado
-     * @param $cod_grupo, Código del Grupo
-     * @param $q, Palabra de búsqueda
-     * @return json $response Resultado en Formato JSON
-     * */
-    public function wsStudentGroupLike($cod_grupo, $q)
-    {
 
-        // Para considerar coincidencias tomamos el periodo academico, la modalidad, tipo de especialización y la especialización
-
-        $g = Grupo::find($cod_grupo);
-
-        // Buscando alumnos que se hayan matriculado
-        $rs = Enrollment::where('id_academic_period', $g->id_academic_period)
-            ->where('cod_modalidad', $g->cod_modalidad)
-            ->where('cod_esp_tipo', $g->cod_esp_tipo)
-            ->where('cod_esp',  $g->cod_esp)
-            ->where('activo', 1);
-
-        $rs->with('student.persona');
-
-        if($q != '-'){
-
-            $rs->whereHas('student.persona', function ($query) use($q) {
-                $query
-                    ->orWhere('nombre', 'LIKE', '%'. $q .'%')
-                    ->orWhere('ape_pat', 'LIKE', '%'. $q .'%')
-                    ->orWhere('ape_mat', 'LIKE', '%'. $q .'%');
-            });
-
-        }
-
-        $enrollments = $rs->get();
-
-        // Realizando una busqueda de cada matriculado para saber si ya fue asignado al grupo correspondiente
-        foreach ($enrollments as $item) {
-
-            $item->is_asignemnt = 0;
-
-            if( GroupStudent::where("cod_alumno", $item->cod_alumno)->count() > 0){
-                $item->is_asignemnt = 1;
-            }
-
-
-        }
-
-        $response = response()->json(["response" => $enrollments], 200);
-
-        return $response;
-    }
 
     /**
      * List Periodo Academico
@@ -405,39 +355,13 @@ class WebServiceController extends Controller
 
     }
 
-    /**
-     * Lista de Alumnos asignados a un determinado grupo
-     * @param string $cod_grupo Id del grupo
-     * @return string $response Resultado en Formato JSON
-     **/
-    public function getWsGroupsAssignedStudents($cod_grupo){
 
-        $response = ''; $fills = array();
-
-        $rs = Grupo::where('id', $cod_grupo)->with('students');
-
-        if($rs->count() > 0){
-
-            $g = $rs->first();
-
-            foreach ($g->students as $item) {
-                $student = Student::find($item->cod_alumno);
-                $fills[] = array("name" => $student->persona->nombre.", ".$student->persona->ape_pat." ".$student->persona->ape_mat, "id" => $item->cod_alumno);
-            }
-
-        }
-
-        $response = response()->json(["response" => $fills], 200);
-
-        return $response;
-
-    }
 
     /**
      * Asignar Estudiantes a Grupos
      * @param $request Request
      **/
-    public function postWsStoreAssignGroup(Request $request){
+    /*public function postWsStoreAssignGroup(Request $request){
 
         // Al quitar el check debería actualizar la lista
 
@@ -504,7 +428,7 @@ class WebServiceController extends Controller
 
         }
 
-    }
+    }*/
 
     /**
      * Lista de Horarios Academicos por el ID del grupo
