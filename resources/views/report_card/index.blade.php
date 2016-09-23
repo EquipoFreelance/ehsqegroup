@@ -199,8 +199,6 @@
 
          var teacher_id = {{ Auth::user()->cod_persona  }};
 
-         listAssignedStudents({{ $cod_grupo }});
-
          wsSelectGroupTeacher('/api/report-card/group-teacher/'+ teacher_id, '#group', '-- Seleccione el grupo asignado --');
 
          // Event Change

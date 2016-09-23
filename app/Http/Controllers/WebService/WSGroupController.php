@@ -6,10 +6,9 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Docente;
 use App\Models\GroupTeacher;
-use App\Models\GroupStudent;
+use App\Models\GroupEnrollment;
 use App\Models\Enrollment;
 use App\Models\Grupo;
-use App\Models\Student;
 use App\Models\Horario;
 use Illuminate\Http\Request;
 
@@ -48,7 +47,7 @@ class WSGroupController extends Controller
     public function GroupHoraryModulo($id_group, $id_person)
     {
         $find_teacher = Docente::where("cod_persona", $id_person)->first();
-        
+
         $rs = Horario::where("cod_grupo", $id_group)->where("cod_docente", $find_teacher->id)->with('modulo');
 
         if($rs->count() > 0){
@@ -63,8 +62,8 @@ class WSGroupController extends Controller
     // Listado de Alumnos vs la matricula y sus notas
 
     // La incognita es si en vez de cod de alumno va el cod de la matricula
-    public function GroupStudent(){
-        
+    public function GroupEnrollment(){
+
     }
 
     /**
@@ -76,21 +75,21 @@ class WSGroupController extends Controller
 
         $response = ''; $fills = array();
 
-        $rs = Grupo::where('id', $cod_grupo)->with('students');
+        $group = Grupo::find($cod_grupo);//->with('group_enrollment');
 
-        if($rs->count() > 0){
+        if($group){
 
-            $g = $rs->first();
+            foreach ($group->group_enrollment as $item) {
 
-            foreach ($g->students as $item) {
-                $student = Student::find($item->cod_alumno);
-                $fills[] = array("name" => $student->persona->nombre.", ".$student->persona->ape_pat." ".$student->persona->ape_mat, "id" => $item->cod_alumno);
+                $enrollment = Enrollment::find($item->id_enrollment);
+
+                $fills[] = array("name" => $enrollment->student->persona->nombre.", ".$enrollment->student->persona->ape_pat." ".$enrollment->student->persona->ape_mat, "id" => $item->id_enrollment);
+
             }
 
         }
 
         $response = response()->json(["response" => $fills], 200);
-
         return $response;
 
     }
@@ -135,7 +134,7 @@ class WSGroupController extends Controller
 
             $item->is_asignemnt = 0;
 
-            if( GroupStudent::where("cod_alumno", $item->cod_alumno)->count() > 0){
+            if( GroupEnrollment::where("id_enrollment", $item->id)->count() > 0){
                 $item->is_asignemnt = 1;
             }
 
@@ -169,8 +168,8 @@ class WSGroupController extends Controller
 
                 if( $ar_cod_alumno[1] == 'true' ) {
 
-                    $rs = GroupStudent::select("cod_alumno", "id")->where("cod_grupo", $cod_grupo);
-                    $rs->where('cod_alumno', $ar_cod_alumno[0]);
+                    $rs = GroupEnrollment::select("id_enrollment", "id")->where("cod_grupo", $cod_grupo);
+                    $rs->where('id_enrollment', $ar_cod_alumno[0]);
 
                     if( $rs->count() == 0){
                         $add_registers[] = $ar_cod_alumno[0];
@@ -185,12 +184,12 @@ class WSGroupController extends Controller
 
             if( count($add_registers) > 0){
 
-                foreach ($add_registers as $cod_alumno) {
-                    $student = new GroupStudent();
-                    $student->cod_grupo  = $cod_grupo;
-                    $student->cod_alumno = $cod_alumno;
-                    $student->created_by = Auth::user()->id;
-                    $student->created_at = Carbon::now();
+                foreach ($add_registers as $id_enrollment) {
+                    $student = new GroupEnrollment();
+                    $student->cod_grupo     = $cod_grupo;
+                    $student->id_enrollment = $id_enrollment;
+                    $student->created_by    = Auth::user()->id;
+                    $student->created_at    = Carbon::now();
                     $student->save();
                 }
                 $add_registers = [];
@@ -198,8 +197,8 @@ class WSGroupController extends Controller
 
             if( count($remove_registers) > 0){
 
-                $rs = GroupStudent::select("cod_alumno", "id")->where("cod_grupo", $cod_grupo);
-                $rs->whereIn('cod_alumno', $remove_registers);
+                $rs = GroupEnrollment::select("id_enrollment", "id")->where("cod_grupo", $cod_grupo);
+                $rs->whereIn('id_enrollment', $remove_registers);
                 ($rs->count() > 0)? $rs->delete() : false;
 
             }

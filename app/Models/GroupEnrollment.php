@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GroupStudent extends Model
+class GroupEnrollment extends Model
 {
-    protected $table = 'grupo_alumno';
+    protected $table = 'grupo_enrollment';
 
     protected $fillable = [
         'cod_grupo',
-        'cod_alumno',
+        'id_enrollment',
         'created_by',
         'created_at'
     ];

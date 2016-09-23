@@ -59,10 +59,10 @@ class Grupo extends Model
         return $this->belongsTo('App\Models\Especializacion', 'cod_esp');
     }
 
-    /* Grupo - Alumnos */
-    public function students(){
+    /* Grupo - Matriculas */
+    public function group_enrollment(){
 
-        return $this->hasMany('App\Models\GroupStudent', 'cod_grupo', 'id');
+        return $this->hasMany('App\Models\GroupEnrollment', 'cod_grupo', 'id');
 
     }
 }

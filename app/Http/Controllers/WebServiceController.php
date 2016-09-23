@@ -30,8 +30,6 @@ use App\Models\AcademicPeriod;
 
 use App\Models\Grupo;
 
-use App\Models\GroupStudent;
-
 use App\Models\Horario;
 
 use App\Models\Docente;

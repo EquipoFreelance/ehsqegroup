@@ -28,7 +28,7 @@
                             <thead>
                             <tr>
                                 <th></th>
-                                <th>Código de Alumno</th>
+                                <th>Código de Matrícula</th>
                                 <th>Nombres y Apellidos</th>
                             </tr>
                             </thead>
@@ -60,8 +60,8 @@
         <script id="response-template-1" type="text/x-handlebars-template">
             @{{#each response}}
             <tr>
-                <td><input type="checkbox" name="student[]" id="student" class="student" data-id="@{{ cod_alumno }}" value="@{{ cod_alumno }}-@{{#if is_asignemnt}}true@{{else}}false@{{/if}}" @{{#if is_asignemnt}} checked @{{/if}}></td>
-                <td>@{{ cod_alumno }}</td>
+                <td><input type="checkbox" name="student[]" id="student" class="student" data-id="@{{ id }}" value="@{{ id }}-@{{#if is_asignemnt}}true@{{else}}false@{{/if}}" @{{#if is_asignemnt}} checked @{{/if}}></td>
+                <td>@{{ id }} - @{{ cod_alumno }}</td>
                 <td>@{{ student.persona.ape_pat }} @{{ student.persona.ape_mat }}, @{{ student.persona.nombre }}</td>
             </tr>
             @{{/each}}
@@ -91,7 +91,7 @@
                         <table id="datatable-responsive" class="table table-stripedx table-borderedx dt-responsive nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
-                                <th>Código de Alumno</th>
+                                <th>Código de Matricula</th>
                                 <th>Nombres y Apellidos</th>
                             </tr>
                             </thead>
