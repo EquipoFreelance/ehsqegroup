@@ -295,8 +295,12 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
         'as' => 'json.group-teacher.all', 'uses' => 'WebService\WSGroupController@GrouTeacher'
     ]);
 
-    // Get List Group Teacher
+    // Get List Group Horary
     Route::get('/api/report-card/group-horary-modules/{id_group}/{id_person}', [
         'as' => 'json.group-teacher.all', 'uses' => 'WebService\WSGroupController@GroupHoraryModulo'
     ]);
 
+    // Get Group Enrollments
+    Route::get('/api/report-card/group-enrollment/{id_group}/{id_module}', [
+        'as' => 'json.group-teacher.all', 'uses' => 'WebService\WSReportCardController@ReportCardEnrollment'
+    ]);

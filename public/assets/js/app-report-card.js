@@ -58,3 +58,61 @@ function wsSelectGroupModules(route, element, placeholder)
 
     return false;
 }
+
+function listReportCard(id_group, id_module) {
+
+    if(id_group != '' && id_module != ''){
+
+        $.ajax({
+            url:'http://api.hsqegroup.app/api/report-card/group-enrollment/'+id_group+'/'+id_module,
+            type:'get',
+            datatype: 'json',
+            data:{},
+            beforeSend: function(){
+                $(".report_card_header").empty().append(custom_handlerbars('<tr><td><center>{{ message }}</center></td></tr>', {message: "Loading..."}));
+                $(".report_card_body").empty().append(custom_handlerbars('<tr><td><center>{{ message }}</center></td></tr>', {message: "Loading..."}));
+            },
+            success:function(items)
+            {
+                if(items.response){
+
+                    var response = items.response;
+
+                    // Head
+                    $(".report_card_header").empty().append(custom_handlerbars($("#response-template-head").html(), response));
+
+                    // Body
+                    if(response.body){
+                        $(".report_card_body").empty().append(custom_handlerbars($("#response-template").html(), response));
+                    } else {
+                        $(".report_card_body").empty().append(custom_handlerbars('<tr><td colspan="'+response.header.length+'"><center>{{ message }}</center></td></tr>', {message: "Sin alumnos matriculados"}));
+                    }
+
+                }
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                if(  response.status == 400){
+
+                    $(".report_card_body").empty().append(custom_handlerbars('<tr><td colspan="2"><center>{{ message }}</center></td></tr>', response.responseJSON));
+
+                }
+            }
+        });
+
+    } else {
+        $(".report_card_header").empty().append(custom_handlerbars('<tr><td><center>{{ message }}</center></td></tr>', {message: "Empty"}));
+        $(".report_card_body").empty().append(custom_handlerbars('<tr><td><center>{{ message }}</center></td></tr>', {message: "Empty"}));
+    }
+
+
+    return false;
+
+}
+
+function custom_handlerbars(source, data){
+    var source   = source;
+    var template = Handlebars.compile(source);
+    var html     = template(data);
+    return html;
+}

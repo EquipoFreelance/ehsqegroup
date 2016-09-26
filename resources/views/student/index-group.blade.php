@@ -61,7 +61,7 @@
             @{{#each response}}
             <tr>
                 <td><input type="checkbox" name="student[]" id="student" class="student" data-id="@{{ id }}" value="@{{ id }}-@{{#if is_asignemnt}}true@{{else}}false@{{/if}}" @{{#if is_asignemnt}} checked @{{/if}}></td>
-                <td>@{{ id }} - @{{ cod_alumno }}</td>
+                <td>@{{ id }}</td>
                 <td>@{{ student.persona.ape_pat }} @{{ student.persona.ape_mat }}, @{{ student.persona.nombre }}</td>
             </tr>
             @{{/each}}

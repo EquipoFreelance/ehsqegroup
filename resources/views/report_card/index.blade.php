@@ -7,6 +7,30 @@
 @stop
 
 @section('content')
+
+   <!-- Custom Templates -->
+   <script id="response-template" type="text/x-handlebars-template">
+      @{{#each body}}
+      <tr>
+         <td>@{{ name  }}</td>
+         @{{#each report}}
+            @{{#with nota}}
+               <td align="center"><input type="text" name="nota_taller_1" class="form-control" value="@{{ num_nota }}" style="width: 50px; text-align: center;"></td>
+            @{{/with}}
+         @{{/each}}
+      </tr>
+      @{{/each}}
+   </script>
+
+   <script id="response-template-head" type="text/x-handlebars-template">
+      <tr>
+         <th>Alumno</th>
+         @{{#each header}}
+            <th style="text-align: center;">@{{ title  }}</th>
+         @{{/each}}
+      </tr>
+   </script>
+
   <div class="">
     <div class="page-title">
       @if(Session::has('message'))
@@ -49,129 +73,11 @@
                   </div>
                   <br>
                   <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                     <thead>
-                        <tr>
-                           <th>Alumno</th>
-                           <th style="text-align: center;">Taller 1</th>
-                           <th style="text-align: center;">Taller 2</th>
-                           <th style="text-align: center;">Taller 3</th>
-                           <!--<th style="text-align: center;">Proyecto</th>
-                           <th style="text-align: center;">Sustentación</th>
-                           <th style="text-align: center;">Promedio Módulo</th>
-                           <th style="text-align: center;">Promedio Final</th>-->
-                        </tr>
+                     <thead class="report_card_header">
+
                      </thead>
-                     <tbody>
-                        <tr>
-                           <td>José Benjamín García Erazo</td>
-                           <td align="center"><input type="text" name="nota_taller1" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller2" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller3" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <!--<td align="center"><input type="text" name="nota_proyecto" class="form-control" value="15" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_sustentacion" class="form-control" value="20" style="width: 50px; text-align: center;"></td>
-                           <td align="center">0</td>
-                           <td align="center">0</td>-->
-                        </tr>
-                        <tr>
-                           <td>Cristian Martin Aleman Molina</td>
-                           <td align="center"><input type="text" name="nota_taller1" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller2" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller3" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <!--<td align="center"><input type="text" name="nota_proyecto" class="form-control" value="15" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_sustentacion" class="form-control" value="20" style="width: 50px; text-align: center;"></td>
-                           <td align="center">0</td>
-                           <td align="center">0</td>-->
-                        </tr>
-                        <tr>
-                           <td>Carmen Rosa Chancayauri Vaca</td>
-                           <td align="center"><input type="text" name="nota_taller1" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller2" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller3" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <!--<td align="center"><input type="text" name="nota_proyecto" class="form-control" value="15" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_sustentacion" class="form-control" value="20" style="width: 50px; text-align: center;"></td>
-                           <td align="center">0</td>
-                           <td align="center">0</td>-->
-                        </tr>
-                        <tr>
-                           <td>Jennyfer Ruiz Melgarejo</td>
-                           <td align="center"><input type="text" name="nota_taller1" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller2" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller3" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <!--<td align="center"><input type="text" name="nota_proyecto" class="form-control" value="15" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_sustentacion" class="form-control" value="20" style="width: 50px; text-align: center;"></td>
-                           <td align="center">0</td>
-                           <td align="center">0</td>-->
-                        </tr>
-                        <tr>
-                           <td>Susan Raquel Godofredo Panduro</td>
-                           <td align="center"><input type="text" name="nota_taller1" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller2" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller3" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <!--<td align="center"><input type="text" name="nota_proyecto" class="form-control" value="15" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_sustentacion" class="form-control" value="20" style="width: 50px; text-align: center;"></td>
-                           <td align="center">0</td>
-                           <td align="center">0</td>-->
-                        </tr>
-                        <tr>
-                           <td>Willian Renzo Benavides Carhuapoma</td>
-                           <td align="center"><input type="text" name="nota_taller1" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller2" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller3" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <!--<td align="center"><input type="text" name="nota_proyecto" class="form-control" value="15" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_sustentacion" class="form-control" value="20" style="width: 50px; text-align: center;"></td>
-                           <td align="center">0</td>
-                           <td align="center">0</td>-->
-                        </tr>
-                        <tr>
-                           <td>Ivan Jose Yupanqui Cochachi</td>
-                           <td align="center"><input type="text" name="nota_taller1" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller2" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller3" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <!--<td align="center"><input type="text" name="nota_proyecto" class="form-control" value="15" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_sustentacion" class="form-control" value="20" style="width: 50px; text-align: center;"></td>
-                           <td align="center">0</td>
-                           <td align="center">0</td>-->
-                        </tr>
-                        <tr>
-                           <td>Gerardo Erick Enriquez Narvaez</td>
-                           <td align="center"><input type="text" name="nota_taller1" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller2" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller3" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <!--<td align="center"><input type="text" name="nota_proyecto" class="form-control" value="15" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_sustentacion" class="form-control" value="20" style="width: 50px; text-align: center;"></td>
-                           <td align="center">0</td>
-                           <td align="center">0</td>-->
-                        </tr>
-                        <tr>
-                           <td>Denisse Lourdes Chana Chana</td>
-                           <td align="center"><input type="text" name="nota_taller1" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller2" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller3" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <!--<td align="center"><input type="text" name="nota_proyecto" class="form-control" value="15" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_sustentacion" class="form-control" value="20" style="width: 50px; text-align: center;"></td>
-                           <td align="center">0</td>
-                           <td align="center">0</td>-->
-                        </tr>
-                        <tr>
-                           <td>Cristian Alan Luquillas Reyes</td>
-                           <td align="center"><input type="text" name="nota_taller1" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller2" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller3" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <!--<td align="center"><input type="text" name="nota_proyecto" class="form-control" value="15" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_sustentacion" class="form-control" value="20" style="width: 50px; text-align: center;"></td>
-                           <td align="center">0</td>
-                           <td align="center">0</td>-->
-                        </tr>
-                        <tr>
-                           <td>Amaly Ayala Acosta</td>
-                           <td align="center"><input type="text" name="nota_taller1" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller2" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_taller3" class="form-control" value="0" disabled="disabled" style="width: 50px; text-align: center;"></td>
-                           <!--<td align="center"><input type="text" name="nota_proyecto" class="form-control" value="15" style="width: 50px; text-align: center;"></td>
-                           <td align="center"><input type="text" name="nota_sustentacion" class="form-control" value="20" style="width: 50px; text-align: center;"></td>
-                           <td align="center">0</td>
-                           <td align="center">0</td>-->
-                        </tr>
+                     <tbody class="report_card_body">
+
                      </tbody>
                   </table>
                   <div class="clear"></div>
@@ -205,6 +111,11 @@
          $("#group").change(function(){
             wsSelectGroupModules('/api/report-card/group-horary-modules/' + $(this).val() + '/' + teacher_id, "#cod_mod", " -- Seleccione el Módulo -- ");
          });
+
+         $("#cod_mod").change(function(){
+            listReportCard($("#group").val(), $(this).val());
+         });
+
 
       });
    </script>

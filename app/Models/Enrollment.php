@@ -44,13 +44,12 @@ class Enrollment extends Model
 
     // Matricula - Boleta de Notas
     public function report_card(){
-        return $this->hasMany("App\Models\ReportCard", "cod_matricula", "id");
+        return $this->hasMany('App\Models\ReportCard', 'cod_matricula', 'id');
     }
 
     // Matricula - Cronograma academico
     public function academic_schedule(){
         return $this->hasMany("App\Models\ReportCard", "cod_matricula", "id");
     }
-
 
 }

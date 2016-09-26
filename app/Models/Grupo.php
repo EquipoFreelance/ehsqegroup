@@ -65,4 +65,11 @@ class Grupo extends Model
         return $this->hasMany('App\Models\GroupEnrollment', 'cod_grupo', 'id');
 
     }
+
+    /* Grupo - Horario */
+    public function group_horary(){
+
+        return $this->hasMany('App\Models\Horario', 'cod_grupo', 'id');
+
+    }
 }

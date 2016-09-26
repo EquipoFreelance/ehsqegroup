@@ -444,7 +444,7 @@ class WebServiceController extends Controller
             ->select('id', 'id_academic_period', 'fec_inicio', 'fec_fin', 'fec_fin', 'h_inicio', 'h_fin', 'cod_docente', 'cod_sede', 'cod_mod', 'num_horas', 'activo');
         $rs->where("activo", 1);
 
-        ($cod_grupo != '-')? $rs->where("cod_grupo", $cod_grupo)->orderBy('id', 'desc') : '';
+        ($cod_grupo != '-')? $rs->where("cod_grupo", $cod_grupo) : '';
 
         $rs->orderBy('id', 'desc');
 
