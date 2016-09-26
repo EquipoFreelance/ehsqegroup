@@ -15,8 +15,6 @@ class ReportCardController extends Controller
      */
     public function index()
     {
-      //$docentes = Docente::where("deleted", '=', 0)->get();
-      //$data = compact('docentes');
       return view('report_card.index');
     }
 

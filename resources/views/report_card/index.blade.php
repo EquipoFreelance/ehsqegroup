@@ -15,7 +15,12 @@
          <td>@{{ name  }}</td>
          @{{#each report}}
             @{{#with nota}}
-               <td align="center"><input type="text" name="nota_taller_1" class="form-control" value="@{{ num_nota }}" style="width: 50px; text-align: center;"></td>
+               <td align="center">
+                  <input type="text" name="num_nota[]" class="form-control" value="@{{#if num_nota}}@{{ num_nota }}@{{ else }}@{{/if}}" style="width: 70px; text-align: center;">
+                  <input type="hidden" name="id_num_nota[]" class="form-control" value="@{{ id }}" style="width: 60px; text-align: center;">
+                  <input type="hidden" name="id_matricula[]" class="form-control" value="@{{ cod_matricula }}" style="width: 70px; text-align: center;">
+                  <input type="hidden" name="id_taller[]" class="form-control" value="@{{ cod_taller }}" style="width: 70px; text-align: center;">
+               </td>
             @{{/with}}
          @{{/each}}
       </tr>
@@ -33,11 +38,11 @@
 
   <div class="">
     <div class="page-title">
-      @if(Session::has('message'))
-          <div class="alert alert-info">
-              {{ Session::get('message') }}
-          </div>
-      @endif
+
+       <div class="alert alert-info" style="display:none">
+
+       </div>
+
       <h1>Ingreso de Notas</h1>
       <p style="margin-top: 15px">En este interior usted podrá ingresar las Notas de Curso.</p>
     </div>
@@ -54,18 +59,19 @@
          </div>
          -->
             <div class="x_content">
-               <form id="asignarCursosDocenteForm" class="form-horizontal form-label-left" method="POST" action="">
+               <form id="store_report_card" name="store_report_card" class="form-horizontal form-label-left" method="POST" action="#">
+                  {!! Form::token() !!}
                   <div class="form-group">
                      <div class="row">
                         <div class="col-md-6 col-sm-6 col-xs-12">
                            <label for="profesor_codigo_ca">Grupos</label>
-                           <select class="select2 form-control" id="group" name="group" data-placeholder="Seleccione la Especialización" onpaste="return false;">
+                           <select data-id-default="{{ old('group') }}" class="select2 form-control" id="group" name="group" data-placeholder="Seleccione la Especialización" onpaste="return false;">
                               <option>-- Seleccione el grupo asignado --</option>
                            </select>
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                            <label for="profesor_codigo_ca">Módulos Disponibles</label>
-                           <select class="select2 form-control" id="cod_mod" name="cod_mod" data-placeholder="Seleccione el Módulo" onpaste="return false;">
+                           <select data-id-default="{{ old('cod_mod') }}" class="select2 form-control" id="cod_mod" name="cod_mod" data-placeholder="Seleccione el Módulo" onpaste="return false;">
                               <option>-- Seleccione el Módulo --</option>
                            </select>
                         </div>
@@ -73,19 +79,15 @@
                   </div>
                   <br>
                   <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                     <thead class="report_card_header">
-
-                     </thead>
-                     <tbody class="report_card_body">
-
-                     </tbody>
+                     <thead class="report_card_header"></thead>
+                     <tbody class="report_card_body"></tbody>
                   </table>
                   <div class="clear"></div>
                   <div class="ln_solid"></div>
                   <div class="form-group">
                      <div class="form-group btncontrol">
                         <a href="javascript:void(0)" class="btn btn-5 btn-5a icon-cancel cancel"><span>Cancelar</span></a>
-                        <button type="submit" class="btn btn-5 btn-5a icon-save save"><span>Guardar</span></button>
+                        <button type="button" class="btn btn-5 btn-5a icon-save save" id="save"><span>Guardar</span></button>
                      </div>
                   </div>
                </form>
@@ -114,6 +116,34 @@
 
          $("#cod_mod").change(function(){
             listReportCard($("#group").val(), $(this).val());
+         });
+
+         $("#save").click(function(){
+            event.preventDefault();
+
+            $.ajax({
+               url:'/api/teacher/report-card/store',
+               type:'post',
+               datatype: 'json',
+               data:$( "#store_report_card" ).serialize(),
+               beforeSend: function(){
+
+               },
+               success:function(response)
+               {
+                  console.log(response);
+               },
+               complete: function(){
+                  $(".alert-info").hide().fadeIn().html("Las notas fueron ingresadas satisfactoriamente");
+                  //$( "#store_report_card" ).submit();
+               },
+               error: function (xhr, ajaxOptions, thrownError) {
+                  if(  response.status == 400){
+
+                  }
+               }
+            });
+
          });
 
 

@@ -304,3 +304,8 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
     Route::get('/api/report-card/group-enrollment/{id_group}/{id_module}', [
         'as' => 'json.group-teacher.all', 'uses' => 'WebService\WSReportCardController@ReportCardEnrollment'
     ]);
+
+    // Get Group Enrollments
+    Route::post('/api/teacher/report-card/store', [
+        'as' => 'json.group-teacher.all', 'uses' => 'WebService\WSReportCardController@ReporteCardStore'
+    ]);

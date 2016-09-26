@@ -1,3 +1,7 @@
+
+/* -- Customs Functions --*/
+
+// Selector de Grupos - Profesores
 function wsSelectGroupTeacher(route, element, placeholder)
 {
     $.ajax({
@@ -27,6 +31,8 @@ function wsSelectGroupTeacher(route, element, placeholder)
     });
 
 }
+
+// Selector de Grupos - Modulos
 function wsSelectGroupModules(route, element, placeholder)
 {
     $.ajax({
@@ -59,12 +65,13 @@ function wsSelectGroupModules(route, element, placeholder)
     return false;
 }
 
+// Listado de Reporte de notas
 function listReportCard(id_group, id_module) {
 
     if(id_group != '' && id_module != ''){
 
         $.ajax({
-            url:'http://api.hsqegroup.app/api/report-card/group-enrollment/'+id_group+'/'+id_module,
+            url:'/api/report-card/group-enrollment/'+id_group+'/'+id_module,
             type:'get',
             datatype: 'json',
             data:{},

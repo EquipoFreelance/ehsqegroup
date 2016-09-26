@@ -7,12 +7,6 @@ $(function(){
 });
 
 
-
-/*filtro_fecha_inicio.change(function(){
-  listEnrollments($(this).val());
-});*/
-
-
 /* -- Customs Functions --*/
 
 /*
@@ -82,7 +76,7 @@ function listStudents(){
  * */
 function listAssignedStudents(cod_grupo){
 
-    var source   = '<tr><td colspan="2"><center>{{ message }}</center><td></tr>';
+    var source   = '<tr><td colspan="2"><center>{{ message }}</center></td></tr>';
     var template = Handlebars.compile(source);
     var html     = template({message: "Loading..."});
 
@@ -104,7 +98,7 @@ function listAssignedStudents(cod_grupo){
         error:function(response)
         {
             if(  response.status == 400){
-                var source   = '<tr><td colspan="2"><center>{{ message }}</center><td></tr>';
+                var source   = '<tr><td colspan="2"><center>{{ message }}</center></td></tr>';
                 var template = Handlebars.compile(source);
                 var html    = template(response.responseJSON);
                 $(".items").empty().append(html);
@@ -123,7 +117,7 @@ function listAssignedStudents(cod_grupo){
 * */
 function listStudentsSearch(group, search){
 
-    var source   = '<tr><td colspan="3"><center>{{ message }}</center><td></tr>';
+    var source   = '<tr><td colspan="3"><center>{{ message }}</center></td></tr>';
     var template = Handlebars.compile(source);
     var html     = template({message: "Loading..."});
 
@@ -139,7 +133,7 @@ function listStudentsSearch(group, search){
         {
 
             if(r.response == ''){
-                $(".modal_items").empty().append('<tr><td colspan="3"><center>Empty</center><td></tr>');
+                $(".modal_items").empty().append('<tr><td colspan="3"><center>Empty</center></td></tr>');
             } else {
 
                 source   = $("#response-template-1").html();
@@ -152,7 +146,7 @@ function listStudentsSearch(group, search){
         },
         error:function(response)
         {
-            $(".modal_items").empty().append('<tr><td colspan="3"><center>Error</center><td></tr>');
+            $(".modal_items").empty().append('<tr><td colspan="3"><center>Error</center></td></tr>');
         }
     });
 }
