@@ -22,7 +22,9 @@
                   <input type="hidden" name="id_taller[]" class="form-control" value="@{{ cod_taller }}" style="width: 70px; text-align: center;">
                </td>
             @{{/with}}
+
          @{{/each}}
+         <td style="width: 70px; text-align: center;">0</td>
       </tr>
       @{{/each}}
    </script>
@@ -33,6 +35,7 @@
          @{{#each header}}
             <th style="text-align: center;">@{{ title  }}</th>
          @{{/each}}
+         <th>Promedio</th>
       </tr>
    </script>
 

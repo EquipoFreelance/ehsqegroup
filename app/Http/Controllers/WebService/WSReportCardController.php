@@ -55,6 +55,8 @@ class WSReportCardController extends Controller
                 }
             }
 
+            $header[] = array("title" => "Examen");
+
         }
 
 
@@ -128,12 +130,57 @@ class WSReportCardController extends Controller
 
                 }
 
+                // Muestra la nota registrada anteriormente
+                $report_card = ReportCard::where("cod_matricula", $id_enrollment)
+                    ->where("cod_modulo", $id_module)
+                    ->where("cod_taller", 11) // Identificador del examen
+                    ->select('id', 'num_nota', 'cod_taller')->first();
+
+                if($report_card) {
+
+                    if(fmod($report_card->num_nota, 1) !== 0.00){
+                        // your code if its decimals has a value
+                        $nota = number_format($report_card->num_nota, 1, '.', '');
+                    } else {
+                        $nota = number_format($report_card->num_nota, 0, '.', '');
+                    }
+
+                    // Nota de Examen
+                    $rows[] = array(
+                        "nota" =>
+                            [
+                                'id'            => $report_card->id,
+                                'num_nota'      => $nota,//$report_card->num_nota,
+                                'cod_matricula' => $report_card->cod_matricula,
+                                'cod_taller'    => 11
+                            ]
+                    );
+
+                } else {
+
+                    // Nota de Examen
+                    $rows[] = array(
+                        "nota" =>
+                            [
+                                'id'            => 0,
+                                'num_nota'      => false,
+                                'cod_matricula' => $id_enrollment,
+                                'cod_taller'    => 11
+                            ]
+                    );
+
+                }
+
                 break;
             }
 
         }
 
         return $rows;
+
+    }
+
+    public function ReportCardExam(){
 
     }
 
