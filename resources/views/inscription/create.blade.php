@@ -5,7 +5,7 @@
 
   <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-      <br>
+
       <div class="x_panel">
         <div class="y_title">
            <h2><i class="fa fa-edit"></i> Ficha de Inscripción</h2>
@@ -219,6 +219,142 @@
             </div>
             @endif
           </div>
+          <div class="ln_solid"></div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <label for="business_name">Razon Social</label>
+                <input type="text" id="business_name" placeholder="Monto" name="business_name" class="form-control" value="{{ old('amount')  }}">
+                @if ($errors->has('business_name'))
+                  <label for="amount" generated="true" class="error">{{ $errors->first('amount') }}</label>
+                @endif
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <label for="billing_ruc">RUC</label>
+                <input type="text" id="billing_ruc" placeholder="RUC" name="billing_ruc" class="form-control" value="{{ old('billing_ruc')  }}">
+                @if ($errors->has('billing_ruc'))
+                  <label for="billing_ruc" generated="true" class="error">{{ $errors->first('billing_ruc') }}</label>
+                @endif
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <label for="ruc">Dirección</label>
+                <input type="text" id="billing_address" placeholder="Dirección" name="billing_address" class="form-control" value="{{ old('billing_address')  }}">
+                @if ($errors->has('billing_address'))
+                  <label for="billing_address" generated="true" class="error">{{ $errors->first('billing_address') }}</label>
+                @endif
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <label for="ruc">Teléfono</label>
+                <input type="text" id="billing_phone" placeholder="Teléfono" name="billing_phone" class="form-control" value="{{ old('billing_phone')  }}">
+                @if ($errors->has('billing_phone'))
+                  <label for="billing_phone" generated="true" class="error">{{ $errors->first('billing_phone') }}</label>
+                @endif
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <label for="ruc">Reponsable del Pago</label>
+                <input type="text" id="billing_client" placeholder="Ingrese el responsable del pago" name="billing_client" class="form-control" value="{{ old('billing_client')  }}">
+                @if ($errors->has('billing_client'))
+                  <label for="billing_client" generated="true" class="error">{{ $errors->first('billing_client') }}</label>
+                @endif
+              </div>
+            </div>
+          </div>
+
+          <div class="ln_solid"></div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <label for="way_to_pay">Forma de Pago</label>
+                <select class="form-control" name="way_to_pay" id="way_to_pay" data-id-default="{{ old('way_to_pay') }}">
+                  <option value="">-- Seleccione la Forma de Pago --</option>
+                  <option value="1">En cuotas</option>
+                  <option value="2">Pago Total</option>
+                </select>
+                @if ($errors->has('way_to_pay'))
+                  <label for="num_cellphone" generated="true" class="error">{{ $errors->first('way_to_pay') }}</label>
+                @endif
+                <p>
+                  <b>Depósito en CTA.</b>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group content_way_to_pay" style="display:none">
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <label for="number_of_shares">Número de Cuotas</label>
+                <select class="form-control" name="number_of_shares" id="number_of_shares" data-id-default="{{ old('number_of_shares') }}">
+                  <option value="">-- Seleccione el Número de Cuotas --</option>
+                  <option value="1">1 Cuota</option>
+                  <option value="2">2 Cuotas</option>
+                  <option value="3">3 Cuotas</option>
+                  <option value="4">4 Cuotas</option>
+                </select>
+                @if ($errors->has('way_to_pay'))
+                  <label for="num_cellphone" generated="true" class="error">{{ $errors->first('way_to_pay') }}</label>
+                @endif
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <label for="amount">Monto</label>
+                <input type="text" id="amount" placeholder="Monto" name="amount" class="form-control" value="{{ old('amount')  }}">
+                @if ($errors->has('amount'))
+                  <label for="amount" generated="true" class="error">{{ $errors->first('amount') }}</label>
+                @endif
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <label for="operation_number">Número de la operación</label>
+                <input type="text" id="operation_number" placeholder="Número de la operación" name="operation_number" class="form-control" value="{{ old('amount')  }}">
+                @if ($errors->has('amount'))
+                  <label for="amount" generated="true" class="error">{{ $errors->first('amount') }}</label>
+                @endif
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <label for="amount">Condiciones</label>
+                <p>
+                  Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.
+                </p>
+              </div>
+            </div>
+          </div>
 
           <div class="ln_solid"></div>
 
@@ -243,4 +379,5 @@
   <script src="{{ URL::asset('assets/js/app.js') }}"></script>
   <script src="{{ URL::asset('assets/js/app-academic-period.js') }}"></script>
   <script src="{{ URL::asset('assets/js/app-document-type.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/app-inscription.js') }}"></script>
 @stop

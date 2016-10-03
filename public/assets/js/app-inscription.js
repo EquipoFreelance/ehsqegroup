@@ -3,13 +3,35 @@ var routes = {
   inscriptions     : '/dashboard/json/inscriptions/',
 };
 
-/* -- App Matricula -- */
+/* -- App -- */
 var filtro_fecha_inicio = $("#fecha_inicio");
 
-listInscriptions('-');
+
+if($(".items").length){
+    listInscriptions('-');
+}
 
 filtro_fecha_inicio.change(function(){
   listInscriptions($(this).val());
+});
+
+/* -- Form Inscription -- */
+$("#way_to_pay").change(function(){
+
+    var c = $(this).val() * 1;
+    switch (c)
+    {
+        // En cuotas
+        case 1:
+            $(".content_way_to_pay").show();
+        break;
+
+        // Pago Total
+        case 2:
+            $(".content_way_to_pay").hide();
+            break;
+    }
+
 });
 
 
