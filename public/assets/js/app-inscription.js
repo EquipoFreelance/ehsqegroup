@@ -19,18 +19,9 @@ filtro_fecha_inicio.change(function(){
 $("#way_to_pay").change(function(){
 
     var c = $(this).val() * 1;
-    switch (c)
-    {
-        // En cuotas
-        case 1:
-            $(".content_way_to_pay").show();
-        break;
 
-        // Pago Total
-        case 2:
-            $(".content_way_to_pay").hide();
-            break;
-    }
+    $(".content_p").hide();
+    $(".content_"+c).show();
 
 });
 

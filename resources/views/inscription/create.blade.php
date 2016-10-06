@@ -210,33 +210,21 @@
             </div>
           </div>
 
-          <div class="chkContent">
-            {{ Form::checkbox('proteccion_datos', 1, false, ['class' => 'flat']) }}
-            Acepto los <a href="#" title="términos y condiciones" target="_blank">términos y condiciones</a> y brindo mi consentimiento para el tratamiento de mis datos de carácter personal proporcionados en el presente formulario de inscripción al equipo de Doktuz, para que sean analizados, procesados, almacenados y transferidos, de tal manera que puedan brindarme todos los servicios que ofrecen de manera directa o a través de terceros. Si tienes alguna duda o sugerencia puedes escribirnos a <a href="#">contacto@info.com</a> y con gusto responderemos tus dudas o sugerencias.
-            @if ($errors->has('proteccion_datos'))
-            <div class="hidden" id="chkvalid" style="display:block !important">
-              <label for="proteccion_datos" generated="true" class="error" style="display:block !important">Es necesario que los términos y condiciones.</label>
-            </div>
-            @endif
-          </div>
+
           <div class="ln_solid"></div>
 
+          <p><b>DATOS PARA LA FACTURACION</b> (Solo para empresas que requieran factura) </p>
           <div class="form-group">
             <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <label for="business_name">Razon Social</label>
-                <input type="text" id="business_name" placeholder="Monto" name="business_name" class="form-control" value="{{ old('amount')  }}">
-                @if ($errors->has('business_name'))
-                  <label for="amount" generated="true" class="error">{{ $errors->first('amount') }}</label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <label for="billing_razon_social">Razón Social</label>
+                <input type="text" id="billing_razon_social" placeholder="Ingrese la Razón Social" name="billing_razon_social" class="form-control" value="{{ old('billing_razon_social')  }}">
+                @if ($errors->has('billing_razon_social'))
+                  <label for="billing_razon_social" generated="true" class="error">{{ $errors->first('billing_razon_social') }}</label>
                 @endif
               </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <label for="billing_ruc">RUC</label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <label for="billing_ruc">N° de RUC</label>
                 <input type="text" id="billing_ruc" placeholder="RUC" name="billing_ruc" class="form-control" value="{{ old('billing_ruc')  }}">
                 @if ($errors->has('billing_ruc'))
                   <label for="billing_ruc" generated="true" class="error">{{ $errors->first('billing_ruc') }}</label>
@@ -247,33 +235,37 @@
 
           <div class="form-group">
             <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="col-md-6 col-sm-6 col-xs-6">
                 <label for="ruc">Dirección</label>
                 <input type="text" id="billing_address" placeholder="Dirección" name="billing_address" class="form-control" value="{{ old('billing_address')  }}">
                 @if ($errors->has('billing_address'))
                   <label for="billing_address" generated="true" class="error">{{ $errors->first('billing_address') }}</label>
                 @endif
               </div>
-            </div>
-          </div>
 
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="col-md-6 col-sm-6 col-xs-6">
                 <label for="ruc">Teléfono</label>
                 <input type="text" id="billing_phone" placeholder="Teléfono" name="billing_phone" class="form-control" value="{{ old('billing_phone')  }}">
                 @if ($errors->has('billing_phone'))
                   <label for="billing_phone" generated="true" class="error">{{ $errors->first('billing_phone') }}</label>
                 @endif
               </div>
+
             </div>
           </div>
 
           <div class="form-group">
             <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <label for="ruc">Reponsable del Pago</label>
-                <input type="text" id="billing_client" placeholder="Ingrese el responsable del pago" name="billing_client" class="form-control" value="{{ old('billing_client')  }}">
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <label for="ruc">Nombres</label>
+                <input type="text" id="billing_client_firstname" placeholder="Ingrese nombre del responsable del pago" name="billing_client_firstname" class="form-control" value="{{ old('billing_client_firstname')  }}">
+                @if ($errors->has('billing_client'))
+                  <label for="billing_client" generated="true" class="error">{{ $errors->first('billing_client') }}</label>
+                @endif
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <label for="ruc">Apellidos</label>
+                <input type="text" id="billing_client_lastname" placeholder="Ingrese apellido del responsable del pago" name="billing_client_lastname" class="form-control" value="{{ old('billing_client_lastname')  }}">
                 @if ($errors->has('billing_client'))
                   <label for="billing_client" generated="true" class="error">{{ $errors->first('billing_client') }}</label>
                 @endif
@@ -283,40 +275,27 @@
 
           <div class="ln_solid"></div>
 
+          <p><b>FORMA DE PAGO</b></p>
+
           <div class="form-group">
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
-                <label for="way_to_pay">Forma de Pago</label>
+                <label for="way_to_pay">Medio de Pago</label>
                 <select class="form-control" name="way_to_pay" id="way_to_pay" data-id-default="{{ old('way_to_pay') }}">
                   <option value="">-- Seleccione la Forma de Pago --</option>
-                  <option value="1">En cuotas</option>
-                  <option value="2">Pago Total</option>
+                  <option value="1">Pago Total</option>
+                  <option value="2">Pago Fraccionado</option>
+                  <option value="3">Pago Condicional</option>
+                  <option value="4">Becado por corporativo</option>
+                  <option value="5">Becado por Sorteo</option>
+                  <option value="6">Becado por Pronto Pago</option>
                 </select>
                 @if ($errors->has('way_to_pay'))
                   <label for="num_cellphone" generated="true" class="error">{{ $errors->first('way_to_pay') }}</label>
                 @endif
-                <p>
-                  <b>Depósito en CTA.</b>
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group content_way_to_pay" style="display:none">
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <label for="number_of_shares">Número de Cuotas</label>
-                <select class="form-control" name="number_of_shares" id="number_of_shares" data-id-default="{{ old('number_of_shares') }}">
-                  <option value="">-- Seleccione el Número de Cuotas --</option>
-                  <option value="1">1 Cuota</option>
-                  <option value="2">2 Cuotas</option>
-                  <option value="3">3 Cuotas</option>
-                  <option value="4">4 Cuotas</option>
-                </select>
-                @if ($errors->has('way_to_pay'))
-                  <label for="num_cellphone" generated="true" class="error">{{ $errors->first('way_to_pay') }}</label>
-                @endif
-
+                <div>
+                  <b>Depósito Cta. Cte.  Banco de  Crédito  del Perú: 192-1884961-0-08  /  CCI :  00219200188496100836</b>
+                </div>
               </div>
             </div>
           </div>
@@ -324,10 +303,122 @@
           <div class="form-group">
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
-                <label for="amount">Monto</label>
-                <input type="text" id="amount" placeholder="Monto" name="amount" class="form-control" value="{{ old('amount')  }}">
-                @if ($errors->has('amount'))
-                  <label for="amount" generated="true" class="error">{{ $errors->first('amount') }}</label>
+                <table class="tablex table-bordered" cellspacing="0" width="100%">
+                  <tr class="content_1 content_p"  style="display:none">
+                    <td align="left">Pago Total</td>
+                    <td colspan="2">
+                      <table>
+                        <tr>
+                          <td>S/.</td>
+                          <td><input type="text" class="form-control" placeholder="0.00"></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr class="content_2 content_p" style="display:none">
+                    <td align="left">Pago Fraccionado</td>
+                    <td>
+                      <table>
+                        <tr>
+                          <td>S/.</td>
+                          <td><input type="text" class="form-control" placeholder="0.00"></td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td>
+                      <table>
+                        <tr>
+                          <td>N° Cuotas </td>
+                          <td>:</td>
+                          <td><select class="form-control"><option>--Cuotas--</option></select></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr class="content_2 content_p" style="display:none">
+                    <td align="left">Matricula</td>
+                    <td colspan="2">
+                      <table>
+                        <tr>
+                          <td>S/.</td>
+                          <td><input type="text" class="form-control" placeholder="0.00"></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr class="content_2 content_p" style="display:none">
+                    <td align="left">Certificado</td>
+                    <td colspan="2">
+                      <table>
+                        <tr>
+                          <td>S/.</td>
+                          <td><input type="text" class="form-control" placeholder="0.00"></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr class="content_3 content_p" style="display:none">
+                    <td align="left">Pago Condicional</td>
+                    <td colspan="2">
+                      <table>
+                        <tr>
+                          <td>S/.</td>
+                          <td><input type="text" class="form-control" placeholder="0.00"></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr class="content_3 content_p" style="display:none">
+                    <td align="left">1ra. Cuota</td>
+                    <td>
+                      <table>
+                        <tr>
+                          <td>S/.</td>
+                          <td><input type="text" class="form-control" placeholder="0.00"></td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td>
+                      <table>
+                        <tr>
+                          <td>Fecha: </td>
+                          <td><input type="text" class="form-control" placeholder="Fecha"></td>
+                        </tr>
+                      </table>
+
+                    </td>
+                  </tr>
+                  <tr class="content_3 content_p" style="display:none">
+                    <td align="left">2da. Cuota</td>
+                    <td>
+                      <table>
+                        <tr>
+                          <td>S/.</td>
+                          <td><input type="text" class="form-control" placeholder="0.00"></td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td>
+                      <table>
+                        <tr>
+                          <td>Fecha: </td>
+                          <td><input type="text" class="form-control" placeholder="Fecha"></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <label for="operation_number">Observación</label>
+                <textarea class="form-control" name="observation"></textarea>
+                @if ($errors->has('observation'))
+                  <label for="observation" generated="true" class="error">{{ $errors->first('observation') }}</label>
                 @endif
               </div>
             </div>
@@ -348,12 +439,30 @@
           <div class="form-group">
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
-                <label for="amount">Condiciones</label>
-                <p>
-                  Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.
-                </p>
+                <label for="condiciones">CONDICIONES</label>
+
+                <ul>
+                  <li>Una vez iniciado el curso, si el participante opta por retirarse, no tendrá derecho a re‐embolso. Así mismo, no lo exime del pago del valor del total del mismo. Solo procede si la reserva es cancelada 72 horas antes del inicio del evento</li>
+                  <li>En caso de retirarse antes de comenzar el diploma se retendrá el 10% por gastos administrativos de su pago.</li>
+                  <li>En caso de tener un retraso mayor a 45 días en sus pagos se derivara a INFOCORP</li>
+                  <li>La inasistencia al evento programado no supone el reembolso del dinero abonado.</li>
+                  <li>EHSQ GROUP SAC Se reserva el derecho de cancelar o postergar el inicio del curso si no se llega al número mínimo de participantes hasta el día de inicio.</li>
+                </ul>
+
               </div>
             </div>
+          </div>
+
+          <div class="chkContent">
+            {{ Form::checkbox('proteccion_datos', 1, false, ['class' => 'flat']) }}
+
+            <b>PROTECCION DE DATOS PERSONALES</b> <br>Mi decisión de participar en los programas de EHSQ GROUP SAC  es personal, libre y voluntaria. Autorizo a EHSQ GROUP SAC  para que recolecte, almacene, use y administre mis datos personales, los cuales les han sido suministrados con la finalidad de desarrollar su gestión y prestar sus servicios, de conformidad con las políticas y normas de Tratamiento de Datos Personales  De conformidad con la Ley N°29733 - “Ley de Protección de Datos Personales”, y el Reglamento del mismo, Decreto Supremo Nº003-2013-JUS
+
+            @if ($errors->has('proteccion_datos'))
+              <div class="hidden" id="chkvalid" style="display:block !important">
+                <label for="proteccion_datos" generated="true" class="error" style="display:block !important">Es necesario que los términos y condiciones.</label>
+              </div>
+            @endif
           </div>
 
           <div class="ln_solid"></div>
