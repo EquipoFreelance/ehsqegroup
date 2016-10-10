@@ -26,10 +26,10 @@ class InscriptionController extends Controller
       return view('inscription.index');
   }
 
-  public function create()
+  public function create($created_by)
   {
 
-    $data = array();
+    $data = array("title" => "Ficha de inscripción", "created_by" => $created_by);
     return view('inscription.create', $data);
 
   }
@@ -58,12 +58,14 @@ class InscriptionController extends Controller
     // Validando DNI
     $find_person = Persona::where("num_doc", $request->get("num_doc") );
 
+    $created_by = $request->get("created_by");
+
     // Si la persona existe en la tabla persona, se realiza un update de su información
     if($find_person->get()->count() == 0){
 
         $person = new Persona($data);
         $person->created_at = Carbon::now();
-        $person->created_by = Auth::user()->id;
+        $person->created_by = $created_by;
         $person->save();
 
     } else {
@@ -71,7 +73,7 @@ class InscriptionController extends Controller
         $person = Persona::findOrFail($find_person->first()->id);
         $person->update($data);
         $person->updated_at = Carbon::now();
-        $person->updated_by = Auth::user()->id;
+        $person->updated_by = $created_by;
     }
 
     // Si la persona existe en la tabla alumno obtenemos su ID
@@ -85,7 +87,7 @@ class InscriptionController extends Controller
             "activo"      => 1
         ));
         $student->created_at = Carbon::now();
-        $student->created_by = Auth::user()->id;
+        $student->created_by = $created_by;
         $student->save();
 
     } else {
@@ -113,11 +115,11 @@ class InscriptionController extends Controller
         ));
 
         $enrollment->created_at = Carbon::now();
-        $enrollment->created_by = Auth::user()->id;
+        $enrollment->created_by = $created_by;
 
         $student->enrollments()->save($enrollment);
 
-        return redirect()->route('dashboard.inscription.edit', $student->id)
+        return redirect()->route('dashboard.inscription.thankyoupage')
             ->with('message', 'La Inscripción fue registrada satisfactoriamente');
 
     }else{
@@ -188,5 +190,10 @@ class InscriptionController extends Controller
 
   }
 
+  public function thankYouPage(){
 
+      $data = array("title" => "Gracias por Inscribirte");
+      return view('inscription.thank_you', $data);
+
+  }
 }

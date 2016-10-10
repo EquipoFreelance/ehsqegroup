@@ -1,7 +1,7 @@
 /* -- Routes -- */
-var routes = {
+/*var routes = {
   inscriptions     : '/dashboard/json/inscriptions/',
-};
+};*/
 
 /* -- App -- */
 var filtro_fecha_inicio = $("#fecha_inicio");
@@ -21,8 +21,14 @@ $("#way_to_pay").change(function(){
     var c = $(this).val() * 1;
 
     $(".content_p").hide();
-    $(".content_"+c).show();
+    $(".content_cuotas").hide();
 
+    $(".content_"+c).show();
+    $(".coutas_"+c).show();
+
+    $("#ddlViewBy option:selected").text();
+    $(".concept").html( $("option:selected", this).text() );
+    
 });
 
 
@@ -33,7 +39,7 @@ $("#way_to_pay").change(function(){
 */
 function listInscriptions(fecha_inicio){
   $.ajax({
-     url:routes.inscriptions+fecha_inicio,
+     url:'/dashboard/json/inscriptions/'+fecha_inicio,
      type:'get',
      datatype: 'json',
      data:{},

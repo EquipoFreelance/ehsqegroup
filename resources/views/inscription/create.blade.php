@@ -1,4 +1,4 @@
-@extends('dashboard.layouts.master')
+@extends('dashboard.layouts.master_public')
 
 @section('content')
 <div class="form_content_block">
@@ -13,16 +13,12 @@
         </div>
 
         <div class="x_content">
-          {!! Form::open(['route' => 'dashboard.inscription.store', 'class' => 'form-horizontal form-label-left']) !!}
+          {!! Form::open(['route' => 'inscription.store', 'class' => 'form-horizontal form-label-left']) !!}
+
+          <input type="hidden" id="created_by" name="created_by" value="{{ $created_by }}">
 
           @if(Session::has('message'))
-          <div class="alert
-          @if(Session::has('class'))
-          {{ Session::get('message') }}
-          @else
-          alert-success
-          @endif
-          alert-dismissible fade in" role="alert">
+          <div class="alert @if(Session::has('class')) {{ Session::get('message') }} @else alert-success @endif alert-dismissible fade in" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
             {{ Session::get('message') }}
           </div>
@@ -30,6 +26,7 @@
 
           <div class="form-group">
             <div class="row">
+
               <div class="col-md-6 col-sm-6 col-xs-12">
                 <label for="id_academic_period">Periódo Académico</label>
                 <select name="id_academic_period" id="id_academic_period" class="form-control" data-id-default="{{ old('id_academic_period') }}"></select>
@@ -212,246 +209,6 @@
 
 
           <div class="ln_solid"></div>
-
-          <p><b>DATOS PARA LA FACTURACION</b> (Solo para empresas que requieran factura) </p>
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <label for="billing_razon_social">Razón Social</label>
-                <input type="text" id="billing_razon_social" placeholder="Ingrese la Razón Social" name="billing_razon_social" class="form-control" value="{{ old('billing_razon_social')  }}">
-                @if ($errors->has('billing_razon_social'))
-                  <label for="billing_razon_social" generated="true" class="error">{{ $errors->first('billing_razon_social') }}</label>
-                @endif
-              </div>
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <label for="billing_ruc">N° de RUC</label>
-                <input type="text" id="billing_ruc" placeholder="RUC" name="billing_ruc" class="form-control" value="{{ old('billing_ruc')  }}">
-                @if ($errors->has('billing_ruc'))
-                  <label for="billing_ruc" generated="true" class="error">{{ $errors->first('billing_ruc') }}</label>
-                @endif
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <label for="ruc">Dirección</label>
-                <input type="text" id="billing_address" placeholder="Dirección" name="billing_address" class="form-control" value="{{ old('billing_address')  }}">
-                @if ($errors->has('billing_address'))
-                  <label for="billing_address" generated="true" class="error">{{ $errors->first('billing_address') }}</label>
-                @endif
-              </div>
-
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <label for="ruc">Teléfono</label>
-                <input type="text" id="billing_phone" placeholder="Teléfono" name="billing_phone" class="form-control" value="{{ old('billing_phone')  }}">
-                @if ($errors->has('billing_phone'))
-                  <label for="billing_phone" generated="true" class="error">{{ $errors->first('billing_phone') }}</label>
-                @endif
-              </div>
-
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <label for="ruc">Nombres</label>
-                <input type="text" id="billing_client_firstname" placeholder="Ingrese nombre del responsable del pago" name="billing_client_firstname" class="form-control" value="{{ old('billing_client_firstname')  }}">
-                @if ($errors->has('billing_client'))
-                  <label for="billing_client" generated="true" class="error">{{ $errors->first('billing_client') }}</label>
-                @endif
-              </div>
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <label for="ruc">Apellidos</label>
-                <input type="text" id="billing_client_lastname" placeholder="Ingrese apellido del responsable del pago" name="billing_client_lastname" class="form-control" value="{{ old('billing_client_lastname')  }}">
-                @if ($errors->has('billing_client'))
-                  <label for="billing_client" generated="true" class="error">{{ $errors->first('billing_client') }}</label>
-                @endif
-              </div>
-            </div>
-          </div>
-
-          <div class="ln_solid"></div>
-
-          <p><b>FORMA DE PAGO</b></p>
-
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <label for="way_to_pay">Medio de Pago</label>
-                <select class="form-control" name="way_to_pay" id="way_to_pay" data-id-default="{{ old('way_to_pay') }}">
-                  <option value="">-- Seleccione la Forma de Pago --</option>
-                  <option value="1">Pago Total</option>
-                  <option value="2">Pago Fraccionado</option>
-                  <option value="3">Pago Condicional</option>
-                  <option value="4">Becado por corporativo</option>
-                  <option value="5">Becado por Sorteo</option>
-                  <option value="6">Becado por Pronto Pago</option>
-                </select>
-                @if ($errors->has('way_to_pay'))
-                  <label for="num_cellphone" generated="true" class="error">{{ $errors->first('way_to_pay') }}</label>
-                @endif
-                <div>
-                  <b>Depósito Cta. Cte.  Banco de  Crédito  del Perú: 192-1884961-0-08  /  CCI :  00219200188496100836</b>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <table class="tablex table-bordered" cellspacing="0" width="100%">
-                  <tr class="content_1 content_p"  style="display:none">
-                    <td align="left">Pago Total</td>
-                    <td colspan="2">
-                      <table>
-                        <tr>
-                          <td>S/.</td>
-                          <td><input type="text" class="form-control" placeholder="0.00"></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                  <tr class="content_2 content_p" style="display:none">
-                    <td align="left">Pago Fraccionado</td>
-                    <td>
-                      <table>
-                        <tr>
-                          <td>S/.</td>
-                          <td><input type="text" class="form-control" placeholder="0.00"></td>
-                        </tr>
-                      </table>
-                    </td>
-                    <td>
-                      <table>
-                        <tr>
-                          <td>N° Cuotas </td>
-                          <td>:</td>
-                          <td><select class="form-control"><option>--Cuotas--</option></select></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                  <tr class="content_2 content_p" style="display:none">
-                    <td align="left">Matricula</td>
-                    <td colspan="2">
-                      <table>
-                        <tr>
-                          <td>S/.</td>
-                          <td><input type="text" class="form-control" placeholder="0.00"></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                  <tr class="content_2 content_p" style="display:none">
-                    <td align="left">Certificado</td>
-                    <td colspan="2">
-                      <table>
-                        <tr>
-                          <td>S/.</td>
-                          <td><input type="text" class="form-control" placeholder="0.00"></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                  <tr class="content_3 content_p" style="display:none">
-                    <td align="left">Pago Condicional</td>
-                    <td colspan="2">
-                      <table>
-                        <tr>
-                          <td>S/.</td>
-                          <td><input type="text" class="form-control" placeholder="0.00"></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                  <tr class="content_3 content_p" style="display:none">
-                    <td align="left">1ra. Cuota</td>
-                    <td>
-                      <table>
-                        <tr>
-                          <td>S/.</td>
-                          <td><input type="text" class="form-control" placeholder="0.00"></td>
-                        </tr>
-                      </table>
-                    </td>
-                    <td>
-                      <table>
-                        <tr>
-                          <td>Fecha: </td>
-                          <td><input type="text" class="form-control" placeholder="Fecha"></td>
-                        </tr>
-                      </table>
-
-                    </td>
-                  </tr>
-                  <tr class="content_3 content_p" style="display:none">
-                    <td align="left">2da. Cuota</td>
-                    <td>
-                      <table>
-                        <tr>
-                          <td>S/.</td>
-                          <td><input type="text" class="form-control" placeholder="0.00"></td>
-                        </tr>
-                      </table>
-                    </td>
-                    <td>
-                      <table>
-                        <tr>
-                          <td>Fecha: </td>
-                          <td><input type="text" class="form-control" placeholder="Fecha"></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <label for="operation_number">Observación</label>
-                <textarea class="form-control" name="observation"></textarea>
-                @if ($errors->has('observation'))
-                  <label for="observation" generated="true" class="error">{{ $errors->first('observation') }}</label>
-                @endif
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <label for="operation_number">Número de la operación</label>
-                <input type="text" id="operation_number" placeholder="Número de la operación" name="operation_number" class="form-control" value="{{ old('amount')  }}">
-                @if ($errors->has('amount'))
-                  <label for="amount" generated="true" class="error">{{ $errors->first('amount') }}</label>
-                @endif
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <label for="condiciones">CONDICIONES</label>
-
-                <ul>
-                  <li>Una vez iniciado el curso, si el participante opta por retirarse, no tendrá derecho a re‐embolso. Así mismo, no lo exime del pago del valor del total del mismo. Solo procede si la reserva es cancelada 72 horas antes del inicio del evento</li>
-                  <li>En caso de retirarse antes de comenzar el diploma se retendrá el 10% por gastos administrativos de su pago.</li>
-                  <li>En caso de tener un retraso mayor a 45 días en sus pagos se derivara a INFOCORP</li>
-                  <li>La inasistencia al evento programado no supone el reembolso del dinero abonado.</li>
-                  <li>EHSQ GROUP SAC Se reserva el derecho de cancelar o postergar el inicio del curso si no se llega al número mínimo de participantes hasta el día de inicio.</li>
-                </ul>
-
-              </div>
-            </div>
-          </div>
 
           <div class="chkContent">
             {{ Form::checkbox('proteccion_datos', 1, false, ['class' => 'flat']) }}

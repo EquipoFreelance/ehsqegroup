@@ -111,9 +111,25 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
 Route::group(['middleware' => ['auth','role.marketing']], function(){
 
   // Recursos de Inscripciones
-  Route::resource('dashboard/inscription', 'InscriptionController', ['only' => ['create','store','show','index','edit','update'] ]);
+  Route::resource('dashboard/inscription', 'InscriptionController', ['only' => ['show','index','edit','update'] ]);
 
 });
+
+// Rutas Públicas para los clientes
+Route::get('inscription/create/{created_by}',[
+    'as'    => 'inscription.create',
+    'uses'  => 'InscriptionController@create'
+]);
+
+Route::post('inscription/store',[
+    'as'    => 'inscription.store',
+    'uses'  => 'InscriptionController@store'
+]);
+
+Route::get('inscription/thank_you_page',[
+    'as'    => 'dashboard.inscription.thankyoupage',
+    'uses'  => 'InscriptionController@thankYouPage'
+]);
 
 // Sistema Docentes
 Route::group(['middleware' => ['auth','role.docente']], function(){
@@ -151,6 +167,8 @@ Route::group(['middleware' => ['auth','role.alumno']], function(){
 Route::group(['middleware' => ['auth','role.sistema']], function(){
 
 });
+
+
 
 
     /* -- Rutas asíncronas -- */
