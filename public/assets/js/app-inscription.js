@@ -16,10 +16,13 @@ filtro_fecha_inicio.change(function(){
 });
 
 /* -- Form Inscription -- */
+
+// Selección de medio de pago
 $("#way_to_pay").change(function(){
 
     var c = $(this).val() * 1;
 
+    $(".content_payment_method_student").show();
     $(".content_p").hide();
     $(".content_cuotas").hide();
 
@@ -28,9 +31,42 @@ $("#way_to_pay").change(function(){
 
     $("#ddlViewBy option:selected").text();
     $(".concept").html( $("option:selected", this).text() );
-    
+
 });
 
+$("#frm_payment_method_student").find(".save").click(function(){
+
+    event.preventDefault();
+
+    console.log($( "#frm_payment_method_student" ).serialize());
+
+    $("#frm_payment_method_student").find(".alert-success").show().removeClass("out").addClass("in");
+    $(this).attr("disabled", "disabled");
+
+    /*$.ajax({
+        url:'/api/teacher/report-card/store',
+        type:'post',
+        datatype: 'json',
+        data:$( "#store_report_card" ).serialize(),
+        beforeSend: function(){
+
+        },
+        success:function(response)
+        {
+            console.log(response);
+        },
+        complete: function(){
+            $(".alert-info").hide().fadeIn().html("Las notas fueron ingresadas satisfactoriamente");
+            //$( "#store_report_card" ).submit();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            if(  response.status == 400){
+
+            }
+        }
+    });*/
+
+});
 
 /* -- Customs Functions --*/
 

@@ -115,7 +115,7 @@ Route::group(['middleware' => ['auth','role.marketing']], function(){
 
 });
 
-// Rutas Públicas para los clientes
+// Rutas Públicas para los posibles clientes
 Route::get('inscription/create/{created_by}',[
     'as'    => 'inscription.create',
     'uses'  => 'InscriptionController@create'

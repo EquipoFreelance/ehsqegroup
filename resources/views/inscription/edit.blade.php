@@ -1,5 +1,14 @@
 @extends('dashboard.layouts.master')
 
+@section('custom_css')
+  <style>
+    .content_payment_method_student{
+      display: none;
+    }
+  </style>
+
+@stop
+
 @section('content')
 
   <!-- Custom Templates -->
@@ -262,194 +271,215 @@
             </div>
 
             <div role="tabpanel" class="tab-pane" id="pmodalidad">
+                <form method="POST" name="frm_payment_method_student" id="frm_payment_method_student" action="#">
 
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-md-12 col-sm-12 col-xs-12">
-                    <label for="way_to_pay">Medio de Pago</label>
-                    <select class="form-control" name="way_to_pay" id="way_to_pay" data-id-default="{{ old('way_to_pay') }}">
-                      <option value="">-- Seleccione la Forma de Pago --</option>
-                      <option value="1">Pago Total</option>
-                      <option value="2">Pago Fraccionado</option>
-                      <option value="3">Pago Condicional</option>
-                      <option value="4">Becado por corporativo</option>
-                      <option value="5">Becado por Sorteo</option>
-                      <option value="6">Becado por Pronto Pago</option>
-                    </select>
-                    @if ($errors->has('way_to_pay'))
-                      <label for="num_cellphone" generated="true" class="error">{{ $errors->first('way_to_pay') }}</label>
-                    @endif
-                    <div>
-                      <b>Depósito Cta. Cte.  Banco de  Crédito  del Perú: 192-1884961-0-08  /  CCI :  00219200188496100836</b>
+
+                  <div class="alert alert-success alert-dismissible fade out" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                      Le forma de pago fue actualizada satisfactoriamente =)
+                    </div>
+
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        <label for="way_to_pay">Medio de Pago</label>
+                        <select class="form-control" name="way_to_pay" id="way_to_pay" data-id-default="{{ old('way_to_pay') }}">
+                          <option value="">-- Seleccione la Forma de Pago --</option>
+                          <option value="1">Pago Total</option>
+                          <option value="2">Pago Fraccionado</option>
+                          <option value="3">Pago Condicional</option>
+                          <option value="4">Becado por corporativo</option>
+                          <option value="5">Becado por Sorteo</option>
+                          <option value="6">Becado por Pronto Pago</option>
+                        </select>
+                        @if ($errors->has('way_to_pay'))
+                          <label for="num_cellphone" generated="true" class="error">{{ $errors->first('way_to_pay') }}</label>
+                        @endif
+                        <div>
+                          Depósito Cta. Cte.  Banco de  Crédito  del Perú: <b> 192-1884961-0-08</b>  /  CCI :  <b>00219200188496100836</b>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
 
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-md-12 col-sm-12 col-xs-12">
-                    <table class="tablex table-bordered" cellspacing="0" width="100%">
-                      <tr>
-                        <td width="300">Concepto</td>
-                        <td width="10">Monto</td>
-                      </tr>
-                      <tr>
-                        <td align="left">
-                          <table>
-                            <tr>
-                              <td class="concept" align="left"></td>
-                              <!-- Fraccionado  -->
-                              <td class="coutas_2 content_cuotas" align="left" style="display:none">
-                                <table cellspacing="0" width="100%">
-                                  <tr>
-                                    <td align="left">&nbsp;</td>
-                                    <td>en</td>
-                                    <td>:&nbsp;</td>
-                                    <td>
-                                      <select class="form-control">
-                                        <option>--Cuotas--</option>
-                                      </select>
-                                    </td>
-                                  </tr>
-                                </table>
-                              </td>
-                              <!-- -->
-                            </tr>
-                          </table>
-                        </td>
-                        <td>
-                          <table cellspacing="0" width="100%">
-                            <tr>
-                              <td><input type="text" class="form-control" id="amount" name="amount" placeholder="S/. 0.00"></td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        <table class="tablex table-bordered" cellspacing="0" width="100%">
+                          <tr>
+                            <td width="300"><b>Concepto</b></td>
+                            <td width="10"><b>Monto</b></td>
+                          </tr>
 
-                      <tr class="content_2 content_p" style="display:none">
-                        <td align="left">Matricula</td>
-                        <td colspan="2">
-                          <table cellspacing="0" width="100%">
-                            <tr>
-                              <td><input type="text" class="form-control" placeholder="S/. 0.00"></td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                      <tr class="content_2 content_p" style="display:none">
-                        <td align="left">Certificado</td>
-                        <td colspan="2">
-                          <table cellspacing="0" width="100%">
-                            <tr>
-                              <td><input type="text" class="form-control" placeholder="S/. 0.00"></td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
+                          <!-- payment_method_student -->
+                          <tr class="content_payment_method_student">
+                            <td align="left">
+                              <table>
+                                <tr>
+                                  <td class="concept" align="left"></td>
+                                  <!-- Fraccionado  -->
+                                  <td class="coutas_2 content_cuotas" align="left" style="display:none">
+                                    <table cellspacing="0" width="100%">
+                                      <tr>
+                                        <td align="left">&nbsp;</td>
+                                        <td>en</td>
+                                        <td>:&nbsp;</td>
+                                        <td>
+                                          <select class="form-control">
+                                            <option>--Cuotas--</option>
+                                          </select>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                  <!-- -->
+                                </tr>
+                              </table>
+                            </td>
+                            <td>
+                              <table cellspacing="0" width="100%">
+                                <tr>
+                                  <td><input type="text" class="form-control" id="amount" name="amount" placeholder="S/. 0.00"></td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
 
-                      <tr class="content_3 content_p" style="display:none">
-                        <td class="coutas_3 content_cuotas" align="left">
-                          <table cellspacing="0" width="320">
-                            <tr>
-                              <td align="left" width="100">1ra. Cuota</td>
+                          <!-- Otros conceptos -->
+                          <tr class="content_2 content_p" style="display:none">
+                            <td align="left">Matricula</td>
+                            <td colspan="2">
+                              <table cellspacing="0" width="100%">
+                                <tr>
+                                  <td><input type="text" class="form-control" placeholder="S/. 0.00"></td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                          <tr class="content_2 content_p" style="display:none">
+                            <td align="left">Certificado</td>
+                            <td colspan="2">
+                              <table cellspacing="0" width="100%">
+                                <tr>
+                                  <td><input type="text" class="form-control" placeholder="S/. 0.00"></td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                          <tr class="content_3 content_p" style="display:none">
+                            <td class="coutas_3 content_cuotas" align="left">
+                              <table cellspacing="0" width="320">
+                                <tr>
+                                  <td align="left" width="100">1ra. Cuota</td>
 
-                              <td align="left" width="100">
-                                <table cellspacing="0" width="250">
-                                  <tr>
-                                    <td>- Fecha:</td>
-                                    <td>&nbsp;</td>
-                                    <td><input type="text" class="form-control" placeholder="09/10/2016"></td>
-                                  </tr>
-                                </table>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>
-                        <td>
-                          <table cellspacing="0" width="100%">
-                            <tr>
-                              <td><input type="text" class="form-control" placeholder="S/. 0.00"></td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                      <tr class="content_3 content_p" style="display:none">
-                        <td class="coutas_3 content_cuotas" align="left">
-                          <table cellspacing="0" width="320">
-                            <tr>
+                                  <td align="left" width="100">
+                                    <table cellspacing="0" width="250">
+                                      <tr>
+                                        <td>- Fecha:</td>
+                                        <td>&nbsp;</td>
+                                        <td><input type="text" class="form-control" placeholder="09/10/2016"></td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                            <td>
+                              <table cellspacing="0" width="100%">
+                                <tr>
+                                  <td><input type="text" class="form-control" placeholder="S/. 0.00"></td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                          <tr class="content_3 content_p" style="display:none">
+                            <td class="coutas_3 content_cuotas" align="left">
+                              <table cellspacing="0" width="320">
+                                <tr>
 
-                              <td align="left" width="100">2da. Cuota</td>
+                                  <td align="left" width="100">2da. Cuota</td>
 
-                              <td align="left" width="100">
-                                <table cellspacing="0" width="250">
-                                  <tr>
-                                    <td>- Fecha:</td>
-                                    <td>&nbsp;</td>
-                                    <td><input type="text" class="form-control" placeholder="09/10/2016"></td>
-                                  </tr>
-                                </table>
-                              </td>
+                                  <td align="left" width="100">
+                                    <table cellspacing="0" width="250">
+                                      <tr>
+                                        <td>- Fecha:</td>
+                                        <td>&nbsp;</td>
+                                        <td><input type="text" class="form-control" placeholder="09/10/2016"></td>
+                                      </tr>
+                                    </table>
+                                  </td>
 
-                            </tr>
-                          </table>
-                        </td>
+                                </tr>
+                              </table>
+                            </td>
 
-                        <td>
-                          <table cellspacing="0" width="100%">
-                            <tr>
-                              <td><input type="text" class="form-control" placeholder="S/. 0.00"></td>
-                            </tr>
-                          </table>
-                        </td>
+                            <td>
+                              <table cellspacing="0" width="100%">
+                                <tr>
+                                  <td><input type="text" class="form-control" placeholder="S/. 0.00"></td>
+                                </tr>
+                              </table>
+                            </td>
 
-                      </tr>
-                    </table>
+                          </tr>
+                          <!-- Otros conceptos -->
+
+                        </table>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-md-12 col-sm-12 col-xs-12">
-                    <label for="operation_number">Observación</label>
-                    <textarea class="form-control" name="observation"></textarea>
-                    @if ($errors->has('observation'))
-                      <label for="observation" generated="true" class="error">{{ $errors->first('observation') }}</label>
-                    @endif
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        <label for="operation_number">Observación</label>
+                        <textarea class="form-control" name="observation" placeholder="Observación"></textarea>
+                        @if ($errors->has('observation'))
+                          <label for="observation" generated="true" class="error">{{ $errors->first('observation') }}</label>
+                        @endif
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-md-12 col-sm-12 col-xs-12">
-                    <label for="operation_number">Número de la operación</label>
-                    <input type="text" id="operation_number" placeholder="Número de la operación" name="operation_number" class="form-control" value="{{ old('amount')  }}">
-                    @if ($errors->has('amount'))
-                      <label for="amount" generated="true" class="error">{{ $errors->first('amount') }}</label>
-                    @endif
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        <label for="operation_number">Número de la operación</label>
+                        <input type="text" id="operation_number" placeholder="Número de la operación" name="operation_number" class="form-control" value="{{ old('amount')  }}">
+                        @if ($errors->has('amount'))
+                          <label for="amount" generated="true" class="error">{{ $errors->first('amount') }}</label>
+                        @endif
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-md-12 col-sm-12 col-xs-12">
-                    <label for="condiciones">CONDICIONES</label>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        <label for="condiciones">CONDICIONES</label>
 
-                    <ul>
-                      <li>Una vez iniciado el curso, si el participante opta por retirarse, no tendrá derecho a re‐embolso. Así mismo, no lo exime del pago del valor del total del mismo. Solo procede si la reserva es cancelada 72 horas antes del inicio del evento</li>
-                      <li>En caso de retirarse antes de comenzar el diploma se retendrá el 10% por gastos administrativos de su pago.</li>
-                      <li>En caso de tener un retraso mayor a 45 días en sus pagos se derivara a INFOCORP</li>
-                      <li>La inasistencia al evento programado no supone el reembolso del dinero abonado.</li>
-                      <li>EHSQ GROUP SAC Se reserva el derecho de cancelar o postergar el inicio del curso si no se llega al número mínimo de participantes hasta el día de inicio.</li>
-                    </ul>
+                        <ul>
+                          <li>Una vez iniciado el curso, si el participante opta por retirarse, no tendrá derecho a re‐embolso. Así mismo, no lo exime del pago del valor del total del mismo. Solo procede si la reserva es cancelada 72 horas antes del inicio del evento</li>
+                          <li>En caso de retirarse antes de comenzar el diploma se retendrá el 10% por gastos administrativos de su pago.</li>
+                          <li>En caso de tener un retraso mayor a 45 días en sus pagos se derivara a INFOCORP</li>
+                          <li>La inasistencia al evento programado no supone el reembolso del dinero abonado.</li>
+                          <li>EHSQ GROUP SAC Se reserva el derecho de cancelar o postergar el inicio del curso si no se llega al número mínimo de participantes hasta el día de inicio.</li>
+                        </ul>
 
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
+                  <div class="ln_solid"></div>
+
+                  <div class="form-group">
+                    <div class="form-group btncontrol">
+                      <a href="{{ route('dashboard.inscription.index') }}" class="btn btn-5 btn-5a icon-return return"><span>Retornar</span></a>
+                      <button type="submit" class="btn btn-5 btn-5a icon-save save"><span>Guardar</span></button>
+                    </div>
+                  </div>
+
+                </form>
             </div>
 
           </div>
