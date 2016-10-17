@@ -110,8 +110,11 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
 // Marketing
 Route::group(['middleware' => ['auth','role.marketing']], function(){
 
-  // Recursos de Inscripciones
-  Route::resource('dashboard/inscription', 'InscriptionController', ['only' => ['show','index','edit','update'] ]);
+    // Recursos de Inscripciones
+    Route::resource('dashboard/inscription', 'InscriptionController', ['only' => ['show','index','edit','update'] ]);
+
+
+
 
 });
 
@@ -242,7 +245,6 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
     ]);
 
 
-
     // Get List Periodo Academico
     Route::get('/hsqegroup/api/academic-period',[
         'as' => 'json.academic-period.all', 'uses' => 'WebServiceController@getWsAcademicPeriod'
@@ -326,4 +328,14 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
     // Get Group Enrollments
     Route::post('/api/teacher/report-card/store', [
         'as' => 'json.group-teacher.all', 'uses' => 'WebService\WSReportCardController@ReporteCardStore'
+    ]);
+
+    // Store Student Payment Method
+    Route::post('/hsqegroup/api/student/payment-method/store',[
+        'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSEnrollmentPaymentMethodController@store'
+    ]);
+
+    // Show Student Payment Method
+    Route::get('/hsqegroup/api/student/{id_enrollment}/payment-method/show',[
+        'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSEnrollmentPaymentMethodController@show'
     ]);

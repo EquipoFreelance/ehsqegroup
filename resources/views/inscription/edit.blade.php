@@ -271,19 +271,20 @@
             </div>
 
             <div role="tabpanel" class="tab-pane" id="pmodalidad">
+
                 <form method="POST" name="frm_payment_method_student" id="frm_payment_method_student" action="#">
 
-
+                  <input type="hidden" name="id_enrollment" id="id_enrollment" value="{{ $student->enrollments()->first()->id }}">
                   <div class="alert alert-success alert-dismissible fade out" role="alert">
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                      Le forma de pago fue actualizada satisfactoriamente =)
-                    </div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <span class="message"></span>
+                  </div>
 
                   <div class="form-group">
                     <div class="row">
                       <div class="col-md-12 col-sm-12 col-xs-12">
-                        <label for="way_to_pay">Medio de Pago</label>
-                        <select class="form-control" name="way_to_pay" id="way_to_pay" data-id-default="{{ old('way_to_pay') }}">
+                        <label for="id_payment_method">Medio de Pago</label>
+                        <select class="form-control" name="id_payment_method" id="id_payment_method" data-id-default="{{ old('id_payment_method') }}">
                           <option value="">-- Seleccione la Forma de Pago --</option>
                           <option value="1">Pago Total</option>
                           <option value="2">Pago Fraccionado</option>
@@ -292,8 +293,8 @@
                           <option value="5">Becado por Sorteo</option>
                           <option value="6">Becado por Pronto Pago</option>
                         </select>
-                        @if ($errors->has('way_to_pay'))
-                          <label for="num_cellphone" generated="true" class="error">{{ $errors->first('way_to_pay') }}</label>
+                        @if ($errors->has('id_payment_method'))
+                          <label for="num_cellphone" generated="true" class="error">{{ $errors->first('id_payment_method') }}</label>
                         @endif
                         <div>
                           Depósito Cta. Cte.  Banco de  Crédito  del Perú: <b> 192-1884961-0-08</b>  /  CCI :  <b>00219200188496100836</b>
@@ -325,8 +326,10 @@
                                         <td>en</td>
                                         <td>:&nbsp;</td>
                                         <td>
-                                          <select class="form-control">
+                                          <select class="form-control" id="num_cuota" name="num_cuota">
                                             <option>--Cuotas--</option>
+                                            <option value="1">Cuota 1</option>
+                                            <option value="2">Cuota 2</option>
                                           </select>
                                         </td>
                                       </tr>
@@ -433,7 +436,7 @@
                     <div class="row">
                       <div class="col-md-12 col-sm-12 col-xs-12">
                         <label for="operation_number">Observación</label>
-                        <textarea class="form-control" name="observation" placeholder="Observación"></textarea>
+                        <textarea class="form-control" name="observation" id="observation" placeholder="Observación"></textarea>
                         @if ($errors->has('observation'))
                           <label for="observation" generated="true" class="error">{{ $errors->first('observation') }}</label>
                         @endif

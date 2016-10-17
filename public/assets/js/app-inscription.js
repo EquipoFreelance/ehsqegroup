@@ -15,10 +15,18 @@ filtro_fecha_inicio.change(function(){
   listInscriptions($(this).val());
 });
 
+/* Edit Inscription */
+
+
+if($("#id_enrollment").val()){
+    showPaymentMethodStudent($("#id_enrollment").val());
+}
+
+
 /* -- Form Inscription -- */
 
 // Selección de medio de pago
-$("#way_to_pay").change(function(){
+$("#id_payment_method").change(function(){
 
     var c = $(this).val() * 1;
 
@@ -38,33 +46,29 @@ $("#frm_payment_method_student").find(".save").click(function(){
 
     event.preventDefault();
 
-    console.log($( "#frm_payment_method_student" ).serialize());
-
-    $("#frm_payment_method_student").find(".alert-success").show().removeClass("out").addClass("in");
-    $(this).attr("disabled", "disabled");
-
-    /*$.ajax({
-        url:'/api/teacher/report-card/store',
+    $.ajax({
+        url:'/hsqegroup/api/student/payment-method/store',
         type:'post',
         datatype: 'json',
-        data:$( "#store_report_card" ).serialize(),
+        data: $( "#frm_payment_method_student" ).serialize(),
         beforeSend: function(){
 
+            //$("#frm_payment_method_student").find(".save").attr("disabled", "disabled");
         },
         success:function(response)
         {
-            console.log(response);
+            $(".message").html(response.message);
         },
         complete: function(){
-            $(".alert-info").hide().fadeIn().html("Las notas fueron ingresadas satisfactoriamente");
-            //$( "#store_report_card" ).submit();
+            $("#frm_payment_method_student").find(".alert-success").show().removeClass("out").addClass("in");
+            $("#frm_payment_method_student").find(".save").removeAttr("disabled");
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if(  response.status == 400){
-
+                $("#frm_payment_method_student").find(".save").attr("disabled", "disabled");
             }
         }
-    });*/
+    });
 
 });
 
@@ -130,5 +134,34 @@ function listInscriptions(fecha_inicio){
           });
     }
 
+    });
+}
+
+function showPaymentMethodStudent(id_student){
+    $.ajax({
+        url:'/hsqegroup/api/student/'+id_student+'/payment-method/show',
+        type:'get',
+        datatype: 'json',
+        data: {},
+        beforeSend: function(){
+
+
+        },
+        success:function(response)
+        {
+
+            $("#id_payment_method").val(response.id_payment_method).trigger("change");
+            $("#amount").val(response.amount);
+            $("#observation").val(response.observation);
+
+        },
+        complete: function(){
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            if(  response.status == 400){
+                $("#frm_payment_method_student").find(".save").attr("disabled", "disabled");
+            }
+        }
     });
 }
