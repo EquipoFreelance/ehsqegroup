@@ -348,6 +348,75 @@
                             </td>
                           </tr>
 
+                          <tr class="content_3 content_p" style="display:none">
+                            <td class="coutas_3 content_cuotas" align="left">
+                              <table cellspacing="0" width="320">
+                                <tr>
+                                  <td align="left" width="100">1ra. Cuota</td>
+
+                                  <td align="left" width="100">
+                                    <table cellspacing="0" width="250">
+                                      <tr>
+                                        <td>- Fecha:</td>
+                                        <td>&nbsp;</td>
+                                        <td>
+                                          <input type="text" class="form-control" id="condicional_date_1" name="condicional_date[]" placeholder="09/10/2016">
+                                          <input type="hidden" id="num_cuota_1" name="num_cuotas[]" value="1">
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                            <td>
+                              <table cellspacing="0" width="100%">
+                                <tr>
+                                  <td>
+                                    <input type="text" class="form-control" id="condicional_amount_1" name="condicional_amount[]" placeholder="S/. 0.00">
+
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                          <tr class="content_3 content_p" style="display:none">
+                            <td class="coutas_3 content_cuotas" align="left">
+                              <table cellspacing="0" width="320">
+                                <tr>
+
+                                  <td align="left" width="100">2da. Cuota</td>
+
+                                  <td align="left" width="100">
+                                    <table cellspacing="0" width="250">
+                                      <tr>
+                                        <td>- Fecha:</td>
+                                        <td>&nbsp;</td>
+                                        <td>
+                                          <input type="text" class="form-control" id="condicional_date_2" name="condicional_date[]" placeholder="09/10/2016">
+                                          <input type="hidden" id="num_cuota_2" name="num_cuotas[]" value="2">
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+
+                                </tr>
+                              </table>
+                            </td>
+
+                            <td>
+                              <table cellspacing="0" width="100%">
+                                <tr>
+                                  <td>
+                                    <input type="text" class="form-control" id="condicional_amount_2" name="condicional_amount[]" placeholder="S/. 0.00">
+
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+
+                          </tr>
+
                           <!-- Otros conceptos -->
                           <tr class="content_2 content_p" style="display:none">
                             <td align="left">Matricula</td>
@@ -369,62 +438,7 @@
                               </table>
                             </td>
                           </tr>
-                          <tr class="content_3 content_p" style="display:none">
-                            <td class="coutas_3 content_cuotas" align="left">
-                              <table cellspacing="0" width="320">
-                                <tr>
-                                  <td align="left" width="100">1ra. Cuota</td>
 
-                                  <td align="left" width="100">
-                                    <table cellspacing="0" width="250">
-                                      <tr>
-                                        <td>- Fecha:</td>
-                                        <td>&nbsp;</td>
-                                        <td><input type="text" class="form-control" placeholder="09/10/2016"></td>
-                                      </tr>
-                                    </table>
-                                  </td>
-                                </tr>
-                              </table>
-                            </td>
-                            <td>
-                              <table cellspacing="0" width="100%">
-                                <tr>
-                                  <td><input type="text" class="form-control" placeholder="S/. 0.00"></td>
-                                </tr>
-                              </table>
-                            </td>
-                          </tr>
-                          <tr class="content_3 content_p" style="display:none">
-                            <td class="coutas_3 content_cuotas" align="left">
-                              <table cellspacing="0" width="320">
-                                <tr>
-
-                                  <td align="left" width="100">2da. Cuota</td>
-
-                                  <td align="left" width="100">
-                                    <table cellspacing="0" width="250">
-                                      <tr>
-                                        <td>- Fecha:</td>
-                                        <td>&nbsp;</td>
-                                        <td><input type="text" class="form-control" placeholder="09/10/2016"></td>
-                                      </tr>
-                                    </table>
-                                  </td>
-
-                                </tr>
-                              </table>
-                            </td>
-
-                            <td>
-                              <table cellspacing="0" width="100%">
-                                <tr>
-                                  <td><input type="text" class="form-control" placeholder="S/. 0.00"></td>
-                                </tr>
-                              </table>
-                            </td>
-
-                          </tr>
                           <!-- Otros conceptos -->
 
                         </table>
