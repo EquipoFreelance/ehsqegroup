@@ -46,13 +46,14 @@
         <div class="x_content">
 
           <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#pinfo" aria-controls="pinfo" role="tab" data-toggle="tab">Información personal</a></li>
-            <li role="presentation"><a href="#pmodalidad" aria-controls="pmodalidad" role="tab" data-toggle="tab">Forma de Pago</a></li>
+            <li role="presentation" class="active"><a href="#tab_informacion_personal" aria-controls="pinfo" role="tab" data-toggle="tab">Información personal</a></li>
+            <li role="presentation"><a href="#tab_form_pago" aria-controls="pmodalidad" role="tab" data-toggle="tab">Forma de Pago</a></li>
+            <li role="presentation"><a href="#tab_facturacion" aria-controls="pmodalidad" role="tab" data-toggle="tab">Datos de la Facturación</a></li>
           </ul>
           <br>
           <div class="tab-content">
 
-            <div role="tabpanel" class="tab-pane active" id="pinfo">
+            <div role="tabpanel" class="tab-pane active" id="tab_informacion_personal">
 
               {!! Form::model($student, [ 'method' => 'PUT', 'route' => ['dashboard.inscription.update', $student->id], 'class' => 'form-horizontal form-label-left' ]) !!}
 
@@ -270,7 +271,7 @@
 
             </div>
 
-            <div role="tabpanel" class="tab-pane" id="pmodalidad">
+            <div role="tabpanel" class="tab-pane" id="tab_form_pago">
 
                 <form method="POST" name="frm_payment_method_student" id="frm_payment_method_student" action="#">
 
@@ -374,7 +375,6 @@
                                 <tr>
                                   <td>
                                     <input type="text" class="form-control" id="condicional_amount_1" name="condicional_amount[]" placeholder="S/. 0.00">
-
                                   </td>
                                 </tr>
                               </table>
@@ -499,6 +499,86 @@
                 </form>
             </div>
 
+            <div role="tabpanel" class="tab-pane" id="tab_facturacion">
+
+              <form method="POST" name="frm_billing_client" id="frm_billing_client" action="#">
+
+                <div class="alert alert-success alert-dismissible fade out" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                  <span class="message"></span>
+                </div>
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                      <label for="billing_razon_social">Razón Social</label>
+                      <input type="text" id="billing_razon_social" placeholder="Ingrese la Razón Social" name="billing_razon_social" class="form-control" value="{{ old('billing_razon_social')  }}">
+                      @if ($errors->has('billing_razon_social'))
+                        <label for="billing_razon_social" generated="true" class="error">{{ $errors->first('billing_razon_social') }}</label>
+                      @endif
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                      <label for="billing_ruc">N° de RUC</label>
+                      <input type="text" id="billing_ruc" placeholder="RUC" name="billing_ruc" class="form-control" value="{{ old('billing_ruc')  }}">
+                      @if ($errors->has('billing_ruc'))
+                        <label for="billing_ruc" generated="true" class="error">{{ $errors->first('billing_ruc') }}</label>
+                      @endif
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                      <label for="ruc">Dirección</label>
+                      <input type="text" id="billing_address" placeholder="Dirección" name="billing_address" class="form-control" value="{{ old('billing_address')  }}">
+                      @if ($errors->has('billing_address'))
+                        <label for="billing_address" generated="true" class="error">{{ $errors->first('billing_address') }}</label>
+                      @endif
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                      <label for="ruc">Teléfono</label>
+                      <input type="text" id="billing_phone" placeholder="Teléfono" name="billing_phone" class="form-control" value="{{ old('billing_phone')  }}">
+                      @if ($errors->has('billing_phone'))
+                        <label for="billing_phone" generated="true" class="error">{{ $errors->first('billing_phone') }}</label>
+                      @endif
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                      <label for="ruc">Nombres</label>
+                      <input type="text" id="billing_client_firstname" placeholder="Ingrese nombre del responsable del pago" name="billing_client_firstname" class="form-control" value="{{ old('billing_client_firstname')  }}">
+                      @if ($errors->has('billing_client_firstname'))
+                        <label for="billing_client_firstname" generated="true" class="error">{{ $errors->first('billing_client_firstname') }}</label>
+                      @endif
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                      <label for="ruc">Apellidos</label>
+                      <input type="text" id="billing_client_lastname" placeholder="Ingrese apellido del responsable del pago" name="billing_client_lastname" class="form-control" value="{{ old('billing_client_lastname')  }}">
+                      @if ($errors->has('billing_client_lastname'))
+                        <label for="billing_client_lastname" generated="true" class="error">{{ $errors->first('billing_client_lastname') }}</label>
+                      @endif
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ln_solid"></div>
+
+                <div class="form-group">
+                  <div class="form-group btncontrol">
+                    <a href="{{ route('dashboard.inscription.index') }}" class="btn btn-5 btn-5a icon-return return"><span>Retornar</span></a>
+                    <button type="submit" class="btn btn-5 btn-5a icon-save save"><span>Guardar</span></button>
+                  </div>
+                </div>
+
+              </form>
+
+            </div>
           </div>
 
 

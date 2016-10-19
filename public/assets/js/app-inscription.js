@@ -20,6 +20,7 @@ filtro_fecha_inicio.change(function(){
 
 if($("#id_enrollment").val()){
     showPaymentMethodStudent($("#id_enrollment").val());
+    showEnrollmentBillingClient($("#id_enrollment").val());
 }
 
 
@@ -66,6 +67,35 @@ $("#frm_payment_method_student").find(".save").click(function(){
         error: function (xhr, ajaxOptions, thrownError) {
             if(  response.status == 400){
                 $("#frm_payment_method_student").find(".save").attr("disabled", "disabled");
+            }
+        }
+    });
+
+});
+
+$("#frm_billing_client").find(".save").click(function(){
+
+    event.preventDefault();
+
+    $.ajax({
+        url:'/hsqegroup/api/inscription/billing_client/store',
+        type:'post',
+        datatype: 'json',
+        data: $( "#frm_billing_client" ).serialize()+"&id_enrollment="+$("#id_enrollment").val(),
+        beforeSend: function(){
+            $("#frm_payment_method_student").find(".save").attr("disabled", "disabled");
+        },
+        success:function(response)
+        {
+            $(".message").html(response.message);
+        },
+        complete: function(){
+            $("#frm_billing_client").find(".alert-success").show().removeClass("out").addClass("in");
+            $("#frm_billing_client").find(".save").removeAttr("disabled");
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            if(  response.status == 400){
+                $("#frm_billing_client").find(".save").attr("disabled", "disabled");
             }
         }
     });
@@ -145,7 +175,6 @@ function showPaymentMethodStudent(id_student){
         data: {},
         beforeSend: function(){
 
-
         },
         success:function(response)
         {
@@ -154,6 +183,21 @@ function showPaymentMethodStudent(id_student){
             $("#amount").val(response.amount);
             $("#observation").val(response.observation);
 
+            // Fraccionado
+            if(response.id_payment_method == 2){
+                
+                $("#num_cuota").val(response.fraccionado.num_cuota).trigger("change");
+
+            // Condicional
+            } else if (response.id_payment_method == 3) {
+
+                $.each( response.condicional, function(i, item) {
+                    $("#condicional_date_"+item.num_cuota).val(item.date);
+                    $("#condicional_amount_"+item.num_cuota).val(item.amount);
+                });
+                
+            }
+
         },
         complete: function(){
 
@@ -161,6 +205,39 @@ function showPaymentMethodStudent(id_student){
         error: function (xhr, ajaxOptions, thrownError) {
             if(  response.status == 400){
                 $("#frm_payment_method_student").find(".save").attr("disabled", "disabled");
+            }
+        }
+    });
+}
+
+function showEnrollmentBillingClient(id_enrollment){
+    $.ajax({
+        url:'/hsqegroup/api/inscription/'+id_enrollment+'/billing_client/show',
+        type:'get',
+        datatype: 'json',
+        data: {},
+        beforeSend: function(){
+
+        },
+        success:function(response)
+        {
+
+            console.log(response);
+            
+            $("#billing_razon_social").val(response.razon_social);
+            $("#billing_ruc").val(response.ruc);
+            $("#billing_address").val(response.address);
+            $("#billing_phone").val(response.phone);
+            $("#billing_client_firstname").val(response.client_firstname);
+            $("#billing_client_lastname").val(response.client_lastname);
+
+        },
+        complete: function(){
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            if(  response.status == 400){
+                //$("#frm_payment_method_student").find(".save").attr("disabled", "disabled");
             }
         }
     });

@@ -54,7 +54,26 @@ class WSEnrollmentPaymentMethodController extends Controller
 
         $rs = EnrollmentPaymentMethod::where("id_enrollment", $id_enrollment);
         if($rs){
+
             $data = $rs->first();
+
+            // Pago Fraccionado
+            if($data->id_payment_method == 2){
+
+                // Existe algun registro con el id del medio de pago registrado
+                $row = EnrollmentPaymentFraccionado::where("id_enrollment_payment", $data->id );
+
+                $data->fraccionado = $row->first();
+
+            // Condicional
+            } else if($data->id_payment_method == 3) {
+
+                $row = EnrollmentPaymentCondicional::where("id_enrollment_payment", $data->id );
+
+                $data->condicional = $row->get();
+
+            }
+
             return response()->json($data->toArray(), 200);
         }
 

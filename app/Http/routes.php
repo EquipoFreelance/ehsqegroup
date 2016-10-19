@@ -339,3 +339,13 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
     Route::get('/hsqegroup/api/student/{id_enrollment}/payment-method/show',[
         'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSEnrollmentPaymentMethodController@show'
     ]);
+
+    // Store Enrollment Billing Client
+    Route::post('/hsqegroup/api/inscription/billing_client/store',[
+        'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSEnrollmentBillingClientController@store'
+    ]);
+
+    // Show Enrollment Billing Client
+    Route::get('/hsqegroup/api/inscription/{id_enrollment}/billing_client/show',[
+        'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSEnrollmentBillingClientController@show'
+    ]);
