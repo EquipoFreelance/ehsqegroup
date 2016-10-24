@@ -423,7 +423,10 @@
                             <td colspan="2">
                               <table cellspacing="0" width="100%">
                                 <tr>
-                                  <td><input type="text" class="form-control" placeholder="S/. 0.00"></td>
+                                  <td>
+                                    <input type="hidden" id="id_payment_concept" name="id_payment_concept[]" value="1">
+                                    <input type="text" id="concept_mount" name="concept_mount[]" class="form-control" placeholder="S/. 0.00">
+                                  </td>
                                 </tr>
                               </table>
                             </td>
@@ -433,7 +436,10 @@
                             <td colspan="2">
                               <table cellspacing="0" width="100%">
                                 <tr>
-                                  <td><input type="text" class="form-control" placeholder="S/. 0.00"></td>
+                                  <td>
+                                    <input type="hidden" id="id_payment_concept" name="id_payment_concept[]" value="2">
+                                    <input type="text" id="concept_mount" name="concept_mount[]" class="form-control" placeholder="S/. 0.00">
+                                  </td>
                                 </tr>
                               </table>
                             </td>

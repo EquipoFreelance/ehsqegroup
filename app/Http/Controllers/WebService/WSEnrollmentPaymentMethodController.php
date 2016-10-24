@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\WebService;
 
+use App\Libraries\Payment\Payment;
 use App\Models\EnrollmentPaymentCondicional;
 use App\Models\EnrollmentPaymentFraccionado;
+use App\Repositories\Eloquents\PaymentDetailRepository;
+use App\Repositories\Eloquents\PaymentRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\EnrollmentPaymentMethod;
@@ -25,7 +28,9 @@ class WSEnrollmentPaymentMethodController extends Controller
                 $student_payment = $this->update($request, $row->id);
 
                 $this->store_payment_method_detail($row->id, $request);
-
+                
+                $this->store_payment($request);
+                
                 return $student_payment;
 
             } else {
@@ -79,6 +84,7 @@ class WSEnrollmentPaymentMethodController extends Controller
 
 
     }
+
 
     /**
      * @param $id_enrollment_payment
@@ -179,4 +185,26 @@ class WSEnrollmentPaymentMethodController extends Controller
 
     }
 
+    public function store_payment(Request $request){
+
+        $payment = new Payment();
+
+        /*foreach ($request->get('concept_mount') as $item) {
+            $payment->CalculateMount($item);
+            //$payment->addItems();
+        }*/
+        
+        /*$pay = new PaymentRepository();
+        $pay->create([
+            'mount'             => $payment->getCalculateMount(),
+            'id_enrollment'     => $request->get('id_enrollment'),
+            'id_payment_type'   => $request->get('id_payment_method'),
+            'active'            => 1
+        ]);*/
+        
+        // Registrar los conceptos
+        //$detail = new PaymentDetailRepository();
+        //$detail->create();
+
+    }
 }
