@@ -5,6 +5,7 @@ namespace App\Http\Controllers\WebService;
 use App\Libraries\Payment\Payment;
 use App\Models\EnrollmentPaymentCondicional;
 use App\Models\EnrollmentPaymentFraccionado;
+use App\Repositories\Eloquents\PaymentConceptTypeRepository;
 use App\Repositories\Eloquents\PaymentDetailRepository;
 use App\Repositories\Eloquents\PaymentRepository;
 use Illuminate\Http\Request;
@@ -84,7 +85,6 @@ class WSEnrollmentPaymentMethodController extends Controller
 
 
     }
-
 
     /**
      * @param $id_enrollment_payment
@@ -167,7 +167,6 @@ class WSEnrollmentPaymentMethodController extends Controller
 
                     $date       = ($arr_condicional_date[$key])? $arr_condicional_date[$key] : 0;
                     $amount     = ($arr_condicional_amount[$key])? $arr_condicional_amount[$key] : 0;
-
                     EnrollmentPaymentCondicional::create(compact('amount', 'date', 'id_enrollment_payment', 'num_cuota', 'created_by'));
 
                 }
@@ -187,24 +186,38 @@ class WSEnrollmentPaymentMethodController extends Controller
 
     public function store_payment(Request $request){
 
-        $payment = new Payment();
+        $concept_id    = $request->get('concept_id_concept');
+        $concept_price = $request->get('concept_price');
 
-        /*foreach ($request->get('concept_mount') as $item) {
-            $payment->CalculateMount($item);
-            //$payment->addItems();
-        }*/
-        
-        /*$pay = new PaymentRepository();
-        $pay->create([
-            'mount'             => $payment->getCalculateMount(),
+        $amount = 0;
+        foreach ($concept_price as $item) {
+            $amount = $amount + $item;
+        }
+
+        $pay = new PaymentRepository();
+        $create = $pay->create([
+            'amount'            => $amount,
             'id_enrollment'     => $request->get('id_enrollment'),
             'id_payment_type'   => $request->get('id_payment_method'),
             'active'            => 1
-        ]);*/
-        
-        // Registrar los conceptos
-        //$detail = new PaymentDetailRepository();
-        //$detail->create();
+        ]);
+
+        $n = - 1;
+        $detail = new PaymentDetailRepository();
+        foreach ($concept_id as $item) {
+            $n = $n + 1;
+            $detail->create([
+                'id_payment' => $create['id'],
+                'price'      => $concept_price[$n],
+                'id_concept' => $item,
+                'quantity'   => 1,
+                'active'     => 1
+            ]);
+        }
+
+
 
     }
+
+    
 }

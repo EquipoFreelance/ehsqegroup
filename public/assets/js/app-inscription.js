@@ -31,15 +31,66 @@ $("#id_payment_method").change(function(){
 
     var c = $(this).val() * 1;
 
-    $(".content_payment_method_student").show();
-    $(".content_p").hide();
-    $(".content_cuotas").hide();
+    if(c){
 
-    $(".content_"+c).show();
-    $(".coutas_"+c).show();
+        $(".content_item").hide();
+        $(".content_item_"+c).show();
 
-    $("#ddlViewBy option:selected").text();
-    $(".concept").html( $("option:selected", this).text() );
+        $(".content_item_mount").show();
+        $(".content_concept").show();
+
+
+        $("#amount").removeAttr("readonly");
+
+        if(c == 3){
+            $("#amount").attr("readonly", "readonly");
+        }
+
+        showConcepts(c);
+
+    } else {
+
+        $(".content_item").hide();
+
+    }
+
+
+
+
+});
+
+
+// Calculo dinamico de montos segun el medio de pago condicional
+$( "#condicional_amount_1" ).keyup(function() {
+    var amount = $("#amount");
+    amount.val(calculateAmmountCondicional($(this).val() * 1 , $( "#condicional_amount_2" ).val() * 1 ) );
+});
+
+$( "#condicional_amount_2" ).keyup(function() {
+    var amount = $("#amount");
+    amount.val(calculateAmmountCondicional($(this).val() * 1, $( "#condicional_amount_1" ).val() * 1) );
+});
+
+// Concepto
+$( "input[name='amount']" ).keyup(function() {
+
+    /*var amount = $(this);
+    var calculate_amount = calculateAmmountCondicional($(this).val() * 1, $( "#condicional_amount_1" ).val() * 1);
+    amount.val(calculate_amount);*/
+
+    var amount = $(this);
+    // Pago Total
+    if($(".concept_amount").hasClass("amount_9_1") ){
+        $(".amount_9_1").val(amount.val());
+
+    // Pago Fraccionado
+    } else if( $(".concept_amount").hasClass("amount_3_2") ){
+        $(".amount_3_2").val(amount.val());
+
+    // Pago Condicional
+    } else if( $(".concept_amount").hasClass("amount_3_3") ){
+        $(".amount_3_3").val(amount.val());
+    }
 
 });
 
@@ -223,7 +274,7 @@ function showEnrollmentBillingClient(id_enrollment){
         {
 
             console.log(response);
-            
+
             $("#billing_razon_social").val(response.razon_social);
             $("#billing_ruc").val(response.ruc);
             $("#billing_address").val(response.address);
@@ -241,4 +292,59 @@ function showEnrollmentBillingClient(id_enrollment){
             }
         }
     });
+}
+
+function calculateAmmountCondicional(amount1, amount2){
+
+    var calcular = (amount1 + amount2);
+
+
+    if( $(".concept_amount").hasClass("amount_3_3") ){
+        $(".amount_3_3").val(calcular);
+    }
+
+    return calcular;
+}
+
+function showConcepts(id_payment_method){
+    $.ajax({
+        url:'/hsqegroup/api/inscription/concepts/'+id_payment_method+'/show',
+        type:'get',
+        datatype: 'json',
+        data: {},
+        beforeSend: function(){
+
+        },
+        success:function(response)
+        {
+
+            var source   = $("#response-template-concepts").html();
+            var template = Handlebars.compile(source);
+            var html    = template(response);
+            $(".content_concept_items").empty().append(html);
+
+            $.each(response.response, function(i, item) {
+
+                var id = "amount_"+item.id_payment_concept+"_"+item.id_payment_type;
+
+                // Tipos de conceptos
+                if( id == "amount_9_1" || id == "amount_3_2" || id == "amount_3_3"){
+                    $("#amount_"+item.id_payment_concept+"_"+item.id_payment_type).val($("#amount").val()).attr("readonly", "readonly");
+                }
+
+            });
+
+            console.log(response);
+
+        },
+        complete: function(){
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            if(  response.status == 400){
+                $("#frm_payment_method_student").find(".save").attr("disabled", "disabled");
+            }
+        }
+    });
+
 }

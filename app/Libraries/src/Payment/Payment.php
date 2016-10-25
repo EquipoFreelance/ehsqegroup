@@ -12,7 +12,7 @@ class Payment
         //$this->model = new PaymentRepository();
     }
 
-    /*public function setCalculateMount($item){
+    public function setCalculateMount($item){
         $mount = 0;
         $mount = $mount + $item;
         return $mount;
@@ -28,6 +28,6 @@ class Payment
 
     public function getItems(){
         return $this->items;
-    }*/
+    }
 
 }

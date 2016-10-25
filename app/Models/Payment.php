@@ -12,7 +12,7 @@ class Payment extends Model
     protected $fillable = [
         'id_enrollment',
         'id_payment_type',
-        'mount',
+        'amount',
         'created_at',
         'created_by',
         'updated_at',

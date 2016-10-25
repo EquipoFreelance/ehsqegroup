@@ -1,16 +1,17 @@
 <?php
+
 namespace App\Repositories\Eloquents;
 
-use App\Models\PaymentDetail;
+use App\Models\PaymentConceptType;
 use App\Repositories\Contracts\InterfaceRepository;
 
-class PaymentDetailRepository implements InterfaceRepository
+class PaymentConceptTypeRepository implements InterfaceRepository
 {
     private $model;
 
     public function __construct()
     {
-        $this->model = new PaymentDetail();
+        $this->model = new PaymentConceptType();
     }
 
 
@@ -26,7 +27,7 @@ class PaymentDetailRepository implements InterfaceRepository
 
     // Create Register
     public function create( array $attribute){
-        return $this->model->create($attribute);
+
     }
 
     // Update Register by Id
@@ -36,6 +37,20 @@ class PaymentDetailRepository implements InterfaceRepository
 
     // Delete Register by Id
     public function delete( $id ){
+
+    }
+
+    public function getConceptsByParameters($id_payment_type){
+        $rs = $this->model->where("id_payment_type", $id_payment_type)->where("active", 1)->with("attr_concept");
+
+        if( $rs->count() ){
+
+            return $rs->get();
+            
+        } else {
+
+            return '';
+        }
 
     }
 

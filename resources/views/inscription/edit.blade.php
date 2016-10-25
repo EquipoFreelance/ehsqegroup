@@ -12,24 +12,26 @@
 @section('content')
 
   <!-- Custom Templates -->
-  <script id="response-template" type="text/x-handlebars-template">
-    @{{#each response}}
-    <tr>
-      <td>@{{ student.id }}</td>
-      <td>@{{ created_at }}</td>
-      <td>@{{ student.persona.persona_document_type.document_type_name }}</td>
-      <td>@{{ student.persona.num_doc }}</td>
-      <td>@{{ student.persona.nombre }}</td>
-      <td>@{{ student.persona.ape_pat }} @{{ student.persona.ape_mat }}</td>
-      <td>@{{ student.persona.correo }}</td>
-      <td>@{{ student.persona.num_phone  }} / @{{ student.persona.num_cellphone }}</td>
-      <td>@{{ modality.nom_mod }}</td>
-      <td>@{{ type_specialization.nom_esp_tipo }} / @{{ specialization.nom_esp }}</td>
-      <td>
-        <a href="inscription/@{{student.id}}/edit" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>
-      </td>
-    </tr>
-    @{{/each}}
+  <script id="response-template-concepts" type="text/x-handlebars-template">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <label for="mount">Detalle de los conceptos necesario para generar una matricula</label>
+      </div>
+      <div class="col-md-12 col-sm-12 col-xs-12 ">
+        <table class="tablex table-bordered" cellspacing="0" width="100%">
+          <tr>
+            <td width="300"><b>Concepto</b></td>
+            <td width="10"><b>Monto</b></td>
+          </tr>
+          @{{#each response}}
+          <tr>
+            <td>@{{ attr_concept.payment_concept_name }}<input type="hidden" name="concept_id_concept[]" value="@{{ id_payment_concept }}"></td>
+            <td class="">
+              <input type="text" class="form-control concept_amount amount_@{{id_payment_concept}}_@{{ id_payment_type }}" id="amount_@{{id_payment_concept}}_@{{ id_payment_type }}" name="concept_price[]" placeholder="S/. 0.00">
+            </td>
+          </tr>
+          @{{/each}}
+        </table>
+      </div>
   </script>
 
 <div class="form_content_block">
@@ -290,13 +292,8 @@
                           <option value="1">Pago Total</option>
                           <option value="2">Pago Fraccionado</option>
                           <option value="3">Pago Condicional</option>
-                          <option value="4">Becado por corporativo</option>
-                          <option value="5">Becado por Sorteo</option>
-                          <option value="6">Becado por Pronto Pago</option>
+                          <option value="4">Becado</option>
                         </select>
-                        @if ($errors->has('id_payment_method'))
-                          <label for="num_cellphone" generated="true" class="error">{{ $errors->first('id_payment_method') }}</label>
-                        @endif
                         <div>
                           Depósito Cta. Cte.  Banco de  Crédito  del Perú: <b> 192-1884961-0-08</b>  /  CCI :  <b>00219200188496100836</b>
                         </div>
@@ -304,151 +301,64 @@
                     </div>
                   </div>
 
-                  <div class="form-group">
+                  <!-- Fraccionado / númer de coutas -->
+                  <div class="form-group content_item content_item_2" style="display:none">
                     <div class="row">
                       <div class="col-md-12 col-sm-12 col-xs-12">
-                        <table class="tablex table-bordered" cellspacing="0" width="100%">
-                          <tr>
-                            <td width="300"><b>Concepto</b></td>
-                            <td width="10"><b>Monto</b></td>
-                          </tr>
-
-                          <!-- payment_method_student -->
-                          <tr class="content_payment_method_student">
-                            <td align="left">
-                              <table>
-                                <tr>
-                                  <td class="concept" align="left"></td>
-                                  <!-- Fraccionado  -->
-                                  <td class="coutas_2 content_cuotas" align="left" style="display:none">
-                                    <table cellspacing="0" width="100%">
-                                      <tr>
-                                        <td align="left">&nbsp;</td>
-                                        <td>en</td>
-                                        <td>:&nbsp;</td>
-                                        <td>
-                                          <select class="form-control" id="num_cuota" name="num_cuota">
-                                            <option>--Cuotas--</option>
-                                            <option value="1">Cuota 1</option>
-                                            <option value="2">Cuota 2</option>
-                                          </select>
-                                        </td>
-                                      </tr>
-                                    </table>
-                                  </td>
-                                  <!-- -->
-                                </tr>
-                              </table>
-                            </td>
-                            <td>
-                              <table cellspacing="0" width="100%">
-                                <tr>
-                                  <td><input type="text" class="form-control" id="amount" name="amount" placeholder="S/. 0.00"></td>
-                                </tr>
-                              </table>
-                            </td>
-                          </tr>
-
-                          <tr class="content_3 content_p" style="display:none">
-                            <td class="coutas_3 content_cuotas" align="left">
-                              <table cellspacing="0" width="320">
-                                <tr>
-                                  <td align="left" width="100">1ra. Cuota</td>
-
-                                  <td align="left" width="100">
-                                    <table cellspacing="0" width="250">
-                                      <tr>
-                                        <td>- Fecha:</td>
-                                        <td>&nbsp;</td>
-                                        <td>
-                                          <input type="text" class="form-control" id="condicional_date_1" name="condicional_date[]" placeholder="09/10/2016">
-                                          <input type="hidden" id="num_cuota_1" name="num_cuotas[]" value="1">
-                                        </td>
-                                      </tr>
-                                    </table>
-                                  </td>
-                                </tr>
-                              </table>
-                            </td>
-                            <td>
-                              <table cellspacing="0" width="100%">
-                                <tr>
-                                  <td>
-                                    <input type="text" class="form-control" id="condicional_amount_1" name="condicional_amount[]" placeholder="S/. 0.00">
-                                  </td>
-                                </tr>
-                              </table>
-                            </td>
-                          </tr>
-                          <tr class="content_3 content_p" style="display:none">
-                            <td class="coutas_3 content_cuotas" align="left">
-                              <table cellspacing="0" width="320">
-                                <tr>
-
-                                  <td align="left" width="100">2da. Cuota</td>
-
-                                  <td align="left" width="100">
-                                    <table cellspacing="0" width="250">
-                                      <tr>
-                                        <td>- Fecha:</td>
-                                        <td>&nbsp;</td>
-                                        <td>
-                                          <input type="text" class="form-control" id="condicional_date_2" name="condicional_date[]" placeholder="09/10/2016">
-                                          <input type="hidden" id="num_cuota_2" name="num_cuotas[]" value="2">
-                                        </td>
-                                      </tr>
-                                    </table>
-                                  </td>
-
-                                </tr>
-                              </table>
-                            </td>
-
-                            <td>
-                              <table cellspacing="0" width="100%">
-                                <tr>
-                                  <td>
-                                    <input type="text" class="form-control" id="condicional_amount_2" name="condicional_amount[]" placeholder="S/. 0.00">
-
-                                  </td>
-                                </tr>
-                              </table>
-                            </td>
-
-                          </tr>
-
-                          <!-- Otros conceptos -->
-                          <tr class="content_2 content_p" style="display:none">
-                            <td align="left">Matricula</td>
-                            <td colspan="2">
-                              <table cellspacing="0" width="100%">
-                                <tr>
-                                  <td>
-                                    <input type="hidden" id="id_payment_concept" name="id_payment_concept[]" value="1">
-                                    <input type="text" id="concept_mount" name="concept_mount[]" class="form-control" placeholder="S/. 0.00">
-                                  </td>
-                                </tr>
-                              </table>
-                            </td>
-                          </tr>
-                          <tr class="content_2 content_p" style="display:none">
-                            <td align="left">Certificado</td>
-                            <td colspan="2">
-                              <table cellspacing="0" width="100%">
-                                <tr>
-                                  <td>
-                                    <input type="hidden" id="id_payment_concept" name="id_payment_concept[]" value="2">
-                                    <input type="text" id="concept_mount" name="concept_mount[]" class="form-control" placeholder="S/. 0.00">
-                                  </td>
-                                </tr>
-                              </table>
-                            </td>
-                          </tr>
-
-                          <!-- Otros conceptos -->
-
-                        </table>
+                        <label for="id_payment_method">Número de Cuotas</label>
+                        <select class="form-control" id="num_cuota" name="num_cuota">
+                          <option> Seleccione el número de cuotas</option>
+                          <option value="1">Cuota 1</option>
+                          <option value="2">Cuota 2</option>
+                        </select>
                       </div>
+                    </div>
+                  </div>
+
+                  <!-- Condicional -->
+                  <div class="form-group content_item content_item_3" style="display:none">
+                    <div class="row">
+                      <div class="col-md-6 col-sm-6 col-xs-6">
+                        <label for="condicional_date_1">Fecha de Cuota 1</label>
+                        <input type="text" class="form-control" id="condicional_date_1" name="condicional_date[]" placeholder="09/10/2016">
+                        <input type="hidden" id="num_cuota_1" name="num_cuotas[]" value="1">
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-6">
+                        <label for="condicional_amount_1">Monto Cuota 1</label>
+                        <input type="text" class="form-control" id="condicional_amount_1" name="condicional_amount[]" placeholder="S/. 0.00">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group content_item content_item_3" style="display:none">
+                    <div class="row">
+                      <div class="col-md-6 col-sm-6 col-xs-6">
+                        <label for="mount">Fecha de la Cuota 2</label>
+                        <input type="text" class="form-control" id="condicional_date_2" name="condicional_date[]" placeholder="09/10/2016">
+                        <input type="hidden" id="num_cuota_2" name="num_cuotas[]" value="2">
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-6">
+                        <label for="condicional_amount_2">Monto Cuota 2</label>
+                        <input type="text" class="form-control" id="condicional_amount_2" name="condicional_amount[]" placeholder="S/. 0.00">
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Condicional -->
+
+                  <div class="form-group content_item content_item_mount" style="display:none">
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        <label for="amount">Monto</label>
+                        <input type="text" class="form-control" id="amount" name="amount" placeholder="S/. 0.00">
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Conceptos -->
+                  <div class="form-group content_item content_concept" style="display:none">
+                    <br>
+                    <div class="row content_concept_items">
+
                     </div>
                   </div>
 
