@@ -41,6 +41,7 @@ class PaymentConceptTypeRepository implements InterfaceRepository
     }
 
     public function getConceptsByParameters($id_payment_type){
+        
         $rs = $this->model->where("id_payment_type", $id_payment_type)->where("active", 1)->with("attr_concept");
 
         if( $rs->count() ){

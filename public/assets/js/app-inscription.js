@@ -46,7 +46,7 @@ $("#id_payment_method").change(function(){
             $("#amount").attr("readonly", "readonly");
         }
 
-        showConcepts(c);
+        showConcepts(c, $("#id_enrollment").val());
 
     } else {
 
@@ -306,9 +306,9 @@ function calculateAmmountCondicional(amount1, amount2){
     return calcular;
 }
 
-function showConcepts(id_payment_method){
+function showConcepts(id_payment_method, id_enrollment){
     $.ajax({
-        url:'/hsqegroup/api/inscription/concepts/'+id_payment_method+'/show',
+        url:'/hsqegroup/api/inscription/'+id_enrollment+'/concepts/'+id_payment_method+'/show',
         type:'get',
         datatype: 'json',
         data: {},
@@ -323,16 +323,19 @@ function showConcepts(id_payment_method){
             var html    = template(response);
             $(".content_concept_items").empty().append(html);
 
-            $.each(response.response, function(i, item) {
+            if(response.response){
+                $.each(response.response, function(i, item) {
 
-                var id = "amount_"+item.id_payment_concept+"_"+item.id_payment_type;
+                    var id = "amount_"+item.id_payment_concept+"_"+item.id_payment_type;
 
-                // Tipos de conceptos
-                if( id == "amount_9_1" || id == "amount_3_2" || id == "amount_3_3"){
-                    $("#amount_"+item.id_payment_concept+"_"+item.id_payment_type).val($("#amount").val()).attr("readonly", "readonly");
-                }
+                    // Tipos de conceptos
+                    if( id == "amount_9_1" || id == "amount_3_2" || id == "amount_3_3"){
+                        $("#amount_"+item.id_payment_concept+"_"+item.id_payment_type).val($("#amount").val()).attr("readonly", "readonly");
+                    }
 
-            });
+                });
+            }
+
 
             console.log(response);
 

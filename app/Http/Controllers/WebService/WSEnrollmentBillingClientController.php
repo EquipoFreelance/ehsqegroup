@@ -67,8 +67,11 @@ class WSEnrollmentBillingClientController extends Controller
         if($rs){
 
             $data = $rs->first();
+            if($data){
+                return response()->json($data->toArray(), 200);
+            }
 
-            return response()->json($data->toArray(), 200);
+
         }
 
 

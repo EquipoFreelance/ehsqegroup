@@ -62,25 +62,28 @@ class WSEnrollmentPaymentMethodController extends Controller
         if($rs){
 
             $data = $rs->first();
+            if($data){
+                // Pago Fraccionado
+                if($data->id_payment_method == 2){
 
-            // Pago Fraccionado
-            if($data->id_payment_method == 2){
+                    // Existe algun registro con el id del medio de pago registrado
+                    $row = EnrollmentPaymentFraccionado::where("id_enrollment_payment", $data->id );
 
-                // Existe algun registro con el id del medio de pago registrado
-                $row = EnrollmentPaymentFraccionado::where("id_enrollment_payment", $data->id );
+                    $data->fraccionado = $row->first();
 
-                $data->fraccionado = $row->first();
+                    // Condicional
+                } else if($data->id_payment_method == 3) {
 
-            // Condicional
-            } else if($data->id_payment_method == 3) {
+                    $row = EnrollmentPaymentCondicional::where("id_enrollment_payment", $data->id );
 
-                $row = EnrollmentPaymentCondicional::where("id_enrollment_payment", $data->id );
+                    $data->condicional = $row->get();
 
-                $data->condicional = $row->get();
+                }
 
+                return response()->json($data->toArray(), 200);
             }
 
-            return response()->json($data->toArray(), 200);
+
         }
 
 
@@ -186,6 +189,8 @@ class WSEnrollmentPaymentMethodController extends Controller
 
     public function store_payment(Request $request){
 
+        // Verificar su existen datos en la tabla pagos
+        
         $concept_id    = $request->get('concept_id_concept');
         $concept_price = $request->get('concept_price');
 

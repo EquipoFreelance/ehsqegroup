@@ -22,7 +22,7 @@ class Payment extends Model
     ];
 
     public function payment_detail(){
-        return $this->hasMany('App\Models\PaymentDetail', 'id_payment_type', 'id');
+        return $this->hasMany('App\Models\PaymentDetail', 'id_payment', 'id');
     }
 
 }

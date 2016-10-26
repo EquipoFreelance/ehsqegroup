@@ -24,7 +24,7 @@
           </tr>
           @{{#each response}}
           <tr>
-            <td>@{{ attr_concept.payment_concept_name }}<input type="hidden" name="concept_id_concept[]" value="@{{ id_payment_concept }}"></td>
+            <td>@{{ attr_concept.payment_concept_name }}<input type="hidden" name="concept_id_concept[]" value="@{{ id }}"></td>
             <td class="">
               <input type="text" class="form-control concept_amount amount_@{{id_payment_concept}}_@{{ id_payment_type }}" id="amount_@{{id_payment_concept}}_@{{ id_payment_type }}" name="concept_price[]" placeholder="S/. 0.00">
             </td>

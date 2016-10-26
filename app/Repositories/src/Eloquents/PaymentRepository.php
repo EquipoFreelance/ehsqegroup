@@ -39,4 +39,11 @@ class PaymentRepository implements InterfaceRepository
 
     }
 
+    public function getPayments($id_enrollemnt, $id_payment_type){
+
+        $rs = Payment::where("id_enrollment", $id_enrollemnt)->where("id_payment_type", $id_payment_type)->where("active", 1)->with("payment_detail");
+        return $rs->get();
+
+    }
+
 }

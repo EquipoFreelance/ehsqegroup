@@ -351,6 +351,6 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
     ]);
 
     // Show Concepts
-    Route::get('/hsqegroup/api/inscription/concepts/{id_payment_method}/show',[
+    Route::get('/hsqegroup/api/inscription/{id_enrollment}/concepts/{id_payment_method}/show',[
         'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSPaymentConceptTypeController@getConcepts'
     ]);
