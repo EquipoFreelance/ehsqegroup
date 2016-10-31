@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\WebService;
 
 use App\Libraries\Payment\Payment;
+use App\Models\EnrollmentPaymentConcept;
 use App\Models\EnrollmentPaymentCondicional;
 use App\Models\EnrollmentPaymentFraccionado;
+use App\Repositories\Eloquents\EnrollmentPaymentConceptRepository;
 use App\Repositories\Eloquents\PaymentConceptTypeRepository;
 use App\Repositories\Eloquents\PaymentDetailRepository;
 use App\Repositories\Eloquents\PaymentRepository;
@@ -26,11 +28,14 @@ class WSEnrollmentPaymentMethodController extends Controller
 
                 $row = $exist->first();
 
+                // Actualización del medio de pagos
                 $student_payment = $this->update($request, $row->id);
 
+                // Actualización del detalle de la forma de pago
                 $this->store_payment_method_detail($row->id, $request);
-                
-                $this->store_payment($request);
+
+                // Almacena el pago y el detalle
+                $this->updateEnrollmentPayment($request);
                 
                 return $student_payment;
 
@@ -48,6 +53,12 @@ class WSEnrollmentPaymentMethodController extends Controller
 
     }
 
+    /**
+     * Actualización del medio de pagos
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request, $id){
 
         $student_payment = EnrollmentPaymentMethod::findOrFail($id);
@@ -56,6 +67,10 @@ class WSEnrollmentPaymentMethodController extends Controller
 
     }
 
+    /**
+     * @param $id_enrollment
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function show($id_enrollment){
 
         $rs = EnrollmentPaymentMethod::where("id_enrollment", $id_enrollment);
@@ -90,6 +105,7 @@ class WSEnrollmentPaymentMethodController extends Controller
     }
 
     /**
+     * Actualización del detalle de la forma de pago
      * @param $id_enrollment_payment
      * @param Request $request
      */
@@ -187,42 +203,47 @@ class WSEnrollmentPaymentMethodController extends Controller
 
     }
 
-    public function store_payment(Request $request){
+    public function storeEnrollmentPayment(Request $request){
 
-        // Verificar su existen datos en la tabla pagos
-        
-        $concept_id    = $request->get('concept_id_concept');
-        $concept_price = $request->get('concept_price');
+        // Consultar la tabla de formas de pago
+        $repo_concept_type = new PaymentConceptTypeRepository();
+        $repo_enrollment   = new EnrollmentPaymentConceptRepository();
 
-        $amount = 0;
-        foreach ($concept_price as $item) {
-            $amount = $amount + $item;
+        $id_enrollment     = $request->get('id_enrollment');
+        $id_payment_method = $request->get('id_payment_method');
+
+        if( $repo_enrollment->countByEnrollment($id_enrollment) > 0){
+            $repo_enrollment->deleteAllByEnrollment($id_enrollment);
         }
 
-        $pay = new PaymentRepository();
-        $create = $pay->create([
-            'amount'            => $amount,
-            'id_enrollment'     => $request->get('id_enrollment'),
-            'id_payment_type'   => $request->get('id_payment_method'),
-            'active'            => 1
-        ]);
-
-        $n = - 1;
-        $detail = new PaymentDetailRepository();
-        foreach ($concept_id as $item) {
-            $n = $n + 1;
-            $detail->create([
-                'id_payment' => $create['id'],
-                'price'      => $concept_price[$n],
-                'id_concept' => $item,
-                'quantity'   => 1,
-                'active'     => 1
+        $rows = $repo_concept_type->getConceptsByParameters($id_payment_method);
+        foreach ($rows as $item) {
+            $repo_enrollment->create([
+                'amount'                    => 0,
+                'id_enrollment'             => $request->get('id_enrollment'),
+                'id_concept_payment_type'   => $item->id_payment_concept,
+                'active'                    => 0
             ]);
         }
 
-
+        return response()->json(array("message" => "Los conceptos se registraron satisfactoriamente"), 200);
 
     }
-
     
+    public function updateEnrollmentPayment($request){
+
+        $repo_enrollment   = new EnrollmentPaymentConceptRepository();
+
+        $n             = -1;
+        $ids           = $request->get('enrollment_concept_id');      // Matricula id del concepto
+        $amounts       = $request->get('enrollment_concept_amount');  // Matricula monto del concepto
+
+        foreach ($ids as $item) {
+            $n = $n + 1;
+            $repo_enrollment->update($ids[$n], [
+                'amount'     => $amounts[$n]
+            ]);
+        }
+        
+    }
 }

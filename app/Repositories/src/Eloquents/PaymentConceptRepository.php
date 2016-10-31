@@ -1,18 +1,19 @@
 <?php
 namespace App\Repositories\Eloquents;
 
-use App\Models\PaymentDetail;
+use App\Models\PaymentConcept;
 use App\Repositories\Contracts\InterfaceRepository;
 
-class PaymentDetailRepository implements InterfaceRepository
+class PaymentConceptRepository implements InterfaceRepository
 {
+
     private $model;
 
     public function __construct()
     {
-        $this->model = new PaymentDetail();
-    }
+        $this->model = new PaymentConcept();
 
+    }
 
     // Get All Register
     public function getAll(){
@@ -26,21 +27,21 @@ class PaymentDetailRepository implements InterfaceRepository
 
     // Create Register
     public function create( array $attribute){
-        return $this->model->create($attribute);
+
     }
 
     // Update Register by Id
     public function update( $id, array $attribute){
-        $todo = $this->model->findOrFail($id);
-        $todo->update($attribute);
-        return $todo;
+
     }
 
     // Delete Register by Id
     public function delete( $id ){
-        $todo = $this->model->findOrFail($id);
-        $todo->delete();
-        return true;
+
     }
 
+    public function getByNameConcept($id){
+        $concept = $this->model->find($id);
+        return $concept->payment_concept_name;
+    }
 }

@@ -13,6 +13,8 @@ class VerifyCsrfToken extends BaseVerifier
      */
     protected $except = [
         '/hsqegroup/api/student/payment-method/store',
-        '/hsqegroup/api/inscription/billing_client/store'
+        '/hsqegroup/api/inscription/billing_client/store',
+        '/hsqegroup/api/inscription/concepts/store',
+        '/dashboard/creditos/update_pagos/store'
     ];
 }

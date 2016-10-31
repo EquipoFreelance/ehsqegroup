@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use App\Repositories\Contracts\InterfaceRepository;
+use App\Repositories\Eloquents\EnrollmentPaymentConceptRepository;
+use App\Repositories\Eloquents\PaymentConceptRepository;
+use App\Repositories\Eloquents\PaymentConceptTypeRepository;
+use App\Repositories\Eloquents\PaymentDetailRepository;
+use App\Repositories\Eloquents\PaymentRepository;
 use Illuminate\Support\ServiceProvider;
 use Validator;
 use Hash;
@@ -29,6 +35,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(
+            InterfaceRepository::class,
+            PaymentConceptRepository::class,
+            PaymentConceptTypeRepository::class,
+            PaymentDetailRepository::class,
+            PaymentRepository::class,
+            EnrollmentPaymentConceptRepository::class
+        );
     }
 }

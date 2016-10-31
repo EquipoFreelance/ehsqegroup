@@ -54,5 +54,6 @@ class Kernel extends HttpKernel
         'role.alumno' => \App\Http\Middleware\RoleAlumnoMiddleware::class,
         'role.sistema' => \App\Http\Middleware\RoleSistemaMiddleware::class,
         'role.marketing' => \App\Http\Middleware\RoleMarketingMiddleware::class,
+        'role.creditos' => \App\Http\Middleware\RoleCreditosCobranzasMiddleware::class,
     ];
 }

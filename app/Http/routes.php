@@ -113,9 +113,6 @@ Route::group(['middleware' => ['auth','role.marketing']], function(){
     // Recursos de Inscripciones
     Route::resource('dashboard/inscription', 'InscriptionController', ['only' => ['show','index','edit','update'] ]);
 
-
-
-
 });
 
 // Rutas Públicas para los posibles clientes
@@ -166,12 +163,26 @@ Route::group(['middleware' => ['auth','role.alumno']], function(){
 
 });
 
+// Creditos y coabranzas
+Route::group(['middleware' => ['auth','role.creditos']], function(){
+
+    // Recursos de Creditos y cobranzas
+    Route::resource('dashboard/creditos', 'CreditosCobranzasController', ['only' => ['index'] ]);
+
+    Route::get('dashboard/creditos/{id_enrollment}/validar_pagos', [
+        'as' => 'dashboard.creditos-validar-pagos', 'uses' => 'CreditosCobranzasController@getValidaPagos'
+    ]);
+
+    Route::post('dashboard/creditos/update_pagos/store', [
+        'as' => 'dashboard.creditos-validar-pagos', 'uses' => 'CreditosCobranzasController@getUpdatePagos'
+    ]);
+
+});
+
 // Sistemas
 Route::group(['middleware' => ['auth','role.sistema']], function(){
 
 });
-
-
 
 
     /* -- Rutas asíncronas -- */
@@ -345,12 +356,17 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
         'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSEnrollmentBillingClientController@store'
     ]);
 
+    // Store Enrollment Concepts
+    Route::post('/hsqegroup/api/inscription/concepts/store',[
+        'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSEnrollmentPaymentMethodController@storeEnrollmentPayment'
+    ]);
+
     // Show Enrollment Billing Client
     Route::get('/hsqegroup/api/inscription/{id_enrollment}/billing_client/show',[
         'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSEnrollmentBillingClientController@show'
     ]);
 
-    // Show Concepts
-    Route::get('/hsqegroup/api/inscription/{id_enrollment}/concepts/{id_payment_method}/show',[
-        'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSPaymentConceptTypeController@getConcepts'
+    // Muestra los conceptos relacionados la matricula
+    Route::get('/hsqegroup/api/inscription/{id_enrollment}/concepts/show',[
+        'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSPaymentConceptTypeController@getEnrollmentConcepts'
     ]);

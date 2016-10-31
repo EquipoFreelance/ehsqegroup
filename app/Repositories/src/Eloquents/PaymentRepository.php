@@ -31,7 +31,9 @@ class PaymentRepository implements InterfaceRepository
 
     // Update Register by Id
     public function update( $id, array $attribute){
-
+        $todo = $this->model->findOrFail($id);
+        $todo->update($attribute);
+        return $todo->toArray();
     }
 
     // Delete Register by Id
@@ -39,11 +41,17 @@ class PaymentRepository implements InterfaceRepository
 
     }
 
-    public function getPayments($id_enrollemnt, $id_payment_type){
+    public function getPayments($id_enrollment){
 
-        $rs = Payment::where("id_enrollment", $id_enrollemnt)->where("id_payment_type", $id_payment_type)->where("active", 1)->with("payment_detail");
-        return $rs->get();
+        //, $id_payment_type
+        // ->where("id_payment_type", $id_payment_type)
+        $rs = Payment::where("id_enrollment", $id_enrollment)->with("payment_detail");//->with("payment_detail.attr_concept"); //->where("active", 0)
+        return $rs;
 
+    }
+
+    public function getCount($id){
+        return $this->model->find($id)->count();
     }
 
 }

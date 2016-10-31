@@ -98,65 +98,31 @@ $( "input[name='amount']" ).keyup(function() {
 
 });
 
-$("#frm_payment_method_student").find(".save").click(function(){
+$("#frm_edit_enrollment_payment_concept").find(".save").click(function(){
 
     event.preventDefault();
 
     $.ajax({
-        url:'/hsqegroup/api/student/payment-method/store',
+        url:'/dashboard/creditos/update_pagos/store',
         type:'post',
         datatype: 'json',
-        data: $( "#frm_payment_method_student" ).serialize(),
+        data: $( "#frm_edit_enrollment_payment_concept" ).serialize(),
         beforeSend: function(){
 
-            //$("#frm_payment_method_student").find(".save").attr("disabled", "disabled");
+            $("#frm_edit_enrollment_payment_concept").find(".save").attr("disabled", "disabled");
         },
         success:function(response)
         {
             $(".message").html(response.message);
         },
         complete: function(){
-            $("#frm_payment_method_student").find(".alert-success").show().removeClass("out").addClass("in");
-            $("#frm_payment_method_student").find(".save").removeAttr("disabled");
+            $("#frm_edit_enrollment_payment_concept").find(".alert-success").show().removeClass("out").addClass("in");
+            $("#frm_edit_enrollment_payment_concept").find(".save").removeAttr("disabled");
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if(  response.status == 400){
                 $("#frm_payment_method_student").find(".save").attr("disabled", "disabled");
             }
-        }
-    });
-
-});
-$("#frm_payment_method_student").find(".done").click(function(){
-
-    event.preventDefault();
-
-    $.ajax({
-        url:'/hsqegroup/api/inscription/concepts/store',
-        type:'post',
-        datatype: 'json',
-        data: $( "#frm_payment_method_student" ).serialize(),
-        beforeSend: function(){
-
-            //$("#frm_payment_method_student").find(".save").attr("disabled", "disabled");
-        },
-        success:function(response)
-        {
-
-            //console.log(response);
-            $(".message").html(response.message);
-
-            $(".content_concept").show();
-            showConcepts($("#id_enrollment").val());
-
-
-        },
-        complete: function(){
-            $("#frm_payment_method_student").find(".alert-success").show().removeClass("out").addClass("in");
-            $("#frm_payment_method_student").find(".save").removeAttr("disabled");
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-
         }
     });
 
@@ -320,6 +286,16 @@ function showConcepts(id_enrollment){
             var template = Handlebars.compile(source);
             var html    = template(response);
             $(".content_concept_items").empty().append(html);
+
+            $.each( response.response, function(i, item) {
+                console.log(item);
+                if(item.active == 1){
+                    $("#checked_"+item.id).attr("checked", "checked");
+                }
+
+            });
+
+
             $(".content_concept").show();
             console.log(response);
 

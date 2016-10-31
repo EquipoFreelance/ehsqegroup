@@ -2,39 +2,57 @@
 
 namespace App\Http\Controllers\WebService;
 
-use App\Repositories\Eloquents\PaymentConceptTypeRepository;
-use App\Repositories\Eloquents\PaymentRepository;
+use App\Repositories\Eloquents\PaymentConceptRepository;
+use App\Repositories\Eloquents\EnrollmentPaymentConceptRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
 class WSPaymentConceptTypeController extends Controller
 {
-    private $orm;
-    private $orm_payment;
-    
+    private $orm_concept_type;
+    private $orm_concept;
+
     public function __construct()
     {
-        $this->orm = new PaymentConceptTypeRepository();
-        $this->orm_payment = new PaymentRepository();
-
+        $this->orm_concept_type = new EnrollmentPaymentConceptRepository();
+        $this->orm_concept      = new PaymentConceptRepository();
     }
 
-    public function getConcepts($id_enrollment, $id_payment_method){
+    /**
+     * Muestra los conceptos asociados a la forma de pago
+     * @param $id_enrollment
+     * @param $id_payment_method
+     * @return $payment_detail
+     */
+    public function getEnrollmentConcepts($id_enrollment){
 
-        // Pago
-        $payment = $this->orm_payment->getPayments($id_enrollment, $id_payment_method);
+        // Verificando existencia del Pago
+        $enrollment_concept = $this->orm_concept_type->getPaymentConcepts($id_enrollment);
+
+        if($enrollment_concept){
+
+            // Calculamos el monto
+            $concept = $enrollment_concept->toArray();
+
+            foreach ($concept as $item) {
 
 
-        $response = $this->orm->getConceptsByParameters($id_payment_method);
+                $payment_detail[] = array(
+                    "id"                       => $item['id'],
+                    "id_enrollment"            => $item['id_enrollment'],
+                    "id_concept_payment_type"  => $item['id_concept_payment_type'],
+                    "amount"                   => $item['amount'],
+                    "active"                   => $item['active'],
+                    "name_concept"             => $this->orm_concept->getByNameConcept($item['id_concept_payment_type'])
+                );
 
-        if($response){
+            }
 
+            return response()->json(array("response" => $payment_detail), 200);
 
-            return response()->json(array("response" => $payment->toArray()), 200);
-            
         } else {
-            return response()->json(array("message" => "Sin conceptos disponibles"), 200);
+            return response()->json(array("response" => ""), 400);
         }
 
 

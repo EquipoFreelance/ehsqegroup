@@ -20,6 +20,12 @@ class PaymentDetail extends Model
         'updated_by',
         'active'
     ];
+
+
+    public function attr_concept()
+    {
+        return $this->belongsTo('App\Models\PaymentConceptType', 'id_concept', 'id');
+    }
     
     
 }
