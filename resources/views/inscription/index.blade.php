@@ -46,10 +46,10 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
 
-          <!--<div class="x_title">
-              <a href="#}" class="btn btn-5 btn-5a icon-add add"><span>Agregar</span></a>
+          <div class="x_title">
+              <a href="/inscription/create/{{ Auth::user()->id  }}" class="btn btn-5 btn-5a icon-add add"><span>Agregar</span></a>
               <div class="clearfix"></div>
-          </div>-->
+          </div>
           <div class="x_content">
             <table id="datatable-responsive" class="table table-stripedx table-borderedx dt-responsive nowrap" cellspacing="0" width="100%">
               <thead>

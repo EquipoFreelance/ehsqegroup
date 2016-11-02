@@ -44,12 +44,16 @@ $("#id_payment_method").change(function(){
         $("#amount").removeAttr("readonly");
 
         if(c == 3) {
-            $("#amount").attr("readonly", "readonly");
+
+            $("#amount").val('').attr("readonly", "readonly");
+
         } else if(c == 4){
             $(".content_item_mount").hide();
             $(".content_concept").hide();
         }
 
+        $.removeData($("#frm_payment_method_student"),'validator');
+        customValidate(customRules(c), customMessages(c));
         //showConcepts(c, $("#id_enrollment").val());
 
     } else {
@@ -127,7 +131,7 @@ $("#frm_payment_method_student").find(".save").click(function(){
     });
 
 });
-$("#frm_payment_method_student").find(".done").click(function(){
+$("#frm_payment_method_student").find(".donexxx").click(function(){
 
     event.preventDefault();
 
@@ -381,4 +385,133 @@ function calculateAmmountCondicional(amount1, amount2){
     }
 
     return calcular;
+}
+
+function customValidate(rules, messages){
+    $("#frm_payment_method_student").validate({
+        ignore: [],
+        errorPlacement: function(error, element) {
+            if(element.attr( "id" ) == 'ley_proteccion'){
+                $(".error_checkbox").show();
+            } else {
+                error.insertAfter(element);
+            }
+        },
+        rules: rules,
+        messages: messages,
+        submitHandler: function(form) {
+
+            $.ajax({
+                url:'/hsqegroup/api/inscription/concepts/store',
+                type:'post',
+                datatype: 'json',
+                data: $( form ).serialize(),
+                beforeSend: function(){
+                    $("#frm_payment_method_student").find(".done").attr("disabled", "disabled");
+                },
+                success:function(response)
+                {
+
+                    //console.log(response);
+                    $(".message").html(response.message);
+
+                    $(".content_concept").show();
+                    showConcepts($("#id_enrollment").val());
+
+
+                },
+                complete: function(){
+                    $("#frm_payment_method_student").find(".alert-success").show().removeClass("out").addClass("in");
+                    $("#frm_payment_method_student").find(".done").removeAttr("disabled");
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+
+                }
+            });
+
+
+        }
+    });
+}
+
+function customRules(id_payment_method){
+    var rules;
+    if(id_payment_method == 1) {
+
+        rules = {
+            amount: {
+                required: true
+            }
+
+        }
+
+    } else if(id_payment_method == 2) {
+
+        rules = {
+            num_cuota:{
+                required: true
+            },
+            amount: {
+                required: true
+            }
+
+        }
+
+    } else if(id_payment_method == 3) {
+
+        rules = {
+            'condicional_date[]': "required",
+            'condicional_amount[]': "required",
+            amount: {
+                required: true
+            }
+
+        }
+
+    }
+
+    return rules;
+}
+
+function customMessages(id_payment_method){
+    var messages;
+    if(id_payment_method == 1) {
+
+        messages = {
+            amount: {
+                required: "El campo es obligatorio"
+            }
+
+        }
+
+    } else if(id_payment_method == 2) {
+
+        messages = {
+            num_cuota:{
+                required: "El campo es obligatorio"
+            },
+            amount: {
+                required: "El campo es obligatorio"
+            }
+
+        }
+
+    } else if(id_payment_method == 3) {
+
+        messages = {
+            'condicional_date[]':{
+                required: "El campo es obligatorio"
+            },
+            'condicional_amount[]':{
+                required: "El campo es obligatorio"
+            },
+            amount: {
+                required: "El campo es obligatorio"
+            }
+
+        }
+
+    }
+
+    return messages;
 }

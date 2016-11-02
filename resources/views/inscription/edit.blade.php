@@ -309,7 +309,7 @@
                       <div class="col-md-12 col-sm-12 col-xs-12">
                         <label for="id_payment_method">Número de Cuotas</label>
                         <select class="form-control" id="num_cuota" name="num_cuota">
-                          <option> Seleccione el número de cuotas</option>
+                          <option value=""> Seleccione el número de cuotas</option>
                           <option value="1">Cuota 1</option>
                           <option value="2">Cuota 2</option>
                         </select>
@@ -322,12 +322,12 @@
                     <div class="row">
                       <div class="col-md-6 col-sm-6 col-xs-6">
                         <label for="condicional_date_1">Fecha de Cuota 1</label>
-                        <input type="text" class="form-control" id="condicional_date_1" name="condicional_date[]" placeholder="09/10/2016">
+                        <input type="text" class="form-control" id="condicional_date_1" name="condicional_date[]" value="" placeholder="09/10/2016">
                         <input type="hidden" id="num_cuota_1" name="num_cuotas[]" value="1">
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-6">
                         <label for="condicional_amount_1">Monto Cuota 1</label>
-                        <input type="text" class="form-control" id="condicional_amount_1" name="condicional_amount[]" placeholder="S/. 0.00">
+                        <input type="text" class="form-control" id="condicional_amount_1" name="condicional_amount[]" value="" placeholder="S/. 0.00">
                       </div>
                     </div>
                   </div>
@@ -336,12 +336,12 @@
                     <div class="row">
                       <div class="col-md-6 col-sm-6 col-xs-6">
                         <label for="mount">Fecha de la Cuota 2</label>
-                        <input type="text" class="form-control" id="condicional_date_2" name="condicional_date[]" placeholder="09/10/2016">
+                        <input type="text" class="form-control" id="condicional_date_2" name="condicional_date[]" value="" placeholder="09/10/2016">
                         <input type="hidden" id="num_cuota_2" name="num_cuotas[]" value="2">
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-6">
                         <label for="condicional_amount_2">Monto Cuota 2</label>
-                        <input type="text" class="form-control" id="condicional_amount_2" name="condicional_amount[]" placeholder="S/. 0.00">
+                        <input type="text" class="form-control" id="condicional_amount_2" name="condicional_amount[]" value="" placeholder="S/. 0.00">
                       </div>
                     </div>
                   </div>
@@ -351,14 +351,14 @@
                     <div class="row">
                       <div class="col-md-12 col-sm-12 col-xs-12">
                         <label for="amount">Monto</label>
-                        <input type="text" class="form-control" id="amount" name="amount" placeholder="S/. 0.00">
+                        <input type="text" class="form-control" id="amount" name="amount" value="" placeholder="S/. 0.00">
                       </div>
                     </div>
                   </div>
 
                   <div class="form-group">
                     <div class="form-group btncontrol">
-                      <button type="submit" class="btn btn-5 btn-5a icon-save done" id=""done><span>Aceptar</span></button>
+                      <button type="submit" class="btn btn-5 btn-5a icon-save done" id="done"><span>Aceptar</span></button>
                     </div>
                   </div>
 
@@ -517,6 +517,7 @@
 @stop
 
 @section('custom_js')
+  <script src="{{ URL::asset('assets/js/jquery.validated.js') }}"></script>
   <script src="{{ URL::asset('assets/js/app.js') }}"></script>
   <script src="{{ URL::asset('assets/js/app-academic-period.js') }}"></script>
   <script src="{{ URL::asset('assets/js/app-document-type.js') }}"></script>
