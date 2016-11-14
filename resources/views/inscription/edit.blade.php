@@ -6,7 +6,6 @@
       display: none;
     }
   </style>
-
 @stop
 
 @section('content')
@@ -48,7 +47,6 @@
         </div>
 
         <div class="x_content">
-
           <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#tab_informacion_personal" aria-controls="pinfo" role="tab" data-toggle="tab">Información personal</a></li>
             <li role="presentation"><a href="#tab_form_pago" aria-controls="pmodalidad" role="tab" data-toggle="tab">Forma de Pago</a></li>
@@ -56,7 +54,7 @@
           </ul>
           <br>
           <div class="tab-content">
-
+            <!-- Información Personal -->
             <div role="tabpanel" class="tab-pane active" id="tab_informacion_personal">
 
               {!! Form::model($student, [ 'method' => 'PUT', 'route' => ['dashboard.inscription.update', $student->id], 'class' => 'form-horizontal form-label-left' ]) !!}
@@ -275,6 +273,7 @@
 
             </div>
 
+            <!-- Información de Forma Pago -->
             <div role="tabpanel" class="tab-pane" id="tab_form_pago">
 
                 <form method="POST" name="frm_payment_method_student" id="frm_payment_method_student" action="#">
@@ -317,7 +316,7 @@
                     </div>
                   </div>
 
-                  <!-- Condicional -->
+                  <!-- Campos Forma de Pago Condicional -->
                   <div class="form-group content_item content_item_3" style="display:none">
                     <div class="row">
                       <div class="col-md-6 col-sm-6 col-xs-6">
@@ -345,7 +344,7 @@
                       </div>
                     </div>
                   </div>
-                  <!-- Condicional -->
+                  <!-- Campos Forma de Pago Condicional -->
 
                   <div class="form-group content_item content_item_mount" style="display:none">
                     <div class="row">
@@ -353,21 +352,6 @@
                         <label for="amount">Monto</label>
                         <input type="text" class="form-control" id="amount" name="amount" value="" placeholder="S/. 0.00">
                       </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <div class="form-group btncontrol">
-                      <button type="submit" class="btn btn-5 btn-5a icon-save done" id="done"><span>Aceptar</span></button>
-                    </div>
-                  </div>
-
-
-                  <!-- Conceptos -->
-                  <div class="form-group content_item content_concept" style="display:none">
-                    <br>
-                    <div class="row content_concept_items">
-
                     </div>
                   </div>
 
@@ -424,6 +408,7 @@
                 </form>
             </div>
 
+            <!-- Información de la facturación -->
             <div role="tabpanel" class="tab-pane" id="tab_facturacion">
 
               <form method="POST" name="frm_billing_client" id="frm_billing_client" action="#">
@@ -505,8 +490,6 @@
 
             </div>
           </div>
-
-
 
         </div>
 

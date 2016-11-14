@@ -7,6 +7,7 @@ use App\Models\EnrollmentPaymentConcept;
 use App\Models\EnrollmentPaymentCondicional;
 use App\Models\EnrollmentPaymentFraccionado;
 use App\Repositories\Eloquents\EnrollmentPaymentConceptRepository;
+use App\Repositories\Eloquents\EnrollmentPMRepository;
 use App\Repositories\Eloquents\PaymentConceptTypeRepository;
 use App\Repositories\Eloquents\PaymentDetailRepository;
 use App\Repositories\Eloquents\PaymentRepository;
@@ -21,30 +22,25 @@ class WSEnrollmentPaymentMethodController extends Controller
     public function store(Request $request){
 
         try {
+            
+            $epm_repo = new EnrollmentPMRepository();
+            
+            // Buscar forma de pago
+            $epm = $epm_repo->getByIdEnrollment(25);
 
-            $exist = EnrollmentPaymentMethod::where("id_enrollment", $request->get("id_enrollment") );
+            // Si Existe el registro, actualizamos
+            if($epm){
 
-            if($exist->count() > 0){
+                $action = $epm_repo->update($epm->id, $request->toArray());
 
-                $row = $exist->first();
-
-                // Actualización del medio de pagos
-                $student_payment = $this->update($request, $row->id);
-
-                // Actualización del detalle de la forma de pago
-                $this->store_payment_method_detail($row->id, $request);
-
-                // Almacena el pago y el detalle
-                $this->updateEnrollmentPayment($request);
-                
-                return $student_payment;
-
+            // Registramos por primera vez
             } else {
 
-                $student_payment = EnrollmentPaymentMethod::create($request->all());
-
-                return response()->json(array("data" => $student_payment->toArray(), "message" => "El medio de pago fue registrado satisfactoriamente"), 200);
+                $action = $epm_repo->create($request->toArray());
             }
+
+            return $action;
+
 
         } catch (Exception $e) {
 
@@ -59,13 +55,13 @@ class WSEnrollmentPaymentMethodController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id){
+    /*public function update(Request $request, $id){
 
         $student_payment = EnrollmentPaymentMethod::findOrFail($id);
         $student_payment->fill($request->all())->save();
-        return response()->json(array("data" => $student_payment->toArray(), "message" => "El medio de pago fue actualizado satisfactoriamente"), 200);
+        return response()->json(array("data" => $student_payment->toArray(), "message" => "EL medio de pago fue actualizado satisfactoriamente"), 200);
 
-    }
+    }*/
 
     /**
      * @param $id_enrollment
@@ -111,8 +107,8 @@ class WSEnrollmentPaymentMethodController extends Controller
      */
     public function store_payment_method_detail($id_enrollment_payment, Request $request){
         
-        $id_payment_method = $request->get("id_payment_method");
-        $num_cuota         = $request->get("num_cuota");
+        $id_payment_method = $request->get("id_payment_method"); // Forma de Pago
+        $num_cuota         = $request->get("num_cuota");            
 
         // Fraccionado
         if($id_payment_method == 2){
@@ -202,7 +198,10 @@ class WSEnrollmentPaymentMethodController extends Controller
         }
 
     }
-
+    
+    
+    
+    
     public function storeEnrollmentPayment(Request $request){
 
         // Consultar la tabla de formas de pago

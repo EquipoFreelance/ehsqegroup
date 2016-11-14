@@ -6,7 +6,7 @@
 /* -- App -- */
 var filtro_fecha_inicio = $("#fecha_inicio");
 
-
+// Mostrar lista de Inscritos
 if($(".items").length){
     listInscriptions('-');
 }
@@ -21,9 +21,8 @@ filtro_fecha_inicio.change(function(){
 if($("#id_enrollment").val()){
 
     // Muestra detalle de la forma de pago
-    showPaymentMethodStudent($("#id_enrollment").val());
-
-    showEnrollmentBillingClient($("#id_enrollment").val());
+    //showPaymentMethodStudent($("#id_enrollment").val());
+    //showEnrollmentBillingClient($("#id_enrollment").val());
 }
 
 
@@ -102,17 +101,15 @@ $( "input[name='amount']" ).keyup(function() {
 
 });
 
+// Registra la forma de pago
 $("#frm_payment_method_student").find(".save").click(function(){
-
     event.preventDefault();
-
     $.ajax({
         url:'/hsqegroup/api/student/payment-method/store',
         type:'post',
         datatype: 'json',
         data: $( "#frm_payment_method_student" ).serialize(),
         beforeSend: function(){
-
             //$("#frm_payment_method_student").find(".save").attr("disabled", "disabled");
         },
         success:function(response)
@@ -131,41 +128,6 @@ $("#frm_payment_method_student").find(".save").click(function(){
     });
 
 });
-$("#frm_payment_method_student").find(".donexxx").click(function(){
-
-    event.preventDefault();
-
-    $.ajax({
-        url:'/hsqegroup/api/inscription/concepts/store',
-        type:'post',
-        datatype: 'json',
-        data: $( "#frm_payment_method_student" ).serialize(),
-        beforeSend: function(){
-
-            //$("#frm_payment_method_student").find(".save").attr("disabled", "disabled");
-        },
-        success:function(response)
-        {
-
-            //console.log(response);
-            $(".message").html(response.message);
-
-            $(".content_concept").show();
-            showConcepts($("#id_enrollment").val());
-
-
-        },
-        complete: function(){
-            $("#frm_payment_method_student").find(".alert-success").show().removeClass("out").addClass("in");
-            $("#frm_payment_method_student").find(".save").removeAttr("disabled");
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-
-        }
-    });
-
-});
-
 
 $("#frm_billing_client").find(".save").click(function(){
 
@@ -177,7 +139,7 @@ $("#frm_billing_client").find(".save").click(function(){
         datatype: 'json',
         data: $( "#frm_billing_client" ).serialize()+"&id_enrollment="+$("#id_enrollment").val(),
         beforeSend: function(){
-            $("#frm_payment_method_student").find(".save").attr("disabled", "disabled");
+            //$("#frm_payment_method_student").find(".save").attr("disabled", "disabled");
         },
         success:function(response)
         {

@@ -133,7 +133,7 @@ class InscriptionController extends Controller
 
   }
 
-  public function show()
+  public function show($id)
   {
     //$persona = Persona::with('persona_student')->find(32);//->persona_telefonos->toJson();
     //return $persona->persona_student()->first()->id;
