@@ -302,6 +302,7 @@
                     </div>
                   </div>
 
+
                   <!-- Fraccionado / númer de coutas -->
                   <div class="form-group content_item content_item_2" style="display:none">
                     <div class="row">
@@ -355,9 +356,22 @@
                     </div>
                   </div>
 
+                  <div class="form-group content_item content_item_2" style="display:none">
+                    <div class="row">
+                      <div class="col-md-6 col-sm-6 col-xs-6">
+                        <label for="amount_enrollment">Costo Matrícula S/.</label>
+                        <input type="text" id="amount_enrollment" placeholder="Matrícula" name="amount_enrollment" class="form-control" value="">
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-6">
+                        <label for="amount_certificate">Costo Certificado S/.</label>
+                        <input type="text" id="amount_certificate" placeholder="Certificado" name="amount_certificate" class="form-control" value="">
+                      </div>
+                    </div>
+                  </div>
+
                   <div class="form-group">
                     <div class="row">
-                      <div class="col-md-12 col-sm-12 col-xs-12">
+                      <div class="col-md-12 col-sm-12 col-xs-6">
                         <label for="operation_number">Observación</label>
                         <textarea class="form-control" name="observation" id="observation" placeholder="Observación"></textarea>
                         @if ($errors->has('observation'))
