@@ -1,13 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: JUAN
- * Date: 14/11/2016
- * Time: 12:48 AM
- */
-
 namespace App\Repositories\Eloquents;
-
 
 use App\Models\EnrollmentPaymentMethod;
 use App\Repositories\Contracts\InterfaceRepository;
@@ -34,11 +26,12 @@ class EnrollmentPMRepository implements InterfaceRepository
     }
 
     // Find Register by Id
-    public function getByIdEnrollment( $id ){
+    public function getByIdEnrollment( $id_enrollment ){
 
-        return $this->model->where("id_enrollment", $id )->first();
+        return $this->model->where("id_enrollment", $id_enrollment )->first();
 
     }
+    
     // Create Register
     public function create( array $attribute){
 
@@ -68,7 +61,6 @@ class EnrollmentPMRepository implements InterfaceRepository
         // Pago Total
         if($mp == 1){
 
-            
             $epm = $epm_repo_total->getByIdEpm($mp);
 
             if($epm){
@@ -93,7 +85,6 @@ class EnrollmentPMRepository implements InterfaceRepository
 
         // Pago Fraccionado
         }else if($mp == 2){
-
 
             $epm = $epm_repo_fra->getByIdEpm($mp);
 
@@ -121,13 +112,15 @@ class EnrollmentPMRepository implements InterfaceRepository
         // Pago Condicional
         } else if($mp == 3){
 
+
             $arr_condicional_date   = $attribute['condicional_date'];
             $arr_condicional_amount = $attribute['condicional_amount'];
             $arr_num_cuota          = $attribute['num_cuotas'];
 
-            $epm = $epm_repo_con->getByIdEpm($id_epm);
+            // Existe registro de pago condicional
+            $epm_count = $epm_repo_con->getCountByIdEpm($id_epm);
             
-            if($epm > 0){
+            if( $epm_count > 0 ){
 
                 foreach ($arr_num_cuota as $key => $num_cuota) {
 
@@ -139,7 +132,6 @@ class EnrollmentPMRepository implements InterfaceRepository
                         'num_cuota' => $num_cuota,
                         'date'      => $date
                     ));
-
                 }
 
 
@@ -157,7 +149,6 @@ class EnrollmentPMRepository implements InterfaceRepository
                         'date'      => $date,
                         'active'    => '1',
                     ));
-
                 }
 
             }

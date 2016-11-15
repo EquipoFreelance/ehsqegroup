@@ -19,10 +19,7 @@ filtro_fecha_inicio.change(function(){
 
 
 if($("#id_enrollment").val()){
-
-    // Muestra detalle de la forma de pago
-    //showPaymentMethodStudent($("#id_enrollment").val());
-    //showEnrollmentBillingClient($("#id_enrollment").val());
+    showInscription(25);
 }
 
 
@@ -31,37 +28,44 @@ if($("#id_enrollment").val()){
 // Selección de medio de pago
 $("#id_payment_method").change(function(){
 
-    var c = $(this).val() * 1;
+    var sel_form_pago = $(this).val() * 1;
 
-    if(c){
+    if(sel_form_pago){
 
         $(".content_item").hide();
-        $(".content_item_"+c).show();
+        $(".content_item_"+sel_form_pago).show();
         $(".content_item_mount").show();
 
+        // Total
+        if(sel_form_pago == 1){
 
-        $("#amount").removeAttr("readonly");
+            $("#amount").removeAttr("readonly").focus();
 
-        if(c == 3) {
+        // Fraccionado
+        } else if(sel_form_pago == 2){
 
+            $("#num_cuota").focus();
+            $("#amount").removeAttr("readonly");
+
+        // Condicional
+        } else if(sel_form_pago == 3){
+
+            $("#condicional_date_1").focus();
             $("#amount").val('').attr("readonly", "readonly");
 
-        } else if(c == 4){
+        // Becado
+        } else if(sel_form_pago == 4){
+
             $(".content_item_mount").hide();
             $(".content_concept").hide();
-        }
 
-        $.removeData($("#frm_payment_method_student"),'validator');
-        customValidate(customRules(c), customMessages(c));
-        //showConcepts(c, $("#id_enrollment").val());
+        }
 
     } else {
 
         $(".content_item").hide();
 
     }
-
-
 
 
 });
@@ -222,6 +226,57 @@ function listInscriptions(fecha_inicio){
 
     });
 }
+
+function showInscription(id_enrollment){
+    $.ajax({
+        url:'/hsqegroup/api/inscription/show/'+id_enrollment,
+        type:'get',
+        datatype: 'json',
+        data: {},
+        beforeSend: function(){
+
+        },
+        success:function(r)
+        {
+            console.log(r);
+
+            var epm_type      = r.forma_pago.id_payment_method;
+            $("#id_payment_method").val(epm_type).trigger("change");
+
+            // Fraccionado
+            if(epm_type == 2){
+
+                var epm_num_cuota = r.forma_pago.form_pago_detalle.num_cuota;
+                $("#num_cuota").val(epm_num_cuota).trigger("change");
+
+            // Condicional
+            } else if(epm_type == 3){
+
+                var epm_num_cuotas = r.forma_pago.form_pago_detalle;
+
+                $.each( epm_num_cuotas, function(i, item) {
+                    $("#condicional_date_"+item.num_cuota).val(item.date);
+                    $("#condicional_amount_"+item.num_cuota).val(item.amount);
+                });
+
+            }
+
+            var epm_amount    = r.forma_pago.form_pago_detalle.amount;
+            $("#amount").val(epm_amount);
+
+        },
+        complete: function(){
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            if(  response.status == 400){
+                $("#frm_payment_method_student").find(".save").attr("disabled", "disabled");
+            }
+        }
+    });
+}
+
+
 
 // Medio de Pago
 function showPaymentMethodStudent(id_enrollment){

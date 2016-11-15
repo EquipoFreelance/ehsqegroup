@@ -34,10 +34,14 @@ class EpmCondicionalRepository implements InterfaceRepository
 
     // Find Register by Id
     public function getByIdEpm( $id_epm ){
-
-        return $this->model->where("id_epm", $id_epm )->count();
-
+        return $this->model->where("id_epm", $id_epm )->get();
     }
+
+    // Find Register by Id
+    public function getCountByIdEpm( $id_epm ){
+        return $this->model->where("id_epm", $id_epm )->count();
+    }
+
 
 
     // Create Register

@@ -347,9 +347,9 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
     ]);
 
     // Show Student Payment Method
-    Route::get('/hsqegroup/api/student/{id_enrollment}/payment-method/show',[
+    /*Route::get('/hsqegroup/api/student/{id_enrollment}/payment-method/show',[
         'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSEnrollmentPaymentMethodController@show'
-    ]);
+    ]);*/
 
     // Store Enrollment Billing Client
     Route::post('/hsqegroup/api/inscription/billing_client/store',[
@@ -357,9 +357,9 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
     ]);
 
     // Store Enrollment Concepts
-    Route::post('/hsqegroup/api/inscription/concepts/store',[
+    /*Route::post('/hsqegroup/api/inscription/concepts/store',[WSInscriptionController
         'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSEnrollmentPaymentMethodController@storeEnrollmentPayment'
-    ]);
+    ]);*/
 
     // Show Enrollment Billing Client
     Route::get('/hsqegroup/api/inscription/{id_enrollment}/billing_client/show',[
@@ -369,4 +369,9 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
     // Muestra los conceptos relacionados la matricula
     Route::get('/hsqegroup/api/inscription/{id_enrollment}/concepts/show',[
         'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSPaymentConceptTypeController@getEnrollmentConcepts'
+    ]);
+
+    // Muestra una inscripción
+    Route::get('/hsqegroup/api/inscription/show/{id_enrollment}',[
+        'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSInscriptionController@showInscription'
     ]);
