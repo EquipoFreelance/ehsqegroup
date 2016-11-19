@@ -184,7 +184,7 @@ Route::group(['middleware' => ['auth','role.creditos']], function(){
     Route::post('/hsqegroup/services/validate-payment/store', [
         'as' => 'hsqegroup.services.validate-payment.store', 'uses' => 'WebService\WSValidatePaymentController@storeValidatePayment'
     ]);
-    
+
 });
 
 // Sistemas

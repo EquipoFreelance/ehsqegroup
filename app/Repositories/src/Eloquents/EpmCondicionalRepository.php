@@ -104,10 +104,11 @@ class EpmCondicionalRepository implements InterfaceRepository
 
             // Adjutnamos los conceptos
             $response_concepts[] = array(
-                'concept_id'        => 0,
+                'id'                => 'idx'.$condicional->id_concept,
+                'concept_id'        => $condicional->id_concept,
                 'concept_name'      => $concept_name->payment_concept_name,
                 'concept_amount'    => $condicional->amount,
-                'concept_verifided' => false
+                'concept_verifided' => 0
             );
 
         }

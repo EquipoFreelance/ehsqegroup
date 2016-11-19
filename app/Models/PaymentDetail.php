@@ -12,7 +12,7 @@ class PaymentDetail extends Model
     protected $fillable = [
         'id_payment',
         'id_concept',
-        'price',
+        'amount',
         'quantity',
         'created_at',
         'created_by',

@@ -99,10 +99,11 @@ class EpmTotalRepository implements InterfaceRepository
 
                 // Adjutnamos los conceptos
                 $response_concepts[] = array(
-                    'concept_id'        => 0,
+                    'id'                => 'idx'+9,
+                    'concept_id'        => 9,
                     'concept_name'      => $concept_name->payment_concept_name,
                     'concept_amount'    => $epm_total->amount,
-                    'concept_verifided' => false
+                    'concept_verifided' => 0
                 );
                 break;
 

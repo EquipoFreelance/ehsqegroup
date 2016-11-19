@@ -21,7 +21,7 @@ if($("#id_enrollment").length){
 
 $( document ).delegate( "input:checkbox", "ifChanged", function(e) {
 
-    var id = '';
+    var id;
 
     id = $(this).attr("id").replace("checked_", "");
 
@@ -43,25 +43,28 @@ $("#frm_edit_enrollment_payment_concept").find(".save").click(function(){
     $.ajax({
         url:'/hsqegroup/services/validate-payment/store',
         type:'post',
-        //datatype: 'json',
+        datatype: 'json',
         data: $( "#frm_edit_enrollment_payment_concept" ).serialize(),
         beforeSend: function(){
-            //$("#frm_payment_method_student").find(".save").attr("disabled", "disabled");
+            $("#frm_edit_enrollment_payment_concept").find(".save").attr("disabled", "disabled");
         },
         success:function(response)
         {
-            console.log(response);
-            //$(".message").html(response.message);
+            //console.log(response);
+            $(".message").html(response.message);
         },
         complete: function(){
-            //$("#frm_payment_method_student").find(".alert-success").hide().fadeIn().removeClass("out").addClass("in");
-            //$("#frm_payment_method_student").find(".save").removeAttr("disabled");
+            $("#frm_edit_enrollment_payment_concept").find(".alert-success").hide().fadeIn().removeClass("out").addClass("in");
+            $("#frm_edit_enrollment_payment_concept").find(".save").removeAttr("disabled");
+
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            /*if(  response.status == 400){
+            if(  response.status == 400){
                 $("#frm_payment_method_student").find(".save").attr("disabled", "disabled");
-            }*/
+            }
         }
+    }).done(function(){
+        location.href = document.URL;
     });
 });
 

@@ -57,7 +57,8 @@ class WSValidatePaymentController extends Controller
                         $concept_name =  $concept_repo->getById($concept->id_concept);
 
                         $response_concepts[] = array(
-                            'concept_id'        => $concept->id,
+                            'id'                => $concept->id,
+                            'concept_id'        => $concept->id_concept,
                             'concept_name'      => $concept_name->payment_concept_name,
                             'concept_amount'    => $concept->amount,
                             'concept_verifided' => $concept->verified
@@ -110,13 +111,15 @@ class WSValidatePaymentController extends Controller
 
     public function storeValidatePayment(Request $request){
 
-        $payment_repo  = new PaymentRepository();
+        $payment_repo         = new PaymentRepository();
         $payment_concept_repo = new PaymentDetailRepository();
 
-        $arr_concept_ids       = $request->get("enrollment_concept_id");
-        $arr_concept_amounts   = $request->get("enrollment_concept_amount");
-        $arr_concept_verifieds = $request->get("enrollment_concept_verified_");
-        $id_enrollment         = $request->get("id_enrollment");
+        $arr_concept_ids       = $request->get("enrollment_concept_id");        // Identidicador de los conceptos
+        $arr_concept_amounts   = $request->get("enrollment_concept_amount");    // Montos
+        $arr_concept_verifieds = $request->get("enrollment_concept_verified_"); // Verificación de checks
+        $arr_concept_idx       = $request->get("enrollment_concept_idx");       // Id de los conceptos
+
+        $id_enrollment         = $request->get("id_enrollment");                // Id de la matricula
 
         $student_payment = StudentPayment::where('id_enrollment', $id_enrollment)->first();
 
@@ -144,37 +147,66 @@ class WSValidatePaymentController extends Controller
 
             }
 
+            return response()->json(array("message" => 'Los pagos fueron verificados satisfactoriamente'), 200);
+
         } else {
 
-        }
+            $epm_repo     = new EnrollmentPMRepository();
+            $payment_repo = new PaymentRepository();
 
-        /*if($arr_concept_ids){
+            $amount_total = 0;
 
-            foreach ($arr_concept_ids as $key => $concept_id) {
+            // Calculando monto total
+            foreach ($arr_concept_amounts as  $amount) {
+                $amount_total = $amount_total + $amount;
+            }
 
-                $payment_concept = $payment_concept_repo->getById($concept_id);
+            // Creando el Pago
+            $create = $payment_repo->create(array(
+                'amount_total' => $amount_total,
+                'active'       => 1,
+                'verified'     => 1,
+            ));
 
-                if($payment_concept){
+            // Creando los conceptos
+            foreach ($arr_concept_amounts as $key => $concept_id) {
 
-                    $payment_concept_repo->update($concept_id, array(
-                        'amount'   => $arr_concept_amounts[$key],
-                        'verified' => $arr_concept_verifieds[$key],
-                    ));
+                $payment_concept_repo->create(array(
+                    'id_concept' => $arr_concept_idx[$key],
+                    'id_payment' => $create->id,
+                    'quantity'   => 1,
+                    'amount'     => $arr_concept_amounts[$key],
+                    'verified'   => $arr_concept_verifieds[$key],
+                ));
 
-                } else {
+            }
 
-                    $payment_concept_repo->cerate(array(
-                        'amount'   => $arr_concept_amounts[$key],
-                        'verified' => $arr_concept_verifieds[$key],
+            if($create){
+
+                // Verificando existencia de la forma de pago
+                $epm = $epm_repo->getByIdEnrollment($id_enrollment);
+
+                if($epm){
+
+                    $enro_repo = new EnrollmentRepository();
+
+                    $enrollment = $enro_repo->getById($epm->id_enrollment);
+
+                    // Creando la relación entre la matricula y el pago
+                    StudentPayment::create(array(
+                        'id_enrollment'     => $epm->id_enrollment,         // Id de la matricula
+                        'id_payment_method' => $epm->id_payment_method,     // Id de la forma de pago
+                        'id_payment'        => $create->id,                 // Id del pago realizado
+                        'id_student'        => $enrollment->student->id     // Id de estudiante
                     ));
 
                 }
 
             }
 
-        }*/
+            return response()->json(array("message" => 'Los pagos fueron verificados satisfactoriamente'), 200);
 
-        //return response()->json(array("message" => 'registrados'), 200);
+        }
 
     }
 }

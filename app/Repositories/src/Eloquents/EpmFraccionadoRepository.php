@@ -108,10 +108,11 @@ class EpmFraccionadoRepository implements InterfaceRepository
 
                 // Adjutnamos los conceptos
                 $response_concepts[] = array(
-                    'concept_id'        => 0,
+                    'id'                => 'idx'+3,
+                    'concept_id'        => 3,
                     'concept_name'      => $concept_name->payment_concept_name,
                     'concept_amount'    => $epm_fra->amount,
-                    'concept_verifided' => false
+                    'concept_verifided' => 0
                 );
                 break;
 
@@ -131,10 +132,11 @@ class EpmFraccionadoRepository implements InterfaceRepository
 
             // Adjutnamos los conceptos
             $response_concepts[] = array(
-                'concept_id'        => 0,
+                'id'                => 'idx'.$otro_concepto['id_concept'],
+                'concept_id'        => $otro_concepto['id_concept'],
                 'concept_name'      => $concept_name->payment_concept_name,
                 'concept_amount'    => $otro_concepto['amount'],
-                'concept_verifided' => false
+                'concept_verifided' => 0
             );
 
         }

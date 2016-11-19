@@ -26,15 +26,16 @@
                 <tr>
                     <td>
                         @{{ concept_name }}
-                        <input type="hidden" name="enrollment_concept_id[]" value="@{{ concept_id }}" />
+                        <input type="hidden" name="enrollment_concept_id[]" value="@{{ id }}" />
+                        <input type="hidden" name="enrollment_concept_idx[]" value="@{{ concept_id }}" />
                     </td>
                     <td>
                         @{{ concept_amount }}
                         <input type="hidden"  class="form-control" name="enrollment_concept_amount[]" placeholder="S/. 0.00" value="@{{ concept_amount }}">
                     </td>
                     <td>
-                        <input type="hidden" class="form-control" id="enrollment_concept_verified_@{{ concept_id }}" name="enrollment_concept_verified_[]" value="@{{ concept_verifided }}">
-                        <input type="checkbox" name="enrollment_concept_verified[]" id="checked_@{{ concept_id }}" @{{#if concept_verifided}} checked="checked" @{{else}} @{{/if}} class="form-control enrollment_concept_verified flatedit" value="1">
+                        <input type="hidden" class="form-control" id="enrollment_concept_verified_@{{ id }}" name="enrollment_concept_verified_[]" value="@{{ concept_verifided }}">
+                        <input type="checkbox" name="enrollment_concept_verified[]" id="checked_@{{ id }}" @{{#if concept_verifided}} checked="checked" @{{else}} @{{/if}} class="form-control enrollment_concept_verified flatedit" value="1">
                     </td>
                 </tr>
                 @{{/each}}
