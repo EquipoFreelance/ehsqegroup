@@ -32,32 +32,59 @@ class EpmFraccionadoOtrosRepository implements InterfaceRepository
 
     }
 
-    // Find Register by Id
-    public function getByIdEpm( $id_epm ){
-        return $this->model->where("id_epm", $id_epm )->get();
+    /**
+     * Find Register by Id
+     * @param $id_epm_fra
+     * @return mixed
+     */
+    public function getByIdEpmFra($id_epm_fra){
+        return $this->model->where("id_epm_fra", $id_epm_fra)->get();
     }
-
-    // Find Register by Id
-    public function getCountByIdEpm( $id_epm ){
-        return $this->model->where("id_epm", $id_epm )->count();
-    }
-
 
 
     // Create Register
     public function create( array $attribute){
 
         $epm = $this->model->create($attribute);
-        return response()->json(array("data" => $epm->toArray(), "message" => "El detalle del medio de pago fue registrado satisfactoriamente"), 200);
+        return response()->json(array("data" => $epm->toArray(), "message" => "El registro fue creado satisfactoriamente"), 200);
 
     }
+
+    // Update Register by Id
+    public function updateByIdEpmFra( $id_epm_fra, $id_concept, array $attribute){
+
+        try {
+
+            $first = $this->model->where("id_epm_fra", $id_epm_fra)->where("id_concept", $id_concept)->first();
+
+            $epm = $this->model->find($first->id);
+
+            if($epm){
+
+                $epm->update($attribute);
+
+                return response()->json(array("data" => $epm->toArray(), "message" => "El registro fue actualizado satisfactoriamente"), 200);
+
+            }
+
+        } catch (Exception $e) {
+
+            return false;
+        }
+
+    }
+
 
     // Update Register by Id
     public function update( $id, array $attribute){
 
         $epm = $this->model->findOrFail($id);
-        $epm->update($attribute);
-        return response()->json(array("data" => $epm->toArray(), "message" => "El detalle del medio de pago fue actualizado satisfactoriamente"), 200);
+        if($epm){
+            $epm->update($attribute);
+            return $epm->toArray();
+        } else {
+            return false;
+        }
 
     }
 
@@ -78,10 +105,13 @@ class EpmFraccionadoOtrosRepository implements InterfaceRepository
 
     }
 
-    public function deleteIdEpm($id_epm){
-        $epm = $this->model->where("id_epm", $id_epm );
+    public function deleteIdEpm($id_epm_fra){
+
+        $epm = $this->model->where("id_epm_fra", $id_epm_fra );
         if($epm){
             $epm->delete();
         }
     }
+
+
 }

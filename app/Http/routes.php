@@ -341,37 +341,19 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
         'as' => 'json.group-teacher.all', 'uses' => 'WebService\WSReportCardController@ReporteCardStore'
     ]);
 
-    // Store Student Payment Method
-    Route::post('/hsqegroup/api/student/payment-method/store',[
-        'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSEnrollmentPaymentMethodController@store'
+    /* -- Module Inscription  -- */
+
+    // Store Forma de Pago
+    Route::post('/hsqegroup/services/inscription/store/payment-method',[
+        'as' => 'hsqegroup.services.inscription.store.payment-method', 'uses' => 'WebService\WSInscriptionController@storePaymentMethod'
     ]);
 
-    // Show Student Payment Method
-    /*Route::get('/hsqegroup/api/student/{id_enrollment}/payment-method/show',[
-        'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSEnrollmentPaymentMethodController@show'
-    ]);*/
-
-    // Store Enrollment Billing Client
-    Route::post('/hsqegroup/api/inscription/billing_client/store',[
-        'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSEnrollmentBillingClientController@store'
-    ]);
-
-    // Store Enrollment Concepts
-    /*Route::post('/hsqegroup/api/inscription/concepts/store',[WSInscriptionController
-        'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSEnrollmentPaymentMethodController@storeEnrollmentPayment'
-    ]);*/
-
-    // Show Enrollment Billing Client
-    Route::get('/hsqegroup/api/inscription/{id_enrollment}/billing_client/show',[
-        'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSEnrollmentBillingClientController@show'
-    ]);
-
-    // Muestra los conceptos relacionados la matricula
-    Route::get('/hsqegroup/api/inscription/{id_enrollment}/concepts/show',[
-        'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSPaymentConceptTypeController@getEnrollmentConcepts'
-    ]);
-
-    // Muestra una inscripción
-    Route::get('/hsqegroup/api/inscription/show/{id_enrollment}',[
+    // Show Inscription
+    Route::get('/hsqegroup/services/inscription/show/{id_enrollment}',[
         'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSInscriptionController@showInscription'
+    ]);
+
+    // tore Enrollment Billing Client
+    Route::post('/hsqegroup/services/inscription/store/billing-client',[
+        'as' => 'hsqegroup.services.inscription.store.billing-client', 'uses' => 'WebService\WSInscriptionController@storeBillingClient'
     ]);

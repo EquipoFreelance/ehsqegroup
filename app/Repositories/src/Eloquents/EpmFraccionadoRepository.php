@@ -36,23 +36,27 @@ class EpmFraccionadoRepository implements InterfaceRepository
     // Find Register by Id
     public function getByIdEpm( $id_epm ){
 
-        return $this->model->where("id_epm", $id_epm )->first();
+        return $this->model->where("id_epm", $id_epm )->with('other_concepts')->first();
 
     }
     // Create Register
     public function create( array $attribute){
 
         $epm = $this->model->create($attribute);
-        return response()->json(array("data" => $epm->toArray(), "message" => "El detalle del medio de pago fue registrado satisfactoriamente"), 200);
+        return $epm->toArray();
 
     }
 
     // Update Register by Id
     public function update( $id, array $attribute){
 
-        $epm = $this->model->findOrFail($id);
-        $epm->update($attribute);
-        return response()->json(array("data" => $epm->toArray(), "message" => "El detalle del medio de pago fue actualizado satisfactoriamente"), 200);
+        $epm = $this->model->find($id);
+        if($epm){
+            $epm->update($attribute);
+            return $epm->toArray();
+        } else {
+            return false;
+        }
 
     }
 
@@ -66,8 +70,13 @@ class EpmFraccionadoRepository implements InterfaceRepository
     }
 
     public function deleteIdEpm($id_epm){
+        $epm_repo_fra_otro =  new EpmFraccionadoOtrosRepository();
         $epm = $this->model->where("id_epm", $id_epm );
         if($epm){
+            $first = $epm->first();
+            if($first){
+                $epm_repo_fra_otro->deleteIdEpm($first->id);
+            }
             $epm->delete();
         }
     }

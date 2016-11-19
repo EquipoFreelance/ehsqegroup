@@ -360,10 +360,12 @@
                     <div class="row">
                       <div class="col-md-6 col-sm-6 col-xs-6">
                         <label for="amount_enrollment">Costo Matrícula S/.</label>
+                        <input type="hidden" id="amount_enrollment_id" placeholder="Matrícula" name="amount_enrollment_id" class="form-control" value="">
                         <input type="text" id="amount_enrollment" placeholder="Matrícula" name="amount_enrollment" class="form-control" value="">
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-6">
                         <label for="amount_certificate">Costo Certificado S/.</label>
+                        <input type="hidden" id="amount_certificate_id" placeholder="Matrícula" name="amount_certificate_id" class="form-control" value="">
                         <input type="text" id="amount_certificate" placeholder="Certificado" name="amount_certificate" class="form-control" value="">
                       </div>
                     </div>
@@ -381,7 +383,7 @@
                     </div>
                   </div>
 
-                  <div class="form-group">
+                  <!--<div class="form-group">
                     <div class="row">
                       <div class="col-md-12 col-sm-12 col-xs-12">
                         <label for="operation_number">Número de la operación</label>
@@ -391,7 +393,7 @@
                         @endif
                       </div>
                     </div>
-                  </div>
+                  </div>-->
 
                   <div class="form-group">
                     <div class="row">

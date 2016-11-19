@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Repositories\Contracts\InterfaceRepository;
+use App\Repositories\Eloquents\EbcRepository;
 use App\Repositories\Eloquents\EnrollmentPaymentConceptRepository;
 use App\Repositories\Eloquents\EnrollmentPMRepository;
 use App\Repositories\Eloquents\EpmFraccionadoOtrosRepository;
@@ -49,7 +50,8 @@ class AppServiceProvider extends ServiceProvider
             EnrollmentPMRepository::class,
             EpmTotalRepository::class,
             EpmFraccionadoRepository::class,
-            EpmFraccionadoOtrosRepository::class
+            EpmFraccionadoOtrosRepository::class,
+            EbcRepository::class
         );
     }
 }

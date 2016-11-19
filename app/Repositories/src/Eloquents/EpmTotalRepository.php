@@ -8,7 +8,6 @@
 
 namespace App\Repositories\Eloquents;
 
-
 use App\Models\EmpTotal;
 use App\Repositories\Contracts\InterfaceRepository;
 

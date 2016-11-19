@@ -15,4 +15,10 @@ class EmpFraccionado extends Model
         'active'
     ];
 
+    // Fraccionado - otros
+    public function other_concepts()
+    {
+        return $this->hasMany('App\Models\EmpFraccionadoOtros', "id_epm_fra", "id");
+    }
+
 }
