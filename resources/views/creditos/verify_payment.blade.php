@@ -6,7 +6,6 @@
             display: none;
         }
     </style>
-
 @stop
 
 @section('content')
@@ -23,16 +22,18 @@
                     <td width="10"><b>Monto</b></td>
                     <td width="10"><b>Validar</b></td>
                 </tr>
-                @{{#each response}}
+                @{{#each concepts}}
                 <tr>
-                    <td>@{{ name_concept }}
+                    <td>
+                        @{{ concept_name }}
                         <input type="hidden" name="enrollment_concept_id[]" value="@{{ id }}" />
                     </td>
-                    <td class="">
-                        <input type="text" readonly="readonly" class="form-control concept_amount amount_@{{id_concept}}_@{{ id_payment_type }}" id="amount_@{{id_concept}}_@{{ id_payment_type }}" name="enrollment_concept_amount[]" placeholder="S/. 0.00" value="@{{ amount }}">
+                    <td>
+                        @{{ concept_amount }}
+                        <input type="hidden"  class="form-control" name="enrollment_concept_amount[]" placeholder="S/. 0.00" value="@{{ concept_amount }}">
                     </td>
-                    <td class="">
-                        <input type="checkbox" name="enrollment_concept_active[]" id="checked_@{{ id }}" class="form-control" value="1">
+                    <td>
+                        <input type="checkbox" name="enrollment_concept_verified[]" id="checked_@{{ id }}" @{{#if concept_verifided}} checked="checked" @{{else}} @{{/if}} class="form-control enrollment_concept_verified flatedit" value="1">
                     </td>
                 </tr>
                 @{{/each}}
@@ -68,32 +69,38 @@
                                         <span class="message"></span>
                                     </div>
 
-                                    <input type="hidden" name="id_enrollment" id="id_enrollment" value="">
+                                    <input type="hidden" name="id_enrollment" id="id_enrollment" value="{{ $id_enrollment }}">
 
                                     <div class="form-group">
                                         <label for="student">Alumno:</label>
-                                        <input type="text" name="student" class="form-control" readonly="readonly" value="">
+                                        <input type="text" name="student" id="student" class="form-control" readonly="readonly" value="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="especializacion">Periodo academico:</label>
+                                        <input type="text" name="period_academy" id="period_academy" class="form-control" readonly="readonly" value="">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="especializacion">Especialización:</label>
-                                        <input type="text" name="especializacion" class="form-control" readonly="readonly" value="">
+                                        <input type="text" name="especializacion" id="especializacion" class="form-control" readonly="readonly" value="">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="modalidad">Modalidad:</label>
-                                        <input type="text" name="modalidad" class="form-control" readonly="readonly" value="">
+                                        <input type="text" name="modalidad" id="modalidad" class="form-control" readonly="readonly" value="">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="fecha-inscription">Fecha de inscripción:</label>
-                                        <input type="text" name="fecha-inscription" class="form-control" readonly="readonly" value="">
+                                        <input type="text" name="fecha-inscription" id="fecha-inscription" class="form-control" readonly="readonly" value="">
                                     </div>
 
                                     <!-- Conceptos -->
                                     <div class="form-group content_item content_concept" style="display:block">
                                         <br>
                                         <div class="row content_concept_items"></div>
+
                                     </div>
 
                                     <div class="ln_solid"></div>

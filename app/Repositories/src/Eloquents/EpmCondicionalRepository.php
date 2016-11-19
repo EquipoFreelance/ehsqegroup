@@ -84,4 +84,35 @@ class EpmCondicionalRepository implements InterfaceRepository
             $epm->delete();
         }
     }
+
+    /**
+     * @param $epm_id
+     * @param $id_payment_method
+     * @return array
+     */
+    public function getConcepts($epm_id, $id_payment_method){
+
+        $concept_repo = new PaymentConceptRepository();
+
+        $response_concepts = array();
+
+        $epm_con = $this->getByIdEpm($epm_id);
+
+        foreach ($epm_con as $condicional) {
+
+            $concept_name =  $concept_repo->getById($condicional->id_concept);
+
+            // Adjutnamos los conceptos
+            $response_concepts[] = array(
+                'concept_id'        => 0,
+                'concept_name'      => $concept_name->payment_concept_name,
+                'concept_amount'    => $condicional->amount,
+                'concept_verifided' => false
+            );
+
+        }
+
+        return $response_concepts;
+
+    }
 }

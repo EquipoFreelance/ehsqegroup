@@ -9,6 +9,7 @@
 namespace App\Repositories\Eloquents;
 
 use App\Models\EmpTotal;
+
 use App\Repositories\Contracts\InterfaceRepository;
 
 class EpmTotalRepository implements InterfaceRepository
@@ -69,5 +70,47 @@ class EpmTotalRepository implements InterfaceRepository
         if($epm){
             return $epm->delete();
         }
+    }
+
+    /**
+     * @param $epm_id
+     * @param $id_payment_method
+     * @return array
+     */
+    public function getConcepts($epm_id, $id_payment_method){
+
+        $pct_repo     = new PaymentConceptTypeRepository();
+        $concept_repo = new PaymentConceptRepository();
+
+        $response_concepts = array();
+
+        $epm_total = $this->getByIdEpm($epm_id);
+
+        // Conceptos disponibles
+        $concepts = $pct_repo->getConceptsByParameters($id_payment_method);
+
+        // Lista de conceptos disponibles
+        foreach ($concepts as $concept) {
+
+            $concept_name =  $concept_repo->getById($concept->id_payment_concept);
+
+            // Concepto: Pago Total
+            if($concept->id_payment_concept == 9){
+
+                // Adjutnamos los conceptos
+                $response_concepts[] = array(
+                    'concept_id'        => 0,
+                    'concept_name'      => $concept_name->payment_concept_name,
+                    'concept_amount'    => $epm_total->amount,
+                    'concept_verifided' => false
+                );
+                break;
+
+            }
+
+        }
+
+        return $response_concepts;
+
     }
 }

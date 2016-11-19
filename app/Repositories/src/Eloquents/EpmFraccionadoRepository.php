@@ -80,4 +80,66 @@ class EpmFraccionadoRepository implements InterfaceRepository
             $epm->delete();
         }
     }
+
+    /**
+     * @param $epm_id
+     * @param $id_payment_method
+     * @return array
+     */
+    public function getConcepts($epm_id, $id_payment_method){
+
+        $pct_repo     = new PaymentConceptTypeRepository();
+        $concept_repo = new PaymentConceptRepository();
+
+        $response_concepts = array();
+
+        $epm_fra = $this->getByIdEpm($epm_id);
+
+        // Conceptos disponibles
+        $concepts = $pct_repo->getConceptsByParameters($id_payment_method);
+
+        // Lista de conceptos disponibles
+        foreach ($concepts as $concept) {
+
+            $concept_name =  $concept_repo->getById($concept->id_payment_concept);
+
+            // Concepto: Cuota 1
+            if($concept->id_payment_concept == 3){
+
+                // Adjutnamos los conceptos
+                $response_concepts[] = array(
+                    'concept_id'        => 0,
+                    'concept_name'      => $concept_name->payment_concept_name,
+                    'concept_amount'    => $epm_fra->amount,
+                    'concept_verifided' => true
+                );
+                break;
+
+            }
+
+
+        }
+
+        // Otros conceptos (Matricula o Certificado)
+        $otros_conceptos = $epm_fra->other_concepts;
+
+        // Concepto: Matricula
+        // Concepto: Certificado
+        foreach ($otros_conceptos as $otro_concepto) {
+
+            $concept_name =  $concept_repo->getById($otro_concepto['id_concept']);
+
+            // Adjutnamos los conceptos
+            $response_concepts[] = array(
+                'concept_id'        => 0,
+                'concept_name'      => $concept_name->payment_concept_name,
+                'concept_amount'    => $otro_concepto['amount'],
+                'concept_verifided' => true
+            );
+
+        }
+
+        return $response_concepts;
+
+    }
 }

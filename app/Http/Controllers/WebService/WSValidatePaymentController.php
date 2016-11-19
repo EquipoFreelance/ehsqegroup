@@ -4,13 +4,14 @@ namespace App\Http\Controllers\WebService;
 
 use App\Http\Controllers\Controller;
 
+use App\Models\StudentPayment;
 use App\Repositories\Eloquents\EnrollmentPMRepository;
 use App\Repositories\Eloquents\EnrollmentRepository;
 use App\Repositories\Eloquents\EpmCondicionalRepository;
 use App\Repositories\Eloquents\EpmFraccionadoRepository;
 use App\Repositories\Eloquents\EpmTotalRepository;
 use App\Repositories\Eloquents\PaymentConceptRepository;
-use App\Repositories\Eloquents\PaymentConceptTypeRepository;
+use App\Repositories\Eloquents\PaymentRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -24,116 +25,84 @@ class WSValidatePaymentController extends Controller
      */
     public function showPaymentOfInscription($id_enrollment){
 
-        $epm_repo      = new EnrollmentPMRepository();
-        $pct           = new PaymentConceptTypeRepository();
-        $concept_repo  = new PaymentConceptRepository();
+        $payment_repo  = new PaymentRepository();
         $enro_repo     = new EnrollmentRepository();
+        $epm_repo      = new EnrollmentPMRepository();
+        $concept_repo  = new PaymentConceptRepository();
 
         $response_concepts = array();
 
-        $epm = $epm_repo->getByIdEnrollment($id_enrollment);
+        // Información de la inscripción
+        $response_enrollment = $enro_repo->getInfoEnrollment($id_enrollment);
 
-        if($epm){
+        // Validación de pago realizados
 
-            // Id de la Forma de Pago
-            $id_payment_method = $epm->id_payment_method;
+            // Buscamos la relación
+            $student_payment = StudentPayment::where('id_enrollment', $id_enrollment)->first();
 
-            // Conceptos disponibles
-            $concepts = $pct->getConceptsByParameters($id_payment_method);
+            if($student_payment){
 
-            // Total
-            if($id_payment_method == 1){
+                // Id del pago realizado
+                $id_payment   = $student_payment->id_payment;
 
-                $epm_repo_total = new EpmTotalRepository();
+                // Información del pago
+                $payment      = $payment_repo->getById($id_payment);
 
-                $epm_total = $epm_repo_total->getByIdEpm($epm->id);
+                // Existe algun pago
+                if($payment){
 
-                // Lista de conceptos disponibles
-                foreach ($concepts as $concept) {
+                    foreach ($payment->payment_detail as $concept) {
 
-                    $concept_name =  $concept_repo->getById($concept->id_payment_concept);
-
-                    // Concepto Pago Total
-                    if($concept->id_payment_concept == 9){
+                        $concept_name =  $concept_repo->getById($concept->id_concept);
 
                         $response_concepts[] = array(
-                            'concept_name'   => $concept_name->payment_concept_name,
-                            'concept_amount' => $epm_total->amount
+                            'concept_id'        => $concept->id,
+                            'concept_name'      => $concept_name->payment_concept_name,
+                            'concept_amount'    => $concept->amount,
+                            'concept_verifided' => $concept->verified
                         );
-                        break;
 
                     }
 
                 }
 
-            // Fraccionado
-            } else if($id_payment_method == 2){
 
-                $epm_repo_fra = new EpmFraccionadoRepository();
+            } else {
 
-                $epm_fra = $epm_repo_fra->getByIdEpm($epm->id);
+                // Ubicando los conceptos registrados en la inscripción
+                $epm = $epm_repo->getByIdEnrollment($id_enrollment);
 
-                // Lista de conceptos disponibles
-                foreach ($concepts as $concept) {
+                if($epm){
 
-                    $concept_name =  $concept_repo->getById($concept->id_payment_concept);
+                    // Id de la Forma de Pago
+                    $id_payment_method = $epm->id_payment_method;
 
-                    // Cuota 1
-                    if($concept->id_payment_concept == 3){
+                    $epm_repo_pm = '';
 
-                        $response_concepts[] = array(
-                            'concept_name'   => $concept_name->payment_concept_name,
-                            'concept_amount' => $epm_fra->amount
-                        );
-                        break;
+                    // Total
+                    if($id_payment_method == 1){
+
+                        $epm_repo_pm = new EpmTotalRepository();
+
+                    // Fraccionado
+                    } else if($id_payment_method == 2){
+
+                        $epm_repo_pm = new EpmFraccionadoRepository();
+
+                    // Condicional
+                    } else if($id_payment_method == 3){
+
+                        $epm_repo_pm = new EpmCondicionalRepository();
 
                     }
 
-
-                }
-
-                // Otros conceptos (Matricula o Certificado)
-                $otros_conceptos = $epm_fra->other_concepts;
-
-                foreach ($otros_conceptos as $otro_concepto) {
-
-                    $concept_name =  $concept_repo->getById($otro_concepto['id_concept']);
-
-                    $response_concepts[] = array(
-                        'concept_name'   => $concept_name->payment_concept_name,
-                        'concept_amount' => $otro_concepto['amount']
-                    );
-
-                }
-
-
-            // Condicional
-            } else if($id_payment_method == 3){
-
-                $epm_repo_con = new EpmCondicionalRepository();
-
-                $epm_con = $epm_repo_con->getByIdEpm($epm->id);
-
-                foreach ($epm_con as $condicional) {
-
-                    $concept_name =  $concept_repo->getById($condicional->id_concept);
-
-                    $response_concepts[] = array(
-                        'concept_name'   => $concept_name->payment_concept_name,
-                        'concept_amount' => $condicional->amount
-                    );
+                    $response_concepts =  $epm_repo_pm->getConcepts($epm->id, $id_payment_method);
 
                 }
 
             }
 
-            // Información del inscripción
-            $response_enrollment = $enro_repo->getInfoEnrollment($id_enrollment);
-
             return response()->json(array("inscription" => $response_enrollment, "concepts" => $response_concepts), 200);
-
-
-        }
 
     }
 
