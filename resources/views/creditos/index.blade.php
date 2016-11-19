@@ -24,7 +24,7 @@
                 <td>@{{ modality.nom_mod }}</td>
                 <td>@{{ type_specialization.nom_esp_tipo }} / @{{ specialization.nom_esp }}</td>
                 <td>
-                    <a href="creditos/@{{student.id}}/validar_pagos" class="btn btn-5 btn-5a icon-edit edit"><span>Validar Pagos</span></a>
+                    <a href="creditos/verify-payment/@{{student.id}}/show" class="btn btn-5 btn-5a icon-edit edit"><span>Validar Pagos</span></a>
                 </td>
             </tr>
             @{{/each}}

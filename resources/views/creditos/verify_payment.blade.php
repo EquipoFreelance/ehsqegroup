@@ -55,7 +55,6 @@
 
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active"><a href="#tab_validacion_pagos" aria-controls="pinfo" role="tab" data-toggle="tab">Validar Pagos</a></li>
-
                         </ul>
                         <br>
                         <div class="tab-content">
@@ -69,7 +68,27 @@
                                         <span class="message"></span>
                                     </div>
 
-                                    <input type="hidden" name="id_enrollment" id="id_enrollment" value="{{ $student->enrollments()->first()->id }}">
+                                    <input type="hidden" name="id_enrollment" id="id_enrollment" value="">
+
+                                    <div class="form-group">
+                                        <label for="student">Alumno:</label>
+                                        <input type="text" name="student" class="form-control" readonly="readonly" value="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="especializacion">Especialización:</label>
+                                        <input type="text" name="especializacion" class="form-control" readonly="readonly" value="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="modalidad">Modalidad:</label>
+                                        <input type="text" name="modalidad" class="form-control" readonly="readonly" value="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="fecha-inscription">Fecha de inscripción:</label>
+                                        <input type="text" name="fecha-inscription" class="form-control" readonly="readonly" value="">
+                                    </div>
 
                                     <!-- Conceptos -->
                                     <div class="form-group content_item content_concept" style="display:block">

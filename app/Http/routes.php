@@ -169,8 +169,8 @@ Route::group(['middleware' => ['auth','role.creditos']], function(){
     // Recursos de Creditos y cobranzas
     Route::resource('dashboard/creditos', 'CreditosCobranzasController', ['only' => ['index'] ]);
 
-    Route::get('dashboard/creditos/{id_enrollment}/validar_pagos', [
-        'as' => 'dashboard.creditos-validar-pagos', 'uses' => 'CreditosCobranzasController@getValidaPagos'
+    Route::get('dashboard/creditos/verify-payment/{id_enrollment}/show', [
+        'as' => 'dashboard.creditos.verify-payment', 'uses' => 'CreditosCobranzasController@getVerifyPayment'
     ]);
 
     Route::post('dashboard/creditos/update_pagos/store', [

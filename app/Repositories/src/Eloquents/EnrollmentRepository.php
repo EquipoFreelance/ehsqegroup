@@ -18,7 +18,7 @@ class EnrollmentRepository implements InterfaceRepository
 
     public function __construct()
     {
-        $this->model =  new Enrollment();
+        $this->model = new Enrollment();
     }
 
     // Get All Register
@@ -28,7 +28,31 @@ class EnrollmentRepository implements InterfaceRepository
 
     // Find Register by Id
     public function getById( $id ){
-        //$this->model->
+
+        return $this->model->find($id);
+    }
+
+    public function getInfoEnrollment($id_enrollment){
+
+        $esp_repo = new EspecializationRepository();
+        $mod_repo = new ModalityRepository();
+        $ap_repo  = new AcademicPeriodRepository();
+
+        $enrollment     = $this->getById($id_enrollment);
+        $ref_enrollment = $enrollment->student->persona;
+
+        $created_at = strtotime( $enrollment->created_at );
+        $created_at = date( 'Y-m-d H:i:s', $created_at );
+
+        return array(
+                'student'    => $ref_enrollment['nombre']." ".$ref_enrollment['ape_pat']." ".$ref_enrollment['ape_mat'],
+                'enrollment' => array(
+                    'modality'        => $mod_repo->getNameById($enrollment->cod_modalidad),
+                    'especialization' => $esp_repo->getNameById($enrollment->cod_esp),
+                    'period_academy'  => $ap_repo->getNameById($enrollment->id_academic_period),
+                    'created_at'      => $created_at
+                )
+        );
     }
 
     // Create Register

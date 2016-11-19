@@ -5,6 +5,7 @@ namespace App\Http\Controllers\WebService;
 use App\Http\Controllers\Controller;
 
 use App\Repositories\Eloquents\EnrollmentPMRepository;
+use App\Repositories\Eloquents\EnrollmentRepository;
 use App\Repositories\Eloquents\EpmCondicionalRepository;
 use App\Repositories\Eloquents\EpmFraccionadoRepository;
 use App\Repositories\Eloquents\EpmTotalRepository;
@@ -26,8 +27,9 @@ class WSValidatePaymentController extends Controller
         $epm_repo      = new EnrollmentPMRepository();
         $pct           = new PaymentConceptTypeRepository();
         $concept_repo  = new PaymentConceptRepository();
+        $enro_repo     = new EnrollmentRepository();
 
-        $response = array();
+        $response_concepts = array();
 
         $epm = $epm_repo->getByIdEnrollment($id_enrollment);
 
@@ -54,7 +56,7 @@ class WSValidatePaymentController extends Controller
                     // Concepto Pago Total
                     if($concept->id_payment_concept == 9){
 
-                        $response[] = array(
+                        $response_concepts[] = array(
                             'concept_name'   => $concept_name->payment_concept_name,
                             'concept_amount' => $epm_total->amount
                         );
@@ -79,7 +81,7 @@ class WSValidatePaymentController extends Controller
                     // Cuota 1
                     if($concept->id_payment_concept == 3){
 
-                        $response[] = array(
+                        $response_concepts[] = array(
                             'concept_name'   => $concept_name->payment_concept_name,
                             'concept_amount' => $epm_fra->amount
                         );
@@ -97,7 +99,7 @@ class WSValidatePaymentController extends Controller
 
                     $concept_name =  $concept_repo->getById($otro_concepto['id_concept']);
 
-                    $response[] = array(
+                    $response_concepts[] = array(
                         'concept_name'   => $concept_name->payment_concept_name,
                         'concept_amount' => $otro_concepto['amount']
                     );
@@ -116,7 +118,7 @@ class WSValidatePaymentController extends Controller
 
                     $concept_name =  $concept_repo->getById($condicional->id_concept);
 
-                    $response[] = array(
+                    $response_concepts[] = array(
                         'concept_name'   => $concept_name->payment_concept_name,
                         'concept_amount' => $condicional->amount
                     );
@@ -125,7 +127,10 @@ class WSValidatePaymentController extends Controller
 
             }
 
-            return response()->json($response, 200);
+            // Información del inscripción
+            $response_enrollment = $enro_repo->getInfoEnrollment($id_enrollment);
+
+            return response()->json(array("inscription" => $response_enrollment, "concepts" => $response_concepts), 200);
 
 
         }

@@ -16,13 +16,11 @@ class CreditosCobranzasController extends Controller
         return view('creditos.index');
     }
 
-    public function getValidaPagos($id){
+    public function getVerifyPayment($id_enrollment){
 
-        // Info of Student
-        $student = Student::with('persona')->find($id);
-        $data = compact('student');
+        $data = compact('id_enrollment');
+        return view('creditos.verify_payment', $data);
 
-        return view('creditos.edit_pagos', $data);
     }
     
     public function getUpdatePagos(Request $request){
