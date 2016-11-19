@@ -16,7 +16,11 @@ use App\Http\Requests;
 
 class WSValidatePaymentController extends Controller
 {
-
+    /**
+     * Muestra los conceptos disponibles
+     * @param $id_enrollment
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function showPaymentOfInscription($id_enrollment){
 
         $epm_repo      = new EnrollmentPMRepository();
@@ -26,7 +30,6 @@ class WSValidatePaymentController extends Controller
         $response = array();
 
         $epm = $epm_repo->getByIdEnrollment($id_enrollment);
-
 
         if($epm){
 
@@ -130,4 +133,7 @@ class WSValidatePaymentController extends Controller
     }
 
 
+    public function storeValidatePayment(Request $request){
+
+    }
 }
