@@ -10,6 +10,7 @@ class EmpCondicional extends Model
 
     protected $fillable = [
         'id_epm',
+        'id_concept',
         'amount',
         'num_cuota',
         'date',

@@ -43,7 +43,7 @@ class PaymentConceptTypeRepository implements InterfaceRepository
     // Obtiene los conceptos por parametros
     public function getConceptsByParameters($id_payment_type){
         
-        $rs = $this->model->where("id_payment_type", $id_payment_type)->where("active", 1);//->with("attr_concept");
+        $rs = $this->model->where("id_payment_type", $id_payment_type)->where("active", 1);
 
         if( $rs->count() ){
 

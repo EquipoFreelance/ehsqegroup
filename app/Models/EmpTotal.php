@@ -11,6 +11,7 @@ class EmpTotal extends Model
 
     protected $fillable = [
         'id_epm',
+        'id_concept',
         'amount',
         'active'
     ];

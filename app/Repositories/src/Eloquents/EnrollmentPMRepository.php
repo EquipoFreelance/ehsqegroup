@@ -69,9 +69,10 @@ class EnrollmentPMRepository implements InterfaceRepository
 
                 // Nuevo registro de forma de pago
                 $epm_repo_total->create(array(
-                    'id_epm' => $id_epm,
-                    'amount' => $attribute['amount'],
-                    'active' => '1',
+                    'id_epm'     => $id_epm,
+                    'id_concept' => 9,
+                    'amount'     => $attribute['amount'],
+                    'active'     => '1',
                 ));
 
 
@@ -79,8 +80,9 @@ class EnrollmentPMRepository implements InterfaceRepository
 
                 // Actualizando registro de forma de pago
                 $epm_repo_total->update($epm->id, array(
-                    'id_epm' => $id_epm,
-                    'amount' => $attribute['amount']
+                    'id_epm'     => $id_epm,
+                    'id_concept' => 9,
+                    'amount'     => $attribute['amount']
                 ));
 
             }
@@ -158,6 +160,7 @@ class EnrollmentPMRepository implements InterfaceRepository
             $arr_condicional_date   = $attribute['condicional_date'];
             $arr_condicional_amount = $attribute['condicional_amount'];
             $arr_num_cuota          = $attribute['num_cuotas'];
+            $arr_concepts           = $attribute['condicional_concept_id'];
 
             // Existe registro de pago condicional
             $epm_count = $epm_repo_con->getCountByIdEpm($id_epm);
@@ -168,11 +171,13 @@ class EnrollmentPMRepository implements InterfaceRepository
 
                     $date       = ($arr_condicional_date[$key])? $arr_condicional_date[$key] : 0;
                     $amount     = ($arr_condicional_amount[$key])? $arr_condicional_amount[$key] : 0;
+                    $concept    = ($arr_concepts[$key])? $arr_concepts[$key] : 0;
 
                     $epm_repo_con->updateByIdCuotaAndIdEpm($id_epm, $num_cuota, array(
-                        'amount'    => $amount,
-                        'num_cuota' => $num_cuota,
-                        'date'      => $date
+                        'amount'     => $amount,
+                        'id_concept' => $concept,
+                        'num_cuota'  => $num_cuota,
+                        'date'       => $date
                     ));
                 }
 
@@ -183,13 +188,16 @@ class EnrollmentPMRepository implements InterfaceRepository
 
                     $date       = ($arr_condicional_date[$key])? $arr_condicional_date[$key] : 0;
                     $amount     = ($arr_condicional_amount[$key])? $arr_condicional_amount[$key] : 0;
+                    $concept     = ($arr_concepts[$key])? $arr_concepts[$key] : 0;
+
 
                     $epm_repo_con->create(array(
-                        'id_epm'    => $id_epm,
-                        'amount'    => $amount,
-                        'num_cuota' => $num_cuota,
-                        'date'      => $date,
-                        'active'    => '1',
+                        'id_epm'     => $id_epm,
+                        'id_concept' => $concept,
+                        'amount'     => $amount,
+                        'num_cuota'  => $num_cuota,
+                        'date'       => $date,
+                        'active'     => '1',
                     ));
                 }
 

@@ -81,7 +81,6 @@ $( "#condicional_amount_2" ).keyup(function() {
     amount.val(calculateAmmountCondicional($(this).val() * 1, $( "#condicional_amount_1" ).val() * 1) );
 });
 
-
 $( "input[name='amount']" ).keyup(function() {
 
     var amount = $(this);
@@ -99,6 +98,8 @@ $( "input[name='amount']" ).keyup(function() {
     }
 
 });
+
+/* -- Form Request -- */
 
 // Registra la forma de pago
 $("#frm_payment_method_student").find(".save").click(function(){
@@ -161,9 +162,7 @@ $("#frm_billing_client").find(".save").click(function(){
 
 /* -- Customs Functions --*/
 
-/*
-* Inscription Lists
-*/
+// Inscription Lists
 function listInscriptions(fecha_inicio){
   $.ajax({
      url:'/dashboard/json/inscriptions/'+fecha_inicio,
@@ -224,7 +223,7 @@ function listInscriptions(fecha_inicio){
     });
 }
 
-
+// Show Inscription
 function showInscription(id_enrollment){
     $.ajax({
         url:'/hsqegroup/services/inscription/show/'+id_enrollment,

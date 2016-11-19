@@ -22,7 +22,7 @@ class PaymentConceptRepository implements InterfaceRepository
 
     // Find Register by Id
     public function getById( $id ){
-
+        return $this->model->find($id);
     }
 
     // Create Register
