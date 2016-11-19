@@ -11,6 +11,7 @@ use App\Repositories\Eloquents\EpmCondicionalRepository;
 use App\Repositories\Eloquents\EpmFraccionadoRepository;
 use App\Repositories\Eloquents\EpmTotalRepository;
 use App\Repositories\Eloquents\PaymentConceptRepository;
+use App\Repositories\Eloquents\PaymentDetailRepository;
 use App\Repositories\Eloquents\PaymentRepository;
 use Illuminate\Http\Request;
 
@@ -108,6 +109,72 @@ class WSValidatePaymentController extends Controller
 
 
     public function storeValidatePayment(Request $request){
+
+        $payment_repo  = new PaymentRepository();
+        $payment_concept_repo = new PaymentDetailRepository();
+
+        $arr_concept_ids       = $request->get("enrollment_concept_id");
+        $arr_concept_amounts   = $request->get("enrollment_concept_amount");
+        $arr_concept_verifieds = $request->get("enrollment_concept_verified_");
+        $id_enrollment         = $request->get("id_enrollment");
+
+        $student_payment = StudentPayment::where('id_enrollment', $id_enrollment)->first();
+
+        if( $student_payment ){
+
+            // Id del pago realizado
+            $id_payment   = $student_payment->id_payment;
+
+            // Información del pago
+            $payment      = $payment_repo->getById($id_payment);
+
+            // Existe algun pago
+            if($payment){
+
+                foreach ($payment->payment_detail as $concept) {
+
+                    $key = array_search($concept->id, $arr_concept_ids);
+
+                    $payment_concept_repo->update($concept->id, array(
+                        'amount'   => $arr_concept_amounts[$key],
+                        'verified' => $arr_concept_verifieds[$key],
+                    ));
+
+                }
+
+            }
+
+        } else {
+
+        }
+
+        /*if($arr_concept_ids){
+
+            foreach ($arr_concept_ids as $key => $concept_id) {
+
+                $payment_concept = $payment_concept_repo->getById($concept_id);
+
+                if($payment_concept){
+
+                    $payment_concept_repo->update($concept_id, array(
+                        'amount'   => $arr_concept_amounts[$key],
+                        'verified' => $arr_concept_verifieds[$key],
+                    ));
+
+                } else {
+
+                    $payment_concept_repo->cerate(array(
+                        'amount'   => $arr_concept_amounts[$key],
+                        'verified' => $arr_concept_verifieds[$key],
+                    ));
+
+                }
+
+            }
+
+        }*/
+
+        //return response()->json(array("message" => 'registrados'), 200);
 
     }
 }

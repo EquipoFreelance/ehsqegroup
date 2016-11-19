@@ -18,6 +18,9 @@ class PaymentDetail extends Model
         'created_by',
         'updated_at',
         'updated_by',
+        'verified',
+        'verified_at',
+        'verified_by',
         'active'
     ];
 

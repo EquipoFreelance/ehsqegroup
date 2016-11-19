@@ -111,7 +111,7 @@ class EpmFraccionadoRepository implements InterfaceRepository
                     'concept_id'        => 0,
                     'concept_name'      => $concept_name->payment_concept_name,
                     'concept_amount'    => $epm_fra->amount,
-                    'concept_verifided' => true
+                    'concept_verifided' => false
                 );
                 break;
 
@@ -134,7 +134,7 @@ class EpmFraccionadoRepository implements InterfaceRepository
                 'concept_id'        => 0,
                 'concept_name'      => $concept_name->payment_concept_name,
                 'concept_amount'    => $otro_concepto['amount'],
-                'concept_verifided' => true
+                'concept_verifided' => false
             );
 
         }

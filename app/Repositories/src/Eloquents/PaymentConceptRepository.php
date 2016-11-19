@@ -32,7 +32,13 @@ class PaymentConceptRepository implements InterfaceRepository
 
     // Update Register by Id
     public function update( $id, array $attribute){
-
+        $epm = $this->model->find($id);
+        if($epm){
+            $epm->update($attribute);
+            return $epm->toArray();
+        } else {
+            return false;
+        }
     }
 
     // Delete Register by Id

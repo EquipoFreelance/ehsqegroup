@@ -19,6 +19,52 @@ if($("#id_enrollment").length){
     showInscriptionVerifyPayment($("#id_enrollment").val());
 }
 
+$( document ).delegate( "input:checkbox", "ifChanged", function(e) {
+
+    var id = '';
+
+    id = $(this).attr("id").replace("checked_", "");
+
+    if($(this).is(':checked') == true){
+
+        $("#enrollment_concept_verified_"+id).val(1);
+
+    } else {
+
+        $("#enrollment_concept_verified_"+id).val(0);
+
+    }
+
+});
+
+
+$("#frm_edit_enrollment_payment_concept").find(".save").click(function(){
+    event.preventDefault();
+    $.ajax({
+        url:'/hsqegroup/services/validate-payment/store',
+        type:'post',
+        //datatype: 'json',
+        data: $( "#frm_edit_enrollment_payment_concept" ).serialize(),
+        beforeSend: function(){
+            //$("#frm_payment_method_student").find(".save").attr("disabled", "disabled");
+        },
+        success:function(response)
+        {
+            console.log(response);
+            //$(".message").html(response.message);
+        },
+        complete: function(){
+            //$("#frm_payment_method_student").find(".alert-success").hide().fadeIn().removeClass("out").addClass("in");
+            //$("#frm_payment_method_student").find(".save").removeAttr("disabled");
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            /*if(  response.status == 400){
+                $("#frm_payment_method_student").find(".save").attr("disabled", "disabled");
+            }*/
+        }
+    });
+});
+
 
 
 /* -- Customs Functions --*/
@@ -123,6 +169,8 @@ function showInscriptionVerifyPayment(id_enrollment){
                     checkboxClass: 'icheckbox_flat-green',
                     radioClass: 'iradio_flat-green',
                 });
+
+
 
             }
 
