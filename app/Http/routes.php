@@ -177,15 +177,15 @@ Route::group(['middleware' => ['auth','role.creditos']], function(){
         'as' => 'dashboard.creditos-validar-pagos', 'uses' => 'CreditosCobranzasController@getUpdatePagos'
     ]);
 
-    Route::get('/hsqegroup/services/validate-payment/show/{id_enrollment}', [
-        'as' => 'hsqegroup.services.validate-payment.show', 'uses' => 'WebService\WSValidatePaymentController@showPaymentOfInscription'
-    ]);
 
     Route::post('/hsqegroup/services/validate-payment/store', [
         'as' => 'hsqegroup.services.validate-payment.store', 'uses' => 'WebService\WSValidatePaymentController@storeValidatePayment'
     ]);
 
 });
+
+
+
 
 // Sistemas
 Route::group(['middleware' => ['auth','role.sistema']], function(){
@@ -368,3 +368,7 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
 
     /* -- Module Validate Payment -- */
 
+    // Show Payment
+    Route::get('/hsqegroup/services/validate-payment/show/{id_enrollment}', [
+        'as' => 'hsqegroup.services.validate-payment.show', 'uses' => 'WebService\WSValidatePaymentController@showPaymentOfInscription'
+    ]);

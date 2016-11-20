@@ -108,7 +108,10 @@ class WSValidatePaymentController extends Controller
 
     }
 
-
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function storeValidatePayment(Request $request){
 
         $payment_repo         = new PaymentRepository();
@@ -209,4 +212,6 @@ class WSValidatePaymentController extends Controller
         }
 
     }
+
+
 }

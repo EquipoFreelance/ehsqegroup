@@ -1,16 +1,17 @@
-/* -- Routes -- */
-var routes = {
-  enrollments     : '/dashboard/json/enrollments/',
-};
-
 /* -- App Matricula -- */
 var filtro_id_academic_period = $("#id_academic_period");
 
-listEnrollments('-');
+if($("#id_academic_period").length){
 
-filtro_id_academic_period.change(function(){
-  listEnrollments($(this).val());
-});
+    listEnrollments('-');
+
+    filtro_id_academic_period.change(function(){
+        listEnrollments($(this).val());
+    });
+
+}
+
+
 
 
 /* -- Customs Functions --*/
@@ -20,7 +21,7 @@ filtro_id_academic_period.change(function(){
 */
 function listEnrollments(id_academic_period){
   $.ajax({
-     url:routes.enrollments+id_academic_period,
+     url:'/dashboard/json/enrollments/'+id_academic_period,
      type:'get',
      datatype: 'json',
      data:{},
@@ -76,3 +77,4 @@ function listEnrollments(id_academic_period){
 
     });
 }
+

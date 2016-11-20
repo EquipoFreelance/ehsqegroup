@@ -1,6 +1,32 @@
 @extends('dashboard.layouts.master')
 
 @section('content')
+
+  <!-- Custom Templates -->
+  <script id="response-template-concepts" type="text/x-handlebars-template">
+    <div class="col-md-12 col-sm-12 col-xs-12 ">
+      <div class="x_title" style="border-bottom:none">
+        <h2>Pagos realizados</h2>
+        <div class="clearfix"></div>
+      </div>
+      <table id="datatable-responsive-price" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%" style="margin-bottom: 0">
+        <tr>
+          <th>Concepto</th>
+          <th>Monto</th>
+          <th>Validación</th>
+        </tr>
+        </tr>
+        @{{#each concepts}}
+        <tr>
+          <td>@{{ concept_name }}</td>
+          <td>@{{ concept_amount }}</td>
+          <td>@{{#if concept_verifided}} <i class="fa fa-check green"></i> @{{else}} @{{/if}}</td>
+        </tr>
+        @{{/each}}
+      </table>
+    </div>
+  </script>
+
   <div class="form_content_block">
 
     <div class="row">
@@ -91,44 +117,13 @@
               </div>
             </div>
 
-
             <div class="ln_solid"></div>
 
             <div class="form-group">
-              <div class="x_title" style="border-bottom:none">
-                <h2>Pagos realizados</h2>
-                <div class="clearfix"></div>
-              </div>
-
-              <tfooter>
-              </tfooter><table id="datatable-responsive-price" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%" style="margin-bottom: 0">
-                <thead>
-                <tr>
-                  <th>Concepto</th>
-                  <th>Monto</th>
-                  <th>Validación</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td>Matrícula</td>
-                  <td>100.00</td>
-                  <td><i class="fa fa-check green"></i></td>
-                </tr>
-                <tr>
-                  <td>1ra Cuota</td>
-                  <td>320.00</td>
-                  <td><i class="fa fa-check green"></i></td>
-                </tr>
-                </tbody>
-                <tbody><tr>
-                  <td><strong>Total</strong></td>
-                  <td><strong>S/. 420.00</strong></td>
-                  <td></td>
-                </tr>
-
-                </tbody></table>
+              <!-- Conceptos -->
+              <div class="row content_concept_items"></div>
             </div>
+
             <div class="form-group">
               <label>Observación:</label>
               <textarea id="message" class="form-control" name="message"></textarea>
@@ -163,34 +158,11 @@
 @section('custom_js')
   <script src="{{ URL::asset('assets/js/app.js') }}"></script>
   <script src="{{ URL::asset('assets/js/app-academic-period.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/app-edit-enrollments.js') }}"></script>
   <script>
-    /*$(".cod_alumno").select2({
-      theme: "classic",
-      placeholder: 'Seleccione',
-      ajax: {
-        url: function (params) {
-          return '/hsqegroup/api/students/search/' + params.term;
-        },
-        dataType: 'json',
-        delay: 250,
-        processResults: function (data, params) {
-          var data_set = [];
-          $.each(data.items, function(i, item) {
-            data_set.push({"id" : item.id, "text" : item.persona.nombre});
-          });
-          return {
-            results: data_set
-          };
-        },
-        cache: true
-      },
-      allowClear: true,
-      templateResult : function (repo) {
-        return repo.text;
-      }
-    }).on('select2:select', function (evt) {
-      console.log($('.cod_alumno').val());
-    });*/
+    $(function(){
+      showInscriptionVerifyPayment('{{ $enrollment->id }}');
+    });
   </script>
 
 @stop
