@@ -24,7 +24,7 @@ class EpmConceptRepository implements InterfaceRepository
     // Find Register by Id
     public function getById( $id ){
 
-        //return $this->model->where("id", 25)->first();
+        return $this->model->find($id)->first();
 
     }
 
