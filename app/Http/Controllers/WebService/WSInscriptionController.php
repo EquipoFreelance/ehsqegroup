@@ -24,6 +24,9 @@ class WSInscriptionController extends Controller
         $epm_repo = new EnrollmentPMRepository();
         $ebc_repo = new EbcRepository();
 
+        $ebc_merge = '';
+        $epm_merge = '';
+
         // Forma de Pago
         $epm = $epm_repo->getByIdEnrollment($id_enrollment);
 
@@ -54,7 +57,23 @@ class WSInscriptionController extends Controller
 
         }
 
-        $response = array_merge($epm_merge, $ebc_merge);
+        if($ebc_merge == '' && $epm_merge == '') {
+
+            $response = '';
+
+        }else if($ebc_merge != '' && $epm_merge == ''){
+
+            $response = $ebc_merge;
+
+        }else if($epm_merge != '' && $ebc_merge == ''){
+
+            $response = $epm_merge;
+
+        }else{
+
+            $response = array_merge($epm_merge, $ebc_merge);
+        }
+
 
         return response()->json($response, 200);
 

@@ -322,13 +322,13 @@
                     <div class="row">
                       <div class="col-md-6 col-sm-6 col-xs-6">
                         <label for="condicional_date_1">Fecha de Cuota 1</label>
-                        <input type="text" class="form-control" id="condicional_date_1" name="condicional_date[]" value="" placeholder="09/10/2016">
-                        <input type="hidden" id="num_cuota_1" name="num_cuotas[]" value="1">
-                        <input type="hidden" id="condicional_concept_1" name="condicional_concept_id[]" value="3">
+                        <input type="text" class="form-control" id="condicional_date_1" name="condicional_date[0]" value="" placeholder="09/10/2016">
+                        <input type="hidden" id="num_cuota_1" name="num_cuotas[0]" value="1">
+                        <input type="hidden" id="condicional_concept_1" name="condicional_concept_id[0]" value="3">
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-6">
                         <label for="condicional_amount_1">Monto Cuota 1</label>
-                        <input type="text" class="form-control" id="condicional_amount_1" name="condicional_amount[]" value="" placeholder="S/. 0.00">
+                        <input type="text" class="form-control" id="condicional_amount_1" name="condicional_amount[0]" value="" placeholder="S/. 0.00">
                       </div>
                     </div>
                   </div>
@@ -337,13 +337,13 @@
                     <div class="row">
                       <div class="col-md-6 col-sm-6 col-xs-6">
                         <label for="mount">Fecha de la Cuota 2</label>
-                        <input type="text" class="form-control" id="condicional_date_2" name="condicional_date[]" value="" placeholder="09/10/2016">
-                        <input type="hidden" id="condicional_concept_2" name="condicional_concept_id[]" value="4">
-                        <input type="hidden" id="num_cuota_2" name="num_cuotas[]" value="2">
+                        <input type="text" class="form-control" id="condicional_date_2" name="condicional_date[1]" value="" placeholder="09/10/2016">
+                        <input type="hidden" id="condicional_concept_2" name="condicional_concept_id[1]" value="4">
+                        <input type="hidden" id="num_cuota_2" name="num_cuotas[1]" value="2">
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-6">
                         <label for="condicional_amount_2">Monto Cuota 2</label>
-                        <input type="text" class="form-control" id="condicional_amount_2" name="condicional_amount[]" value="" placeholder="S/. 0.00">
+                        <input type="text" class="form-control" id="condicional_amount_2" name="condicional_amount[1]" value="" placeholder="S/. 0.00">
                       </div>
                     </div>
                   </div>

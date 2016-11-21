@@ -60,6 +60,12 @@ $("#id_payment_method").change(function(){
 
         }
 
+        //$.removeData(,'validator');
+        $("#frm_payment_method_student").unbind().removeData();
+        $("label.error").remove();
+        $("input.error").removeClass("error");
+        customValidate(customRules(sel_form_pago), customMessages(sel_form_pago));
+
     } else {
 
         $(".content_item").hide();
@@ -102,7 +108,7 @@ $( "input[name='amount']" ).keyup(function() {
 /* -- Form Request -- */
 
 // Registra la forma de pago
-$("#frm_payment_method_student").find(".save").click(function(){
+$("#frm_payment_method_studentxxx").find(".save").click(function(){
     event.preventDefault();
     $.ajax({
         url:'/hsqegroup/services/inscription/store/payment-method',
@@ -239,76 +245,82 @@ function showInscription(id_enrollment){
 
                 console.log(r);
 
-                var form_pago_detalle = r.forma_pago.form_pago_detalle; // Detalle de la forma de pago
-                var epm_type          = r.forma_pago.id_payment_method; // Tipo de forma de pago
+                if(r.forma_pago){
 
-                var billing_client    = r.billing_client;    // Detalle de la forma de pago
+                    var form_pago_detalle = r.forma_pago.form_pago_detalle; // Detalle de la forma de pago
+                    var epm_type          = r.forma_pago.id_payment_method; // Tipo de forma de pago
+
+                    // Forma de Pago
+                    if(form_pago_detalle){
+
+                        $("#id_payment_method").val(epm_type).trigger("change");
+
+                        // Fraccionado
+                        if(epm_type == 2){
+
+                            var epm_num_cuota = form_pago_detalle.num_cuota;
+                            $("#num_cuota").val(epm_num_cuota).trigger("change");
+
+                            // Otros Pagos (Matricula, Certificado)
+                            if(form_pago_detalle.other_concepts){
+                                $.each( form_pago_detalle.other_concepts, function(i, item) {
+
+                                    // Matricula
+                                    if(item.id_concept == 1){
+
+                                        $("#amount_enrollment_id").val(item.id);
+                                        $("#amount_enrollment").val(item.amount);
+
+                                        // Certificado
+                                    } else if(item.id_concept == 2){
+
+                                        $("#amount_certificate_id").val(item.id);
+                                        $("#amount_certificate").val(item.amount);
+
+                                    }
+
+                                });
+                            }
 
 
-                // Forma de Pago
-                if(form_pago_detalle){
+                            // Condicional
+                        } else if(epm_type == 3){
 
-                    $("#id_payment_method").val(epm_type).trigger("change");
-
-                    // Fraccionado
-                    if(epm_type == 2){
-
-                        var epm_num_cuota = form_pago_detalle.num_cuota;
-                        $("#num_cuota").val(epm_num_cuota).trigger("change");
-
-                        // Otros Pagos (Matricula, Certificado)
-                        if(form_pago_detalle.other_concepts){
-                            $.each( form_pago_detalle.other_concepts, function(i, item) {
-
-                                // Matricula
-                                if(item.id_concept == 1){
-
-                                    $("#amount_enrollment_id").val(item.id);
-                                    $("#amount_enrollment").val(item.amount);
-
-                                    // Certificado
-                                } else if(item.id_concept == 2){
-
-                                    $("#amount_certificate_id").val(item.id);
-                                    $("#amount_certificate").val(item.amount);
-
-                                }
-
+                            $.each( form_pago_detalle, function(i, item) {
+                                $("#condicional_date_"+item.num_cuota).val(item.date);
+                                $("#condicional_amount_"+item.num_cuota).val(item.amount);
                             });
+
                         }
 
-
-                        // Condicional
-                    } else if(epm_type == 3){
-
-                        $.each( form_pago_detalle, function(i, item) {
-                            $("#condicional_date_"+item.num_cuota).val(item.date);
-                            $("#condicional_amount_"+item.num_cuota).val(item.amount);
-                        });
+                        var epm_amount    = r.forma_pago.amount;
+                        $("#amount").val(epm_amount);
 
                     }
 
-                    var epm_amount    = r.forma_pago.amount;
-                    $("#amount").val(epm_amount);
-
+                    $("#observation").val(r.forma_pago.observation);
                 }
 
-                // Datos de la facturación
-                if(billing_client){
 
-                    $("#billing_razon_social").val(billing_client.razon_social);
-                    $("#billing_ruc").val(billing_client.ruc);
-                    $("#billing_phone").val(billing_client.phone);
-                    $("#billing_address").val(billing_client.address);
-                    $("#billing_client_firstname").val(billing_client.client_firstname);
-                    $("#billing_client_lastname").val(billing_client.client_lastname);
+                if(r.billing_client){
+
+                    var billing_client    = r.billing_client;    // Detalle de la forma de pago
+
+                    // Datos de la facturación
+                    if(billing_client){
+
+                        $("#billing_razon_social").val(billing_client.razon_social);
+                        $("#billing_ruc").val(billing_client.ruc);
+                        $("#billing_phone").val(billing_client.phone);
+                        $("#billing_address").val(billing_client.address);
+                        $("#billing_client_firstname").val(billing_client.client_firstname);
+                        $("#billing_client_lastname").val(billing_client.client_lastname);
+
+                    }
 
                 }
-
-                $("#observation").val(r.forma_pago.observation);
 
             }
-
 
         },
         complete: function(){
@@ -332,4 +344,166 @@ function calculateAmmountCondicional(amount1, amount2){
     }
 
     return calcular;
+}
+
+function customValidate(rules, messages){
+    $("#frm_payment_method_student").validate({
+        ignore: [],
+        errorPlacement: function(error, element) {
+            if(element.attr( "id" ) == 'ley_proteccion'){
+                $(".error_checkbox").show();
+            } else {
+                error.insertAfter(element);
+            }
+        },
+        rules: rules,
+        messages: messages,
+        submitHandler: function(form) {
+
+            $.ajax({
+                url:'/hsqegroup/services/inscription/store/payment-method',
+                type:'post',
+                datatype: 'json',
+                data: $( form ).serialize(),
+                beforeSend: function(){
+                    $(form).find(".save").attr("disabled", "disabled");
+                },
+                success:function(response)
+                {
+                    $(".message").html(response.message);
+                },
+                complete: function(){
+                    $(form).find(".alert-success").hide().fadeIn().removeClass("out").addClass("in");
+                    $(form).find(".save").removeAttr("disabled");
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    if(  response.status == 400){
+                        $(form).find(".save").attr("disabled", "disabled");
+                    }
+                }
+            });
+        }
+    });
+}
+
+function customRules(id_payment_method){
+    var rules;
+    if(id_payment_method == 1) {
+
+        rules = {
+            amount: {
+                required: true,
+                min: 1
+            }
+
+        }
+
+    } else if(id_payment_method == 2) {
+
+        rules = {
+            num_cuota:{
+                required: true
+            },
+            amount_enrollment: {
+                required: true,
+                min: 1
+            },
+            amount_certificate : {
+                required: true,
+                min: 1
+            },
+            amount: {
+                required: true,
+                min: 1
+            }
+
+        }
+
+    } else if(id_payment_method == 3) {
+
+        rules = {
+            amount: {
+                required: true,
+                min: 1
+            },
+            'condicional_date[0]':{
+                required: true
+            },
+            'condicional_date[1]':{
+                required: true
+            },
+            'condicional_amount[0]': {
+                required: true
+            },
+            'condicional_amount[1]': {
+                required: true
+            }
+
+        }
+
+    }
+
+    return rules;
+}
+
+function customMessages(id_payment_method){
+    var messages;
+    if(id_payment_method == 1) {
+
+        messages = {
+            amount: {
+                required: "El campo es obligatorio",
+                min: "Valor mínimo 1"
+            }
+
+        }
+
+    } else if(id_payment_method == 2) {
+
+        messages = {
+            num_cuota:{
+                required: "El campo es obligatorio"
+            },
+            amount_enrollment: {
+                required: "El campo es obligatorio",
+                min: "Valor mínimo 1"
+            },
+            amount_certificate : {
+                required: "El campo es obligatorio",
+                min: "Valor mínimo 1"
+            },
+            amount: {
+                required: "El campo es obligatorio",
+                min: "Valor mínimo 1"
+            }
+
+        }
+
+    } else if(id_payment_method == 3) {
+
+        messages = {
+            amount: {
+                required: "El campo es obligatorio",
+                min: "Valor mínimo 1"
+            },
+            'condicional_date[0]':{
+                required: "El campo es obligatorio"
+            },
+            'condicional_date[1]':{
+                required: "El campo es obligatorio"
+            },
+            'condicional_amount[0]':{
+                required: "El campo es obligatorio"
+            },
+            'condicional_amount[1]':{
+                required: "El campo es obligatorio"
+            }
+
+        }
+
+    }
+
+
+
+    return messages;
 }
