@@ -64,7 +64,7 @@ $("#frm_edit_enrollment_payment_concept").find(".save").click(function(){
             }
         }
     }).done(function(){
-        location.href = document.URL;
+        //location.href = document.URL;
     });
 });
 
@@ -154,25 +154,43 @@ function showInscriptionVerifyPayment(id_enrollment){
 
                 console.log(r);
 
-                var student    = r.inscription.student;     // Información del alumno
-                var enrollment = r.inscription.enrollment;  // Información de la matricula
+                if(r.inscription){
 
-                $("#student").val(student);
-                $("#especializacion").val(enrollment.especialization);
-                $("#modalidad").val(enrollment.modality);
-                $("#fecha-inscription").val(enrollment.created_at);
-                $("#period_academy").val(enrollment.period_academy);
+                    var student    = r.inscription.student;     // Información del alumno
+                    var enrollment = r.inscription.enrollment;  // Información de la matricula
 
-                var source   = $("#response-template-concepts").html();
-                var template = Handlebars.compile(source);
-                var html     = template(r);
-                $(".content_concept_items").empty().append(html);
+                    $("#student").val(student);
+                    $("#especializacion").val(enrollment.especialization);
+                    $("#modalidad").val(enrollment.modality);
+                    $("#fecha-inscription").val(enrollment.created_at);
+                    $("#period_academy").val(enrollment.period_academy);
 
-                $('input.flatedit').iCheck({
-                    checkboxClass: 'icheckbox_flat-green',
-                    radioClass: 'iradio_flat-green',
-                });
+                }
 
+                if(r.concepts){
+
+                    var source   = $("#response-template-concepts").html();
+                    var template = Handlebars.compile(source);
+                    var html     = template(r);
+
+                    $(".content_concept_items").empty().append(html);
+
+                    $('input.flatedit').iCheck({
+                        checkboxClass: 'icheckbox_flat-green',
+                        radioClass: 'iradio_flat-green',
+                    });
+
+                } else {
+
+                    var source   = $("#response-template-concepts-empty").html();
+                    var template = Handlebars.compile(source);
+                    var html     = template(r);
+
+                    $(".content_concept_items").empty().append(html);
+
+                    $("#frm_edit_enrollment_payment_concept").find(".save").attr("disabled", "disabled");
+
+                }
 
 
             }

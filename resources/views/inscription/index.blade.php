@@ -24,7 +24,7 @@
           <td>@{{ modality.nom_mod }}</td>
           <td>@{{ type_specialization.nom_esp_tipo }} / @{{ specialization.nom_esp }}</td>
           <td>
-            <a href="inscription/@{{student.id}}/edit" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>
+            <a href="inscription/@{{ id }}/edit" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>
           </td>
         </tr>
       @{{/each}}

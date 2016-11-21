@@ -12,6 +12,9 @@ class EpmConcept extends Model
         'id_concept',
         'id_epm',
         'amount',
+        'verified_at',
+        'verified',
+        'verified_by',
         'active',
     ];
 

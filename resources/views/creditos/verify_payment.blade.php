@@ -43,6 +43,26 @@
         </div>
     </script>
 
+    <script id="response-template-concepts-empty" type="text/x-handlebars-template">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <label for="mount">Detalle de los conceptos necesario para validar una matricula</label>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 ">
+            <table class="tablex table-bordered" cellspacing="0" width="100%">
+                <tr>
+                    <td width="300"><b>Concepto</b></td>
+                    <td width="10"><b>Monto</b></td>
+                    <td width="10"><b>Validar</b></td>
+                </tr>
+                <tr>
+                    <td colspan="3" align="center">
+                        <b>@{{ message }}</b>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </script>
+
     <div class="form_content_block">
 
         <div class="row">

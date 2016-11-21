@@ -112,7 +112,6 @@ class EnrollmentPMRepository implements InterfaceRepository
             $epm_repo_con->deleteIdEpm($id_epm);
 
 
-
         // Pago Fraccionado
         }else if($mp == 2){
 

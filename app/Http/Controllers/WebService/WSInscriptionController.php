@@ -44,8 +44,6 @@ class WSInscriptionController extends Controller
 
             $epm_merge = array('forma_pago' => $epm->toArray());
 
-
-
         }
 
         // Datos de la facturación

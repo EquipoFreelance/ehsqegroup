@@ -4,6 +4,8 @@ namespace App\Repositories\Eloquents;
 use App\Models\EpmConcept;
 use App\Models\PaymentConceptType;
 use App\Repositories\Contracts\InterfaceRepository;
+use Auth;
+use Carbon\Carbon;
 
 class EpmConceptRepository implements InterfaceRepository
 {
@@ -24,6 +26,10 @@ class EpmConceptRepository implements InterfaceRepository
 
         //return $this->model->where("id", 25)->first();
 
+    }
+
+    public function getByIdEpm($id_epm){
+        return $this->model->where("id_epm", $id_epm )->where("active", 1 )->get();
     }
 
     // Find Register by Id
@@ -48,8 +54,11 @@ class EpmConceptRepository implements InterfaceRepository
     // Update Register by Id
     public function update( $id, array $attribute){
 
-        $update = $this->model->findOrFail($id);
+        $update = $this->model->find($id);
+        $update->verified_at = Carbon::now();
+        $update->verified_by = \Auth::user()->id;
         $update->update($attribute);
+
         return $update->toArray();
 
     }

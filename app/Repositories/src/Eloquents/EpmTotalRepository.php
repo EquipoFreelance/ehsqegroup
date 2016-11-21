@@ -77,7 +77,7 @@ class EpmTotalRepository implements InterfaceRepository
      * @param $id_payment_method
      * @return array
      */
-    public function getConcepts($epm_id, $id_payment_method){
+    /*public function getConcepts($epm_id, $id_payment_method){
 
         $pct_repo     = new PaymentConceptTypeRepository();
         $concept_repo = new PaymentConceptRepository();
@@ -113,5 +113,5 @@ class EpmTotalRepository implements InterfaceRepository
 
         return $response_concepts;
 
-    }
+    }*/
 }
