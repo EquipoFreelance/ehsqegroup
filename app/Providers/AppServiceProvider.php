@@ -57,7 +57,8 @@ class AppServiceProvider extends ServiceProvider
             EbcRepository::class,
             EspecializationRepository::class,
             ModalityRepository::class,
-            AcademicPeriodRepository::class
+            AcademicPeriodRepository::class,
+            EpmConceptRepository::class
         );
     }
 }

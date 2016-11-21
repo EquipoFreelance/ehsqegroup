@@ -82,7 +82,7 @@ class WSInscriptionController extends Controller
 
                 $action = $epm_repo->update($epm->id, $request->toArray());
 
-                // Registramos por primera vez
+            // Registramos por primera vez
             } else {
 
                 $action = $epm_repo->create($request->toArray());
@@ -133,8 +133,6 @@ class WSInscriptionController extends Controller
         return $action;
 
     }
-
-
 
 
     public function showListInscription(){

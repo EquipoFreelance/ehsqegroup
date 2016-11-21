@@ -22,30 +22,5 @@ class CreditosCobranzasController extends Controller
         return view('creditos.verify_payment', $data);
 
     }
-    
-    public function getUpdatePagos(Request $request){
 
-        $repo_enrollment   = new EnrollmentPaymentConceptRepository();
-
-        $n             = -1;
-        $ids           = $request->get('enrollment_concept_id');      // Matricula id del concepto
-        $actives       = $request->get('enrollment_concept_active');  // Matricula monto del concepto activo
-
-        $check_active = 0;
-
-        foreach ($ids as $item) {
-            $n = $n + 1;
-            
-            if($actives[$n]){
-                $check_active = 1;
-            }
-
-            $repo_enrollment->update($ids[$n], [
-                'active'     => $check_active
-            ]);
-        }
-
-        return response()->json(array("message" => "Los pagos fueron verificados satisfactoriamentexxx"), 200);
-
-    }
 }

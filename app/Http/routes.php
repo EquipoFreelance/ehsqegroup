@@ -22,10 +22,6 @@ Route::group(['middleware' => ['auth']], function(){
         return redirect()->to('/dashboard');
     });
 
-    /*Route::get('/info', function () {
-        phpinfo();
-    });*/
-
     // Dashboard
     Route::get('/dashboard', 'DashBoardController@validateDashBoard', ['as' => 'dashboard.index']);
 
@@ -163,34 +159,44 @@ Route::group(['middleware' => ['auth','role.alumno']], function(){
 
 });
 
-// Creditos y coabranzas
-Route::group(['middleware' => ['auth','role.creditos']], function(){
+    /* --  Modulo / Creditos y Cobranzas -- */
 
-    // Recursos de Creditos y cobranzas
-    Route::resource('dashboard/creditos', 'CreditosCobranzasController', ['only' => ['index'] ]);
+    /* -- Dashboard - Creditos y Cobranzas -- */
 
-    Route::get('dashboard/creditos/verify-payment/{id_enrollment}/show', [
-        'as' => 'dashboard.creditos.verify-payment', 'uses' => 'CreditosCobranzasController@getVerifyPayment'
-    ]);
+        Route::group(['middleware' => ['auth','role.creditos']], function(){
 
-    Route::post('dashboard/creditos/update_pagos/store', [
-        'as' => 'dashboard.creditos-validar-pagos', 'uses' => 'CreditosCobranzasController@getUpdatePagos'
-    ]);
+            // Recursos de Creditos y cobranzas
+            Route::resource('dashboard/creditos', 'CreditosCobranzasController', ['only' => ['index'] ]);
+
+            // Recursos Validación de Pagos
+            Route::get('dashboard/creditos/verify-payment/{id_enrollment}/show', [
+                'as' => 'dashboard.creditos.verify-payment', 'uses' => 'CreditosCobranzasController@getVerifyPayment'
+            ]);
+
+        });
+
+    /* -- Dashboard - Creditos y Cobranzas -- */
+
+    /* -- Service Validate Payment -- */
+
+        // Show Payment
+        Route::get('/hsqegroup/services/validate-payment/show/{id_enrollment}', [
+            'as' => 'hsqegroup.services.validate-payment.show', 'uses' => 'WebService\WSValidatePaymentController@showPaymentOfInscription'
+        ]);
+
+        // Store Payment
+        Route::post('/hsqegroup/services/validate-payment/store', [
+            'as' => 'hsqegroup.services.validate-payment.store', 'uses' => 'WebService\WSValidatePaymentController@storeValidatePayment'
+        ]);
+
+    /* -- Service Validate Payment --*/
 
 
-    Route::post('/hsqegroup/services/validate-payment/store', [
-        'as' => 'hsqegroup.services.validate-payment.store', 'uses' => 'WebService\WSValidatePaymentController@storeValidatePayment'
-    ]);
 
-});
+    // Sistemas
+    Route::group(['middleware' => ['auth','role.sistema']], function(){
 
-
-
-
-// Sistemas
-Route::group(['middleware' => ['auth','role.sistema']], function(){
-
-});
+    });
 
 
     /* -- Rutas asíncronas -- */
@@ -361,14 +367,8 @@ Route::group(['middleware' => ['auth','role.sistema']], function(){
         'as' => 'hsqegroup.student.payment-method', 'uses' => 'WebService\WSInscriptionController@showInscription'
     ]);
 
-    // tore Enrollment Billing Client
+    // Store Enrollment Billing Client
     Route::post('/hsqegroup/services/inscription/store/billing-client',[
         'as' => 'hsqegroup.services.inscription.store.billing-client', 'uses' => 'WebService\WSInscriptionController@storeBillingClient'
     ]);
 
-    /* -- Module Validate Payment -- */
-
-    // Show Payment
-    Route::get('/hsqegroup/services/validate-payment/show/{id_enrollment}', [
-        'as' => 'hsqegroup.services.validate-payment.show', 'uses' => 'WebService\WSValidatePaymentController@showPaymentOfInscription'
-    ]);

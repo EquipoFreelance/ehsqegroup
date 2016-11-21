@@ -57,24 +57,36 @@ class EnrollmentPMRepository implements InterfaceRepository
         $epm_repo_fra       = new EpmFraccionadoRepository();
         $epm_repo_fra_otros = new EpmFraccionadoOtrosRepository();
         $epm_repo_con       = new EpmCondicionalRepository();
+        $epm_repo_concept   = new EpmConceptRepository();
 
         $mp = $attribute['id_payment_method'];
 
         // Pago Total
         if($mp == 1){
 
+            $epm_repo_concept->deleteByIdEpmByIdConcept($id_epm, [1,2,3]);
+
             $epm = $epm_repo_total->getByIdEpm($id_epm);
+
+            $amount = $attribute['amount'];
 
             if(!$epm){
 
-                // Nuevo registro de forma de pago
+                // Registrando forma de pago
                 $epm_repo_total->create(array(
                     'id_epm'     => $id_epm,
                     'id_concept' => 9,
-                    'amount'     => $attribute['amount'],
+                    'amount'     => $amount,
                     'active'     => '1',
                 ));
 
+                // Registrando concepto pago completo
+                $epm_repo_concept->create(array(
+                    'id_concept' => 9,
+                    'id_epm'     => $id_epm,
+                    'amount'     => $amount,
+                    'active'     => 1
+                ));
 
             } else {
 
@@ -82,8 +94,16 @@ class EnrollmentPMRepository implements InterfaceRepository
                 $epm_repo_total->update($epm->id, array(
                     'id_epm'     => $id_epm,
                     'id_concept' => 9,
-                    'amount'     => $attribute['amount']
+                    'amount'     => $amount
                 ));
+
+                // Actualizando concepto pago completo
+                $epm_concept = $epm_repo_concept->getByIdEpmByIdConcept($id_epm, 9);
+                if($epm_concept){
+                    $epm_repo_concept->update($epm_concept->id, array(
+                        'amount'     => $amount
+                    ));
+                }
 
             }
 
@@ -91,11 +111,14 @@ class EnrollmentPMRepository implements InterfaceRepository
             $epm_repo_fra->deleteIdEpm($id_epm);
             $epm_repo_con->deleteIdEpm($id_epm);
 
+
+
         // Pago Fraccionado
         }else if($mp == 2){
 
-
             $epm = $epm_repo_fra->getByIdEpm($id_epm);
+
+            $epm_repo_concept->deleteByIdEpmByIdConcept($id_epm, [9,3]);
 
             if(!$epm){
 
@@ -107,7 +130,9 @@ class EnrollmentPMRepository implements InterfaceRepository
                     'active'    => '1',
                 ));
 
-                // Registrando Matricula
+                /* -- Agregando detalle a los forma de pago -- */
+
+                // Matricula
                 $epm_repo_fra_otros->create(
                     array(
                         'id_epm_fra' => $create['id'],
@@ -116,7 +141,7 @@ class EnrollmentPMRepository implements InterfaceRepository
                     )
                 );
 
-                // Registrando Certificado
+                // Certificado
                 $epm_repo_fra_otros->create(
                     array(
                         'id_epm_fra' => $create['id'],
@@ -125,7 +150,36 @@ class EnrollmentPMRepository implements InterfaceRepository
                     )
                 );
 
+                /* -- Agregando los conceptos -- */
+
+                // Concepto matricula
+                $epm_repo_concept->create(array(
+                    'id_concept' => 3,
+                    'id_epm'     => $id_epm,
+                    'amount'     => $attribute['amount'],
+                    'active'     => 1
+                ));
+
+                // Concepto matricula
+                $epm_repo_concept->create(array(
+                    'id_concept' => 1,
+                    'id_epm'     => $id_epm,
+                    'amount'     => $attribute['amount_enrollment'],
+                    'active'     => 1
+                ));
+
+                // Concepto certificado
+                $epm_repo_concept->create(array(
+                    'id_concept' => 2,
+                    'id_epm'     => $id_epm,
+                    'amount'     => $attribute['amount_certificate'],
+                    'active'     => 1
+                ));
+
+
             } else {
+
+                /* -- Actualizando registro de la forma de pago -- */
 
                 // Actualizando registro fraccionado
                 $update = $epm_repo_fra->update($epm->id, array(
@@ -147,20 +201,49 @@ class EnrollmentPMRepository implements InterfaceRepository
                     ));
                 }
 
+                /* -- Actualizando los conceptos -- */
+
+                // Actualizando concepto cuota 1
+                $epm_concept = $epm_repo_concept->getByIdEpmByIdConcept($id_epm, 3);
+                if($epm_concept){
+                    $epm_repo_concept->update($epm_concept->id, array(
+                        'amount'     => $attribute['amount']
+                    ));
+                }
+
+                // Actualizando concepto matricula
+                $epm_concept = $epm_repo_concept->getByIdEpmByIdConcept($id_epm, 1);
+                if($epm_concept){
+                    $epm_repo_concept->update($epm_concept->id, array(
+                        'amount'     => $attribute['amount_enrollment']
+                    ));
+                }
+
+                // Actualizando concepto certificado
+                $epm_concept = $epm_repo_concept->getByIdEpmByIdConcept($id_epm, 2);
+                if($epm_concept){
+                    $epm_repo_concept->update($epm_concept->id, array(
+                        'amount'     => $attribute['amount_certificate']
+                    ));
+                }
+
             }
 
             // Elimnando formas de pagos registrados anteriormente
             $epm_repo_total->deleteIdEpm($id_epm);
             $epm_repo_con->deleteIdEpm($id_epm);
 
+
         // Pago Condicional
         } else if($mp == 3){
-
 
             $arr_condicional_date   = $attribute['condicional_date'];
             $arr_condicional_amount = $attribute['condicional_amount'];
             $arr_num_cuota          = $attribute['num_cuotas'];
             $arr_concepts           = $attribute['condicional_concept_id'];
+
+
+            $epm_repo_concept->deleteByIdEpmByIdConcept($id_epm, [9,1,2,3]);
 
             // Existe registro de pago condicional
             $epm_count = $epm_repo_con->getCountByIdEpm($id_epm);
@@ -182,6 +265,15 @@ class EnrollmentPMRepository implements InterfaceRepository
                 }
 
 
+                // Actualizando concepto cuota 1
+                $epm_concept = $epm_repo_concept->getByIdEpmByIdConcept($id_epm, 3);
+                if($epm_concept){
+                    $epm_repo_concept->update($epm_concept->id, array(
+                        'amount'     => $arr_condicional_amount[0]
+                    ));
+                }
+
+
             } else {
 
                 foreach ($arr_num_cuota as $key => $num_cuota) {
@@ -189,7 +281,6 @@ class EnrollmentPMRepository implements InterfaceRepository
                     $date       = ($arr_condicional_date[$key])? $arr_condicional_date[$key] : 0;
                     $amount     = ($arr_condicional_amount[$key])? $arr_condicional_amount[$key] : 0;
                     $concept     = ($arr_concepts[$key])? $arr_concepts[$key] : 0;
-
 
                     $epm_repo_con->create(array(
                         'id_epm'     => $id_epm,
@@ -201,6 +292,13 @@ class EnrollmentPMRepository implements InterfaceRepository
                     ));
                 }
 
+                // Registrando concepto cuota 1
+                $epm_repo_concept->create(array(
+                    'id_concept' => 3,
+                    'id_epm'     => $id_epm,
+                    'amount'     => $arr_condicional_amount[0],
+                    'active'     => 1
+                ));
             }
 
             // Elimnando formas de pagos registrados anteriormente
