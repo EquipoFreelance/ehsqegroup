@@ -8,17 +8,17 @@
 
 namespace App\Repositories\Eloquents;
 
-use App\Models\EmpTotal;
 
+use App\EmpBecado;
 use App\Repositories\Contracts\InterfaceRepository;
 
-class EpmTotalRepository implements InterfaceRepository
+class EpmBecadoRepository implements InterfaceRepository
 {
     private $model;
 
     public function __construct()
     {
-        $this->model = new EmpTotal();
+        $this->model = new EmpBecado();
     }
 
     // Get All Register
@@ -29,7 +29,7 @@ class EpmTotalRepository implements InterfaceRepository
     // Find Register by Id
     public function getById( $id ){
 
-        //return $this->model->find("id", 25)->first();
+        return $this->model->find("id", 25)->first();
 
     }
 
@@ -43,16 +43,20 @@ class EpmTotalRepository implements InterfaceRepository
     public function create( array $attribute){
 
         $epm = $this->model->create($attribute);
-        return response()->json(array("data" => $epm->toArray(), "message" => "El detalle del medio de pago fue registrado satisfactoriamente"), 200);
+        return $epm->toArray();
 
     }
 
     // Update Register by Id
     public function update( $id, array $attribute){
 
-        $epm = $this->model->findOrFail($id);
-        $epm->update($attribute);
-        return response()->json(array("data" => $epm->toArray(), "message" => "El detalle del medio de pago fue actualizado satisfactoriamente"), 200);
+        $epm = $this->model->find($id);
+        if($epm){
+            $epm->update($attribute);
+            return $epm->toArray();
+        } else {
+            return false;
+        }
 
     }
 
@@ -71,6 +75,5 @@ class EpmTotalRepository implements InterfaceRepository
             return $epm->delete();
         }
     }
-
 
 }

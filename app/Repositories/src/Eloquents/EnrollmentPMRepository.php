@@ -37,7 +37,7 @@ class EnrollmentPMRepository implements InterfaceRepository
 
         $epm_create = $this->model->create($attribute);
         $this->doneEPMDetail($epm_create->id, $attribute);
-        return response()->json(array("data" => $epm_create->toArray(), "message" => "EL medio de pago fue registrado satisfactoriamente"), 200);
+        return response()->json(array("data" => $epm_create->toArray(), "message" => "El medio de pago fue registrado satisfactoriamente"), 200);
 
     }
 
@@ -47,7 +47,7 @@ class EnrollmentPMRepository implements InterfaceRepository
         $epm_update = $this->model->findOrFail($id);
         $epm_update->update($attribute);
         $this->doneEPMDetail($epm_update->id, $attribute);
-        return response()->json(array("data" => $epm_update->toArray(), "message" => "EL medio de pago fue actualizado satisfactoriamente"), 200);
+        return response()->json(array("data" => $epm_update->toArray(), "message" => "El medio de pago fue actualizado satisfactoriamente"), 200);
 
     }
 
@@ -57,6 +57,7 @@ class EnrollmentPMRepository implements InterfaceRepository
         $epm_repo_fra       = new EpmFraccionadoRepository();
         $epm_repo_fra_otros = new EpmFraccionadoOtrosRepository();
         $epm_repo_con       = new EpmCondicionalRepository();
+        $epm_repo_becado    = new EpmBecadoRepository();
         $epm_repo_concept   = new EpmConceptRepository();
 
         $mp = $attribute['id_payment_method'];
@@ -110,7 +111,7 @@ class EnrollmentPMRepository implements InterfaceRepository
             // Elimnando formas de pagos registrados anteriormente
             $epm_repo_fra->deleteIdEpm($id_epm);
             $epm_repo_con->deleteIdEpm($id_epm);
-
+            $epm_repo_becado->deleteIdEpm($id_epm);
 
         // Pago Fraccionado
         }else if($mp == 2){
@@ -231,7 +232,7 @@ class EnrollmentPMRepository implements InterfaceRepository
             // Elimnando formas de pagos registrados anteriormente
             $epm_repo_total->deleteIdEpm($id_epm);
             $epm_repo_con->deleteIdEpm($id_epm);
-
+            $epm_repo_becado->deleteIdEpm($id_epm);
 
         // Pago Condicional
         } else if($mp == 3){
@@ -303,7 +304,36 @@ class EnrollmentPMRepository implements InterfaceRepository
             // Elimnando formas de pagos registrados anteriormente
             $epm_repo_total->deleteIdEpm($id_epm);
             $epm_repo_fra->deleteIdEpm($id_epm);
+            $epm_repo_becado->deleteIdEpm($id_epm);
 
+        // Becado
+        } else if( $mp == 4 ){
+
+            $epm = $epm_repo_becado->getByIdEpm($id_epm);
+
+            if(!$epm){
+
+                // Nuevo Registro becado
+                $epm_repo_becado->create(array(
+                    'id_epm'    => $id_epm,
+                    'amount'    => 0,
+                    'active'    => '1',
+                ));
+
+
+            } else {
+
+                // Actualizando registro de forma de pago
+                $epm_repo_becado->update($epm->id, array(
+                    'id_epm'     => $id_epm
+                ));
+
+            }
+
+            // Elimnando formas de pagos registrados anteriormente
+            $epm_repo_total->deleteIdEpm($id_epm);
+            $epm_repo_fra->deleteIdEpm($id_epm);
+            $epm_repo_con->deleteIdEpm($id_epm);
         }
 
     }

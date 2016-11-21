@@ -55,6 +55,7 @@ $("#id_payment_method").change(function(){
         // Becado
         } else if(sel_form_pago == 4){
 
+            $("#amount").val(0);
             $(".content_item_mount").hide();
             $(".content_concept").hide();
 
