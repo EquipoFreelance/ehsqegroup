@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\WebService;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\Eloquents\AcademicPeriodRepository;
 use App\Repositories\Eloquents\EbcRepository;
 use App\Repositories\Eloquents\EnrollmentPMRepository;
 use App\Repositories\Eloquents\EnrollmentRepository;
@@ -10,6 +11,8 @@ use App\Repositories\Eloquents\EpmBecadoRepository;
 use App\Repositories\Eloquents\EpmCondicionalRepository;
 use App\Repositories\Eloquents\EpmFraccionadoRepository;
 use App\Repositories\Eloquents\EpmTotalRepository;
+use App\Repositories\Eloquents\EspecializationRepository;
+use App\Repositories\Eloquents\ModalityRepository;
 use App\Repositories\Eloquents\PersonRepository;
 use App\Repositories\Eloquents\StudentRepository;
 use Illuminate\Http\Request;
@@ -21,13 +24,19 @@ class WSInscriptionController extends Controller
 
     private $e_repo = '';
     private $s_repo = '';
-    private $p_repo = '';
+    private $p_repo   = '';
+    private $esp_repo = '';
+    private $m_repo = '';
+    private $ap_repo = '';
 
     function __construct()
     {
         $this->e_repo = new EnrollmentRepository();
         $this->s_repo = new StudentRepository();
         $this->p_repo = new PersonRepository();
+        $this->esp_repo = new EspecializationRepository();
+        $this->m_repo = new ModalityRepository();
+        $this->ap_repo = new AcademicPeriodRepository();
 
     }
 
@@ -207,22 +216,25 @@ class WSInscriptionController extends Controller
 
             foreach ($list as $item) {
 
-                $student    = $this->s_repo->getById($item->cod_alumno);
-                $person     = $this->p_repo->getById($student->cod_persona);
-                $enrollment = $this->e_repo->getById($item->id);
+                $student         = $this->s_repo->getById($item->cod_alumno);
+                $person          = $this->p_repo->getById($student->cod_persona);
+                $enrollment      = $this->e_repo->getById($item->id);
+                $especialization = $this->esp_repo->getById($enrollment->cod_esp);
+                $modality        = $this->m_repo->getById($enrollment->cod_modalidad);
+                $academic_period = $this->ap_repo->getById($enrollment->id_academic_period);
 
                 $json[] = array(
                     "id" => $item->cod_alumno, // Id de la matricula,
                     "student" => array(
-                        "firtname"     =>  $person->nombre,
+                        "firtname"     => $person->nombre,
                         "lastname_pat" => $person->ape_pat,
                         "lastname_mat" => $person->ape_mat,
                         "email"        => $person->correo
                     ),
-                        "modalidad"       => $enrollment->cod_modalidad,
-                        "especialization" => $enrollment->cod_esp,
-                        "period_academic" => $enrollment->id_academic_period,
-                        "created_at"      => $enrollment->created_at
+                        "modalidad"       => $modality->nom_mod,
+                        "especialization" => $especialization->nom_esp,
+                        "period_academic" => $academic_period->start_date,
+                        "created_at"      => date("d/m/Y H:i:s", strtotime($item->created_at))
                 );
 
             }
