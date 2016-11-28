@@ -8,17 +8,16 @@
 
 namespace App\Repositories\Eloquents;
 
-
-use App\Models\Enrollment;
+use App\Models\Persona;
 use App\Repositories\Contracts\InterfaceRepository;
 
-class EnrollmentRepository implements InterfaceRepository
+class PersonRepository implements InterfaceRepository
 {
     private $model;
 
     public function __construct()
     {
-        $this->model = new Enrollment();
+        $this->model = new Persona();
     }
 
     // Get All Register
@@ -39,6 +38,7 @@ class EnrollmentRepository implements InterfaceRepository
 
         return $this->model->find($id);
     }
+
 
     public function getInfoEnrollment($id_enrollment){
 

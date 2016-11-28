@@ -103,11 +103,20 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
 
 });
 
-// Marketing
+// Ventas
 Route::group(['middleware' => ['auth','role.marketing']], function(){
 
     // Recursos de Inscripciones
     Route::resource('dashboard/inscription', 'InscriptionController', ['only' => ['show','index','edit','update'] ]);
+
+
+    /* -- Api Rest Service -- */
+
+    // Get List Enrollments with its information of students
+
+    Route::get('/api/inscriptions', [
+        "uses" => 'WebService\WSInscriptionController@getInscriptionByIdUser'
+    ]);
 
 });
 
@@ -176,6 +185,7 @@ Route::group(['middleware' => ['auth','role.alumno']], function(){
         });
 
     /* -- Dashboard - Creditos y Cobranzas -- */
+
 
     /* -- Service Validate Payment -- */
 

@@ -5,16 +5,32 @@ namespace App\Http\Controllers\WebService;
 use App\Http\Controllers\Controller;
 use App\Repositories\Eloquents\EbcRepository;
 use App\Repositories\Eloquents\EnrollmentPMRepository;
+use App\Repositories\Eloquents\EnrollmentRepository;
 use App\Repositories\Eloquents\EpmBecadoRepository;
 use App\Repositories\Eloquents\EpmCondicionalRepository;
 use App\Repositories\Eloquents\EpmFraccionadoRepository;
 use App\Repositories\Eloquents\EpmTotalRepository;
+use App\Repositories\Eloquents\PersonRepository;
+use App\Repositories\Eloquents\StudentRepository;
 use Illuminate\Http\Request;
-
+use Validator;
 use App\Http\Requests;
 
 class WSInscriptionController extends Controller
 {
+
+    private $e_repo = '';
+    private $s_repo = '';
+    private $p_repo = '';
+
+    function __construct()
+    {
+        $this->e_repo = new EnrollmentRepository();
+        $this->s_repo = new StudentRepository();
+        $this->p_repo = new PersonRepository();
+
+    }
+
     /**
      * Muestra el detalle de la matricula con la inscripción
      * @param $id_enrollment
@@ -161,6 +177,59 @@ class WSInscriptionController extends Controller
 
 
     public function showListInscription(){
+
+    }
+
+    /**
+     * Information of inscriptions by the param of created_by
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getInscriptionByIdUser(Request $request){
+
+        $list = '';
+        $json = '';
+
+        $validator = Validator::make($request->all(), [
+            'created_by'          => 'required',
+        ], [
+            "created_by.required" => "Es necesario colocar el identificado del creador del registro"
+        ]);
+
+        if ( $validator->fails() ){
+
+            return response()->json($list, 400);
+
+        } else {
+
+            $created_by = $request->get('created_by');
+            $list =  $this->e_repo->getEnrollmentByCreatedBy($created_by, 1);
+
+            foreach ($list as $item) {
+
+                $student    = $this->s_repo->getById($item->cod_alumno);
+                $person     = $this->p_repo->getById($student->cod_persona);
+                $enrollment = $this->e_repo->getById($item->id);
+
+                $json[] = array(
+                    "id" => $item->cod_alumno, // Id de la matricula,
+                    "student" => array(
+                        "firtname"     =>  $person->nombre,
+                        "lastname_pat" => $person->ape_pat,
+                        "lastname_mat" => $person->ape_mat,
+                        "email"        => $person->correo
+                    ),
+                        "modalidad"       => $enrollment->cod_modalidad,
+                        "especialization" => $enrollment->cod_esp,
+                        "period_academic" => $enrollment->id_academic_period,
+                        "created_at"      => $enrollment->created_at
+                );
+
+            }
+
+            return response()->json($json, 200);
+
+        }
 
     }
 }
