@@ -28,7 +28,11 @@ class EnrollmentRepository implements InterfaceRepository
 
     public function getEnrollmentByCreatedBy($created_by, $activo){
 
-        $list = $this->model->where("created_by", $created_by)->where("activo", $activo)->get();
+        $list = $this->model
+                ->where("created_by", $created_by)
+                ->where("activo", $activo)
+                ->orderBy('created_at', 'desc')
+                ->get();
 
         return $list;
 

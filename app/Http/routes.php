@@ -113,10 +113,10 @@ Route::group(['middleware' => ['auth','role.marketing']], function(){
     /* -- Api Rest Service -- */
 
     // Get List Enrollments with its information of students
-
     Route::get('/api/inscriptions', [
-        "uses" => 'WebService\WSInscriptionController@getInscriptionByIdUser'
+        "uses" => 'WebService\WSInscriptionController@getInscriptionsByCreatedBy'
     ]);
+
 
 });
 

@@ -13,11 +13,11 @@ use App\Repositories\Contracts\InterfaceRepository;
 
 class StudentRepository implements InterfaceRepository
 {
-    private $model;
+    protected $model;
 
-    public function __construct()
+    public function __construct(Student $student)
     {
-        $this->model = new Student();
+        $this->model = $student;
     }
 
     // Get All Register

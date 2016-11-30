@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\WebService;
 
 use App\Http\Controllers\Controller;
+use App\Models\Student;
 use App\Repositories\Eloquents\AcademicPeriodRepository;
 use App\Repositories\Eloquents\EbcRepository;
 use App\Repositories\Eloquents\EnrollmentPMRepository;
@@ -29,10 +30,12 @@ class WSInscriptionController extends Controller
     private $m_repo = '';
     private $ap_repo = '';
 
-    function __construct()
+    function __construct(
+        StudentRepository $s_repo
+    )
     {
         $this->e_repo = new EnrollmentRepository();
-        $this->s_repo = new StudentRepository();
+        $this->s_repo = $s_repo;
         $this->p_repo = new PersonRepository();
         $this->esp_repo = new EspecializationRepository();
         $this->m_repo = new ModalityRepository();
@@ -194,10 +197,10 @@ class WSInscriptionController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getInscriptionByIdUser(Request $request){
+    public function getInscriptionsByCreatedBy(Request $request){
 
-        $list = '';
-        $json = '';
+        $list     = '';
+        $response = '';
 
         $validator = Validator::make($request->all(), [
             'created_by'          => 'required',
@@ -207,39 +210,45 @@ class WSInscriptionController extends Controller
 
         if ( $validator->fails() ){
 
-            return response()->json($list, 400);
+            return response()->json($list, 404);
 
         } else {
 
             $created_by = $request->get('created_by');
-            $list =  $this->e_repo->getEnrollmentByCreatedBy($created_by, 1);
+            $list = $this->e_repo->getEnrollmentByCreatedBy($created_by, 1);
 
-            foreach ($list as $item) {
+            if($list){
 
-                $student         = $this->s_repo->getById($item->cod_alumno);
-                $person          = $this->p_repo->getById($student->cod_persona);
-                $enrollment      = $this->e_repo->getById($item->id);
-                $especialization = $this->esp_repo->getById($enrollment->cod_esp);
-                $modality        = $this->m_repo->getById($enrollment->cod_modalidad);
-                $academic_period = $this->ap_repo->getById($enrollment->id_academic_period);
+                foreach ($list as $item) {
 
-                $json[] = array(
-                    "id" => $item->cod_alumno, // Id de la matricula,
-                    "student" => array(
-                        "firtname"     => $person->nombre,
-                        "lastname_pat" => $person->ape_pat,
-                        "lastname_mat" => $person->ape_mat,
-                        "email"        => $person->correo
-                    ),
-                        "modalidad"       => $modality->nom_mod,
-                        "especialization" => $especialization->nom_esp,
-                        "period_academic" => $academic_period->start_date,
-                        "created_at"      => date("d/m/Y H:i:s", strtotime($item->created_at))
-                );
+                    $student         = $this->s_repo->getById($item->cod_alumno);
+                    $person          = $this->p_repo->getById($student->cod_persona);
+                    $enrollment      = $this->e_repo->getById($item->id);
+                    $especialization = $this->esp_repo->getById($enrollment->cod_esp);
+                    $modality        = $this->m_repo->getById($enrollment->cod_modalidad);
+                    $academic_period = $this->ap_repo->getById($enrollment->id_academic_period);
+
+                    $response[] = array(
+                        "id" => $item->cod_alumno, // Id de la matricula,
+                        "student" => array(
+                            "firtname"     => $person->nombre,
+                            "lastname_pat" => $person->ape_pat,
+                            "lastname_mat" => $person->ape_mat,
+                            "email"        => $person->correo
+                        ),
+                            "modality"       => $modality->nom_mod,
+                            "especialization" => $especialization->nom_esp,
+                            "period_academic" => $academic_period->start_date,
+                            "created_at"      => date("d/m/Y H:i:s", strtotime($item->created_at))
+                    );
+
+                }
+                return response()->json(array("response" => $response), 200);
 
             }
 
-            return response()->json($json, 200);
+
+
 
         }
 

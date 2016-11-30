@@ -13,16 +13,14 @@
     <script id="response-template" type="text/x-handlebars-template">
       @{{#each response}}
         <tr>
-          <td>@{{ student.id }}</td>
+          <td>@{{ id }}</td>
           <td>@{{ created_at }}</td>
-          <td>@{{ student.persona.persona_document_type.document_type_name }}</td>
-          <td>@{{ student.persona.num_doc }}</td>
-          <td>@{{ student.persona.nombre }}</td>
-          <td>@{{ student.persona.ape_pat }} @{{ student.persona.ape_mat }}</td>
-          <td>@{{ student.persona.correo }}</td>
-          <td>@{{ student.persona.num_phone  }} / @{{ student.persona.num_cellphone }}</td>
-          <td>@{{ modality.nom_mod }}</td>
-          <td>@{{ type_specialization.nom_esp_tipo }} / @{{ specialization.nom_esp }}</td>
+          <td>@{{ student.firtname }}</td>
+          <td>@{{ student.lastname_pat }} @{{ student.lastname_mat }}</td>
+          <td>@{{ student.email }}</td>
+          <td>@{{ modality }}</td>
+          <td>@{{ especialization }}</td>
+          <td>@{{ period_academic }}</td>
           <td>
             <a href="inscription/@{{ id }}/edit" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>
           </td>
@@ -37,8 +35,8 @@
           </div>
       @endif
 
-      <h1>Administrador de Inscritos</h1>
-      <p style="margin-top: 15px">Información administrable de Inscritos.</p>
+      <h1>Inscripciones realizadas</h1>
+      <p style="margin-top: 15px">Listado de las inscripciones</p>
     </div>
     <div class="clearfix"></div>
     <div class="row">
@@ -55,15 +53,13 @@
               <thead>
                 <tr>
                   <th>Id</th>
-                  <th>Fecha Registro</th>
-                  <th>Tipo documento</th>
-                  <th>Número</th>
+                  <th>Fecha creación</th>
                   <th>Nombres</th>
                   <th>Apellidos</th>
                   <th>Correo</th>
-                  <th>Teléfono</th>
                   <th>Modalidad</th>
-                  <th>Curso</th>
+                  <th>Especialidad</th>
+                  <th>Periódo</th>
                   <th></th>
                 </tr>
               </thead>
@@ -82,5 +78,5 @@
 
 @section('custom_js')
   <script src="{{ URL::asset('assets/js/app-templates-js.js') }}"></script>
-  <script src="{{ URL::asset('assets/js/app-inscription.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/app-inscription-index.js') }}"></script>
 @stop
