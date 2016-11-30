@@ -188,10 +188,6 @@ class WSInscriptionController extends Controller
     }
 
 
-    public function showListInscription(){
-
-    }
-
     /**
      * Information of inscriptions by the param of created_by
      * @param Request $request
@@ -243,6 +239,11 @@ class WSInscriptionController extends Controller
                     );
 
                 }
+
+                if(!$response){
+                    return response()->json("", 200);
+                }
+
                 return response()->json(array("response" => $response), 200);
 
             }

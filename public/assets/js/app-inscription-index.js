@@ -1,6 +1,6 @@
 
 $(function(){
-    listInscriptions(0);
+    listInscriptions($("#created_by").val());
 });
 
 
@@ -18,16 +18,27 @@ function listInscriptions(created_by){
      },
      success:function(response)
      {
-        var source   = $("#response-template").html();
-        var template = Handlebars.compile(source);
-        var html    = template(response);
-        $(".items").html(html);
         console.log(response);
+        if(!response){
+            var source   = '<tr><td colspan="9" align="center">No existen inscripciones asociadas al Usuario</td></tr>';
+            var template = Handlebars.compile(source);
+            var html    = template(response);
+            $(".items").html(html);
+        }else{
+            var source   = $("#response-template").html();
+            var template = Handlebars.compile(source);
+            var html    = template(response);
+            $(".items").html(html);
+        }
+
+
+        //console.log(response);
      },
      error:function(response)
     {
-      if(  response.status == 204){
-
+      console.log(response);
+      if(  response.status == 404){
+        console.log("dddd");
       }
     }
   });
