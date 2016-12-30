@@ -14,6 +14,7 @@ class Enrollment extends Model
       "cod_modalidad",
       "cod_esp_tipo",
       "cod_esp",
+      "cod_alumno",
       "activo"
     ];
 

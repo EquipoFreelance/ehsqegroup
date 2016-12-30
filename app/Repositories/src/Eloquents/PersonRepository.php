@@ -39,6 +39,16 @@ class PersonRepository implements InterfaceRepository
         return $this->model->find($id);
     }
 
+    /**
+     * @param $num_doc
+     * @return mixed
+     */
+    public function getFindByNumDoc( $num_doc ){
+
+        return $this->model->where("num_doc", $num_doc)->first();
+
+    }
+
 
     public function getInfoEnrollment($id_enrollment){
 
@@ -65,6 +75,8 @@ class PersonRepository implements InterfaceRepository
 
     // Create Register
     public function create( array $attribute){
+
+        return $this->model->create($attribute);
 
     }
 

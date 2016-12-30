@@ -1,4 +1,4 @@
-@extends('dashboard.layouts.master_public')
+@extends('dashboard.layouts.master')
 
 @section('content')
 <div class="form_content_block">
@@ -15,7 +15,7 @@
         <div class="x_content">
           {!! Form::open(['route' => 'inscription.store', 'class' => 'form-horizontal form-label-left']) !!}
 
-          <input type="hidden" id="created_by" name="created_by" value="{{ $created_by }}">
+          <input type="hidden" id="created_by" name="created_by" value="{{ $created_by }}" />
 
           @if(Session::has('message'))
           <div class="alert @if(Session::has('class')) {{ Session::get('message') }} @else alert-success @endif alert-dismissible fade in" role="alert">

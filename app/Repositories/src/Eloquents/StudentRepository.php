@@ -39,6 +39,10 @@ class StudentRepository implements InterfaceRepository
         return $this->model->find($id);
     }
 
+    public function getFindByCodPerson($cod_persona){
+        return $this->model->where("cod_persona", $cod_persona)->first();
+    }
+
 
     public function getInfoEnrollment($id_enrollment){
 
@@ -65,6 +69,8 @@ class StudentRepository implements InterfaceRepository
 
     // Create Register
     public function create( array $attribute){
+
+        return $this->model->create($attribute);
 
     }
 

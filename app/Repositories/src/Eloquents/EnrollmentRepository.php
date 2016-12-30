@@ -44,6 +44,23 @@ class EnrollmentRepository implements InterfaceRepository
         return $this->model->find($id);
     }
 
+    public function getValidateDuplicateEnrollment(
+        $id_academic_period,
+        $cod_modalidad,
+        $cod_esp_tipo,
+        $cod_esp
+    ){
+        $enrollment = $this->model
+            ->where("id_academic_period", $id_academic_period)
+            ->where("cod_modalidad", $cod_modalidad)
+            ->where("cod_esp_tipo", $cod_esp_tipo)
+            ->where("cod_esp", $cod_esp)
+            ->first();
+
+        return $enrollment;
+    }
+
+
     public function getInfoEnrollment($id_enrollment){
 
         $esp_repo = new EspecializationRepository();
@@ -70,6 +87,7 @@ class EnrollmentRepository implements InterfaceRepository
     // Create Register
     public function create( array $attribute){
 
+        return $this->model->create($attribute);
     }
 
     // Update Register by Id

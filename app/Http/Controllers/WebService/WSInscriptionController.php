@@ -23,24 +23,21 @@ use App\Http\Requests;
 class WSInscriptionController extends Controller
 {
 
-    private $e_repo = '';
-    private $s_repo = '';
-    private $p_repo   = '';
-    private $esp_repo = '';
-    private $m_repo = '';
-    private $ap_repo = '';
+    private $e_repo     = '';
+    private $s_repo     = '';
+    private $p_repo     = '';
+    private $esp_repo   = '';
+    private $m_repo     = '';
+    private $ap_repo    = '';
 
-    function __construct(
-        StudentRepository $s_repo
-    )
+    function __construct( StudentRepository $s_repo )
     {
-        $this->e_repo = new EnrollmentRepository();
-        $this->s_repo = $s_repo;
-        $this->p_repo = new PersonRepository();
+        $this->e_repo   = new EnrollmentRepository();
+        $this->s_repo   = $s_repo;
+        $this->p_repo   =  new PersonRepository();
         $this->esp_repo = new EspecializationRepository();
-        $this->m_repo = new ModalityRepository();
-        $this->ap_repo = new AcademicPeriodRepository();
-
+        $this->m_repo   = new ModalityRepository();
+        $this->ap_repo  = new AcademicPeriodRepository();
     }
 
     /**
@@ -254,4 +251,6 @@ class WSInscriptionController extends Controller
         }
 
     }
+
+
 }

@@ -12,7 +12,7 @@
 */
 
 Route::auth();
-
+Route::pattern('id', '[0-9]+');
 
 // Dashboard
 Route::group(['middleware' => ['auth']], function(){
@@ -99,37 +99,55 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
 
   /* -- Routes - Personalizados -- */
 
-
-
 });
 
 // Ventas
+
+
 Route::group(['middleware' => ['auth','role.marketing']], function(){
 
-    // Recursos de Inscripciones
-    Route::resource('dashboard/inscription', 'InscriptionController', ['only' => ['show','index','edit','update'] ]);
 
+    // Recursos de Inscripcion
+
+    Route::resource('dashboard/inscription',
+        'InscriptionController',
+            array(
+                'only' => ['index', 'edit', 'update', 'create', 'show' ]
+            )
+        );
+
+    // Ruta Publica para usuarios
+    Route::get('inscription', ['uses' => 'InscriptionController@getPublicCreate']);
 
     /* -- Api Rest Service -- */
 
-    // Get List Enrollments with its information of students
-    Route::get('/api/inscriptions', [
-        "uses" => 'WebService\WSInscriptionController@getInscriptionsByCreatedBy'
-    ]);
+    Route::resource('/api/inscriptions',
+        'WebService\ResourceInscriptionController',
+        array(
+            'only' => ['store']
+        )
+    );
 
+    // Get List Enrollments with its information of students
+    /*Route::get('/api/inscriptions', [
+        "uses" => 'WebService\WSInscriptionController@getInscriptionsByCreatedBy'
+    ]);*/
 
 });
 
-// Rutas Públicas para los posibles clientes
-Route::get('inscription/create/{created_by}',[
+
+// Interiores
+/*Route::get('inscription/create/{created_by}',[
     'as'    => 'inscription.create',
     'uses'  => 'InscriptionController@create'
-]);
+]);*/
+
 
 Route::post('inscription/store',[
     'as'    => 'inscription.store',
     'uses'  => 'InscriptionController@store'
 ]);
+
 
 Route::get('inscription/thank_you_page',[
     'as'    => 'dashboard.inscription.thankyoupage',
@@ -382,3 +400,10 @@ Route::group(['middleware' => ['auth','role.alumno']], function(){
         'as' => 'hsqegroup.services.inscription.store.billing-client', 'uses' => 'WebService\WSInscriptionController@storeBillingClient'
     ]);
 
+/* Api Inscription */
+
+Route::group(['prefix' => 'api/', 'middleware' => ['web']], function() {
+
+    Route::resource("inscription", 'WebService\ResourceInscriptionController', ['only' => ['store','update'] ]);
+
+});

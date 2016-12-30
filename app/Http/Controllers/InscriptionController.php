@@ -27,13 +27,29 @@ class InscriptionController extends Controller
       return view('inscription.index');
   }
 
-  public function create($created_by)
-  {
+    /**
+     * Create Form
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+    */
+    public function create()
+    {
 
-    $data = array("title" => "Ficha de inscripción", "created_by" => $created_by);
-    return view('inscription.create', $data);
+        $data = array("title" => "Ficha de inscripción", "created_by" => Auth::user()->id);
+        return view('inscription.create', $data);
 
-  }
+    }
+
+    /**
+     * Create Form Public
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getPublicCreate(Request $request){
+
+      $data = array("title" => "Ficha de inscripción", "created_by" => $request->get("created_by"));
+      return view('inscription.create_public', $data);
+
+    }
 
   public function store(InscriptionStoreRequest $request)
   {
@@ -136,6 +152,8 @@ class InscriptionController extends Controller
 
   public function show($id)
   {
+    
+      return "ddd";
     //$persona = Persona::with('persona_student')->find(32);//->persona_telefonos->toJson();
     //return $persona->persona_student()->first()->id;
   }
