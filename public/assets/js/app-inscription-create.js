@@ -43,6 +43,7 @@ $(function(){
 
                     $(form).find(".alert-success").hide().fadeIn().removeClass("out").addClass("in");
                     $(form).find(".save").removeAttr("disabled");
+                    $('#store')[0].reset();
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -55,7 +56,7 @@ $(function(){
                 }
             });
 
-            console.log("Hola mundo");
+            //console.log("Hola mundo");
 
         }
     });
