@@ -37,11 +37,14 @@ $(function(){
                 {
                     console.log(response);
                     $(".message").html(response.message);
+                    $(".alert").addClass(response.alert).find(".fa_icon").addClass(response.icon);
+
 
                 },
                 complete: function(){
 
-                    $(form).find(".alert-success").hide().fadeIn().removeClass("out").addClass("in");
+
+                    $(form).find(".alert").hide().fadeIn().removeClass("out").addClass("in");
                     $(form).find(".save").removeAttr("disabled");
 
                 },

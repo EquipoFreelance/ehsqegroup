@@ -121,6 +121,8 @@ class ResourceInscriptionController extends Controller
                         return response()->json(
                             [
                                 "message"  => "La Inscripción se registró satisfactoriamente",
+                                "alert"    => "alert-success",
+                                "icon"     => "fa-check",
                                 "response" => $new_enrollment,
 
                             ], 200 );
@@ -131,6 +133,8 @@ class ResourceInscriptionController extends Controller
                     return response()->json(
                         [
                             "message"  => "Error, la inscripción presente duplicado",
+                            "alert"    => "alert-warning",
+                            "icon"     => "fa-exclamation-circle",
                             "response" => null
                         ], 200 );
 
@@ -144,8 +148,11 @@ class ResourceInscriptionController extends Controller
 
             return Response::json(
                 [
-                    "errors" => [ "message" => $e->getMessage() ]
-                ] , 400 );
+                    "message"  => "Error, en el acceso al servidor",
+                    "alert"    => "alert-danger",
+                    "icon"     => "fa-ban",
+                    "response" => null
+                ], 400 );
 
         }
 

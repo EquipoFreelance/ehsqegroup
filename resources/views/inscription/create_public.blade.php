@@ -17,8 +17,9 @@
 
                         <input type="hidden" id="created_by" name="created_by" value="{{ $created_by }}" />
 
-                        <div class="alert alert-success alert-dismissible fade out" role="alert">
+                        <div class="alert alert-dismissible fade out" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <i class="fa fa_icon"></i>
                             <p class="message">Mensaje</p>
                         </div>
 

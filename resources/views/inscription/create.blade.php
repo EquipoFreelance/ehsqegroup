@@ -17,12 +17,11 @@
 
           <input type="hidden" id="created_by" name="created_by" value="{{ $created_by }}" />
 
-          @if(Session::has('message'))
-          <div class="alert @if(Session::has('class')) {{ Session::get('message') }} @else alert-success @endif alert-dismissible fade in" role="alert">
+          <div class="alert alert-dismissible fade out" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-            {{ Session::get('message') }}
+            <i class="fa fa_icon"></i>
+            <p class="message">Mensaje</p>
           </div>
-          @endif
 
           <div class="form-group">
             <div class="row">
@@ -242,8 +241,9 @@
 @stop
 
 @section('custom_js')
+  <script src="{{ URL::asset('assets/js/jquery.validated.js') }}"></script>
   <script src="{{ URL::asset('assets/js/app.js') }}"></script>
   <script src="{{ URL::asset('assets/js/app-academic-period.js') }}"></script>
   <script src="{{ URL::asset('assets/js/app-document-type.js') }}"></script>
-  <script src="{{ URL::asset('assets/js/app-inscription.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/app-inscription-create.js') }}"></script>
 @stop
