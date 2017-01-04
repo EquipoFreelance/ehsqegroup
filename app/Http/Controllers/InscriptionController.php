@@ -46,8 +46,16 @@ class InscriptionController extends Controller
      */
     public function getPublicCreate(Request $request){
 
-      $data = array("title" => "Ficha de inscripción", "created_by" => $request->get("created_by"));
-      return view('inscription.create_public', $data);
+        $v = Validator::make($request->all(), [
+            'created_by' => 'required'
+        ]);
+        
+        if ($v->fails()) {
+            return "Error";
+        }
+
+        $data = array("title" => "Ficha de inscripción", "created_by" => $request->get("created_by"));
+        return view('inscription.create_public', $data);
 
     }
 

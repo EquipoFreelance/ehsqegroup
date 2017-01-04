@@ -45,12 +45,14 @@ class EnrollmentRepository implements InterfaceRepository
     }
 
     public function getValidateDuplicateEnrollment(
+        $id_student,
         $id_academic_period,
         $cod_modalidad,
         $cod_esp_tipo,
         $cod_esp
     ){
         $enrollment = $this->model
+            ->where("cod_alumno", $id_student)
             ->where("id_academic_period", $id_academic_period)
             ->where("cod_modalidad", $cod_modalidad)
             ->where("cod_esp_tipo", $cod_esp_tipo)

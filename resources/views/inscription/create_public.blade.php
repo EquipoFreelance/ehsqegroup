@@ -206,6 +206,24 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label for="num_tel_mobile">Como se enteror del Curso-Diploma</label>
+                                    <select class="form-control" name="poll" id="poll">
+                                        <option value="0">Seleccione</option>
+                                        <option value="AFICHE">Afiche</option>
+                                        <option value="GOOGLE">Google</option>
+                                        <option value="WEB">Web</option>
+                                        <option value="FACEBOOK">Facebook</option>
+                                        <option value="FACEBOOK">Masivo</option>
+                                    </select>
+                                    @if ($errors->has('num_cellphone'))
+                                        <label for="num_cellphone" generated="true" class="error">{{ $errors->first('num_cellphone') }}</label>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="ln_solid"></div>
 

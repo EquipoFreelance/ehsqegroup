@@ -4,6 +4,7 @@ namespace App\Http\Controllers\WebService;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\InscriptionStoreRequest;
+use App\Repositories\Eloquents\EnrollmentPollRepository;
 use App\Repositories\Eloquents\EnrollmentRepository;
 use App\Repositories\Eloquents\PersonRepository;
 use App\Repositories\Eloquents\StudentRepository;
@@ -17,17 +18,20 @@ class ResourceInscriptionController extends Controller
     private $re;
     private $rs;
     private $rp;
+    private $rep;
 
     public function __construct(
         EnrollmentRepository $re,
         StudentRepository $rs,
-        PersonRepository $rp
+        PersonRepository $rp,
+        EnrollmentPollRepository $rep
     )
     {
 
         $this->re = $re;
         $this->rs = $rs;
         $this->rp = $rp;
+        $this->rep = $rep;
 
     }
 
@@ -96,12 +100,13 @@ class ResourceInscriptionController extends Controller
 
                 // Validate Duplicate
                 $validate_duplicate = $this->re->getValidateDuplicateEnrollment(
+                    $id_student,
                     $request->get("id_academic_period"),
                     $request->get("cod_modalidad"),
                     $request->get("cod_esp_tipo"),
                     $request->get("cod_esp")
+                    
                 );
-
 
                 if($validate_duplicate == null){
 
@@ -118,6 +123,18 @@ class ResourceInscriptionController extends Controller
                     );
 
                     if($new_enrollment != null){
+
+                        /**
+                         * Create New Poll
+                         */
+                        $this->rep->create(
+                            array(
+                                "id_enrollment" => $new_enrollment->id,
+                                "poll"          => $request->get("poll"),
+                                "created_by"    => Auth::user()->id,
+                            )
+                        );
+
                         return response()->json(
                             [
                                 "message"  => "La Inscripción se registró satisfactoriamente",
@@ -126,6 +143,7 @@ class ResourceInscriptionController extends Controller
                                 "response" => $new_enrollment,
 
                             ], 200 );
+
                     }
 
                 } else {

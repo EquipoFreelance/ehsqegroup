@@ -7,6 +7,7 @@ use App\Repositories\Eloquents\AcademicPeriodRepository;
 use App\Repositories\Eloquents\EbcRepository;
 use App\Repositories\Eloquents\EnrollmentPaymentConceptRepository;
 use App\Repositories\Eloquents\EnrollmentPMRepository;
+use App\Repositories\Eloquents\EnrollmentPollRepository;
 use App\Repositories\Eloquents\EpmFraccionadoOtrosRepository;
 use App\Repositories\Eloquents\EpmFraccionadoRepository;
 use App\Repositories\Eloquents\EpmTotalRepository;
@@ -58,7 +59,8 @@ class AppServiceProvider extends ServiceProvider
             EspecializationRepository::class,
             ModalityRepository::class,
             AcademicPeriodRepository::class,
-            EpmConceptRepository::class
+            EpmConceptRepository::class,
+            EnrollmentPollRepository::class
         );
     }
 }
