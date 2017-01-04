@@ -104,8 +104,6 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
 // Ventas
 Route::group(['middleware' => ['auth','role.marketing']], function(){
 
-    // Ruta de Publica del Formulario
-    Route::get('inscription', ['uses' => 'InscriptionController@getPublicCreate']);
 
     // Recursos de Inscripcion
     Route::resource('dashboard/inscription',
@@ -116,31 +114,8 @@ Route::group(['middleware' => ['auth','role.marketing']], function(){
         );
 
 
-    // Get List Enrollments with its information of students
-    /*Route::get('/api/inscriptions', [
-        "uses" => 'WebService\WSInscriptionController@getInscriptionsByCreatedBy'
-    ]);*/
-
 });
 
-
-// Interiores
-/*Route::get('inscription/create/{created_by}',[
-    'as'    => 'inscription.create',
-    'uses'  => 'InscriptionController@create'
-]);*/
-
-
-Route::post('inscription/store',[
-    'as'    => 'inscription.store',
-    'uses'  => 'InscriptionController@store'
-]);
-
-
-Route::get('inscription/thank_you_page',[
-    'as'    => 'dashboard.inscription.thankyoupage',
-    'uses'  => 'InscriptionController@thankYouPage'
-]);
 
 // Sistema Docentes
 Route::group(['middleware' => ['auth','role.docente']], function(){
@@ -396,16 +371,21 @@ Route::group(['prefix' => 'api/', 'middleware' => ['web']], function() {
 
 });
 
+// Ruta de Publica del Formulario
+Route::get('inscription', ['uses' => 'InscriptionController@getPublicCreate']);
+
+
 /* -- Path Api Rest Service -- */
 
 // Inscriptions
 Route::resource('/api/inscriptions',
     'WebService\ResourceInscriptionController',
     array(
-        'only' => ['store']
+        'only' => ['store', 'index']
 
     )
 );
+
 
 // Califications
 Route::resource('/api/califications',

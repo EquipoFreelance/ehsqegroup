@@ -31,7 +31,6 @@ function listInscriptions(created_by){
             $(".items").html(html);
         }
 
-
         //console.log(response);
      },
      error:function(response)

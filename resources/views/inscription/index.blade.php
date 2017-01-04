@@ -15,11 +15,12 @@
         <tr>
           <td>@{{ id }}</td>
           <td>@{{ created_at }}</td>
-          <td>@{{ student.firtname }}</td>
-          <td>@{{ student.lastname_pat }} @{{ student.lastname_mat }}</td>
-          <td>@{{ student.email }}</td>
+          <td>@{{ student }}</td>
+          <td>@{{ email }}</td>
           <td>@{{ modality }}</td>
-          <td>@{{ especialization }}</td>
+          <td>@{{ type_specialty }}</td>
+          <td>@{{ modality }}</td>
+          <td>@{{ specialty }}</td>
           <td>@{{ period_academic }}</td>
           <td>
             <a href="inscription/@{{ id }}/edit" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>
@@ -55,10 +56,10 @@
                 <tr>
                   <th>Id</th>
                   <th>Fecha creación</th>
-                  <th>Nombres</th>
-                  <th>Apellidos</th>
+                  <th>Inscrito</th>
                   <th>Correo</th>
                   <th>Modalidad</th>
+                  <th>Tipo de Especialidad</th>
                   <th>Especialidad</th>
                   <th>Periódo</th>
                   <th></th>

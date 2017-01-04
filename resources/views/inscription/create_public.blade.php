@@ -13,13 +13,16 @@
                     </div>
 
                     <div class="x_content">
-                        {!! Form::open(['route' => 'inscription.store', 'class' => 'form-horizontal form-label-left', 'name' => 'store', 'id' => 'store']) !!}
+
+                        <form action="#" class="form-horizontal form-label-left" name="store" id="store">
+
+                        {{ csrf_field() }}
 
                         <input type="hidden" id="created_by" name="created_by" value="{{ $created_by }}" />
 
                         <div class="alert alert-success alert-dismissible fade out" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                            <p class="message">Mensaje</p>
+                            <p class="message"></p>
                         </div>
 
                         <div class="form-group">
