@@ -187,5 +187,5 @@ class ResourceInscriptionController extends Controller
             return Response::json([ 'errors' => [ ['message' => $e->getMessage()] ] ], 200);
         }
     }
-
+    
 }
