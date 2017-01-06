@@ -206,9 +206,7 @@ class ResourceInscriptionController extends Controller
             return Response::json([ 'errors' => [ ['message' => $e->getMessage()] ] ], 200);
         }
     }
-<<<<<<< HEAD
-    
-=======
+
 
 
     public function index(Request $request){
@@ -249,5 +247,4 @@ class ResourceInscriptionController extends Controller
 
     }
 
->>>>>>> cb9e5558589ffe445cc3cea36379f71255bbd397
 }
