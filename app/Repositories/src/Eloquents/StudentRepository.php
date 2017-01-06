@@ -44,7 +44,7 @@ class StudentRepository implements InterfaceRepository
     }
 
 
-    public function getInfoEnrollment($id_enrollment){
+    /*public function getInfoEnrollment($id_enrollment){
 
         $esp_repo = new EspecializationRepository();
         $mod_repo = new ModalityRepository();
@@ -65,7 +65,7 @@ class StudentRepository implements InterfaceRepository
                     'created_at'      => $created_at
                 )
         );
-    }
+    }*/
 
     // Create Register
     public function create( array $attribute){

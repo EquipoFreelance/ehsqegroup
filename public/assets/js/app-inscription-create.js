@@ -50,11 +50,10 @@ $(function(){
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-
-                    console.log(xhr);
-                    /*if(  response.status == 400){
-                        $(form).find(".save").attr("disabled", "disabled");
-                    }*/
+                    
+                    if(  response.status == 500){
+                        $(".message").html("Error al realizar la ficha de inscripción");
+                    }
 
                 }
             });

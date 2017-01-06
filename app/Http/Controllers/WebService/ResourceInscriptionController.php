@@ -4,8 +4,12 @@ namespace App\Http\Controllers\WebService;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\InscriptionStoreRequest;
+use App\Repositories\Eloquents\AcademicPeriodRepository;
 use App\Repositories\Eloquents\EnrollmentPollRepository;
 use App\Repositories\Eloquents\EnrollmentRepository;
+use App\Repositories\Eloquents\EspecializationRepository;
+use App\Repositories\Eloquents\EspecializationTypeRepository;
+use App\Repositories\Eloquents\ModalityRepository;
 use App\Repositories\Eloquents\PersonRepository;
 use App\Repositories\Eloquents\StudentRepository;
 use Illuminate\Http\Request;
@@ -19,12 +23,20 @@ class ResourceInscriptionController extends Controller
     private $rs;
     private $rp;
     private $rep;
+    private $rap;
+    private $rmod;
+    private $resp;
+    private $respt;
 
     public function __construct(
         EnrollmentRepository $re,
         StudentRepository $rs,
         PersonRepository $rp,
-        EnrollmentPollRepository $rep
+        EnrollmentPollRepository $rep,
+        AcademicPeriodRepository $rap,
+        ModalityRepository $rmod,
+        EspecializationRepository $resp,
+        EspecializationTypeRepository $respt
     )
     {
 
@@ -32,6 +44,10 @@ class ResourceInscriptionController extends Controller
         $this->rs = $rs;
         $this->rp = $rp;
         $this->rep = $rep;
+        $this->rap = $rap;
+        $this->rmod = $rmod;
+        $this->resp = $resp;
+        $this->respt = $respt;
 
     }
 
@@ -46,6 +62,7 @@ class ResourceInscriptionController extends Controller
         try {
 
             $num_doc = $request->get("num_doc");
+            $created_by = $request->get("created_by");
 
             $find = $this->rp->getFindByNumDoc( $num_doc );
 
@@ -86,7 +103,7 @@ class ResourceInscriptionController extends Controller
                         "cod_persona" => $cod_persona,
                         "cod_sede"    => "1",
                         "activo"      => "1",
-                        "created_by"  => Auth::user()->id,
+                        "created_by"  => $created_by,
                     ));
 
                     $id_student = $student->id;
@@ -105,7 +122,7 @@ class ResourceInscriptionController extends Controller
                     $request->get("cod_modalidad"),
                     $request->get("cod_esp_tipo"),
                     $request->get("cod_esp")
-                    
+
                 );
 
                 if($validate_duplicate == null){
@@ -117,7 +134,7 @@ class ResourceInscriptionController extends Controller
                             "cod_modalidad"      => $request->get("cod_modalidad"),
                             "cod_esp_tipo"       => $request->get("cod_esp_tipo"),
                             "cod_esp"            => $request->get("cod_esp"),
-                            "created_by"         => Auth::user()->id,
+                            "created_by"         => $created_by,
                             "activo"             => 1
                         )
                     );
@@ -131,7 +148,7 @@ class ResourceInscriptionController extends Controller
                             array(
                                 "id_enrollment" => $new_enrollment->id,
                                 "poll"          => $request->get("poll"),
-                                "created_by"    => Auth::user()->id,
+                                "created_by"    => $created_by,
                             )
                         );
 
@@ -176,6 +193,8 @@ class ResourceInscriptionController extends Controller
 
     }
 
+
+
     public function update(InscriptionStoreRequest $request, $id)
     {
         try {
@@ -187,5 +206,48 @@ class ResourceInscriptionController extends Controller
             return Response::json([ 'errors' => [ ['message' => $e->getMessage()] ] ], 200);
         }
     }
+<<<<<<< HEAD
     
+=======
+
+
+    public function index(Request $request){
+
+        $created_by = $request->get("created_by");
+
+
+        if( $created_by ){
+
+            $items = $this->re->getEnrollmentByCreatedBy($created_by, 1);
+
+            $response = array();
+
+            foreach ($items as $item) {
+
+                // Find Person
+                $find_enrollment = $this->re->getById($item->id);
+
+                // Find in ref to person
+                $ref_student_to_person = $find_enrollment->student->persona;
+
+                $response[] = array(
+                    "id"               => $item->id,
+                    "student"          => $ref_student_to_person['FullNameUpper'],//." ".$ref_student_to_person['ape_pat']." ".$ref_student_to_person['ape_mat'],
+                    "email"            => $ref_student_to_person['correo'],
+                    "created_at"       => date("d-m-Y H:i:s", strtotime($item->created_at)),
+                    "academic_period"  => $this->rap->getNameById($item->id_academic_period),
+                    "type_specialty"   => $this->respt->getNameById($item->cod_esp_tipo),
+                    "specialty"        => $this->resp->getNameById($item->cod_esp),
+                    "modality"         => $this->rmod->getNameById($item->cod_modalidad)
+                );
+
+            }
+
+        }
+
+        return response()->json(["response" => $response], 200);
+
+    }
+
+>>>>>>> cb9e5558589ffe445cc3cea36379f71255bbd397
 }
