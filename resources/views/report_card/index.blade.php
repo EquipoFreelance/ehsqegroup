@@ -22,9 +22,9 @@
                   <input type="hidden" name="id_taller[]" class="form-control" value="@{{ cod_taller }}" style="width: 70px; text-align: center;">
                </td>
             @{{/with}}
-
          @{{/each}}
-         <td style="width: 70px; text-align: center;">0</td>
+
+         <td style="width: 70px; text-align: center;" class="ïd_enrollment_@{{ enrollment }}"><span>@{{ enrollment }}</span></td>
       </tr>
       @{{/each}}
    </script>
@@ -108,7 +108,7 @@
    <script>
       $(function(){
 
-         var teacher_id = {{ Auth::user()->cod_persona  }};
+         var teacher_id = '{{ Auth::user()->cod_persona  }}';
 
          wsSelectGroupTeacher('/api/report-card/group-teacher/'+ teacher_id, '#group', '-- Seleccione el grupo asignado --');
 
@@ -138,6 +138,7 @@
                },
                complete: function(){
                   $(".alert-info").hide().fadeIn().html("Las notas fueron ingresadas satisfactoriamente");
+                  $("#cod_mod").trigger("change");
                   //$( "#store_report_card" ).submit();
                },
                error: function (xhr, ajaxOptions, thrownError) {
@@ -148,7 +149,6 @@
             });
 
          });
-
 
       });
    </script>

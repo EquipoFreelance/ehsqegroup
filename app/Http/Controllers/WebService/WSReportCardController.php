@@ -39,7 +39,8 @@ class WSReportCardController extends Controller
                     $body[] = array(
                         "id"     => $item->id_enrollment,
                         "name"   => $enrollment->student->persona->nombre.", ".$enrollment->student->persona->ape_pat." ".$enrollment->student->persona->ape_mat,
-                        "report" => $this->ReportCardModules($item->id_enrollment, $id_module, $group, $header)
+                        "report" => $this->ReportCardModules($item->id_enrollment, $id_module, $group, $header, $prom),
+                        "enrollment" => $prom
                     );
 
                 }
@@ -74,7 +75,7 @@ class WSReportCardController extends Controller
      * @param $header
      * @return array
      */
-    public function ReportCardModules($id_enrollment, $id_module, $group, &$header)
+    public function ReportCardModules($id_enrollment, $id_module, $group, &$header, &$prom)
     {
         $rows = [];
 
@@ -96,6 +97,7 @@ class WSReportCardController extends Controller
                     if($report_card){
 
                         if(fmod($report_card->num_nota, 1) !== 0.00){
+
                             // your code if its decimals has a value
                             $nota = number_format($report_card->num_nota, 1, '.', '');
                         } else {
@@ -106,7 +108,7 @@ class WSReportCardController extends Controller
                             "nota" =>
                                 [
                                     'id'            => $report_card->id,
-                                    'num_nota'      => $nota,//$report_card->num_nota,
+                                    'num_nota'      => $nota,
                                     'cod_matricula' => $report_card->cod_matricula,
                                     'cod_taller'    => $n
                                 ]
@@ -150,11 +152,13 @@ class WSReportCardController extends Controller
                         "nota" =>
                             [
                                 'id'            => $report_card->id,
-                                'num_nota'      => $nota,//$report_card->num_nota,
+                                'num_nota'      => $nota,
                                 'cod_matricula' => $report_card->cod_matricula,
                                 'cod_taller'    => 11
                             ]
                     );
+
+
 
                 } else {
 
@@ -176,15 +180,23 @@ class WSReportCardController extends Controller
 
         }
 
+        // Calculando el promedio
+        $sum_nota = 0;
+        foreach ($rows as $row) {
+            $sum_nota = $sum_nota + $row["nota"]['num_nota'];
+        }
+
+        $prom = $this->getCalculateAverage(count($rows), $sum_nota);
+
         return $rows;
 
     }
 
-    public function ReportCardExam(){
-
-    }
-
-    public function ReporteCardStore(Request $request){
+    /**
+     * Save Report Card
+     * @param Request $request
+     */
+    public function ReportCardStore(Request $request){
 
         $ids            = $request->get("id_num_nota");
         $cod_grupo      = $request->get("group");
@@ -192,7 +204,7 @@ class WSReportCardController extends Controller
         $cod_modulo     = $request->get("cod_mod");
         $ids_taller     = $request->get("id_taller");
 
-        $teacher    = Docente::where("cod_persona", Auth::user()->cod_persona )->first();
+        $teacher        = Docente::where("cod_persona", Auth::user()->cod_persona )->first();
 
         foreach ($request->get("num_nota") as $key => $value)
         {
@@ -207,9 +219,7 @@ class WSReportCardController extends Controller
                         if($rc->num_nota != $value)
                         {
                             $rc->fill(['num_nota' => $value])->save();
-                            print "Actualizado \n";
-                        }else{
-                            print "No es necesario hacer esfuerzo \n";
+
                         }
 
                     }
@@ -232,37 +242,6 @@ class WSReportCardController extends Controller
 
                 }
 
-                /*if($rc){
-
-                    if($rc->num_nota != $value)
-                    {
-                        $rc->fill(['num_nota' => $value])->save();
-                        print "Actualizado \n";
-                    }else{
-                        print "No es necesario hacer esfuerzo \n";
-                    }
-
-                } else {
-
-                    $new_report_card = new ReportCard;
-                    $new_report_card->fill(
-                        [
-                            'num_nota'    => $value,
-                            'cod_grupo'   => $cod_grupo,
-                            'cod_modulo'  => $cod_modulo,
-                            'cod_docente' => $teacher->id,
-                            'created_by'  => Auth::user()->id,
-                            'created_at'  => Carbon::now(),
-                        ]
-                    )->save();
-                    //print "Nueva nota registrada \n";
-
-                }*/
-
-            }else if( $value == ''){
-
-               //print "No hace nada:".$value." - Id:".$ids[$key]."\n";
-                //print "Nota:".$value." - Id:".$ids[$key]."\n";
             }
 
         }
@@ -270,4 +249,7 @@ class WSReportCardController extends Controller
 
     }
 
+    public function getCalculateAverage($total_notas, $sum_notas){
+        return ($sum_notas / $total_notas);
+    }
 }

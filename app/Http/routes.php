@@ -343,7 +343,7 @@ Route::group(['middleware' => ['auth','role.alumno']], function(){
 
     // Get Group Enrollments
     Route::post('/api/teacher/report-card/store', [
-        'as' => 'json.group-teacher.all', 'uses' => 'WebService\WSReportCardController@ReporteCardStore'
+        'as' => 'json.group-teacher.all', 'uses' => 'WebService\WSReportCardController@ReportCardStore'
     ]);
 
     /* -- Module Inscription  -- */
