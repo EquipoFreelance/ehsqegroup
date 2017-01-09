@@ -24,7 +24,7 @@
             @{{/with}}
          @{{/each}}
 
-         <td style="width: 70px; text-align: center;" class="ïd_enrollment_@{{ enrollment }}"><span>@{{ enrollment }}</span></td>
+         <td style="width: 70px; text-align: center;" class="ïd_enrollment_@{{ enrollment }}"><span>@{{ average }}</span></td>
       </tr>
       @{{/each}}
    </script>

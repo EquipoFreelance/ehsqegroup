@@ -1,5 +1,14 @@
 @extends('dashboard.layouts.master_public')
 
+@section('custom_css')
+    <style>
+        .chkContentp {
+            position: relative;
+            padding-left: 28px;
+        }
+    </style>
+@stop
+
 @section('content')
     <div class="form_content_block">
 
@@ -22,12 +31,8 @@
 
                         <div class="alert alert-dismissible fade out" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-<<<<<<< HEAD
                             <i class="fa fa_icon"></i>
                             <p class="message">Mensaje</p>
-=======
-                            <p class="message"></p>
->>>>>>> cb9e5558589ffe445cc3cea36379f71255bbd397
                         </div>
 
                         <div class="form-group">
@@ -218,7 +223,7 @@
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <label for="num_tel_mobile">Como se enteror del Curso-Diploma</label>
                                     <select class="form-control" name="poll" id="poll">
-                                        <option value="0">Seleccione</option>
+                                        <option value="">Seleccione</option>
                                         <option value="AFICHE">Afiche</option>
                                         <option value="GOOGLE">Google</option>
                                         <option value="WEB">Web</option>
@@ -235,15 +240,9 @@
                         <div class="ln_solid"></div>
 
                         <div class="chkContent">
-                            {{ Form::checkbox('proteccion_datos', 1, false, ['class' => 'flat']) }}
-
+                            {{ Form::checkbox('proteccion_datos', 1, false, ['class' => 'flat', 'id' => 'proteccion_datos']) }}
                             <b>PROTECCION DE DATOS PERSONALES</b> <br>Mi decisión de participar en los programas de EHSQ GROUP SAC  es personal, libre y voluntaria. Autorizo a EHSQ GROUP SAC  para que recolecte, almacene, use y administre mis datos personales, los cuales les han sido suministrados con la finalidad de desarrollar su gestión y prestar sus servicios, de conformidad con las políticas y normas de Tratamiento de Datos Personales  De conformidad con la Ley N°29733 - “Ley de Protección de Datos Personales”, y el Reglamento del mismo, Decreto Supremo Nº003-2013-JUS
-
-                            @if ($errors->has('proteccion_datos'))
-                                <div class="hidden" id="chkvalid" style="display:block !important">
-                                    <label for="proteccion_datos" generated="true" class="error" style="display:block !important">Es necesario que los términos y condiciones.</label>
-                                </div>
-                            @endif
+                            <label for="proteccion_datos" class="error" style="display:none !important">Es necesario que los términos y condiciones.</label>
                         </div>
 
                         <div class="ln_solid"></div>

@@ -39,8 +39,9 @@ class WSReportCardController extends Controller
                     $body[] = array(
                         "id"     => $item->id_enrollment,
                         "name"   => $enrollment->student->persona->nombre.", ".$enrollment->student->persona->ape_pat." ".$enrollment->student->persona->ape_mat,
-                        "report" => $this->ReportCardModules($item->id_enrollment, $id_module, $group, $header, $prom),
-                        "enrollment" => $prom
+                        "report" => $this->ReportCardModules($item->id_enrollment, $id_module, $group, $header, $average),
+                        "average" => $average,
+                        "enrollment" => $item->id_enrollment
                     );
 
                 }
@@ -75,7 +76,7 @@ class WSReportCardController extends Controller
      * @param $header
      * @return array
      */
-    public function ReportCardModules($id_enrollment, $id_module, $group, &$header, &$prom)
+    public function ReportCardModules($id_enrollment, $id_module, $group, &$header, &$average)
     {
         $rows = [];
 
@@ -180,13 +181,30 @@ class WSReportCardController extends Controller
 
         }
 
-        // Calculando el promedio
-        $sum_nota = 0;
+        // Nota final de talleres
+        $sum_nota_talleres = 0;
+        $n = 0;
         foreach ($rows as $row) {
-            $sum_nota = $sum_nota + $row["nota"]['num_nota'];
+            if($row["nota"]['cod_taller'] != 11){
+                $n = $n + 1;
+                $sum_nota_talleres = $sum_nota_talleres + $row["nota"]['num_nota'];
+            }
         }
 
-        $prom = $this->getCalculateAverage(count($rows), $sum_nota);
+        $final_nota_taller = $this->getCalculateAverage($n, $sum_nota_talleres);
+
+
+        // Nota examen del modulo
+        $final_nota_examen = 0;
+        foreach ($rows as $row) {
+            if($row["nota"]['cod_taller'] == 11){
+                $final_nota_examen = $row["nota"]['num_nota'];
+                break;
+            }
+        }
+
+        // Promedio modulo
+        $average = ($final_nota_taller * 0.3) + ($final_nota_examen * 0.7);
 
         return $rows;
 

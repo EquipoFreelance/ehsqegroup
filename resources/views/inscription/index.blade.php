@@ -46,7 +46,8 @@
         <div class="x_panel">
 
           <div class="x_title">
-              <a href="/inscription/create/{{ Auth::user()->id  }}" class="btn btn-5 btn-5a icon-add add"><span>Agregar</span></a>
+
+              <a href="/inscription/?created_by={{ Auth::user()->id  }}" class="btn btn-5 btn-5a icon-add add"><span>Agregar</span></a>
               <input type="hidden" name="created_by" id="created_by" value="{{ Auth::user()->id  }}" >
               <div class="clearfix"></div>
           </div>

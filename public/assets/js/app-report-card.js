@@ -81,9 +81,13 @@ function listReportCard(id_group, id_module) {
             },
             success:function(items)
             {
+                console.log(items);
+
                 if(items.response){
 
                     var response = items.response;
+
+
 
                     // Head
                     $(".report_card_header").empty().append(custom_handlerbars($("#response-template-head").html(), response));
