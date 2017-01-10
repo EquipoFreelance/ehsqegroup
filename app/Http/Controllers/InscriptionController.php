@@ -68,7 +68,7 @@ class InscriptionController extends Controller
     }
 
     
-    /*public function edit($id)
+    public function edit($id)
     {
 
         $enrollment_repo = new EnrollmentRepository();
@@ -87,9 +87,9 @@ class InscriptionController extends Controller
 
         }
 
-    }*/
+    }
 
-    /*public function update(InscriptionStoreRequest $request, $id)
+    public function update(InscriptionStoreRequest $request, $id)
   {
 
       $student = Student::with('persona')->find($id);
@@ -126,8 +126,8 @@ class InscriptionController extends Controller
                         ->with('message', 'La Inscripción fue actualizada satisfactoriamente');
         }
 
-      }*/
+      }
 
-  //}
+  }
 
 }
