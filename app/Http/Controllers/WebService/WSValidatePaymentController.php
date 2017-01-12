@@ -55,7 +55,7 @@ class WSValidatePaymentController extends Controller
                         'concept_id'        => $concept->id_concept,
                         'concept_name'      => $concept_name->payment_concept_name,
                         'concept_amount'    => $concept->amount,
-                        'concept_verifided' => $concept->verified
+                        'concept_verifided' => ($concept->verified == 1)? true : false
                     );
 
                 }
