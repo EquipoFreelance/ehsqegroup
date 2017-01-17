@@ -365,11 +365,12 @@ Route::group(['middleware' => ['auth','role.alumno']], function(){
 
 /* Api Inscription */
 
-Route::group(['prefix' => 'api/', 'middleware' => ['web']], function() {
+/*Route::group(['prefix' => 'api/', 'middleware' => ['web']], function() {
 
     Route::resource("inscription", 'WebService\ResourceInscriptionController', ['only' => ['store','update'] ]);
+    Route::resource("auxilliar", 'WebService\AuxiliarResource', ['only' => ['store','update'] ]);
 
-});
+});*/
 
 // Ruta de Publica del Formulario
 Route::get('inscription', ['uses' => 'InscriptionController@getPublicCreate']);
@@ -386,6 +387,13 @@ Route::resource('/api/inscriptions',
     )
 );
 
+// Auxiliares
+Route::resource('/api/auxiliares',
+    'WebService\AuxiliarResource',
+    array(
+        'only' => ['store', 'index']
+    )
+);
 
 // Califications
 Route::resource('/api/califications',

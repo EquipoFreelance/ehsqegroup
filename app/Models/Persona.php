@@ -87,10 +87,10 @@ class Persona extends Model
     }
 
     // Una persona puede ser un auxiliar
-    /*  public function auxiliar()
+    public function auxiliar()
     {
         return $this->hasOne('App\Models\Auxiliar', 'cod_persona', 'id');
-    }*/
+    }
 
     // Una persona puede ser un docente
     public function docente()

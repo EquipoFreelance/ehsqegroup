@@ -184,7 +184,7 @@ class AuxiliarController extends Controller
         'ape_pat'           => 'required',
         'ape_mat'           => 'required',
         'direccion'         => 'required',
-        'telefono'          => 'required',
+        //'telefono'          => 'required',
         'fe_nacimiento'     => 'required',
         'cod_sexo'          => 'required',
         'activo'            => 'required'
@@ -205,7 +205,7 @@ class AuxiliarController extends Controller
         'nombre.required'             => 'Es necesario ingresar el nombre',
         'ape_pat.required'            => 'Es necesario ingresar el apellido paterno',
         'ape_mat.required'            => 'Es necesario ingresar el apellido materno',
-        'telefono.required'           => 'Es necesario ingresar un número telefónico',
+        //'telefono.required'           => 'Es necesario ingresar un número telefónico',
         'direccion.required'          => 'Es necesario ingresar una dirección',
         'fe_nacimiento.required'      => 'Es necesario ingresar una fecha de nacimiento',
         'cod_sexo.required'           => 'Es necesario indicar el género',

@@ -19,6 +19,7 @@ use App\Repositories\Eloquents\PaymentConceptRepository;
 use App\Repositories\Eloquents\PaymentConceptTypeRepository;
 use App\Repositories\Eloquents\PaymentDetailRepository;
 use App\Repositories\Eloquents\PaymentRepository;
+use App\Repositories\Eloquents\AuxiliarRepository;
 use Illuminate\Support\ServiceProvider;
 use Validator;
 use Hash;
@@ -64,7 +65,8 @@ class AppServiceProvider extends ServiceProvider
             ModalityRepository::class,
             AcademicPeriodRepository::class,
             EpmConceptRepository::class,
-            EnrollmentPollRepository::class
+            EnrollmentPollRepository::class,
+            AuxiliarRepository::class
         );
     }
 }
