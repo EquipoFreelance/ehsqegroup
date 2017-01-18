@@ -87,6 +87,12 @@ class AuxiliarRepository implements InterfaceRepository
     // Update Register by Id
     public function update( $id, array $attribute){
 
+        $update = $this->model->findOrFail($id);
+
+        $update->fill($attribute)->save();
+
+        return $update->toArray();
+
     }
 
     // Delete Register by Id

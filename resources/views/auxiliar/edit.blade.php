@@ -8,21 +8,21 @@
         <br>
         <div class="x_panel">
           <div class="y_title">
-            <h2><i class="fa fa-edit"></i> Ficha de Auxiliar</h2>
+            <h2><i class="fa fa-edit"></i> Editar Ficha de Auxiliar</h2>
             <div class="clearfix"></div>
           </div>
 
           <div class="x_content">
 
-            {!! Form::model($auxiliar, [ 'method' => 'PUT', 'route' => ['dashboard.auxiliar.update', $auxiliar->id], 'class' => 'form-horizontal form-label-left' ]) !!}
+            {!! Form::model($auxiliar, [ 'name' => 'edit', 'id' => 'edit', 'method' => 'PUT', 'route' => ['dashboard.auxiliar.update', $auxiliar->id], 'class' => 'form-horizontal form-label-left' ]) !!}
 
-            @if(Session::has('message'))
-              <div class="alert alert-success alert-dismissible fade in" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <strong>¡Perfecto!</strong>{{ Session::get('message') }}
-              </div>
-            @endif
+            <div class="alert alert-dismissible fade out" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+              <i class="fa fa_icon"></i>
+              <p class="message">Mensaje</p>
+            </div>
 
+            <input type="hidden" id="id_persona" name="id_persona"  value="{{ $auxiliar->persona->id }}">
             <div class="form-group">
               <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -59,29 +59,6 @@
               </div>
             </div>
 
-            <div class="form-group">
-              <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                  <label for="nom_corto">Fecha de nacimiento</label>
-                  <input type="text" id="fe_nacimiento" placeholder="Fecha de nacimiento" name="fe_nacimiento"  class="form-control" value="{{ $auxiliar->persona->fe_nacimiento }}">
-                  @if ($errors->has('direccion'))
-                    <label for="fe_nacimiento" generated="true" class="error">{{ $errors->first('fe_nacimiento') }}</label>
-                  @endif
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                  <label for="cod_sexo">Género</label>
-                  {{ Form::select('cod_sexo', array('1' => 'Masculino', '2' => 'Femenino'), $auxiliar->persona->cod_sexo, ['class' => 'form-control'] ) }}
-                  @if ($errors->has('cod_sexo'))
-                    <label for="cod_esp" generated="true" class="error">{{ $errors->first('cod_sexo') }}</label>
-                  @endif
-                </div>
-              </div>
-            </div>
 
             <div class="form-group">
               <div class="row">
@@ -107,53 +84,6 @@
               </div>
             </div>
 
-            <div class="form-group">
-              <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                  <label for="nom_corto">Dirección</label>
-                  <input type="text" id="direccion" placeholder="Dirección" name="direccion"  class="form-control" value="{{ $auxiliar->persona->direccion }}">
-                  @if ($errors->has('direccion'))
-                    <label for="direccion" generated="true" class="error">{{ $errors->first('direccion') }}</label>
-                  @endif
-                </div>
-              </div>
-            </div>
-
-          <!--<div class="form-group">
-              <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                  <label for="telefono">Teléfonos</label>
-                  <input type="text" id="telefono" placeholder="Teléfonos" name="telefono"  class="form-control" value="">
-                  @if ($errors->has('telefono'))
-                    <label for="telefono" generated="true" class="error">{{ $errors->first('telefono') }}</label>
-                  @endif
-                </div>
-              </div>
-            </div>-->
-
-            <!--<div class="form-group">
-              <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                  <label for="correo">Correo electrónico</label>
-                  <input type="text" id="correo" placeholder="Correo electrónico" name="correo"  class="form-control" value="">
-                  @if ($errors->has('correo'))
-                    <label for="correo" generated="true" class="error">{{ $errors->first('correo') }}</label>
-                  @endif
-                </div>
-              </div>
-            </div>-->
-
-            <div class="form-group">
-              <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                  <label for="activo">Estado</label>
-                  {{ Form::select('activo', ['1' => 'Activo','0' => 'No Activo'], $auxiliar->activo, ['class' => 'form-control'] ) }}
-                  @if ($errors->has('activo'))
-                    <label for="activo" generated="true" class="error">{{ $errors->first('activo') }}</label>
-                  @endif
-                </div>
-              </div>
-            </div>
 
             <div class="ln_solid"></div>
             <div class="form-group btncontrol">
@@ -166,4 +96,8 @@
       </div>
     </div>
   </div>
+@stop
+@section('custom_js')
+  <script src="{{ URL::asset('assets/js/jquery.validated.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/app-auxiliar-create.js') }}"></script>
 @stop

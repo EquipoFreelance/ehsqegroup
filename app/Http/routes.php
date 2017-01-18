@@ -165,6 +165,7 @@ Route::group(['middleware' => ['auth','role.alumno']], function(){
 
         });
 
+
     /* -- Dashboard - Creditos y Cobranzas -- */
 
 
@@ -391,7 +392,7 @@ Route::resource('/api/inscriptions',
 Route::resource('/api/auxiliares',
     'WebService\AuxiliarResource',
     array(
-        'only' => ['store', 'index']
+        'only' => ['store', 'index', 'update']
     )
 );
 

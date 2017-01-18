@@ -101,7 +101,7 @@ class ResourceInscriptionController extends Controller
                      */
                     $student = $this->rs->create(array(
                         "cod_persona" => $cod_persona,
-                        "cod_sede"    => "1",
+                        "cod_sede"    => "4",
                         "activo"      => "1",
                         "created_by"  => $created_by,
                     ));
