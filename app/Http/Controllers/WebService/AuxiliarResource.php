@@ -54,7 +54,7 @@ class AuxiliarResource extends Controller
 
                 return response()->json(
                     [
-                        "message"  => "La Inscripción se registró satisfactoriamente",
+                        "message"  => "El auxiliar se registró satisfactoriamente",
                         "alert"    => "alert-success",
                         "icon"     => "fa-check",
                         "response" => $create_auxiliar,
@@ -124,7 +124,7 @@ class AuxiliarResource extends Controller
 
             return response()->json(
                 [
-                    "message"  => "La Inscripción se actualizó satisfactoriamente",
+                    "message"  => "El auxiliar se actualizó satisfactoriamente",
                     "alert"    => "alert-success",
                     "icon"     => "fa-check",
                     "response" => $update,
