@@ -13,16 +13,20 @@
         <script id="response-template" type="text/x-handlebars-template">
             @{{#each response}}
             <tr>
-                <td>@{{ student.id }}</td>
                 <td>@{{ created_at }}</td>
-                <td>@{{ student.persona.persona_document_type.document_type_name }}</td>
+                <td> </td>
                 <td>@{{ student.persona.num_doc }}</td>
                 <td>@{{ student.persona.nombre }}</td>
                 <td>@{{ student.persona.ape_pat }} @{{ student.persona.ape_mat }}</td>
                 <td>@{{ student.persona.correo }}</td>
                 <td>@{{ student.persona.num_phone  }} / @{{ student.persona.num_cellphone }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>@{{ modality.nom_mod }}</td>
-                <td>@{{ type_specialization.nom_esp_tipo }} / @{{ specialization.nom_esp }}</td>
+                <td>@{{ type_specialization.nom_esp_tipo }}</td>
+                <td>@{{ specialization.nom_esp }}</td>
+                <td></td>
                 <td>
                     <a href="creditos/verify-payment/@{{ id }}/show" class="btn btn-5 btn-5a icon-edit edit"><span>Validar Pagos</span></a>
                 </td>
@@ -54,16 +58,23 @@
                         <table id="datatable-responsive" class="table table-stripedx table-borderedx dt-responsive nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
-                                <th>Id</th>
                                 <th>Fecha Registro</th>
-                                <th>Tipo documento</th>
-                                <th>Número</th>
+                                <th>Ejecutivo comercial</th>
+
+                                <th>DNI</th>
                                 <th>Nombres</th>
                                 <th>Apellidos</th>
-                                <th>Correo</th>
-                                <th>Teléfono</th>
+                                <th>Email</th>
+                                <th>Celular</th>
+                                <th>Tipo Doc</th>
+                                <th>RUC</th>
+                                <th>Empresa</th>
                                 <th>Modalidad</th>
+                                <th>Tipo de especialización</th>
+                                <th>Nombre del Diploma</th>
+                                <th>Fecha del Programa</th>
                                 <th>Curso</th>
+
                                 <th></th>
                             </tr>
                             </thead>

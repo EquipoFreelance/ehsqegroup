@@ -144,10 +144,19 @@ Route::group(['middleware' => ['auth','role.docente']], function(){
 
 });
 
-// Sistema Alumnos
-Route::group(['middleware' => ['auth','role.alumno']], function(){
+    // Dashboard de Sistema Alumnos
+    Route::group(['middleware' => ['auth','role.alumno']], function(){
 
-});
+        Route::get(
+            'dashboard/students/report-card',
+            [
+                'as'   => 'dashboard.students.report-card',
+                'uses' => 'StudentController@getReportCard'
+            ]
+        );
+
+    });
+
 
     /* --  Modulo / Creditos y Cobranzas -- */
 
@@ -381,10 +390,18 @@ Route::get('inscription', ['uses' => 'InscriptionController@getPublicCreate']);
 
 // Inscriptions
 Route::resource('/api/inscriptions',
-    'WebService\ResourceInscriptionController',
+    'WebService\InscriptionResource',
     array(
         'only' => ['store', 'index']
 
+    )
+);
+
+// Verification of payments
+Route::resource('/api/payment-verification',
+    'WebService\PaymentVerificationResource',
+    array(
+        'only' => ['store', 'index']
     )
 );
 
@@ -403,4 +420,6 @@ Route::resource('/api/califications',
         'only' => ['store']
     )
 );
+
+//
 

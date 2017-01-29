@@ -4,10 +4,10 @@
       <div class="clear"></div>
       <ul class="nav side-menu">
          <li class="title">Menú principal</li>
-         <li><a href="{{ route('dashboard.inscription.index') }}"><i class="fa fa-tasks"></i> Reporte de Asistencias</a></li>
-         <li><a href="{{ route('dashboard.inscription.index') }}"><i class="fa fa-tasks"></i> Reporte de Cursos</a></li>
-         <li><a href="{{ route('dashboard.inscription.index') }}"><i class="fa fa-tasks"></i> Reporte de Actividades</a></li>
-         <li><a href="{{ route('dashboard.inscription.index') }}"><i class="fa fa-tasks"></i> Encuesta</a></li>
+         <!--<li><a href="{{ route('dashboard.inscription.index') }}"><i class="fa fa-tasks"></i> Reporte de Asistencias</a></li>-->
+         <li><a href="{{ route('dashboard.students.report-card') }}"><i class="fa fa-tasks"></i> Reporte de Cursos</a></li>
+         <!--<li><a href="{{ route('dashboard.inscription.index') }}"><i class="fa fa-tasks"></i> Reporte de Actividades</a></li>-->
+         <!--<li><a href="{{ route('dashboard.inscription.index') }}"><i class="fa fa-tasks"></i> Encuesta</a></li>-->
       </ul>
    </div>
 </div>

@@ -20,40 +20,40 @@ use Validator;
 class StudentController extends Controller
 {
 
-  public function index()
-  {
-      return view('student.index');
-  }
+    public function index()
+    {
+        return view('student.index');
+    }
 
-  public function create()
-  {
+    public function create()
+    {
 
-    $data = array();
-    return view('student.create', $data);
+        $data = array();
+        return view('student.create', $data);
 
-  }
+    }
     
     public function getIndexGroup($cod_grupo){
         return view('student.index-group', compact('cod_grupo'));
     }
 
-  public function show()
-  {
+    public function show()
+    {
     //$persona = Persona::with('persona_student')->find(32);//->persona_telefonos->toJson();
     //return $persona->persona_student()->first()->id;
-  }
+    }
 
-  public function edit($id)
-  {
+    public function edit($id)
+    {
 
     $student = Student::with('persona.persona_correos')->with('persona.persona_telefonos')->find($id);
     $data = compact('student');
     return view('student.edit', $data);
 
-  }
+    }
 
-  public function store(StudentStoreRequest $request)
-  {
+    public function store(StudentStoreRequest $request)
+    {
 
     $persona = new Persona(array(
       'nombre'           => $request->get("nombre"),
@@ -84,11 +84,10 @@ class StudentController extends Controller
       return redirect()->route('dashboard.student.edit', $student->id)
       ->with('message', 'El alumno fue registrado satisfactoriamente');
     }
-  }
+    }
 
-
-  public function update(StudentUpdateRequest $request, $id)
-  {
+    public function update(StudentUpdateRequest $request, $id)
+    {
 
       $student = Student::with('persona')->find($id);
       $student->persona->nombre           = $request->get("nombre");
@@ -116,7 +115,9 @@ class StudentController extends Controller
                       ->with('message', 'La información del alumnos fue actualizado satisfactoriamente');
       }
 
-  }
+    }
 
-
+    public function getReportCard(){
+        return view('student.report-card');
+    }
 }
