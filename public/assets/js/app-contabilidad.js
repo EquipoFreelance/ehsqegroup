@@ -8,7 +8,7 @@ function listInscriptions(){
     if (! $.fn.dataTable.isDataTable( '#datatable-responsive' ) ) {
         $('#datatable-responsive').DataTable({
             //destroy: true,
-            "ajax": 'http://api.hsqegroup.app/api/contabilidad?q=ALL',
+            "ajax": '/api/contabilidad?q=ALL',
             "columns": [
                 { "data": "idx" },
                 { "data": "creationDate" },
