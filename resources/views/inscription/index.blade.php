@@ -12,28 +12,28 @@
     <!-- Custom Templates -->
     <script id="response-template" type="text/x-handlebars-template">
       @{{#each response}}
-        <tr>
-          <td>@{{ id }}</td>
-          <td>@{{ created_at }}</td>
-          <td>@{{ student }}</td>
-          <td>@{{ email }}</td>
-          <td>@{{ modality }}</td>
-          <td>@{{ type_specialty }}</td>
-          <td>@{{ modality }}</td>
-          <td>@{{ specialty }}</td>
-          <td>@{{ period_academic }}</td>
-          <td>
-            <a href="inscription/@{{ id }}/edit" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>
-          </td>
-        </tr>
+      <tr>
+        <td>@{{ id }}</td>
+        <td>@{{ created_at }}</td>
+        <td>@{{ student }}</td>
+        <td>@{{ email }}</td>
+        <td>@{{ modality }}</td>
+        <td>@{{ type_specialty }}</td>
+        <td>@{{ specialty }}</td>
+        <td>@{{ academic_period }}</td>
+        <td>@{{ creation_date }}</td>
+        <td>
+          <a href="inscription/@{{ id }}/edit" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>
+        </td>
+      </tr>
       @{{/each}}
     </script>
 
     <div class="page-title">
       @if(Session::has('message'))
-          <div class="alert @if(Session::has('class')) {{ Session::get('class') }} @else alert-info @endif ">
-              {{ Session::get('message') }}
-          </div>
+        <div class="alert @if(Session::has('class')) {{ Session::get('class') }} @else alert-info @endif ">
+          {{ Session::get('message') }}
+        </div>
       @endif
 
       <h1>Inscripciones realizadas</h1>
@@ -47,24 +47,34 @@
 
           <div class="x_title">
 
-              <a href="/inscription/?created_by={{ Auth::user()->id  }}" class="btn btn-5 btn-5a icon-add add"><span>Agregar</span></a>
-              <input type="hidden" name="created_by" id="created_by" value="{{ Auth::user()->id  }}" >
-              <div class="clearfix"></div>
+            <a href="/dashboard/inscription/create" class="btn btn-5 btn-5a icon-add add"><span>Agregar</span></a>
+            <br>
+            <br>
+
+            <p>
+                <span style="color: #333;">
+                  Copiar y pegar el link para enviar a los clientes:
+                  <input type="text" name=""  class="form-control"  value="http://intranetehsq.ehsqgroup.com/inscription?created_by={{ Auth::user()->id  }}">
+                </span>
+            </p>
+            <input type="hidden" name="created_by" id="created_by" value="{{ Auth::user()->id  }}" >
+            <div class="clearfix"></div>
           </div>
           <div class="x_content">
             <table id="datatable-responsive" class="table table-stripedx table-borderedx dt-responsive nowrap" cellspacing="0" width="100%">
               <thead>
-                <tr>
-                  <th>Id</th>
-                  <th>Fecha creación</th>
-                  <th>Inscrito</th>
-                  <th>Correo</th>
-                  <th>Modalidad</th>
-                  <th>Tipo de Especialidad</th>
-                  <th>Especialidad</th>
-                  <th>Periódo</th>
-                  <th></th>
-                </tr>
+              <tr>
+                <th>Id</th>
+                <th>Fecha creación</th>
+                <th>Inscrito</th>
+                <th>Correo</th>
+                <th>Modalidad</th>
+                <th>Tipo de Especialidad</th>
+                <th>Especialidad</th>
+                <th>Periódo académico</th>
+                <th>Fecha de inicio</th>
+                <th></th>
+              </tr>
               </thead>
               <tbody class="items">
 

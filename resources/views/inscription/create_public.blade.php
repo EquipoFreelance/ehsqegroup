@@ -233,7 +233,7 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <label for="num_tel_mobile">Como se enteró del Curso-Diploma</label>
+                                        <label for="num_tel_mobile">Como se enteror del Curso-Diploma</label>
                                         <select class="form-control" name="poll" id="poll">
                                             <option value="">Seleccione</option>
                                             <option value="AFICHE">Afiche</option>

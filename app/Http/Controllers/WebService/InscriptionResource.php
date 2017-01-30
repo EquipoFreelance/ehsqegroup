@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 use Auth;
 
 
-class InscriptionResourceController extends Controller
+class InscriptionResource extends Controller
 {
 
     private $re;
@@ -234,6 +234,7 @@ class InscriptionResourceController extends Controller
                     "email"            => $ref_student_to_person['correo'],
                     "created_at"       => date("d-m-Y H:i:s", strtotime($item->created_at)),
                     "academic_period"  => $this->rap->getNameById($item->id_academic_period),
+                    "creation_date"    => $item->creation_date,
                     "type_specialty"   => $this->respt->getNameById($item->cod_esp_tipo),
                     "specialty"        => $this->resp->getNameById($item->cod_esp),
                     "modality"         => $this->rmod->getNameById($item->cod_modalidad)

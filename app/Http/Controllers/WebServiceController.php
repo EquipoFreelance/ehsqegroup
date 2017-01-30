@@ -46,48 +46,48 @@ use Auth;
 class WebServiceController extends Controller
 {
     /**
-    * Países
-    * Servicio permite listar los países
-    * @return json $response  -> Json
-    */
+     * Países
+     * Servicio permite listar los países
+     * @return json $response  -> Json
+     */
     public function wsCountries()
     {
-      return $departament = Country::select('nom_pais as name', 'id')->get()->toJson();
+        return $departament = Country::select('nom_pais as name', 'id')->get()->toJson();
     }
 
     /**
-    * Departamentos
-    * Servicio permite listar las Provincias
-    * @param string $cod_pais -> Código del país
-    * @return Response $response  -> Json
-    */
+     * Departamentos
+     * Servicio permite listar las Provincias
+     * @param string $cod_pais -> Código del país
+     * @return Response $response  -> Json
+     */
     public function wsDepartaments($cod_pais)
     {
-      return Departament::where(compact('cod_pais'))->select('nom_dpto as name', 'id')->get()->toJson();
+        return Departament::where(compact('cod_pais'))->select('nom_dpto as name', 'id')->get()->toJson();
     }
 
     /**
-    * Provincias
-    * Servicio permite listar las Provincias
-    * @param string $cod_dpto -> Código del departamento
-    * @param string $cod_prov -> Código de la provincia
-    * @return Response $response  -> Json
-    */
+     * Provincias
+     * Servicio permite listar las Provincias
+     * @param string $cod_dpto -> Código del departamento
+     * @param string $cod_prov -> Código de la provincia
+     * @return Response $response  -> Json
+     */
     public function wsProvinces($cod_dpto)
     {
-      return Province::where(compact('cod_dpto'))->select('nom_prov as name', 'id')->get()->toJson();
+        return Province::where(compact('cod_dpto'))->select('nom_prov as name', 'id')->get()->toJson();
     }
 
     /**
-    * Distritos
-    * Servicio permite listar los Distritos
-    * @param string $cod_dpto -> Código del departamento
-    * @param string $cod_prov -> Código de la provincia
-    * @return Response $response  -> Json
-    */
+     * Distritos
+     * Servicio permite listar los Distritos
+     * @param string $cod_dpto -> Código del departamento
+     * @param string $cod_prov -> Código de la provincia
+     * @return Response $response  -> Json
+     */
     public function wsDistricts($cod_dpto, $cod_prov)
     {
-      return District::where(compact('cod_dpto','cod_prov'))->select('nom_dist as name', 'id')->get()->toJson();
+        return District::where(compact('cod_dpto','cod_prov'))->select('nom_dist as name', 'id')->get()->toJson();
     }
 
 
@@ -98,28 +98,31 @@ class WebServiceController extends Controller
      */
     public function wsModalidades()
     {
+        $deleted = "0";
         return Modalidad::select('nom_mod as name', 'id')->get()->toJson();
     }
 
     /**
-    * Tipo de Especializaciones,
-    * Servicio permite listar las Tipos de especializaciones
-    * @return Response $response  -> Json
-    */
+     * Tipo de Especializaciones,
+     * Servicio permite listar las Tipos de especializaciones
+     * @return Response $response  -> Json
+     */
     public function wsEspecializacionTipos()
     {
-      return EspecializacionTipo::select('nom_esp_tipo as name', 'id')->get()->toJson();
+        $deleted = "0";
+        return EspecializacionTipo::select('nom_esp_tipo as name', 'id')->get()->toJson();
     }
 
     /**
-    * Especializaciones,
-    * Servicio permite listar las Especializaciones
-    * @param string $cod_esp_tipo -> Código del tipo de especialización
-    * @return Response $response  -> Json
-    */
+     * Especializaciones,
+     * Servicio permite listar las Especializaciones
+     * @param string $cod_esp_tipo -> Código del tipo de especialización
+     * @return Response $response  -> Json
+     */
     public function wsEspecializaciones($cod_esp_tipo)
     {
-      return Especializacion::where(compact('cod_esp_tipo'))->select('nom_esp as name', 'id')->get()->toJson();
+        $deleted = "0";
+        return Especializacion::where(compact('cod_esp_tipo', 'deleted'))->select('nom_esp as name', 'id')->get()->toJson();
     }
 
     /**
@@ -136,6 +139,7 @@ class WebServiceController extends Controller
         $response = '';
 
         $rs = Modulo::
+        where('deleted', 0)->
         where('cod_modalidad', $cod_modalidad)->
         where('cod_esp_tipo', $cod_esp_tipo)->
         where('cod_esp', $cod_esp);
@@ -187,54 +191,54 @@ class WebServiceController extends Controller
     }
 
     /**
-    * Lista de Matriculados
-    * Servicio permite listar las matriculas realizadas filtradas por le fecha de inicio
-    * @param string $id_academic_period, Id del periodo academico
-    * @return json $response, Muestra el resultado en formaro JSON
-    */
+     * Lista de Matriculados
+     * Servicio permite listar las matriculas realizadas filtradas por le fecha de inicio
+     * @param string $id_academic_period, Id del periodo academico
+     * @return json $response, Muestra el resultado en formaro JSON
+     */
     public function wsEnrollments($id_academic_period)
     {
-      if($id_academic_period){
+        if($id_academic_period){
 
-        // Solo cuando el usuario seleccione el signo "-"
-        if($id_academic_period != '-')
-        {
-            // Verificando existencia de registros con los parametros recibidos
-            if(Enrollment::where("id_academic_period", $id_academic_period)->with('student')->with('student.persona')->count() > 0)
+            // Solo cuando el usuario seleccione el signo "-"
+            if($id_academic_period != '-')
             {
-                $enrollment = Enrollment::where("id_academic_period", $id_academic_period)
-                ->with('type_specialization')
-                ->with('specialization')
-                ->with('modality')
-                ->with('student')
-                ->with('student.persona')->orderBy('created_at', 'desc')->get();
+                // Verificando existencia de registros con los parametros recibidos
+                if(Enrollment::where("id_academic_period", $id_academic_period)->with('student')->with('student.persona')->count() > 0)
+                {
+                    $enrollment = Enrollment::where("id_academic_period", $id_academic_period)
+                        ->with('type_specialization')
+                        ->with('specialization')
+                        ->with('modality')
+                        ->with('student')
+                        ->with('student.persona')->orderBy('created_at', 'desc')->get();
 
-                $response = response()->json(["response" => $enrollment->toArray()], 200);
+                    $response = response()->json(["response" => $enrollment->toArray()], 200);
+
+                } else {
+
+                    $response = response()->json(["message" => "Empty"], 400);
+                }
 
             } else {
 
-                $response = response()->json(["message" => "Empty"], 400);
+                $enrollment = Enrollment::with('type_specialization')
+                    ->with('specialization')
+                    ->with('modality')
+                    ->with('student')
+                    ->with('student.persona')->orderBy('created_at', 'desc')->get();
+
+                $response = response()->json(["response" => $enrollment->toArray()], 200);
             }
+
 
         } else {
 
-            $enrollment = Enrollment::with('type_specialization')
-            ->with('specialization')
-            ->with('modality')
-            ->with('student')
-            ->with('student.persona')->orderBy('created_at', 'desc')->get();
+            $response = response()->json(["message" => "Empty"], 400);
 
-            $response = response()->json(["response" => $enrollment->toArray()], 200);
         }
 
-
-      } else {
-
-        $response = response()->json(["message" => "Empty"], 400);
-
-      }
-
-      return $response;
+        return $response;
 
     }
 
@@ -245,48 +249,48 @@ class WebServiceController extends Controller
      */
     public function wsInscriptions($id_academic_period){
 
-      if($id_academic_period){
+        if($id_academic_period){
 
-        // Solo cuando el usuario seleccione el signo "-"
-        if($id_academic_period != '-')
-        {
-            // Verificando existencia de registros con los parametros recibidos
-            if(Enrollment::where("id_academic_period", $id_academic_period)->with('student')->with('student.persona')->count() > 0)
+            // Solo cuando el usuario seleccione el signo "-"
+            if($id_academic_period != '-')
             {
-                $enrollment = Enrollment::where("id_academic_period", $id_academic_period)
-                ->with('type_specialization')
-                ->with('specialization')
-                ->with('modality')
-                ->with('student')
-                ->with('student.persona.persona_document_type')
-                ->with('student.persona')->orderBy('created_at', 'desc')->get();
-                $response = response()->json(["response" => $enrollment->toArray()], 200);
+                // Verificando existencia de registros con los parametros recibidos
+                if(Enrollment::where("id_academic_period", $id_academic_period)->with('student')->with('student.persona')->count() > 0)
+                {
+                    $enrollment = Enrollment::where("id_academic_period", $id_academic_period)
+                        ->with('type_specialization')
+                        ->with('specialization')
+                        ->with('modality')
+                        ->with('student')
+                        ->with('student.persona.persona_document_type')
+                        ->with('student.persona')->orderBy('created_at', 'desc')->get();
+                    $response = response()->json(["response" => $enrollment->toArray()], 200);
+
+                } else {
+
+                    $response = response()->json(["message" => "Empty"], 400);
+                }
 
             } else {
 
-                $response = response()->json(["message" => "Empty"], 400);
+                $enrollment = Enrollment::with('type_specialization')
+                    ->with('specialization')
+                    ->with('modality')
+                    ->with('student')
+                    ->with('student.persona.persona_document_type')
+                    ->with('student.persona')->orderBy('created_at', 'desc')->get();
+
+                $response = response()->json(["response" => $enrollment->toArray()], 200);
             }
+
 
         } else {
 
-            $enrollment = Enrollment::with('type_specialization')
-            ->with('specialization')
-            ->with('modality')
-            ->with('student')
-            ->with('student.persona.persona_document_type')
-            ->with('student.persona')->orderBy('created_at', 'desc')->get();
+            $response = response()->json(["message" => "Empty"], 400);
 
-            $response = response()->json(["response" => $enrollment->toArray()], 200);
         }
 
-
-      } else {
-
-        $response = response()->json(["message" => "Empty"], 400);
-
-      }
-
-      return $response;
+        return $response;
 
     }
 
@@ -308,8 +312,8 @@ class WebServiceController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function wsStudentLike($q)
-    {   
-        
+    {
+
         $students = Student::with('persona')->whereHas('persona', function ($query) use($q) {
             $query->where('nombre', 'LIKE', '%'. $q .'%');
         })->get();
@@ -317,7 +321,7 @@ class WebServiceController extends Controller
         $response = response()->json(["items" => $students->toArray()], 200);
 
         return $response;
-        
+
     }
 
 
@@ -611,7 +615,7 @@ class WebServiceController extends Controller
         $cod_docente = $persona->docente->id;
 
         $rs = Horario::
-            with('sede')
+        with('sede')
             ->with('modulo')
             ->with('academic_period')
             ->select('id', 'id_academic_period', 'fec_inicio', 'fec_fin', 'fec_fin', 'h_inicio', 'h_fin', 'cod_docente', 'cod_sede', 'cod_mod', 'num_horas', 'num_taller', 'activo');
@@ -619,11 +623,11 @@ class WebServiceController extends Controller
 
         // Si el periodo no ha sido seleccionado mostramos todos los horarios disponibles
         if($id_academic_period != 0){
-            $rs->where('id_academic_period', $id_academic_period)->where('cod_docente', $cod_docente);    
+            $rs->where('id_academic_period', $id_academic_period)->where('cod_docente', $cod_docente);
         } else {
             $rs->where('cod_docente', $cod_docente);
         }
-        
+
 
         $rs->orderBy('id', 'desc');
 
