@@ -33,11 +33,20 @@ function listInscriptions(){
             ],
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
             "order": [[ 1, "desc" ]],
-            columnDefs: [ {
-                targets: [ 0 ],
-                orderData: [ 0 ]
-            }]
-            ,
+            columnDefs: [
+                {
+                    "targets": [ 0 ],
+                    "orderData": [ 0 ],
+                },
+                {
+                    "targets": [ 8 ],
+                    "visible": false,
+                },
+                {
+                    "targets": [ 9 ],
+                    "visible": false
+                }
+            ],
             "language":
             {
                 "lengthMenu": "Mostrar _MENU_ registros por página",

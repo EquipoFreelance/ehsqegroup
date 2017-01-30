@@ -97,15 +97,19 @@ class ContabilidadResource extends Controller
                 $find_billing_client = $this->rebr->getByIdEnrollment($item->id);
                 if($find_billing_client){
 
-                    $ruc          = $find_billing_client->ruc;
-                    $razon_social = $find_billing_client->razon_social;
+                    $ruc            = $find_billing_client->ruc;
+                    $razon_social   = $find_billing_client->razon_social;
+
 
                 } else {
 
-                    $ruc          = "";
-                    $razon_social = "";
+                    $ruc           = "";
+                    $razon_social   = "";
+
 
                 }
+
+                $typeDocPyament = $this->rebr->getValidateTypeDoc($ruc);
 
                 // Find in ref to person
                 $person = $find_enrollment->student->persona;
@@ -204,6 +208,8 @@ class ContabilidadResource extends Controller
                 }
 
 
+
+
                 $response[] = array(
 
                   "idx"                 => $idx,
@@ -213,7 +219,7 @@ class ContabilidadResource extends Controller
                   "dni"                 => $person['num_doc'],
                   "email"               => $person['correo'],
                   "cellphone"           => $person['num_cellphone'],
-                  "typeDocPyament"      => "Boleta",
+                  "typeDocPyament"      => $typeDocPyament,
                   "ruc"                 => $ruc,
                   "empresa"             => $razon_social,
                   "modality"            => $this->rmod->getNameById($item->cod_modalidad),

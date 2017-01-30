@@ -52,4 +52,22 @@ class EnrollmentBillingClientRepository implements InterfaceRepository
 
     }
 
+    public function getValidateTypeDoc($ruc){
+
+        $type_doc = "";
+
+        if($ruc){
+
+            $type_doc = "Factura";
+
+        } else {
+
+            $type_doc = "Boleta";
+
+        }
+
+        return $type_doc;
+
+    }
+
 }
