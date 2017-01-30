@@ -13,6 +13,7 @@ class EnrollmentPMRepository implements InterfaceRepository
         $this->model = new EnrollmentPaymentMethod();
     }
 
+
     // Get All Register
     public function getAll(){
 
@@ -21,7 +22,7 @@ class EnrollmentPMRepository implements InterfaceRepository
     // Find Register by Id
     public function getById( $id ){
 
-        //return $this->model->where("id", 25)->first();
+        return $this->model->find($id);
 
     }
 

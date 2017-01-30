@@ -70,7 +70,8 @@ class AppServiceProvider extends ServiceProvider
             EnrollmentPollRepository::class,
             AuxiliarRepository::class,
             StudentRepository::class,
-            EnrollmentBillingClientRepository::class
+            EnrollmentBillingClientRepository::class,
+            PaymentTypeRepository::class
         );
     }
 }

@@ -40,8 +40,6 @@ class EnrollmentBillingClientRepository implements InterfaceRepository
     // Create Register
     public function create( array $attribute){
 
-
-
     }
 
     // Update Register by Id
