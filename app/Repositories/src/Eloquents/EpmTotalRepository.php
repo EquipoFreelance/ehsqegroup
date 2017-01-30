@@ -29,7 +29,7 @@ class EpmTotalRepository implements InterfaceRepository
     // Find Register by Id
     public function getById( $id ){
 
-        //return $this->model->find("id", 25)->first();
+        return $this->model->find($id);
 
     }
 

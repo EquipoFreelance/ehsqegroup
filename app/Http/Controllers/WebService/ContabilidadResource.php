@@ -28,7 +28,7 @@ use Illuminate\Http\Request;
 
 
 
-class PaymentVerificationResource extends Controller
+class ContabilidadResource extends Controller
 {
     private $rep;
     private $rmod;
@@ -79,7 +79,7 @@ class PaymentVerificationResource extends Controller
     public function index(Request $request){
 
         $q = $request->get("q");
-
+        $idx = 0;
         $response = array();
 
         if($q == "ALL"){
@@ -87,6 +87,8 @@ class PaymentVerificationResource extends Controller
             $items = $this->rep->getEnrollmentByPeriodicAcademic();
 
             foreach ($items as $item) {
+
+                $idx = $idx + 1;
 
                 // Find Person
                 $find_enrollment = $this->rep->getById($item->id);
@@ -203,7 +205,9 @@ class PaymentVerificationResource extends Controller
 
 
                 $response[] = array(
-                  "creationDate"        => $find_enrollment->created_at,
+
+                  "idx"                 => $idx,
+                  "creationDate"        => date("d/m/Y", strtotime($find_enrollment->created_at) ),
                   "businessExecutive"   => $createdByName,
                   "fullname"            => $person['FullNameUpper'],
                   "dni"                 => $person['num_doc'],
@@ -212,22 +216,22 @@ class PaymentVerificationResource extends Controller
                   "typeDocPyament"      => "Boleta",
                   "ruc"                 => $ruc,
                   "empresa"             => $razon_social,
+                  "modality"            => $this->rmod->getNameById($item->cod_modalidad),
                   "type_specialty"      => $this->respt->getNameById($item->cod_esp_tipo),
                   "specialty"           => $this->resp->getNameById($item->cod_esp),
-                  "modality"            => $this->rmod->getNameById($item->cod_modalidad),
                   "periodAcademic"      => $this->rap->getNameById($item->id_academic_period),
                   "formaDePago"         => $formaDePagoName,
                   "contado"             => $contado,
                   "cuota1"              => $cuota_monto,
                   "matricula"           => $matricula,
                   "certificado"         => $certificado,
-                  "numCoutas"           => $cuota_num_cuotas
+                  "numCuotas"           => $cuota_num_cuotas
                 );
             }
 
             return response()->json(
                 [
-                    "response" => $response
+                    "data" => $response
 
                 ], 200 );
 

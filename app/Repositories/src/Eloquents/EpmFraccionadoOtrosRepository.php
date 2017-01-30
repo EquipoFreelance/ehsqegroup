@@ -29,7 +29,6 @@ class EpmFraccionadoOtrosRepository implements InterfaceRepository
     public function getById( $id ){
 
         //return $this->model->find("id", 25)->first();
-
     }
 
     /**
@@ -39,6 +38,10 @@ class EpmFraccionadoOtrosRepository implements InterfaceRepository
      */
     public function getByIdEpmFra($id_epm_fra){
         return $this->model->where("id_epm_fra", $id_epm_fra)->get();
+    }
+
+    public function getByEpmFraByConcept($id_epm_fra, $id_concept){
+        return $this->model->where("id_epm_fra", $id_epm_fra)->where("id_concept", $id_concept)->first();
     }
 
 

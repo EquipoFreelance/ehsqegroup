@@ -213,7 +213,6 @@ class InscriptionResource extends Controller
 
         $created_by = $request->get("created_by");
 
-
         if( $created_by ){
 
             $items = $this->re->getEnrollmentByCreatedBy($created_by, 1);

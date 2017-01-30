@@ -114,6 +114,7 @@ Route::group(['middleware' => ['auth','role.marketing']], function(){
         );
 
 
+
 });
 
 
@@ -172,6 +173,11 @@ Route::group(['middleware' => ['auth','role.docente']], function(){
                 'as' => 'dashboard.creditos.verify-payment', 'uses' => 'CreditosCobranzasController@getVerifyPayment'
             ]);
 
+            // Show Payment
+            Route::get('/hsqegroup/contabilidad/report', [
+                'as' => 'dashboard.contabilidad.index', 'uses' => 'ContabilidadController@index'
+            ]);
+
         });
 
 
@@ -197,6 +203,12 @@ Route::group(['middleware' => ['auth','role.docente']], function(){
     // Sistemas
     Route::group(['middleware' => ['auth','role.sistema']], function(){
 
+    });
+
+    // Contabilidad
+    Route::group(['middleware' => ['auth','role.contabilidad']], function(){
+
+        
     });
 
 
@@ -400,6 +412,14 @@ Route::resource('/api/inscriptions',
 // Verification of payments
 Route::resource('/api/payment-verification',
     'WebService\PaymentVerificationResource',
+    array(
+        'only' => ['store', 'index']
+    )
+);
+
+// Verification of payments
+Route::resource('/api/contabilidad',
+    'WebService\ContabilidadResource',
     array(
         'only' => ['store', 'index']
     )

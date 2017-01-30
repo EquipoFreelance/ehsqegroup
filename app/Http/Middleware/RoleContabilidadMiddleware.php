@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Auth;
 
-class RoleSistemaMiddleware
+class RoleContabilidadMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class RoleSistemaMiddleware
     public function handle($request, Closure $next)
     {
         // Pertenece a Servicios académicos
-        if(Auth::User()->cod_role == 4)
+        if(Auth::User()->cod_role == 7)
         {
             return $next($request);
 

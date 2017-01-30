@@ -22,6 +22,7 @@ use App\Repositories\Eloquents\PaymentDetailRepository;
 use App\Repositories\Eloquents\PaymentRepository;
 use App\Repositories\Eloquents\AuxiliarRepository;
 use App\Repositories\Eloquents\StudentRepository;
+use App\Repositories\Eloquents\UserRepository;
 use Illuminate\Support\ServiceProvider;
 use Validator;
 use Hash;
@@ -51,6 +52,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             InterfaceRepository::class,
+            UserRepository::class,
             PaymentConceptRepository::class,
             PaymentConceptTypeRepository::class,
             PaymentDetailRepository::class,
