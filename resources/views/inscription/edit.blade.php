@@ -318,6 +318,10 @@
                           <option value=""> Seleccione el número de cuotas</option>
                           <option value="1">Cuota 1</option>
                           <option value="2">Cuota 2</option>
+                          <option value="3">Cuota 3</option>
+                          <option value="4">Cuota 4</option>
+                          <option value="5">Cuota 5</option>
+                          <option value="6">Cuota 6</option>
                         </select>
                       </div>
                     </div>

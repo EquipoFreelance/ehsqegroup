@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 use Auth;
 
 
-class ResourceInscriptionController extends Controller
+class InscriptionResourceController extends Controller
 {
 
     private $re;
@@ -101,7 +101,7 @@ class ResourceInscriptionController extends Controller
                      */
                     $student = $this->rs->create(array(
                         "cod_persona" => $cod_persona,
-                        "cod_sede"    => "1",
+                        "cod_sede"    => "4",
                         "activo"      => "1",
                         "created_by"  => $created_by,
                     ));
@@ -122,7 +122,6 @@ class ResourceInscriptionController extends Controller
                     $request->get("cod_modalidad"),
                     $request->get("cod_esp_tipo"),
                     $request->get("cod_esp")
-
                 );
 
                 if($validate_duplicate == null){
@@ -135,6 +134,7 @@ class ResourceInscriptionController extends Controller
                             "cod_esp_tipo"       => $request->get("cod_esp_tipo"),
                             "cod_esp"            => $request->get("cod_esp"),
                             "created_by"         => $created_by,
+                            "creation_date"      => $request->get("id_academic_period_txt"),
                             "activo"             => 1
                         )
                     );

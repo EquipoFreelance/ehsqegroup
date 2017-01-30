@@ -121,13 +121,6 @@ function listInscriptions(fecha_inicio){
             {
               extend: "excel",
               className: "btn btn-5 btn-5a icon-excel excel"
-            }, {
-              extend: "pdf",
-              className: "btn btn-5 btn-5a icon-pdf pdf"
-            }, {
-              extend: "print",
-              text:"Imprimir",
-              className: "btn btn-5 btn-5a icon-print print"
             }],
           });
     }

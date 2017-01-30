@@ -26,6 +26,21 @@ class EnrollmentRepository implements InterfaceRepository
 
     }
 
+    public function getEnrollmentByPeriodicAcademic(){
+
+        //if($id_academic_period){
+
+            $list = $this->model
+                //->where("id_academic_period", $id_academic_period)
+                ->where("activo", 1)
+                ->orderBy('created_at', 'desc')
+                ->get();
+        //}
+
+        return $list;
+    }
+
+
     public function getEnrollmentByCreatedBy($created_by, $activo){
 
         $list = $this->model

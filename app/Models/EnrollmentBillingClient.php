@@ -19,4 +19,5 @@ class EnrollmentBillingClient extends Model
         'created_at',
         'created_by'
     ];
+
 }

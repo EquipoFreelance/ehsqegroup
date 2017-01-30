@@ -10,32 +10,33 @@ class Enrollment extends Model
     protected $table = 'matricula';
 
     protected $fillable = [
-      "id_academic_period",
-      "cod_modalidad",
-      "cod_esp_tipo",
-      "cod_esp",
-      "cod_alumno",
-      "created_by",
-      "activo"
+        "id_academic_period",
+        "cod_modalidad",
+        "cod_esp_tipo",
+        "cod_esp",
+        "cod_alumno",
+        "created_by",
+        "creation_date",
+        "activo"
     ];
 
 
     // Matricula - Estudiantes
     public function student()
     {
-      return $this->belongsTo('App\Models\Student', "cod_alumno", "id");
+        return $this->belongsTo('App\Models\Student', "cod_alumno", "id");
     }
 
     // Matricula - Tipo de Expecialización
     public function type_specialization()
     {
-      return $this->belongsTo("App\Models\EspecializacionTipo", "cod_esp_tipo", "id");
+        return $this->belongsTo("App\Models\EspecializacionTipo", "cod_esp_tipo", "id");
     }
 
     // Matricula - Expecialización
     public function specialization()
     {
-      return $this->belongsTo("App\Models\Especializacion", "cod_esp", "id");
+        return $this->belongsTo("App\Models\Especializacion", "cod_esp", "id");
     }
 
     // Matricula - Modalidad

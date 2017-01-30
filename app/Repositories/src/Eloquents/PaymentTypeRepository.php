@@ -2,15 +2,16 @@
 namespace App\Repositories\Eloquents;
 
 use App\Models\Payment;
+use App\PaymentType;
 use App\Repositories\Contracts\InterfaceRepository;
 
-class PaymentRepository implements InterfaceRepository
+class PaymentTypeRepository implements InterfaceRepository
 {
     private $model;
 
     public function __construct()
     {
-        $this->model = new Payment();
+        $this->model = new PaymentType();
     }
 
 
@@ -50,10 +51,10 @@ class PaymentRepository implements InterfaceRepository
 
     }
 
-    public function getNameByIdEnrollment($id_enrollment){
+    public function getNameById($id){
 
-        //$pmt = $this->model->where("id_enrollment", $id_enrollment)->first();
-        //return $pmt->payment_type_name;
+        $pmt = $this->model->find($id);
+        return $pmt->payment_type_name;
 
     }
 

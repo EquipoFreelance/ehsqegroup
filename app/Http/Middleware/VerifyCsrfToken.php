@@ -17,6 +17,6 @@ class VerifyCsrfToken extends BaseVerifier
         '/hsqegroup/api/inscription/concepts/store',
         '/dashboard/creditos/update_pagos/store',
         '/hsqegroup/services/validate-payment/store',
-        '/api/*',
+        '/api/*'
     ];
 }
