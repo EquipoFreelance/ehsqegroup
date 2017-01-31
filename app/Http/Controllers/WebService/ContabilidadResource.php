@@ -90,11 +90,19 @@ class ContabilidadResource extends Controller
 
                 $idx = $idx + 1;
 
+                $cuota_monto      = "";
+                $cuota_num_cuotas = "";
+                $ruc              = "";
+                $razon_social     = "";
+                $matricula        = "";
+                $certificado      = "";
+
                 // Find Person
                 $find_enrollment = $this->rep->getById($item->id);
 
                 // Find Billing Client
                 $find_billing_client = $this->rebr->getByIdEnrollment($item->id);
+
                 if($find_billing_client){
 
                     $ruc            = $find_billing_client->ruc;
