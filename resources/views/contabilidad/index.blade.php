@@ -55,7 +55,8 @@
                                 <th>Fec. Registro</th>
                                 <th>Ejecutivo Comercial</th>
                                 <th>DNI</th>
-                                <th>Nombres y Apellidos</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
                                 <th>Email</th>
                                 <th>Celular</th>
                                 <th>Tipo Doc</th>

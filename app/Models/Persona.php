@@ -43,7 +43,9 @@ class Persona extends Model
         'num_phone',
         'num_cellphone',
         'persona_document_type',
-        'FullNameUpper'
+        'FullNameUpper',
+        'NombreUpper',
+        'ApellidosUpper'
     ];
     
     // Una persona puede tener de uno a muchos cargos
@@ -83,7 +85,16 @@ class Persona extends Model
 
     public function getFullNameUpperAttribute()
     {
-        return ucwords(mb_strtolower($this->nombre))." ".ucwords(mb_strtolower($this->ape_pat))." ".ucwords(mb_strtolower($this->ape_mat, 'UTF-8'));
+        return ucwords(mb_strtolower($this->nombre, 'UTF-8'))." ".ucwords(mb_strtolower($this->ape_pat, 'UTF-8'))." ".ucwords(mb_strtolower($this->ape_mat, 'UTF-8'));
+    }
+
+    public function getNombreUpperAttribute()
+    {
+        return ucwords(mb_strtolower($this->nombre, 'UTF-8'));
+    }
+    public function getApellidosUpperAttribute()
+    {
+        return ucwords(mb_strtolower($this->ape_pat, 'UTF-8'))." ".ucwords(mb_strtolower($this->ape_mat, 'UTF-8'));
     }
 
     // Una persona puede ser un auxiliar
