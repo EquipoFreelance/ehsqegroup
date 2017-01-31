@@ -96,6 +96,7 @@ class ContabilidadResource extends Controller
                 $razon_social     = "";
                 $matricula        = "";
                 $certificado      = "";
+                $contado          = "";
 
                 // Find Person
                 $find_enrollment = $this->rep->getById($item->id);
@@ -113,7 +114,6 @@ class ContabilidadResource extends Controller
 
                     $ruc           = "";
                     $razon_social   = "";
-
 
                 }
 
