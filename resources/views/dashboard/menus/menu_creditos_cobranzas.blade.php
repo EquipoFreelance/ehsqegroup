@@ -4,8 +4,8 @@
       <div class="clear"></div>
       <ul class="nav side-menu">
          <li class="title">Menú principal</li>
-         <li><a href="{{ route('dashboard.creditos.index') }}"><i class="fa fa-tasks"></i> Verificar Pagos</a></li>
-         <li><a href="{{ route('dashboard.contabilidad.index') }}"><i class="fa fa-tasks"></i> Reporte de Contabilidad</a></li>
+         <!--li><a href="{{ route('dashboard.creditos.index') }}"><i class="fa fa-tasks"></i> Verificar Pagos</a></li>-->
+         <li><a href="{{ route('dashboard.contabilidad.index') }}"><i class="fa fa-tasks"></i> Verificar Pagos</a></li>
       </ul>
    </div>
 </div>
