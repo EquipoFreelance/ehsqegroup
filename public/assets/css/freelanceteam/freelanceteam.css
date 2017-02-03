@@ -3,11 +3,11 @@
   -moz-user-select: none;
   -ms-user-select: none;
   -webkit-box-sizing: border-box;
-  -webkit-user-select: none;
+  /*-webkit-user-select: none;*/
   box-sizing: border-box;
   outline: 0 !important;
   outline: none !important;
-  user-select: none;
+  /*user-select: none;*/
 }
 .clear {
   clear: both;

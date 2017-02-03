@@ -174,7 +174,7 @@ Route::group(['middleware' => ['auth','role.docente']], function(){
             ]);
 
             // Show Payment
-            Route::get('/hsqegroup/contabilidad/report', [
+            Route::get('dashboard/contabilidad/report', [
                 'as' => 'dashboard.contabilidad.index', 'uses' => 'ContabilidadController@index'
             ]);
 

@@ -30,21 +30,22 @@ function listInscriptions(){
                 { "data": "cuota1" },
                 { "data": "matricula" },
                 { "data": "certificado" },
-                { "data": "numCuotas" }
+                { "data": "numCuotas" },
+                { "data": "button_verify_payment" }
             ],
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-            "order": [[ 1, "desc" ]],
+            "order": [[ 0, "asc" ],[ 1, "asc" ]],
             columnDefs: [
                 {
-                    "targets": [ 0 ],
-                    "orderData": [ 0 ],
+                    "targets": [ 0,1 ],
+                    "orderData": [ 0,1 ],
                 },
                 {
                     "targets": [ 8 ],
                     "visible": false,
                 },
                 {
-                    "targets": [ 9 ],
+                    "targets": [ 9,10 ],
                     "visible": false
                 }
             ],

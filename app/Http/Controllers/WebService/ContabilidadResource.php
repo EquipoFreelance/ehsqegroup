@@ -240,7 +240,9 @@ class ContabilidadResource extends Controller
                   "cuota1"              => $cuota_monto,
                   "matricula"           => $matricula,
                   "certificado"         => $certificado,
-                  "numCuotas"           => $cuota_num_cuotas
+                  "numCuotas"           => $cuota_num_cuotas,
+                  "button_verify_payment"              => '<a href="../creditos/verify-payment/'.$find_enrollment->id.'/show" class="btn btn-5 btn-5a icon-edit edit"><span>Validar Pagos</span></a>',
+                  "button_edit_ficha"              => '<a href="../creditos/verify-payment/'.$find_enrollment->id.'/show" class="btn btn-5 btn-5a icon-edit edit"><span>Validar Pagos</span></a>'
                 );
             }
 
