@@ -41,11 +41,7 @@ function listInscriptions(){
                     "orderData": [ 0,1 ],
                 },
                 {
-                    "targets": [ 8 ],
-                    "visible": false,
-                },
-                {
-                    "targets": [ 9,10 ],
+                    "targets": [ 10 ],
                     "visible": false
                 }
             ],
