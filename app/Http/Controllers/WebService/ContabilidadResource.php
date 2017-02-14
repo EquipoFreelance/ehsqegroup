@@ -161,16 +161,24 @@ class ContabilidadResource extends Controller
 
                             // Matricula
                             $matricula = "";
+                            $verified_enrolment = "";
+
                             $find_repmfo = $this->repmfo->getByEpmFraByConcept($find_repmf->id, 1);
+
                             if($find_repmfo){
                                 $matricula = $find_repmfo->amount;
+                                $verified_enrolment = $find_repmfo->verified;
                             }
 
                             // Certificado
                             $certificado = "";
+                            $verified_certificate = "";
+
                             $find_repmfo = $this->repmfo->getByEpmFraByConcept($find_repmf->id, 2);
+
                             if($find_repmfo){
                                 $certificado = $find_repmfo->amount;
+                                $verified_certificate = $find_repmfo->verified;
                             }
 
                         }else{
@@ -217,9 +225,17 @@ class ContabilidadResource extends Controller
 
 
 
+                if( $item->id_academic_period == 9 ){
+
+                    $periodAcademic = $item->creation_date;
+
+                } else{
+
+                    $periodAcademic = $this->rap->getNameById($item->id_academic_period);
+
+                }
 
                 $response[] = array(
-
                   "idx"                 => $idx,
                   "creationDate"        => date("d/m/Y", strtotime($find_enrollment->created_at) ),
                   "businessExecutive"   => $createdByName,
@@ -234,15 +250,15 @@ class ContabilidadResource extends Controller
                   "modality"            => $this->rmod->getNameById($item->cod_modalidad),
                   "type_specialty"      => $this->respt->getNameById($item->cod_esp_tipo),
                   "specialty"           => $this->resp->getNameById($item->cod_esp),
-                  "periodAcademic"      => $this->rap->getNameById($item->id_academic_period),
+                  "periodAcademic"      => $periodAcademic,
                   "formaDePago"         => $formaDePagoName,
                   "contado"             => $contado,
                   "cuota1"              => $cuota_monto,
                   "matricula"           => $matricula,
                   "certificado"         => $certificado,
                   "numCuotas"           => $cuota_num_cuotas,
-                  "button_verify_payment"              => '<a href="../creditos/verify-payment/'.$find_enrollment->id.'/show" class="btn btn-5 btn-5a icon-edit edit"><span>Validar Pagos</span></a>',
-                  "button_edit_ficha"              => '<a href="../creditos/verify-payment/'.$find_enrollment->id.'/show" class="btn btn-5 btn-5a icon-edit edit"><span>Validar Pagos</span></a>'
+                  "button_verify_payment" => '<a href="../creditos/verify-payment/'.$find_enrollment->id.'/show" class="btn btn-5 btn-5a icon-edit edit"><span>Validar Pagos</span></a>',
+                  "button_edit_ficha"     => '<a href="../creditos/verify-payment/'.$find_enrollment->id.'/show" class="btn btn-5 btn-5a icon-edit edit"><span>Validar Pagos</span></a>'
                 );
             }
 
