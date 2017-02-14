@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Eloquents\AcademicPeriodRepository;
 use App\Repositories\Eloquents\EnrollmentPMRepository;
 use App\Repositories\Eloquents\EnrollmentRepository;
+use App\Repositories\Eloquents\EpmConceptRepository;
 use App\Repositories\Eloquents\EpmCondicionalRepository;
 use App\Repositories\Eloquents\EpmFraccionadoOtrosRepository;
 use App\Repositories\Eloquents\EpmFraccionadoRepository;
@@ -20,7 +21,6 @@ use App\Repositories\Eloquents\EpmTotalRepository;
 use App\Repositories\Eloquents\EspecializationRepository;
 use App\Repositories\Eloquents\EspecializationTypeRepository;
 use App\Repositories\Eloquents\EnrollmentBillingClientRepository;
-
 use App\Repositories\Eloquents\ModalityRepository;
 use App\Repositories\Eloquents\PaymentTypeRepository;
 use App\Repositories\Eloquents\UserRepository;
@@ -43,6 +43,7 @@ class ContabilidadResource extends Controller
     private $repmf;
     private $repmc;
     private $repmfo;
+    private $rconcept;
 
     public function __construct(
         EnrollmentRepository $rep,
@@ -57,7 +58,8 @@ class ContabilidadResource extends Controller
         EpmTotalRepository $rempt,
         EpmFraccionadoRepository $repmf,
         EpmCondicionalRepository $repmc,
-        EpmFraccionadoOtrosRepository $repmfo
+        EpmFraccionadoOtrosRepository $repmfo,
+        EpmConceptRepository $rconcept
     )
     {
         $this->rep   = $rep;
@@ -73,6 +75,7 @@ class ContabilidadResource extends Controller
         $this->repmf = $repmf;
         $this->repmc = $repmc;
         $this->repmfo = $repmfo;
+        $this->rconcept = $rconcept;
 
     }
 
@@ -143,7 +146,29 @@ class ContabilidadResource extends Controller
 
                         if($find_contado){
 
-                            $contado = $find_contado->amount;
+
+                            $find_rconcept_3 = $this->rconcept->getByIdEpmByIdConcept($find_epm->id, 9);
+
+                            if( $find_rconcept_3['verified'] == 1){
+
+                                $contado = '<span style="border: 1px green solid;background-color: green;padding: 10px;color: #FFFFFF;font-weight: bold;">'.$find_contado->amount.'</span>';
+
+                            } else {
+
+                                $contado = $find_contado->amount;
+                            }
+
+                           /*if($find_contado->verified == 1){
+
+                                $contado = '<span style="border: 1px green solid;background-color: green;padding: 10px;color: #FFFFFF;font-weight: bold;">'.$find_contado->amount.'<span></span></span>';
+
+                            } else {
+
+                                $contado = $find_contado->amount;
+
+                            }*/
+
+
 
                         }
 
@@ -154,32 +179,55 @@ class ContabilidadResource extends Controller
 
                         if($find_repmf){
 
-                            $cuota_monto      = $find_repmf->amount;
+
+                            $find_rconcept = $this->rconcept->getByIdEpmByIdConcept($find_epm->id, 3);
+
+                            if( $find_rconcept['verified'] == 1){
+
+                                $cuota_monto = '<span style="border: 1px green solid;background-color: green;padding: 10px;color: #FFFFFF;font-weight: bold;">'.$find_repmf->amount.'</span>';
+
+                            } else {
+
+                                $cuota_monto = $find_repmf->amount;
+                            }
+
                             $cuota_num_cuotas = $find_repmf->num_cuota;
 
                             // Otros conceptos dentro del la forma de pago fraccionado
 
                             // Matricula
                             $matricula = "";
-                            $verified_enrolment = "";
 
                             $find_repmfo = $this->repmfo->getByEpmFraByConcept($find_repmf->id, 1);
 
                             if($find_repmfo){
-                                $matricula = $find_repmfo->amount;
-                                $verified_enrolment = $find_repmfo->verified;
+
+
+                                $find_rconcept_1 = $this->rconcept->getByIdEpmByIdConcept($find_epm->id, 1);
+
+                                if( $find_rconcept_1['verified'] == 1){
+
+                                    $matricula = '<span style="border: 1px green solid;background-color: green;padding: 10px;color: #FFFFFF;font-weight: bold;">'.$find_repmfo->amount.'</span>';
+
+                                } else {
+
+                                    $matricula = $find_repmf->amount;
+                                }
+
+
                             }
 
                             // Certificado
                             $certificado = "";
-                            $verified_certificate = "";
+
 
                             $find_repmfo = $this->repmfo->getByEpmFraByConcept($find_repmf->id, 2);
 
                             if($find_repmfo){
                                 $certificado = $find_repmfo->amount;
-                                $verified_certificate = $find_repmfo->verified;
                             }
+
+
 
                         }else{
 
@@ -194,7 +242,19 @@ class ContabilidadResource extends Controller
 
                         if($find_repmc){
 
-                            $cuota_monto      = $find_repmc->amount;
+                            //$cuota_monto      = $find_repmc->amount;
+
+                            $find_rconcept_2 = $this->rconcept->getByIdEpmByIdConcept($find_epm->id, 3);
+
+                            if( $find_rconcept_2['verified'] == 1){
+
+                                $cuota_monto = '<span style="border: 1px green solid;background-color: green;padding: 10px;color: #FFFFFF;font-weight: bold;">'.$find_repmc->amount.'</span>';
+
+                            } else {
+
+                                $cuota_monto = $find_repmc->amount;
+                            }
+
                             $cuota_num_cuotas = $this->repmc->getByIdEpmTotalCuota($find_repmc->id);
 
                         }else{

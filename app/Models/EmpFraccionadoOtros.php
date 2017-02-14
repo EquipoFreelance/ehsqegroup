@@ -12,7 +12,8 @@ class EmpFraccionadoOtros extends Model
         'id_epm_fra',
         'id_concept',
         'amount',
-        'active'
+        'active',
+        'verified'
     ];
 
 }
