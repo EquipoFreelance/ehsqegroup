@@ -53,6 +53,23 @@ class EnrollmentRepository implements InterfaceRepository
 
     }
 
+    public function getEnrollmentByCreatedByDateToDateFrom($created_by, $date_from, $date_to){
+        $list = $this->model
+            ->where("created_by", $created_by)
+            ->where("activo", 1)
+            ->whereBetween('created_at', [$date_from." 00:00:00", $date_to." 23:59:59"])
+
+            //->where('created_at','>=','2017-01-18 00:00:00')
+            //->where('created_at','<=','2017-01-18 00:00:00')
+
+            //->whereRaw("created_at >= ? AND created_at <= ?", array('2017-01-18 00:20:15', '2017-01-18 00:20:15'))
+
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return $list;
+    }
+
     // Find Register by Id
     public function getById( $id ){
 

@@ -212,38 +212,67 @@ class InscriptionResource extends Controller
     public function index(Request $request){
 
         $created_by = $request->get("created_by");
+        $date_from  = $request->get("date_from");
+        $date_to    = $request->get("date_to");
 
-        if( $created_by ){
+        $n = 0;
+
+        if( $created_by && !$date_from  && !$date_to){
 
             $items = $this->re->getEnrollmentByCreatedBy($created_by, 1);
 
-            $response = array();
+        } else if($created_by && $date_from  && $date_to){
 
-            foreach ($items as $item) {
+            $items = $this->re->getEnrollmentByCreatedByDateToDateFrom($created_by, $date_from, $date_to);
+        }
 
-                // Find Person
-                $find_enrollment = $this->re->getById($item->id);
 
-                // Find in ref to person
-                $ref_student_to_person = $find_enrollment->student->persona;
+        $response = array();
 
-                $response[] = array(
-                    "id"               => $item->id,
-                    "student"          => $ref_student_to_person['FullNameUpper'],//." ".$ref_student_to_person['ape_pat']." ".$ref_student_to_person['ape_mat'],
-                    "email"            => $ref_student_to_person['correo'],
-                    "created_at"       => date("d-m-Y H:i:s", strtotime($item->created_at)),
-                    "academic_period"  => $this->rap->getNameById($item->id_academic_period),
-                    "creation_date"    => $item->creation_date,
-                    "type_specialty"   => $this->respt->getNameById($item->cod_esp_tipo),
-                    "specialty"        => $this->resp->getNameById($item->cod_esp),
-                    "modality"         => $this->rmod->getNameById($item->cod_modalidad)
-                );
+        foreach ($items as $item) {
+
+            $n = $n + 1;
+
+            // Find Person
+            $find_enrollment = $this->re->getById($item->id);
+
+            // Find in ref to person
+            $ref_student_to_person = $find_enrollment->student->persona;
+
+            $periodAcademic = 0;
+
+            if( $item->id_academic_period == 9 ){
+
+                $periodAcademic = $item->creation_date;
+
+            } else{
+
+                $periodAcademic = $this->rap->getNameById($item->id_academic_period);
 
             }
 
+            $response[] = array(
+                "idx"             => $n,
+                "id"              => $item->id,
+                "student"         => $ref_student_to_person['FullNameUpper'],//." ".$ref_student_to_person['ape_pat']." ".$ref_student_to_person['ape_mat'],
+                "email"           => $ref_student_to_person['correo'],
+                "createdAt"       => date("d-m-Y H:i:s", strtotime($item->created_at)),
+                "periodAcademic"  => $periodAcademic,//$this->rap->getNameById($item->id_academic_period),
+                "creationDate"    => $item->creation_date,
+                "typeSpecialty"   => $this->respt->getNameById($item->cod_esp_tipo),
+                "specialty"       => $this->resp->getNameById($item->cod_esp),
+                "modality"        => $this->rmod->getNameById($item->cod_modalidad),
+                "buttonEditar"   => '<a href="inscription/'.$item->id.'/edit" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>',
+            );
+
         }
 
-        return response()->json(["response" => $response], 200);
+
+        return response()->json(
+            [
+                "data" => $response
+
+            ], 200 );
 
     }
 

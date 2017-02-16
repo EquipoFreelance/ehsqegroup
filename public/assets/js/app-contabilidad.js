@@ -36,10 +36,10 @@ function listInscriptions(){
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
             "order": [[ 0, "asc" ],[ 1, "asc" ]],
             columnDefs: [
-                {
+                /*{
                     "targets": [ 0,1 ],
                     "orderData": [ 0,1 ],
-                },
+                },*/
                 {
                     "targets": [ 10 ],
                     "visible": false
@@ -60,7 +60,7 @@ function listInscriptions(){
                     "last": "Final"
                 }
             },
-            //scrollX: true,
+            scrollX: true,
             dom: "Bfrtip",
             buttons: [
                 {

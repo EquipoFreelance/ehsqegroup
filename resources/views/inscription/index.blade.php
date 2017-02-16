@@ -6,6 +6,15 @@
   @include('dashboard.menus.' . Auth::user()->role->menu )
 @stop
 
+@section('custom_css')
+
+  <!-- CSS Plugin DatePicker Material -->
+  <link href="{{ URL::asset('assets/js/datepicker_material/css/bootstrap-material-datetimepicker.css') }}" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+@stop
+
 @section('content')
   <div class="">
 
@@ -55,13 +64,25 @@
                 <span style="color: #333;">
                   Copiar y pegar el link para enviar a los clientes:
                   <input type="text" name=""  class="form-control"  value="http://intranetehsq.ehsqgroup.com/inscription?created_by={{ Auth::user()->id  }}">
+
+                  <span>
+                        <form class="form-inline">
+                            <label class="mr-sm-2" for="inlineFormCustomSelect">Desde:</label>
+                            <input type="text" name="date_from" id="date_from" placeholder="Buscar desde" class="form-control">
+                          <label class="mr-sm-2" for="inlineFormCustomSelect">Hasta:</label>
+                            <input type="text" name="date_to" id="date_to" placeholder="Buscar hasta" class="form-control">
+                            <button name="filter" id="filter" class="btn btn-primary">Filtrar</button>
+                        </form>
+                  </span>
+
                 </span>
             </p>
             <input type="hidden" name="created_by" id="created_by" value="{{ Auth::user()->id  }}" >
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
-            <table id="datatable-responsive" class="table table-stripedx table-borderedx dt-responsive nowrap" cellspacing="0" width="100%">
+            <!--class="display nowrap" cellspacing="0" width="100%"> dt-responsive-->
+            <table id="datatable-responsive" class="display table table-stripedx table-borderedx nowrap" cellspacing="0" width="100%">
               <thead>
               <tr>
                 <th>Id</th>

@@ -48,7 +48,9 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <table id="datatable-responsive" class="table table-stripedx table-borderedx dt-responsive nowrap" cellspacing="0" width="100%">
+
+                        <!--class="display nowrap" cellspacing="0" width="100%"> dt-responsive-->
+                        <table id="datatable-responsive" class="display table table-stripedx table-borderedx nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
                                 <th>Nro</th>
