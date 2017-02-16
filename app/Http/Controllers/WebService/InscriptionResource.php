@@ -254,10 +254,10 @@ class InscriptionResource extends Controller
             $response[] = array(
                 "idx"             => $n,
                 "id"              => $item->id,
-                "student"         => $ref_student_to_person['FullNameUpper'],//." ".$ref_student_to_person['ape_pat']." ".$ref_student_to_person['ape_mat'],
+                "student"         => $ref_student_to_person['FullNameUpper'],
                 "email"           => $ref_student_to_person['correo'],
                 "createdAt"       => date("d-m-Y H:i:s", strtotime($item->created_at)),
-                "periodAcademic"  => $periodAcademic,//$this->rap->getNameById($item->id_academic_period),
+                "periodAcademic"  => $periodAcademic,
                 "creationDate"    => $item->creation_date,
                 "typeSpecialty"   => $this->respt->getNameById($item->cod_esp_tipo),
                 "specialty"       => $this->resp->getNameById($item->cod_esp),

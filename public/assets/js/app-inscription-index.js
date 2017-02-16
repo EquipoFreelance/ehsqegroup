@@ -41,28 +41,20 @@ function listInscriptions(url_ajax){
             "ajax": url_ajax,
             "columns": [
                 { "data": "idx" },
+                { "data": "createdAt" },
                 { "data": "student" },
                 { "data": "email" },
-                { "data": "createdAt" },
-                { "data": "periodAcademic" },
-                { "data": "creationDate" },
+                { "data": "modality" },
                 { "data": "typeSpecialty" },
                 { "data": "specialty" },
-                { "data": "modality" },
+                { "data": "periodAcademic" },
+                //{ "data": "creationDate" },
                 { "data": "buttonEditar" }
             ],
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
             "order": [[ 0, "asc" ],[ 3, "asc" ]],
             columnDefs: [
-                /*{
-                    "targets": [ 0,3 ],
-                    "orderData": [ 0,3 ],
-                }*/
-                /*,
-                {
-                    "targets": [ 10 ],
-                    "visible": false
-                }*/
+                
             ],
             "language":
             {

@@ -68,9 +68,9 @@
                   <span>
                         <form class="form-inline">
                             <label class="mr-sm-2" for="inlineFormCustomSelect">Desde:</label>
-                            <input type="text" name="date_from" id="date_from" placeholder="Buscar desde" class="form-control">
+                            <input type="text" name="date_from" id="date_from" placeholder="YYYY-MM-DD" class="form-control">
                           <label class="mr-sm-2" for="inlineFormCustomSelect">Hasta:</label>
-                            <input type="text" name="date_to" id="date_to" placeholder="Buscar hasta" class="form-control">
+                            <input type="text" name="date_to" id="date_to" placeholder="YYYY-MM-DD" class="form-control">
                             <button name="filter" id="filter" class="btn btn-primary">Filtrar</button>
                         </form>
                   </span>
@@ -92,8 +92,8 @@
                 <th>Modalidad</th>
                 <th>Tipo de Especialidad</th>
                 <th>Especialidad</th>
-                <th>Periódo académico</th>
                 <th>Fecha de inicio</th>
+                <!--<th>Fecha de inicio</th>-->
                 <th></th>
               </tr>
               </thead>
