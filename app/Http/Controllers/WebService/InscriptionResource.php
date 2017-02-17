@@ -277,7 +277,7 @@ class InscriptionResource extends Controller
 
                 $find_payment_type_name = $find_pm['payment_type_name'];
 
-                $find_concept_amount = $this->rec->getByIdEpmTotalMount($find_epm['id']);;
+                $find_concept_amount = $this->rec->getByIdEpmTotalMount($find_epm['id']);
 
             }
 

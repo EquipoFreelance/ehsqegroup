@@ -389,6 +389,8 @@ function customValidate(rules, messages){
 
 function customRules(id_payment_method){
     var rules;
+
+    // Pago Total
     if(id_payment_method == 1) {
 
         rules = {
@@ -399,6 +401,7 @@ function customRules(id_payment_method){
 
         }
 
+    // Pago Fraccionado
     } else if(id_payment_method == 2) {
 
         rules = {
@@ -410,8 +413,8 @@ function customRules(id_payment_method){
                 min: 1
             },
             amount_certificate : {
-                required: true,
-                min: 1
+                required: false,
+                min: 0
             },
             amount: {
                 required: true,
@@ -420,6 +423,7 @@ function customRules(id_payment_method){
 
         }
 
+    // Becado
     } else if(id_payment_method == 3) {
 
         rules = {
@@ -449,6 +453,8 @@ function customRules(id_payment_method){
 
 function customMessages(id_payment_method){
     var messages;
+
+    // Pago Total
     if(id_payment_method == 1) {
 
         messages = {
@@ -459,6 +465,7 @@ function customMessages(id_payment_method){
 
         }
 
+    // Pago Fraccionado
     } else if(id_payment_method == 2) {
 
         messages = {
@@ -471,7 +478,7 @@ function customMessages(id_payment_method){
             },
             amount_certificate : {
                 required: "El campo es obligatorio",
-                min: "Valor mínimo 1"
+                min: "Valor mínimo 0"
             },
             amount: {
                 required: "El campo es obligatorio",
@@ -480,6 +487,7 @@ function customMessages(id_payment_method){
 
         }
 
+    // Becado
     } else if(id_payment_method == 3) {
 
         messages = {

@@ -119,7 +119,7 @@ class EnrollmentPMRepository implements InterfaceRepository
 
             $epm = $epm_repo_fra->getByIdEpm($id_epm);
 
-            $epm_repo_concept->deleteByIdEpmByIdConcept($id_epm, [9,3]);
+            $epm_repo_concept->deleteByIdEpmByIdConcept($id_epm, [9]);
 
             if(!$epm){
 
@@ -153,7 +153,7 @@ class EnrollmentPMRepository implements InterfaceRepository
 
                 /* -- Agregando los conceptos -- */
 
-                // Concepto matricula
+                // Concepto Cuota 1
                 $epm_repo_concept->create(array(
                     'id_concept' => 3,
                     'id_epm'     => $id_epm,
@@ -206,10 +206,22 @@ class EnrollmentPMRepository implements InterfaceRepository
 
                 // Actualizando concepto cuota 1
                 $epm_concept = $epm_repo_concept->getByIdEpmByIdConcept($id_epm, 3);
+
                 if($epm_concept){
+
                     $epm_repo_concept->update($epm_concept->id, array(
                         'amount'     => $attribute['amount']
                     ));
+
+                }else{
+
+                    $epm_repo_concept->create(array(
+                        'id_concept' => 3,
+                        'id_epm'     => $id_epm,
+                        'amount'     => $attribute['amount'],
+                        'active'     => 1
+                    ));
+
                 }
 
                 // Actualizando concepto matricula
