@@ -32,6 +32,21 @@ class EpmConceptRepository implements InterfaceRepository
         return $this->model->where("id_epm", $id_epm )->where("active", 1 )->get();
     }
 
+    public function getByIdEpmTotalMount($id_epm){
+
+        $find_concepts = $this->model->where("id_epm", $id_epm )->where("active", 1 )->where("verified", 1)->get();
+
+        $amount = "";
+
+        foreach ($find_concepts as $concept) {
+
+            $amount = $amount + $concept['amount'];
+
+        }
+        return $amount;
+
+    }
+
     // Find Register by Id
     public function getByIdEpmByIdConcept( $id_epm, $id_concept ){
 

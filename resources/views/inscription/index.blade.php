@@ -85,15 +85,19 @@
             <table id="datatable-responsive" class="display table table-stripedx table-borderedx nowrap" cellspacing="0" width="100%">
               <thead>
               <tr>
-                <th>Id</th>
+                <th>N°</th>
                 <th>Fecha creación</th>
-                <th>Inscrito</th>
-                <th>Correo</th>
+                <th>Ejecutiva comercial</th>
+                <th>Fecha de inicio</th>
+                <th>Dni</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Celular</th>
                 <th>Modalidad</th>
                 <th>Tipo de Especialidad</th>
                 <th>Especialidad</th>
-                <th>Fecha de inicio</th>
-                <!--<th>Fecha de inicio</th>-->
+                <th>Forma de Pago</th>
+                <th>Ingreso en Efectivo</th>
                 <th></th>
               </tr>
               </thead>

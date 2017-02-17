@@ -42,19 +42,23 @@ function listInscriptions(url_ajax){
             "columns": [
                 { "data": "idx" },
                 { "data": "createdAt" },
-                { "data": "student" },
-                { "data": "email" },
+                { "data": "createdBy" },
+                { "data": "periodAcademic" },
+                { "data": "dni" },
+                { "data": "firstName" },
+                { "data": "lastName" },
+                { "data": "phoneNumber" },
                 { "data": "modality" },
                 { "data": "typeSpecialty" },
                 { "data": "specialty" },
-                { "data": "periodAcademic" },
-                //{ "data": "creationDate" },
+                { "data": "formaPago" },
+                { "data": "IngresoEfectibvo" },
                 { "data": "buttonEditar" }
             ],
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
             "order": [[ 0, "asc" ],[ 3, "asc" ]],
             columnDefs: [
-                
+
             ],
             "language":
             {

@@ -12,6 +12,9 @@ use App\Repositories\Eloquents\EspecializationTypeRepository;
 use App\Repositories\Eloquents\ModalityRepository;
 use App\Repositories\Eloquents\PersonRepository;
 use App\Repositories\Eloquents\StudentRepository;
+use App\Repositories\Eloquents\EnrollmentPMRepository;
+use App\Repositories\Eloquents\PaymentTypeRepository;
+use App\Repositories\Eloquents\EpmConceptRepository;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -27,6 +30,9 @@ class InscriptionResource extends Controller
     private $rmod;
     private $resp;
     private $respt;
+    private $remp;
+    private $rmp;
+    private $rec;
 
     public function __construct(
         EnrollmentRepository $re,
@@ -36,7 +42,10 @@ class InscriptionResource extends Controller
         AcademicPeriodRepository $rap,
         ModalityRepository $rmod,
         EspecializationRepository $resp,
-        EspecializationTypeRepository $respt
+        EspecializationTypeRepository $respt,
+        EnrollmentPMRepository $remp,
+        PaymentTypeRepository $rmp,
+        EpmConceptRepository $rec
     )
     {
 
@@ -48,6 +57,9 @@ class InscriptionResource extends Controller
         $this->rmod = $rmod;
         $this->resp = $resp;
         $this->respt = $respt;
+        $this->remp = $remp;
+        $this->rmp = $rmp;
+        $this->rec = $rec;
 
     }
 
@@ -251,18 +263,42 @@ class InscriptionResource extends Controller
 
             }
 
+            // Find Enrollment Payment Method
+            $find_epm = $this->remp->getByIdEnrollment($item->id);
+
+            // Fin Name Method Type
+            $find_payment_type_name = "";
+
+            $find_concept_amount = "";
+
+            if($find_epm){
+
+                $find_pm = $this->rmp->getById($find_epm['id_payment_method']);
+
+                $find_payment_type_name = $find_pm['payment_type_name'];
+
+                $find_concept_amount = $this->rec->getByIdEpmTotalMount($find_epm['id']);;
+
+            }
+
+            // Find Comercial
+            $find_comercial = $this->rp->getById($item->created_by);
+
             $response[] = array(
                 "idx"             => $n,
-                "id"              => $item->id,
-                "student"         => $ref_student_to_person['FullNameUpper'],
-                "email"           => $ref_student_to_person['correo'],
                 "createdAt"       => date("d-m-Y H:i:s", strtotime($item->created_at)),
+                "createdBy"       => $find_comercial->NombreUpper." ".$find_comercial->ApellidosUpper,
                 "periodAcademic"  => $periodAcademic,
-                "creationDate"    => $item->creation_date,
+                "dni"             => $ref_student_to_person['num_doc'],
+                "firstName"       => $ref_student_to_person['NombreUpper'],
+                "lastName"        => $ref_student_to_person['ApellidosUpper'],
+                "phoneNumber"     => $ref_student_to_person['num_cellphone'],
+                "modality"        => $this->rmod->getNameById($item->cod_modalidad),
                 "typeSpecialty"   => $this->respt->getNameById($item->cod_esp_tipo),
                 "specialty"       => $this->resp->getNameById($item->cod_esp),
-                "modality"        => $this->rmod->getNameById($item->cod_modalidad),
-                "buttonEditar"   => '<a href="inscription/'.$item->id.'/edit" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>',
+                "formaPago"        => $find_payment_type_name,
+                "IngresoEfectibvo" => $find_concept_amount,
+                "buttonEditar"     => '<a href="inscription/'.$item->id.'/edit" class="btn btn-5 btn-5a icon-edit edit"><span>Editar</span></a>',
             );
 
         }
