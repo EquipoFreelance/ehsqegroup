@@ -15,6 +15,7 @@ use App\Repositories\Eloquents\StudentRepository;
 use App\Repositories\Eloquents\EnrollmentPMRepository;
 use App\Repositories\Eloquents\PaymentTypeRepository;
 use App\Repositories\Eloquents\EpmConceptRepository;
+use App\Repositories\Eloquents\UserRepository;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -33,6 +34,7 @@ class InscriptionResource extends Controller
     private $remp;
     private $rmp;
     private $rec;
+    private $ruser;
 
     public function __construct(
         EnrollmentRepository $re,
@@ -45,7 +47,8 @@ class InscriptionResource extends Controller
         EspecializationTypeRepository $respt,
         EnrollmentPMRepository $remp,
         PaymentTypeRepository $rmp,
-        EpmConceptRepository $rec
+        EpmConceptRepository $rec,
+        UserRepository $ruser
     )
     {
 
@@ -60,6 +63,7 @@ class InscriptionResource extends Controller
         $this->remp = $remp;
         $this->rmp = $rmp;
         $this->rec = $rec;
+        $this->ruser = $ruser;
 
     }
 
@@ -282,12 +286,16 @@ class InscriptionResource extends Controller
             }
 
             // Find Comercial
-            $find_comercial = $this->rp->getById($item->created_by);
+            $createdByName = "";
+            $find_user = $this->ruser->getById($item->created_by);
+            if($find_user){
+                $createdByName = ucwords(strtolower($find_user->fullname));
+            }
 
             $response[] = array(
                 "idx"             => $n,
                 "createdAt"       => date("d-m-Y H:i:s", strtotime($item->created_at)),
-                "createdBy"       => $find_comercial->NombreUpper." ".$find_comercial->ApellidosUpper,
+                "createdBy"       => $createdByName,
                 "periodAcademic"  => $periodAcademic,
                 "dni"             => $ref_student_to_person['num_doc'],
                 "firstName"       => $ref_student_to_person['NombreUpper'],
