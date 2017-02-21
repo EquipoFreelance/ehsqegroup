@@ -211,7 +211,7 @@ class ContabilidadResource extends Controller
 
                                 } else {
 
-                                    $matricula = $find_repmf->amount;
+                                    $matricula = $find_repmfo->amount;
                                 }
 
 
@@ -220,14 +220,11 @@ class ContabilidadResource extends Controller
                             // Certificado
                             $certificado = "";
 
-
                             $find_repmfo = $this->repmfo->getByEpmFraByConcept($find_repmf->id, 2);
 
                             if($find_repmfo){
                                 $certificado = $find_repmfo->amount;
                             }
-
-
 
                         }else{
 
