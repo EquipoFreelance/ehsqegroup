@@ -36,12 +36,17 @@ class EpmConceptRepository implements InterfaceRepository
 
         $find_concepts = $this->model->where("id_epm", $id_epm )->where("active", 1 )->where("verified", 1)->get();
 
-        $amount = "";
+        $amount = 0;
 
-        foreach ($find_concepts as $concept) {
+        if($find_concepts){
+            foreach ($find_concepts as $concept) {
 
-            $amount = $amount + $concept['amount'];
+                $amount = $amount + $concept['amount'];
 
+            }
+        }
+        if($amount == 0){
+            return "";
         }
         return $amount;
 
