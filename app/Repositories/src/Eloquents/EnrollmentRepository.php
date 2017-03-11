@@ -53,6 +53,22 @@ class EnrollmentRepository implements InterfaceRepository
 
     }
 
+    public function getEnrollmentByIdStudent($id_student){
+
+        $esp_repo = new EspecializationRepository();
+
+        $list = $this->model
+            ->where("cod_alumno", $id_student)
+            ->get();
+
+        foreach ($list as $enrollment) {
+            $list_enrollment[] = array("id" => $enrollment["cod_esp"], "name" => $esp_repo->getNameById($enrollment["cod_esp"]));
+        }
+
+        return $list_enrollment;
+
+    }
+
     public function getEnrollmentByCreatedByDateToDateFrom($created_by, $date_from, $date_to){
         $list = $this->model
             ->where("created_by", $created_by)
@@ -69,6 +85,25 @@ class EnrollmentRepository implements InterfaceRepository
 
         return $list;
     }
+
+    /*public function getEnrollmentEspecializations($id_enrollment){
+
+        $esp_repo = new EspecializationRepository();
+
+        $enrollments = $this->getById(40);
+
+        $list_enrollment = array();
+
+        foreach ($enrollments as $enrollment) {
+            print_r($enrollment->cod_esp);
+            //$list_enrollment[] = $enrollment["cod_esp"];
+        }
+
+        return $list_enrollment;
+
+    }*/
+
+
 
     // Find Register by Id
     public function getById( $id ){

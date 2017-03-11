@@ -409,6 +409,18 @@ Route::resource('/api/inscriptions',
     )
 );
 
+// Enrollment
+Route::resource('/api/enrollments',
+    'WebService\EnrollmentResource',
+    array(
+        'only' => ['store', 'index']
+
+    )
+);
+
+
+
+
 // Verification of payments
 Route::resource('/api/payment-verification',
     'WebService\PaymentVerificationResource',

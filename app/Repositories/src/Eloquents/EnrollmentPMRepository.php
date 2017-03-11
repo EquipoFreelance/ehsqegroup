@@ -256,7 +256,7 @@ class EnrollmentPMRepository implements InterfaceRepository
             $arr_concepts           = $attribute['condicional_concept_id'];
 
 
-            $epm_repo_concept->deleteByIdEpmByIdConcept($id_epm, [9,1,2,3]);
+            //$epm_repo_concept->deleteByIdEpmByIdConcept($id_epm, [9,1,2,3]);//3
 
             // Existe registro de pago condicional
             $epm_count = $epm_repo_con->getCountByIdEpm($id_epm);
@@ -278,7 +278,7 @@ class EnrollmentPMRepository implements InterfaceRepository
                 }
 
 
-                // Actualizando concepto cuota 1
+                // Actualizando concepto Cuota 1
                 $epm_concept = $epm_repo_concept->getByIdEpmByIdConcept($id_epm, 3);
                 if($epm_concept){
                     $epm_repo_concept->update($epm_concept->id, array(
@@ -308,7 +308,7 @@ class EnrollmentPMRepository implements InterfaceRepository
                 // Registrando concepto cuota 1
                 $epm_repo_concept->create(array(
                     'id_concept' => 3,
-                    'id_epm'     => $id_epm,
+                    'id_epm'     => 78,
                     'amount'     => $arr_condicional_amount[0],
                     'active'     => 1
                 ));
