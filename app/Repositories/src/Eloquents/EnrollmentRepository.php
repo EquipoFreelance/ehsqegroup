@@ -76,6 +76,16 @@ class EnrollmentRepository implements InterfaceRepository
         return $this->model->find($id);
     }
 
+    public function getEnrollmentByStudent($id_student){
+
+        $list = $this->model
+            ->where("cod_alumno", $id_student)
+            ->where("activo", 1)->get();
+
+        return $list;
+
+    }
+
     public function getValidateDuplicateEnrollment(
         $id_student,
         $id_academic_period,

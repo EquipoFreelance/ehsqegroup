@@ -25,16 +25,6 @@
                 <label for="especializacion_ca">Especialización</label>
                 <select class="select2 form-control" id="especializacion_ca" name="especializacion_ca" data-placeholder="Seleccione la Especialización">
                   <option></option>
-                  <option value="DEGCIA">DIPLOMA DE ESPECIALIZACIÓN EN GESTIÓN DE CALIDAD E INOCUIDAD ALIMENTARIA</option>
-                  <option value="DEGCP">DIPLOMA DE ESPECIALIZACIÓN EN GESTIÓN DE CALIDAD Y PROCESOS</option>
-                  <option value="DESSMA">DIPLOMA DE ESPECIALIZACIÓN EN SEGURIDAD, SALUD OCUPACIONAL Y MEDIO AMBIENTE</option>
-                  <option value="DESISO">DIPLOMA DE ESPECIALIZACIÓN EN SEGURIDAD INDUSTRIAL Y SALUD OCUPACIONAL</option>
-                  <option value="DEGDCMSS">DIPLOMA DE ESPECIALIZACIÓN EN GESTIÓN DE LA CALIDAD, MEDIO AMBIENTE, SEGURIDAD Y SALUD OCUPACIONAL</option>
-                  <option value="DESST">DIPLOMA DE ESPECIALIZACIÓN EN SEGURIDAD Y SALUD EN EL TRABAJO</option>
-                  <option value="DPRLPSC">DIPLOMA DE PREVENCIÓN DE RIESGOS LABORALES PARA EL SECTOR CONSTRUCCIÓN</option>
-                  <option value="DEIPRLSC">DIPLOMA DE ESPECIALIZACIÓN INTERNACIONAL EN PREVENCION DE RIESGOS LABORALES EN EL SECTOR DE CONSTRUCCIÓN</option>
-                  <option value="DEISSTM">DIPLOMA DE ESPECIALIZACIÓN INTERNACIONAL EN SEGURIDAD Y SALUD EN EL TRABAJO EN MINERA</option>
-                  <option value="DEISIG">DIPLOMA DE ESPECIALIZACIÓN INTERNACIONAL EN SISTEMAS INTEGRADOS DE GESTIÓN</option>
                 </select>
               </div>
             </div>
@@ -168,5 +158,5 @@
 @stop
 
 @section('custom_js')
-
+  <script src="{{ URL::asset('assets/js/app-report-card-students.js') }}"></script>
 @stop

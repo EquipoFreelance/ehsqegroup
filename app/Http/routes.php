@@ -423,7 +423,9 @@ Route::resource('/api/enrollments',
     )
 );
 
-
+Route::get('/api/enrollments/especialization-by-enrollment',
+    ['uses' => 'WebService\EnrollmentResource@getEspecializationByEnrollment'
+]);
 
 
 // Verification of payments
@@ -458,5 +460,10 @@ Route::resource('/api/califications',
     )
 );
 
-//
-
+// Especialization
+/*Route::resource('/api/especialization',
+    'WebService\CalificationController',
+    array(
+        'only' => ['store']
+    )
+);*/
