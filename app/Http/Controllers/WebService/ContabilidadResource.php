@@ -158,21 +158,21 @@ class ContabilidadResource extends Controller
                                 $contado = $find_contado->amount;
                             }
 
-                           /*if($find_contado->verified == 1){
-
-                                $contado = '<span style="border: 1px green solid;background-color: green;padding: 10px;color: #FFFFFF;font-weight: bold;">'.$find_contado->amount.'<span></span></span>';
-
-                            } else {
-
-                                $contado = $find_contado->amount;
-
-                            }*/
+                            /*if($find_contado->verified == 1){
+ 
+                                 $contado = '<span style="border: 1px green solid;background-color: green;padding: 10px;color: #FFFFFF;font-weight: bold;">'.$find_contado->amount.'<span></span></span>';
+ 
+                             } else {
+ 
+                                 $contado = $find_contado->amount;
+ 
+                             }*/
 
 
 
                         }
 
-                    // Fraccionado
+                        // Fraccionado
                     } else if( $idformaDePago == 2){
 
                         $find_repmf = $this->repmf->getByIdEpm($find_epm->id);
@@ -232,7 +232,7 @@ class ContabilidadResource extends Controller
                             $cuota_num_cuotas = "";
                         }
 
-                    // Condicional
+                        // Condicional
                     } else if( $idformaDePago == 3){
 
                         $find_repmc = $this->repmc->getByIdEpmFirst($find_epm->id);
@@ -293,29 +293,29 @@ class ContabilidadResource extends Controller
                 }
 
                 $response[] = array(
-                  "idx"                 => $idx,
-                  "creationDate"        => date("d/m/Y", strtotime($find_enrollment->created_at) ),
-                  "businessExecutive"   => $createdByName,
-                  "firstName"           => $person['NombreUpper'],
-                  "lastName"            => $person['ApellidosUpper'],
-                  "dni"                 => $person['num_doc'],
-                  "email"               => $person['correo'],
-                  "cellphone"           => $person['num_cellphone'],
-                  "typeDocPyament"      => $typeDocPyament,
-                  "ruc"                 => $ruc,
-                  "empresa"             => $razon_social,
-                  "modality"            => $this->rmod->getNameById($item->cod_modalidad),
-                  "type_specialty"      => $this->respt->getNameById($item->cod_esp_tipo),
-                  "specialty"           => $this->resp->getNameById($item->cod_esp),
-                  "periodAcademic"      => $periodAcademic,
-                  "formaDePago"         => $formaDePagoName,
-                  "contado"             => $contado,
-                  "cuota1"              => $cuota_monto,
-                  "matricula"           => $matricula,
-                  "certificado"         => $certificado,
-                  "numCuotas"           => $cuota_num_cuotas,
-                  "button_verify_payment" => '<a href="../creditos/verify-payment/'.$find_enrollment->id.'/show" class="btn btn-5 btn-5a icon-edit edit"><span>Validar Pagos</span></a>',
-                  "button_edit_ficha"     => '<a href="../creditos/verify-payment/'.$find_enrollment->id.'/show" class="btn btn-5 btn-5a icon-edit edit"><span>Validar Pagos</span></a>'
+                    "idx"                 => $idx,
+                    "creationDate"        => date("d/m/Y", strtotime($find_enrollment->created_at) ),
+                    "businessExecutive"   => $createdByName,
+                    "firstName"           => $person['NombreUpper'],
+                    "lastName"            => $person['ApellidosUpper'],
+                    "dni"                 => $person['num_doc'],
+                    "email"               => $person['correo'],
+                    "cellphone"           => $person['num_cellphone'],
+                    "typeDocPyament"      => $typeDocPyament,
+                    "ruc"                 => $ruc,
+                    "empresa"             => $razon_social,
+                    "modality"            => $this->rmod->getNameById($item->cod_modalidad),
+                    "type_specialty"      => $this->respt->getNameById($item->cod_esp_tipo),
+                    "specialty"           => $this->resp->getNameById($item->cod_esp),
+                    "periodAcademic"      => $periodAcademic,
+                    "formaDePago"         => $formaDePagoName,
+                    "contado"             => $contado,
+                    "cuota1"              => $cuota_monto,
+                    "matricula"           => $matricula,
+                    "certificado"         => $certificado,
+                    "numCuotas"           => $cuota_num_cuotas,
+                    "button_verify_payment" => '<a href="../creditos/verify-payment/'.$find_enrollment->id.'/show" class="btn btn-5 btn-5a icon-edit edit"><span>Validar Pagos</span></a>',
+                    "button_view_ficha"     => '<a href="../contabilidad/student/'.$find_enrollment->id.'" class="btn btn-5 btn-5a icon-edit edit"><span>Ver Ficha</span></a>'
                 );
             }
 

@@ -55,7 +55,7 @@ class InscriptionController extends Controller
             return "Error";
         }
 
-        $data = array("title" => "Ficha de inscripción", "created_by" => $request->get("created_by"));
+        $data = array("title" => "Ficha de inscripci��n", "created_by" => $request->get("created_by"));
         return view('inscription.create_public', $data);
 
     }
@@ -84,6 +84,29 @@ class InscriptionController extends Controller
             $data = compact('student', 'enrollment');
 
             return view('inscription.edit', $data);
+
+        }
+
+    }
+
+    /**
+     * Vista de la ficha de la matricula para contabilidad
+     */
+    public function viewEnrollmentContabilidad($id_enrollment){
+
+        $enrollment_repo = new EnrollmentRepository();
+
+        // Información de la matricula
+        $enrollment = $enrollment_repo->getById($id_enrollment);
+
+        if($enrollment){
+
+            // Info of Student
+            $student = Student::with('persona')->find($enrollment->cod_alumno);
+
+            $data = compact('student', 'enrollment');
+
+            return view('inscription.view_contabilidad', $data);
 
         }
 

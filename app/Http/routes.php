@@ -178,6 +178,11 @@ Route::group(['middleware' => ['auth','role.docente']], function(){
                 'as' => 'dashboard.contabilidad.index', 'uses' => 'ContabilidadController@index'
             ]);
 
+            // Show Ficha de inscripción
+            Route::get('dashboard/contabilidad/student/{id_enrollment}', [
+                'as' => 'dashboard.contabilidad.student', 'uses' => 'InscriptionController@viewEnrollmentContabilidad'
+            ]);
+
         });
 
 
@@ -408,6 +413,18 @@ Route::resource('/api/inscriptions',
 
     )
 );
+
+// Enrollment
+Route::resource('/api/enrollments',
+    'WebService\EnrollmentResource',
+    array(
+        'only' => ['store', 'index']
+
+    )
+);
+
+
+
 
 // Verification of payments
 Route::resource('/api/payment-verification',

@@ -75,6 +75,7 @@
                                 <th>Certificado</th>
                                 <th>Num Cuotas</th>
                                 <th>Action</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody class="items">

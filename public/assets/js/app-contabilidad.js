@@ -31,7 +31,8 @@ function listInscriptions(){
                 { "data": "matricula" },
                 { "data": "certificado" },
                 { "data": "numCuotas" },
-                { "data": "button_verify_payment" }
+                { "data": "button_verify_payment" },
+                { "data": "button_view_ficha" }
             ],
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
             "order": [[ 0, "asc" ],[ 1, "asc" ]],
