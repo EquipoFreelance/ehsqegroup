@@ -11,6 +11,7 @@ class AcademicPeriod extends Model
     protected $fillable = [
         'start_date',
         'finish_date',
+        'observation',
         'active',
         'created_at',
         'created_by',

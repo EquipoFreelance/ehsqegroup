@@ -1,5 +1,46 @@
 @extends('dashboard.layouts.master')
 @section('content')
+
+  <!-- Custom Templates -->
+  <script id="response-template" type="text/x-handlebars-template">
+
+    <table class="tablex table-bordered" cellspacing="0" width="100%">
+      <tr>
+        <td rowspan="2" align="center" valign="middle" bgcolor="#f4f4f4">N°</td>
+        <td rowspan="2" align="center" valign="middle" bgcolor="#f4f4f4">MODULOS</td>
+        <td rowspan="2" align="center" valign="middle" bgcolor="#f4f4f4">EXAMEN</td>
+        <td colspan="5" align="center" valign="middle" bgcolor="#f4f4f4">TALLERES</td>
+        <td rowspan="2" align="center" valign="middle" bgcolor="#f4f4f4">PROM<br>
+          TALLER
+        </td>
+        <td rowspan="2" align="center" valign="middle" bgcolor="#f4f4f4">PROM<br>
+          MODULO
+        </td>
+      </tr>
+      <tr>
+          <td align="center" valign="middle" bgcolor="#f4f4f4">1</td>
+          <td align="center" valign="middle" bgcolor="#f4f4f4">2</td>
+          <td align="center" valign="middle" bgcolor="#f4f4f4">3</td>
+          <td align="center" valign="middle" bgcolor="#f4f4f4">4</td>
+          <td align="center" valign="middle" bgcolor="#f4f4f4">5</td>
+      </tr>
+    @{{#each data}}
+
+      <tr>
+        <td align="center">@{{ idx }}</td>
+        <td align="left">@{{ module_name }}</td>
+        <td align="center" valign="middle">@{{ exam }}</td>
+        @{{#each workshops}}
+          <td align="center" valign="middle" width="63" height="49">@{{ num_nota }}</td>
+        @{{/each}}
+        <td align="center" valign="middle"><strong>@{{ prom_taller }}</strong></td>
+        <td align="center" valign="middle"><strong>@{{ prom_module }}</strong></td>
+      </tr>
+
+    @{{/each}}
+    </table>
+  </script>
+
   <div class="">
 
     <div class="page-title">
@@ -8,7 +49,7 @@
               {{ Session::get('message') }}
           </div>
       @endif
-      <h1>Reporte de Notas por especialización</h1>
+      <h1>Reporte de Notas por especialización </h1>
     </div>
     <div class="clearfix"></div>
     <div class="row">
@@ -26,116 +67,15 @@
                 <select class="select2 form-control" id="especializacion_ca" name="especializacion_ca" data-placeholder="Seleccione la Especialización">
                   <option></option>
                 </select>
+                <input type="hidden" id="id_student" name="id_student" value="{{ Auth::user()->persona->persona_student->id }}" />
               </div>
             </div>
             <br>
-            <table class="tablex table-bordered" cellspacing="0" width="100%">
-              <tr>
-                <td rowspan="2" align="center" valign="middle" bgcolor="#f4f4f4">N°</td>
-                <td rowspan="2" align="center" valign="middle" bgcolor="#f4f4f4">MODULOS</td>
-                <td rowspan="2" align="center" valign="middle" bgcolor="#f4f4f4">EXAMEN</td>
-                <td colspan="5" align="center" valign="middle" bgcolor="#f4f4f4">TALLERES</td>
-                <td rowspan="2" align="center" valign="middle" bgcolor="#f4f4f4">PROM<br>
-                  TALLER
-                </td>
-                <td rowspan="2" align="center" valign="middle" bgcolor="#f4f4f4">PROM<br>
-                  MODULO
-                </td>
-              </tr>
-              <tr>
-                <td align="center" valign="middle" bgcolor="#f4f4f4">1</td>
-                <td align="center" valign="middle" bgcolor="#f4f4f4">2</td>
-                <td align="center" valign="middle" bgcolor="#f4f4f4">3</td>
-                <td align="center" valign="middle" bgcolor="#f4f4f4">4</td>
-                <td align="center" valign="middle" bgcolor="#f4f4f4">5</td>
-              </tr>
-              <tr>
-                <td align="center">1</td>
-                <td align="left">INTERPRETACIÓN DE LA NORMA ISO 9001.2008</td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle">20</td>
-                <td align="center" valign="middle">20</td>
-                <td align="center" valign="middle">20</td>
-                <td align="center" valign="middle">20</td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle"><strong>20</strong></td>
-                <td align="center" valign="middle"><strong>19</strong></td>
-              </tr>
-              <tr>
-                <td align="center">2</td>
-                <td align="left">INTERPRETACIÓN DE LA NORMA ISO 14001:2004</td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle">15</td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle"><strong>17</strong></td>
-                <td align="center" valign="middle"><strong>18</strong></td>
-              </tr>
-              <tr>
-                <td align="center">3</td>
-                <td align="left">INTERPRETACION DE LA NORMA OHSAS 18001</td>
-                <td align="center" valign="middle">20</td>
-                <td align="center" valign="middle">20</td>
-                <td align="center" valign="middle">20</td>
-                <td align="center" valign="middle">20</td>
-                <td align="center" valign="middle">20</td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle"><strong>20</strong></td>
-                <td align="center" valign="middle"><strong>19</strong></td>
-              </tr>
-              <tr>
-                <td align="center">4</td>
-                <td align="left">DOCUMENTACION DE UN SISTEMA INTEGRADO DE GESTION </td>
-                <td align="center" valign="middle">20</td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle">15</td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle"><strong>17</strong></td>
-                <td align="center" valign="middle"><strong>18</strong></td>
-              </tr>
-              <tr>
-                <td align="center">5</td>
-                <td align="left">INTEGRACION DE UN SISTEMA INTEGRADO DE GESTION </td>
-                <td align="center" valign="middle">20</td>
-                <td align="center" valign="middle">20</td>
-                <td align="center" valign="middle">20</td>
-                <td align="center" valign="middle">20</td>
-                <td align="center" valign="middle">20</td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle"><strong>20</strong></td>
-                <td align="center" valign="middle"><strong>19</strong></td>
-              </tr>
-              <tr>
-                <td align="center">6</td>
-                <td align="left">AUDITORES DE SISTEMAS INTEGRADOS DE GESTION</td>
-                <td align="center" valign="middle">17</td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle">15</td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle"><strong>17</strong></td>
-                <td align="center" valign="middle"><strong>18</strong></td>
-              </tr>
-              <tr>
-                <td align="center">7</td>
-                <td align="left">HERRAMIENTAS DE MEJORA DE UN SISTEMA DE GESTION </td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle">15</td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle">18</td>
-                <td align="center" valign="middle"><strong>17</strong></td>
-                <td align="center" valign="middle"><strong>18</strong></td>
-              </tr>
-            </table>
+            <div class="add_notes">
+
+            </div>
             <br>
-            <table class="tablex table-bordered" cellspacing="0" width="100%">
+            <!--<table class="tablex table-bordered" cellspacing="0" width="100%">
               <tr>
                 <td align="left" valign="middle"  bgcolor="#f4f4f4">PROMEDIO TOTAL</td>
                 <td align="center"><strong>17</strong></td>
@@ -148,7 +88,7 @@
                 <td align="left" valign="middle"  bgcolor="#f4f4f4">PROMEDIO FINAL</td>
                 <td align="center"><strong>9</strong></td>
               </tr>
-            </table>
+            </table>-->
           </div>
         </div>
       </div>

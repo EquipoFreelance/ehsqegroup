@@ -39,33 +39,33 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
 
   /* -- Routes - Recursos -- */
 
-  // Administrador de Modalidades
-  Route::resource('/dashboard/modalidad', 'ModalidadController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+    // Administrador de Modalidades
+    Route::resource('/dashboard/modalidad', 'ModalidadController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
-  // Administrador de Tipo de Especialización
-  Route::resource('/dashboard/tesp', 'EspecializacionTipoController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+    // Administrador de Tipo de Especialización
+    Route::resource('/dashboard/tesp', 'EspecializacionTipoController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
-  // Administrador de Especialización
-  Route::resource('/dashboard/esp', 'EspecializacionController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+    // Administrador de Especialización
+    Route::resource('/dashboard/esp', 'EspecializacionController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
-  // Administrador de Módulos
-  Route::resource('/dashboard/modulo', 'ModuloController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+    // Administrador de Módulos
+    Route::resource('/dashboard/modulo', 'ModuloController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
-  // Administrador de Sedes
-  Route::resource('/dashboard/sede', 'SedeController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+    // Administrador de Sedes
+    Route::resource('/dashboard/sede', 'SedeController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
-  // Administrador de Locales
-  Route::resource('/dashboard/sede/local', 'SedeLocalController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+    // Administrador de Locales
+    Route::resource('/dashboard/sede/local', 'SedeLocalController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
-  // Administrador de Horarios
-  Route::resource('/dashboard/academic_schedule', 'HorarioController', ['only' => ['index', 'create', 'store', 'edit', 'update'] ] );
+    // Administrador de Horarios
+    Route::resource('/dashboard/academic_schedule', 'HorarioController', ['only' => ['index', 'create', 'store', 'edit', 'update'] ] );
 
     Route::get('/dashboard/academic_schedule/{cod_group}',[
         'as' => 'dashboard.academic_schedule.horario.group', 'uses' => 'HorarioController@getIndexHorarios'
     ]);
 
-  // Administrador de Grupos
-  Route::resource('/dashboard/grupo', 'GrupoController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+    // Administrador de Grupos
+    Route::resource('/dashboard/grupo', 'GrupoController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
     // Administrador de Horarios
 
@@ -79,25 +79,31 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
     ]);
 
 
-  // Administrador de Auxiliares
-  Route::resource('/dashboard/auxiliar', 'AuxiliarController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+    // Administrador de Auxiliares
+    Route::resource('/dashboard/auxiliar', 'AuxiliarController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
-  // Administrador de Docentes
-  Route::resource('/dashboard/docente', 'DocenteController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+    // Administrador de Docentes
+    Route::resource('/dashboard/docente', 'DocenteController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
-  // Administrador de talleres
-  Route::resource('/dashboard/taller', 'TallerController', ['only' => ['index','create','store','edit','update','destroy'] ] );
+    // Administrador de talleres
+    Route::resource('/dashboard/taller', 'TallerController', ['only' => ['index','create','store','edit','update','destroy'] ] );
 
-  // Resources Students
-  Route::resource('dashboard/student', 'StudentController', ['only' => ['create','store','show','index','edit','update'] ]);
+    // Resources Students
+    Route::resource('dashboard/student', 'StudentController', ['only' => ['create','store','show','index','edit','update'] ]);
 
-  // Recursos Enrollments
-  Route::resource('dashboard/enrollment', 'EnrollmentController', ['only' => ['create','store','show','index','edit','update'] ]);
+    // Recursos Enrollments
+    Route::resource('dashboard/enrollment', 'EnrollmentController', ['only' => ['create','store','show','index','edit','update'] ]);
 
-  // Recursos Enrollments
-  Route::resource('dashboard/academic_period', 'AcademicPeriodController', ['only' => ['create','store','show','index','edit','update'] ]);
+    // Recursos Enrollments
+    Route::resource('dashboard/academic_period', 'AcademicPeriodController', ['only' => ['create','store','show','index','edit','update'] ]);
 
-  /* -- Routes - Personalizados -- */
+    /* -- Routes - Personalizados -- */
+
+    // Report Card Academic
+    Route::get('/dashboard/academic/report-card/',[
+        'as' => 'dashboard.academic.report-card', 'uses' => 'ReportCardController@getAcademicReportCard'
+    ]);
+
 
 });
 
@@ -427,6 +433,10 @@ Route::get('/api/enrollments/especialization-by-enrollment',
     ['uses' => 'WebService\EnrollmentResource@getEspecializationByEnrollment'
 ]);
 
+Route::get('/api/enrollments/modules-by-especialization',
+    ['uses' => 'WebService\EnrollmentResource@getModuleByIdEspecialization'
+    ]);
+
 
 // Verification of payments
 Route::resource('/api/payment-verification',
@@ -460,10 +470,10 @@ Route::resource('/api/califications',
     )
 );
 
-// Especialization
-/*Route::resource('/api/especialization',
-    'WebService\CalificationController',
+// Groups
+Route::resource('/api/groups',
+    'WebService\GroupResource',
     array(
-        'only' => ['store']
+        'only' => ['index']
     )
-);*/
+);

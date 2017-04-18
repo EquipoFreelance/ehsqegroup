@@ -42,6 +42,8 @@ use Carbon\Carbon;
 
 use Auth;
 
+use DB;
+
 
 class WebServiceController extends Controller
 {
@@ -332,7 +334,7 @@ class WebServiceController extends Controller
      * */
     public function getWsAcademicPeriod(){
 
-        $schedules = AcademicPeriod::select('start_date as name', 'id')->where("active", 1)->orderBy('id', 'desc')->get()->toJson();
+        $schedules = AcademicPeriod::select(DB::raw('CONCAT(start_date, observation) AS name'), 'id')->where("active", 1)->orderBy('id', 'desc')->get()->toJson();
         return $schedules;
 
     }

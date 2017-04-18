@@ -59,6 +59,15 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label for="observation">Observación</label>
+                                    <textarea name="observation" id="observation" class="form-control">{{ $schedule->observation }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
                                     <label for="active">Estado</label>
                                     {{ Form::select('active', ['' => '-- Seleccione el estado --','1' => 'Activo','0' => 'No Activo'], $schedule->active, ['class' => 'form-control'] ) }}
                                     @if ($errors->has('active'))

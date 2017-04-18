@@ -15,7 +15,11 @@ class ReportCardController extends Controller
      */
     public function index()
     {
-      return view('report_card.index');
+        return view('report_card.index');
+    }
+
+    public function getAcademicReportCard(){
+        return view('report_card.report-card-academic');
     }
 
     /**

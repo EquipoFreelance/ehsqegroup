@@ -73,7 +73,8 @@ class AppServiceProvider extends ServiceProvider
             AuxiliarRepository::class,
             StudentRepository::class,
             EnrollmentBillingClientRepository::class,
-            PaymentTypeRepository::class
+            CalificationRepository::class,
+            GroupRepository::class
         );
     }
 }
