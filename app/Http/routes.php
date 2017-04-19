@@ -477,3 +477,7 @@ Route::resource('/api/groups',
         'only' => ['index']
     )
 );
+
+Route::get('/api/groups/group-teacher',
+    ['uses' => 'WebService\GroupResource@getGroupTeacher'
+    ]);

@@ -6,7 +6,11 @@ use App\Http\Controllers\Controller;
 
 use App\Repositories\Eloquents\AuxiliarRepository;
 use App\Repositories\Eloquents\GroupRepository;
+use App\Repositories\Eloquents\GroupTeacherRepository;
+use App\Repositories\Eloquents\HoraryRepository;
+use App\Repositories\Eloquents\ModuleRepository;
 use App\Repositories\Eloquents\PersonRepository;
+use App\Repositories\Eloquents\TeacherRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -15,12 +19,24 @@ use Psy\Exception\ErrorException;
 class GroupResource extends Controller
 {
     private $rgroup;
+    private $rgroup_teacher;
+    private $rteacher;
+    private $rhorary;
+    private $rmodule;
 
     public function __construct(
-        GroupRepository $rgroup
+        GroupRepository $rgroup,
+        GroupTeacherRepository $rgroup_teacher,
+        TeacherRepository $rteacher,
+        HoraryRepository $rhorary,
+        ModuleRepository $rmodule
     )
     {
-        $this->rgroup = $rgroup;
+        $this->rgroup         = $rgroup;
+        $this->rgroup_teacher = $rgroup_teacher;
+        $this->rteacher       = $rteacher;
+        $this->rhorary        = $rhorary;
+        $this->rmodule        = $rmodule;
     }
 
     public function index(Request $request)
@@ -54,6 +70,30 @@ class GroupResource extends Controller
 
         }
 
+
+    }
+
+
+    public function getGroupTeacher(Request $request){
+
+        $id_group       = $request->get("id_group");
+        $group_teachers = $this->rgroup_teacher->getByIdGroup($id_group);
+
+        foreach ($group_teachers as $group_teacher) {
+
+            // Get Mod
+            $rs_horary = $this->rhorary->getIdModByIdGroupAndByIdTeacher($id_group, $group_teacher->id_teacher);
+
+            $teacher = $this->rteacher->getById($group_teacher->id_teacher);
+
+            $response[] = array(
+                "teacher"  => $teacher->persona,
+                "module"   => $this->rmodule->getById($rs_horary->cod_mod)
+            );
+
+        }
+
+        return response()->json($response, 200 );
 
     }
 

@@ -33,13 +33,13 @@ function wsSelectGroupAll(route, element, placeholder)
 }
 
 // Selector de Grupos - Modulos
-function wsSelectGroupModules(route, element, placeholder)
+function wsSelectGroupTeacherModules(route, element, placeholder, id_group)
 {
     $.ajax({
         url:route,
         type:'get',
         datatype: 'json',
-        data:{},
+        data:{"id_group" : id_group },
         beforeSend: function(){
 
             DefaultOptionSelect(element, placeholder);
@@ -49,8 +49,8 @@ function wsSelectGroupModules(route, element, placeholder)
             console.log(items);
             $.each(items, function (i, item) {
                 $(element).append($('<option>', {
-                    value: item.modulo.id,
-                    text : item.modulo.nombre
+                    value: item.module.id+"-"+item.teacher.id,
+                    text : item.module.nombre+" / "+item.teacher.ape_mat+ " " +item.teacher.ape_pat+ " " +item.teacher.nombre
                 }));
             });
 

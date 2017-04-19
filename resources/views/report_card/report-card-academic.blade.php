@@ -73,7 +73,7 @@
                            </select>
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                           <label for="profesor_codigo_ca">Módulos Disponibles</label>
+                           <label for="profesor_codigo_ca">Módulos / Docentes</label>
                            <select data-id-default="{{ old('cod_mod') }}" class="select2 form-control" id="cod_mod" name="cod_mod" data-placeholder="Seleccione el Módulo" onpaste="return false;">
                               <option>-- Seleccione el Módulo --</option>
                            </select>
@@ -114,7 +114,7 @@
 
          // Event Change
          $("#group").change(function(){
-            wsSelectGroupModules('/api/report-card/group-horary-modules/' + $(this).val() + '/' + teacher_id, "#cod_mod", " -- Seleccione el Módulo -- ");
+            wsSelectGroupTeacherModules('/api/groups/group-teacher/', "#cod_mod", " -- Seleccione el Módulo -- ", $(this).val());
          });
 
          $("#cod_mod").change(function(){
