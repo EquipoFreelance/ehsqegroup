@@ -17,6 +17,7 @@
          <li><a href="{{ route('dashboard.sede.local.index') }}"><i class="fa fa-tasks"></i> Locales</a></li>
          <li><a href="{{ route('dashboard.grupo.index') }}"><i class="fa fa-tasks"></i> Grupos</a></li>
          <li><a href="{{ route('dashboard.academic_schedule.index') }}"><i class="fa fa-tasks"></i> Horarios</a></li>
+         <li><a href="/dashboard/academic/report-card/"><i class="fa fa-tasks"></i> Nota de Sustentación</a></li>
       </ul>
    </div>
 </div>

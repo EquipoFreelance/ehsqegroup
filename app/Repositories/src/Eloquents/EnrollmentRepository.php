@@ -144,6 +144,11 @@ class EnrollmentRepository implements InterfaceRepository
 
     }
 
+    public function getGroupStudentEnrollment($ge){
+
+        return $this->model->select("cod_alumno", "id")->whereIn('id', $ge)->get();
+
+    }
 
 
 }

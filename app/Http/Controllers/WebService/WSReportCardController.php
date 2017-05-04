@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\WebService;
 
+use App\Repositories\Eloquents\PersonRepository;
 use App\Models\Docente;
 use App\Models\Grupo;
 use App\Models\Enrollment;
@@ -14,6 +15,14 @@ use App\Http\Requests;
 
 class WSReportCardController extends Controller
 {
+    private $rperson;
+
+    public function __construct(
+        PersonRepository $rperson
+    ){
+        $this->rperson = $rperson;
+    }
+
     /**
      * Lista de reporte de notas
      * @param $id_group
@@ -23,7 +32,7 @@ class WSReportCardController extends Controller
     public function ReportCardEnrollment($id_group, $id_module)
     {
 
-        $group = Grupo::find($id_group);
+        $group   = Grupo::find($id_group);
         $header  = '';
         $body    = '';
         $builder = [];
@@ -36,17 +45,58 @@ class WSReportCardController extends Controller
 
                     $enrollment = Enrollment::find($item->id_enrollment);
 
-                    $body[] = array(
+                    /*$body[] = array(
                         "id"     => $item->id_enrollment,
                         "name"   => $enrollment->student->persona->nombre.", ".$enrollment->student->persona->ape_pat." ".$enrollment->student->persona->ape_mat,
                         "report" => $this->ReportCardModules($item->id_enrollment, $id_module, $group, $header, $average),
                         "average" => $average,
                         "enrollment" => $item->id_enrollment
+                    );*/
+
+                    $ids_enrollments[] = array(
+                        "id"            => $item->id_enrollment,
+                        "name"          => $enrollment->student->persona->ape_pat." ".$enrollment->student->persona->ape_mat.", ".$enrollment->student->persona->nombre,
+                        "report"        => $this->ReportCardModules($item->id_enrollment, $id_module, $group, $header, $average),
+                        "average"       => $average,
+                        "enrollment"    => $item->id_enrollment,
+                        "id_person"     => $enrollment->student->persona->id,
                     );
+
 
                 }
 
             }
+
+            // Group Ids Enrolments
+            foreach ($ids_enrollments as $id_enrollment) {
+                $id_p[] = $id_enrollment['id_person'];
+            }
+
+            $iperson_order = $this->rperson->getGroupPersonOrdeByLastName($id_p);
+
+            foreach ($iperson_order as $ipo) {
+
+                $report = "";
+
+                // Group Id Person
+                foreach ($ids_enrollments as $id_enrollment) {
+
+                    if($id_enrollment['id_person'] == $ipo['id']){
+                        $report = $id_enrollment;
+                        break;
+                    }
+
+                }
+
+                $body[] = $report;/*array(
+                    "id"            => $ipo['id'],
+                    "ape_pat"       => $ipo['ape_pat'],
+                    "ape_mat"       => $ipo['ape_mat'],
+                    "nombre"        => $ipo['nombre'],
+                    "enrollment"    => $report
+                );*/
+            }
+
 
             // Generando la cabecera del listado
             foreach ($group->group_horary as $horary) {

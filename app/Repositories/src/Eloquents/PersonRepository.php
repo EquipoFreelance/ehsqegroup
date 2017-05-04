@@ -96,6 +96,16 @@ class PersonRepository implements InterfaceRepository
 
     }
 
+    /**
+     * getGroupPersonOrdeByLastName
+     * @param $astudent
+     * @return mixed
+     */
+    public function getGroupPersonOrdeByLastName($astudent){
+
+        return $this->model->select("ape_pat", "ape_mat", "nombre", "id")->whereIn('id', $astudent)->orderBy('ape_pat', 'asc')->get();
+
+    }
 
 
 }

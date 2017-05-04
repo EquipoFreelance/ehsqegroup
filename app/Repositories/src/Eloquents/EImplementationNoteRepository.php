@@ -8,16 +8,16 @@
 
 namespace App\Repositories\Eloquents;
 
-use App\Models\ReportCard;
+use App\Models\EImplementationNote;
 use App\Repositories\Contracts\InterfaceRepository;
 
-class CalificationRepository implements InterfaceRepository
+class EImplementationNoteRepository implements InterfaceRepository
 {
     private $model;
 
     public function __construct()
     {
-        $this->model  = new ReportCard();
+        $this->model  = new EImplementationNote();
     }
 
     // Get All Register
@@ -30,39 +30,43 @@ class CalificationRepository implements InterfaceRepository
         return $this->model->find($id);
     }
 
+    public function getByIdEnrollmentAndIdType($id_enrollment, $id_type){
+        return $this->model->select("num_nota","id")->where("id_enrollment", $id_enrollment )->where("id_type", $id_type )->first();
+    }
+
     public function getCount($id){
         return $this->model->find($id)->count();
     }
 
-    public function getNameById($id){
+    /*public function getNameById($id){
         $find = $this->getById($id);
         return $find->start_date;
-    }
+    }*/
 
-    public function getByIdEnrollmentByEspecialization($id_enrollment){
+    /*public function getByIdEnrollmentByEspecialization($id_enrollment){
         return $this->model->where("cod_matricula", $id_enrollment )->get();
-    }
+    }*/
 
-    public function getExamByIdModule($cod_taller, $cod_modulo, $id_enrollment){
+    /*public function getExamByIdModule($cod_taller, $cod_modulo, $id_enrollment){
         return $this->model
             ->where("cod_taller", $cod_taller )
             ->where("cod_modulo", $cod_modulo )
             ->where("cod_matricula", $id_enrollment )
 
             ->first();
-    }
+    }*/
 
-    public function getCalificationByIdModule($cod_modulo, $id_enrollment){
+    /*public function getCalificationByIdModule($cod_modulo, $id_enrollment){
         return $this->model->
                 where("cod_taller", "!=", 11 )->
                 where("cod_modulo", $cod_modulo )->
                 where("cod_matricula", $id_enrollment )
             ->get();
-    }
+    }*/
 
     // Create Register
     public function create( array $attribute){
-
+        return $this->model->create($attribute);
     }
 
     // Update Register by Id

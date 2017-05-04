@@ -16,6 +16,9 @@
         <td rowspan="2" align="center" valign="middle" bgcolor="#f4f4f4">PROM<br>
           MODULO
         </td>
+        <td rowspan="2" align="center" valign="middle" bgcolor="#f4f4f4">PROM<br>
+          PROM FINAL
+        </td>
       </tr>
       <tr>
           <td align="center" valign="middle" bgcolor="#f4f4f4">1</td>
@@ -35,6 +38,7 @@
         @{{/each}}
         <td align="center" valign="middle"><strong>@{{ prom_taller }}</strong></td>
         <td align="center" valign="middle"><strong>@{{ prom_module }}</strong></td>
+        <td align="center" valign="middle"><strong>@{{ prom_final }}</strong></td>
       </tr>
 
     @{{/each}}

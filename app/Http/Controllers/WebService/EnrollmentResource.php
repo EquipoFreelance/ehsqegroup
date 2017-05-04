@@ -8,6 +8,7 @@ use App\Repositories\Eloquents\CalificationRepository;
 use App\Repositories\Eloquents\EnrollmentRepository;
 use App\Repositories\Eloquents\EspecializationRepository;
 use App\Repositories\Eloquents\ModuleRepository;
+use App\Repositories\Eloquents\EImplementationNoteRepository;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
@@ -18,19 +19,22 @@ class EnrollmentResource extends Controller
     private $esp_repo;
     private $cal_repo;
     private $mod_repo;
+    private $rein;
 
 
     public function __construct(
         EnrollmentRepository $re,
         EspecializationRepository $esp_repo,
         CalificationRepository $cal_repo,
-        ModuleRepository $mod_repo
+        ModuleRepository $mod_repo,
+        EImplementationNoteRepository $rein
     )
     {
         $this->re = $re;
         $this->esp_repo = $esp_repo;
         $this->cal_repo = $cal_repo;
         $this->mod_repo = $mod_repo;
+        $this->rein = $rein;
     }
 
     public function index(Request $request){
@@ -134,10 +138,16 @@ class EnrollmentResource extends Controller
             }
 
 
+            $note_project = $this->rein->getByIdEnrollmentAndIdType($request->get("id_enrollment"), 1);
+            $note_sustent = $this->rein->getByIdEnrollmentAndIdType($request->get("id_enrollment"), 2);
+
+            $prom_susten_project = ($note_project['num_nota'] * 0.5) + ($note_sustent['num_nota'] * 0.5);
 
             if($num_nota_taller != 0){
 
                 $prom_taller = ($num_nota_taller / count($rs_calification));
+                $prom_module = (0.3 * $prom_taller) + (0.7 * $rs_exam['num_nota']);
+                $prom_final  = (0.5 * $prom_module) + (0.5 * $prom_susten_project);
 
                 $x = $x + 1;
                 $response[] = array(
@@ -147,7 +157,8 @@ class EnrollmentResource extends Controller
                     "exam"          => $rs_exam['num_nota'],
                     "workshops"     => $workshops,
                     "prom_taller"   => $prom_taller,
-                    "prom_module"   => (0.3 * $prom_taller) + (0.7 * $rs_exam['num_nota'])
+                    "prom_module"   => $prom_module,
+                    "prom_final"    => $prom_final
                 );
             }
 

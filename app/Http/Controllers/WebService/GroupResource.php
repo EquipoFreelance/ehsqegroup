@@ -4,13 +4,17 @@ namespace App\Http\Controllers\WebService;
 
 use App\Http\Controllers\Controller;
 
+use App\Models\Enrollment;
 use App\Repositories\Eloquents\AuxiliarRepository;
+use App\Repositories\Eloquents\EnrollmentRepository;
 use App\Repositories\Eloquents\GroupRepository;
 use App\Repositories\Eloquents\GroupTeacherRepository;
 use App\Repositories\Eloquents\HoraryRepository;
 use App\Repositories\Eloquents\ModuleRepository;
 use App\Repositories\Eloquents\PersonRepository;
+use App\Repositories\Eloquents\StudentRepository;
 use App\Repositories\Eloquents\TeacherRepository;
+use App\Repositories\Eloquents\EImplementationNoteRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -23,13 +27,21 @@ class GroupResource extends Controller
     private $rteacher;
     private $rhorary;
     private $rmodule;
+    private $re;
+    private $rstudent;
+    private $rperson;
+    private $rein;
 
     public function __construct(
         GroupRepository $rgroup,
         GroupTeacherRepository $rgroup_teacher,
         TeacherRepository $rteacher,
         HoraryRepository $rhorary,
-        ModuleRepository $rmodule
+        ModuleRepository $rmodule,
+        EnrollmentRepository $re,
+        StudentRepository $rstudent,
+        PersonRepository $rperson,
+        EImplementationNoteRepository $rein
     )
     {
         $this->rgroup         = $rgroup;
@@ -37,6 +49,10 @@ class GroupResource extends Controller
         $this->rteacher       = $rteacher;
         $this->rhorary        = $rhorary;
         $this->rmodule        = $rmodule;
+        $this->re             = $re;
+        $this->rstudent       = $rstudent;
+        $this->rperson        = $rperson;
+        $this->rein           = $rein;
     }
 
     public function index(Request $request)
@@ -94,6 +110,92 @@ class GroupResource extends Controller
         }
 
         return response()->json($response, 200 );
+
+    }
+
+    public function getGroupEnrollment(Request $request){
+
+        $id_group   = $request->get("cod_grupo");
+        $type       = $request->get("type");
+
+        $ids_enrollment = [];
+        $ids_students   = [];
+
+        $items = $this->rgroup->getById($id_group)->first();
+
+        // Grupo de Identificadores de Matriculados
+        if($items->group_enrollment){
+
+            foreach ($items->group_enrollment as $item) {
+
+                $enrollment = $this->re->getById($item->id_enrollment);
+
+
+                $note_project = $this->rein->getByIdEnrollmentAndIdType($item->id_enrollment, 1);
+                $note_sustent = $this->rein->getByIdEnrollmentAndIdType($item->id_enrollment, 2);
+
+
+                if(fmod($note_project['num_nota'], 1) !== 0.00){
+
+                    // your code if its decimals has a value
+                    $note_project['num_nota'] = number_format($note_project['num_nota'], 1, '.', '');
+                } else {
+                    $note_project['num_nota'] = number_format($note_project['num_nota'], 0, '.', '');
+                }
+
+                if(fmod($note_sustent['num_nota'], 1) !== 0.00){
+
+                    // your code if its decimals has a value
+                    $note_sustent['num_nota'] = number_format($note_sustent['num_nota'], 1, '.', '');
+                } else {
+                    $note_sustent['num_nota'] = number_format($note_sustent['num_nota'], 0, '.', '');
+                }
+
+                $ids_enrollments[] = array(
+                    "id_enrollment" => $enrollment->id,
+                    "id_student"    => $enrollment->student->id,
+                    "id_person"     => $enrollment->student->persona->id,
+                    "report"        => array(
+                                            "note_project" => $note_project,
+                                            "note_sustent" => $note_sustent
+                                        ),
+                    "prom"          => ($note_project['num_nota'] * 0.5) + ($note_sustent['num_nota'] * 0.5)
+                );
+
+            }
+        }
+
+        // Group Ids Enrolments
+        foreach ($ids_enrollments as $id_enrollment) {
+            $id_p[] = $id_enrollment['id_person'];
+        }
+
+        $iperson_order = $this->rperson->getGroupPersonOrdeByLastName($id_p);
+
+        foreach ($iperson_order as $ipo) {
+
+            $report = "";
+
+            // Group Id Person
+            foreach ($ids_enrollments as $id_enrollment) {
+
+                if($id_enrollment['id_person'] == $ipo['id']){
+                    $report = $id_enrollment;
+                    break;
+                }
+
+            }
+
+            $response[] = array(
+                "id"            => $ipo['id'],
+                "ape_pat"       => $ipo['ape_pat'],
+                "ape_mat"       => $ipo['ape_mat'],
+                "nombre"        => $ipo['nombre'],
+                "enrollment"    => $report
+            );
+        }
+
+        return response()->json(array("response" => $response), 200 );
 
     }
 

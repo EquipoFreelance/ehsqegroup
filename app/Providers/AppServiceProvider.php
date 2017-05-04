@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Repositories\Contracts\InterfaceRepository;
 use App\Repositories\Eloquents\AcademicPeriodRepository;
 use App\Repositories\Eloquents\EbcRepository;
+use App\Repositories\Eloquents\EImplementationNoteRepository;
 use App\Repositories\Eloquents\EnrollmentBillingClientRepository;
 use App\Repositories\Eloquents\EnrollmentPaymentConceptRepository;
 use App\Repositories\Eloquents\EnrollmentPMRepository;
@@ -74,7 +75,8 @@ class AppServiceProvider extends ServiceProvider
             StudentRepository::class,
             EnrollmentBillingClientRepository::class,
             CalificationRepository::class,
-            GroupRepository::class
+            GroupRepository::class,
+            EImplementationNoteRepository::class
         );
     }
 }

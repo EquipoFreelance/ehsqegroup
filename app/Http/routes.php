@@ -470,6 +470,11 @@ Route::resource('/api/califications',
     )
 );
 
+// Fin Enrollment by Group
+Route::post('/api/califications/implementation/store',
+        ['uses' => 'WebService\CalificationController@storeCalificationImplementation'
+]);
+
 // Groups
 Route::resource('/api/groups',
     'WebService\GroupResource',
@@ -477,7 +482,12 @@ Route::resource('/api/groups',
         'only' => ['index']
     )
 );
-
+// Find Grupo by teachet
 Route::get('/api/groups/group-teacher',
     ['uses' => 'WebService\GroupResource@getGroupTeacher'
-    ]);
+]);
+
+// Fin Enrollment by Group
+Route::get('/api/groups/group-enrollment',
+    ['uses' => 'WebService\GroupResource@getGroupEnrollment'
+]);

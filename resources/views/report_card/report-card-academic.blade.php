@@ -10,31 +10,47 @@
 
    <!-- Custom Templates -->
    <script id="response-template" type="text/x-handlebars-template">
-      @{{#each body}}
-      <tr>
-         <td>@{{ name  }}</td>
-         @{{#each report}}
-            @{{#with nota}}
-               <td align="center">
-                  <input type="text" name="num_nota[]" class="form-control" value="@{{#if num_nota}}@{{ num_nota }}@{{ else }}@{{/if}}" style="width: 70px; text-align: center;">
-                  <input type="hidden" name="id_num_nota[]" class="form-control" value="@{{ id }}" style="width: 60px; text-align: center;">
-                  <input type="hidden" name="id_matricula[]" class="form-control" value="@{{ cod_matricula }}" style="width: 70px; text-align: center;">
-                  <input type="hidden" name="id_taller[]" class="form-control" value="@{{ cod_taller }}" style="width: 70px; text-align: center;">
-               </td>
-            @{{/with}}
-         @{{/each}}
 
-         <td style="width: 70px; text-align: center;" class="ïd_enrollment_@{{ enrollment }}"><span>@{{ average }}</span></td>
+      @{{#each response}}
+       <tr>
+         <td>@{{ ape_pat }} @{{ ape_mat }}, @{{ nombre  }}
+
+         </td>
+
+          @{{#with enrollment}}
+                  <input type="hidden" name="id_enrollment_id[]" value="@{{ id_enrollment }}" >
+                  @{{#with report}}
+
+                       @{{#with note_project}}
+                        <td align="center">
+                            <input type="text" name="note_project[]" value="@{{ num_nota }}" class="form-control" style="width: 70px; text-align: center;">
+                            <input type="hidden" name="note_project_id[]" value="@{{ id }}" class="form-control" style="width: 70px; text-align: center;">
+                        </td>
+                       @{{/with}}
+
+                       @{{#with note_sustent}}
+                        <td align="center">
+                            <input type="text" name="note_sustent[]" value="@{{ num_nota }}" class="form-control" style="width: 70px; text-align: center;">
+                            <input type="hidden" name="note_sustent_id[]" value="@{{ id }}" class="form-control" style="width: 70px; text-align: center;">
+                        </td>
+                       @{{/with}}
+
+                  @{{/with}}
+
+                   <td align="center">
+                       @{{ prom  }}
+                   </td>
+          @{{/with}}
       </tr>
       @{{/each}}
+
    </script>
 
    <script id="response-template-head" type="text/x-handlebars-template">
       <tr>
          <th>Alumno</th>
-         @{{#each header}}
-            <th style="text-align: center;">@{{ title  }}</th>
-         @{{/each}}
+         <th >Proyecto</th>
+         <th>Sustentación</th>
          <th>Promedio</th>
       </tr>
    </script>
@@ -66,31 +82,46 @@
                   {!! Form::token() !!}
                   <div class="form-group">
                      <div class="row">
-                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
                            <label for="profesor_codigo_ca">Grupos</label>
                            <select data-id-default="{{ old('group') }}" class="select2 form-control" id="group" name="group" data-placeholder="Seleccione la Especialización" onpaste="return false;">
                               <option>-- Seleccione el grupo asignado --</option>
                            </select>
                         </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                           <label for="profesor_codigo_ca">Módulos / Docentes</label>
+                        <!--<div class="col-md-6 col-sm-6 col-xs-12">
+                           <label for="profesor_codigo_ca">Seleccione el tipo de nota</label>
                            <select data-id-default="{{ old('cod_mod') }}" class="select2 form-control" id="cod_mod" name="cod_mod" data-placeholder="Seleccione el Módulo" onpaste="return false;">
                               <option>-- Seleccione el Módulo --</option>
+                              <option value="1">Nota Proyecto</option>
+                              <option value="2">Nota Sustentación</option>
+                              <option value="3">Ver todos</option>
                            </select>
-                        </div>
+                        </div>-->
                      </div>
                   </div>
                   <br>
                   <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                     <thead class="report_card_header"></thead>
-                     <tbody class="report_card_body"></tbody>
+                     <thead class="report_card_header" style="display: none;">
+
+                        <tr>
+                            <th>Alumno</th>
+                            <th align="center">Proyecto</th>
+                            <th align="center">Sustentación</th>
+                            <th align="center">Promedio</th>
+                        </tr>
+
+                     </thead>
+                     <tbody class="report_card_body">
+
+                     </tbody>
+
                   </table>
                   <div class="clear"></div>
                   <div class="ln_solid"></div>
                   <div class="form-group">
                      <div class="form-group btncontrol">
-                        <a href="javascript:void(0)" class="btn btn-5 btn-5a icon-cancel cancel"><span>Cancelar</span></a>
-                        <button type="button" class="btn btn-5 btn-5a icon-save save" id="save"><span>Guardar</span></button>
+                        <a href="javascript:void(0)" class="btn btn-5 btn-5a icon-cancel cancel"><span>Retornar</span></a>
+                        <button type="button" class="btn btn-5 btn-5a icon-save save" id="save" disabled="disabled"><span>Guardar</span></button>
                      </div>
                   </div>
                </form>
@@ -108,47 +139,35 @@
    <script>
       $(function(){
 
-         //var teacher_id = '{{ Auth::user()->cod_persona  }}';
-
          wsSelectGroupAll('/api/groups/', '#group', '-- Seleccione el grupo asignado --');
 
-         // Event Change
          $("#group").change(function(){
-            wsSelectGroupTeacherModules('/api/groups/group-teacher/', "#cod_mod", " -- Seleccione el Módulo -- ", $(this).val());
+            listReportCard($(this).val());
          });
 
-         $("#cod_mod").change(function(){
-            //listReportCard($("#group").val(), $(this).val());
-         });
+         $("#save").click(function(){
 
-         /*$("#save").click(function(){
             event.preventDefault();
 
             $.ajax({
-               url:'/api/teacher/report-card/store',
+               url:'/api/califications/implementation/store',
                type:'post',
                datatype: 'json',
                data:$( "#store_report_card" ).serialize(),
                beforeSend: function(){
-
+                   $(".save").attr("disabled", "disabled");
                },
                success:function(response)
                {
                   console.log(response);
+                   $(".save").removeAttr("disabled");
                },
                complete: function(){
-                  $(".alert-info").hide().fadeIn().html("Las notas fueron ingresadas satisfactoriamente");
-                  $("#cod_mod").trigger("change");
-                  //$( "#store_report_card" ).submit();
-               },
-               error: function (xhr, ajaxOptions, thrownError) {
-                  if(  response.status == 400){
-
-                  }
+                   listReportCard($("#group").val());
                }
             });
 
-         });*/
+         });
 
       });
    </script>

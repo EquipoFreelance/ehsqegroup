@@ -43,6 +43,15 @@ class StudentRepository implements InterfaceRepository
         return $this->model->where("cod_persona", $cod_persona)->first();
     }
 
+    public function getGroupStudent($astudent){
+
+        return $this->model->whereIn('id', $astudent)->get();
+    }
+
+    public function getByIdActivo($id){
+
+        return $this->model->select("cod_persona", "id")->where('activo', 1)->where('id', $id)->first();
+    }
 
     /*public function getInfoEnrollment($id_enrollment){
 

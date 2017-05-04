@@ -66,37 +66,34 @@ function wsSelectGroupTeacherModules(route, element, placeholder, id_group)
 }
 
 // Listado de Reporte de notas
-function listReportCard(id_group, id_module) {
+function listReportCard(id_group) {
 
-    if(id_group != '' && id_module != ''){
+    if(id_group != ''){
 
         $.ajax({
-            url:'/api/report-card/group-enrollment/'+id_group+'/'+id_module,
+            url:'/api/groups/group-enrollment/',
             type:'get',
             datatype: 'json',
-            data:{},
+            data:{"cod_grupo":id_group},
             beforeSend: function(){
-                $(".report_card_header").empty().append(custom_handlerbars('<tr><td><center>{{ message }}</center></td></tr>', {message: "Loading..."}));
-                $(".report_card_body").empty().append(custom_handlerbars('<tr><td><center>{{ message }}</center></td></tr>', {message: "Loading..."}));
+                $(".save").attr("disabled", "disabled");
+                $(".title_type_nota").html($("#cod_mod option:selected").text());
+                $(".report_card_body").empty().append(custom_handlerbars('<tr><td colspan="3"><center>{{ message }}</center></td></tr>', {message: "Loading..."}));
             },
-            success:function(items)
+            success:function(response)
             {
-                console.log(items);
+                console.log(response);
 
-                if(items.response){
+                if(response){
 
-                    var response = items.response;
+                    if(response){
 
-
-
-                    // Head
-                    $(".report_card_header").empty().append(custom_handlerbars($("#response-template-head").html(), response));
-
-                    // Body
-                    if(response.body){
+                        $(".report_card_header").show();
+                        $(".save").removeAttr("disabled");
                         $(".report_card_body").empty().append(custom_handlerbars($("#response-template").html(), response));
+
                     } else {
-                        $(".report_card_body").empty().append(custom_handlerbars('<tr><td colspan="'+response.header.length+'"><center>{{ message }}</center></td></tr>', {message: "Sin alumnos matriculados"}));
+                        $(".report_card_body").empty().append(custom_handlerbars('<tr><td colspan="3"><center>{{ message }}</center></td></tr>', {message: "Sin alumnos matriculados"}));
                     }
 
                 }
@@ -105,15 +102,14 @@ function listReportCard(id_group, id_module) {
             error: function (xhr, ajaxOptions, thrownError) {
                 if(  response.status == 400){
 
-                    $(".report_card_body").empty().append(custom_handlerbars('<tr><td colspan="2"><center>{{ message }}</center></td></tr>', response.responseJSON));
+                    $(".report_card_body").empty().append(custom_handlerbars('<tr><td colspan="3"><center>{{ message }}</center></td></tr>', response.responseJSON));
 
                 }
             }
         });
 
     } else {
-        $(".report_card_header").empty().append(custom_handlerbars('<tr><td><center>{{ message }}</center></td></tr>', {message: "Empty"}));
-        $(".report_card_body").empty().append(custom_handlerbars('<tr><td><center>{{ message }}</center></td></tr>', {message: "Empty"}));
+        $(".report_card_body").empty().append(custom_handlerbars('<tr><td class="3"><center>{{ message }}</center></td></tr>', {message: "Empty"}));
     }
 
 
