@@ -22,7 +22,7 @@ class ModalityRepository implements InterfaceRepository
 
     // Get All Register
     public function getAll(){
-
+        return $this->model->where("activo", 1)->get();
     }
 
     // Find Register by Id

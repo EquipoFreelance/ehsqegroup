@@ -56,9 +56,7 @@ if($("#cod_modalidad").length > 0){
 }
 
 
-$("#cod_esp_tipo").change(function(){
-  wsUbigeo(routes.especializacion+$(this).val(), "#cod_esp", "-- Seleccione la especialización --");
-});
+
 
 // Si lo valores por defecto son diferentes a Vacío
 if(group_cod_mod != '' && group_cod_esp_tipo != ''){
@@ -66,9 +64,60 @@ if(group_cod_mod != '' && group_cod_esp_tipo != ''){
     $(".group_cod_esp_tipo").trigger("change");
 }
 
+$("#cod_esp_tipo").change(function(){
+    listEspecializations($("#cod_modalidad").val(), $(this).val());
+});
+
 /*
   @route string
 */
+
+function listEspecializations(id_mod, id_type_esp){
+
+    $.ajax({
+        url:'/api/especialization',
+        type:'get',
+        datatype: 'json',
+        data:{id_mod:id_mod, id_type_esp:id_type_esp},
+        beforeSend: function(){
+            $("#cod_esp").empty();
+            $("#cod_esp").append($('<option>', {
+                value: "",
+                text : "-- Seleccione la especialización --"
+            }));
+        },
+        success:function(items)
+        {
+            var attr = $("#cod_esp").attr("data-id-default");
+
+            if(items){
+
+                var items = items.response;
+
+                $.each(items, function (i, item) {
+
+                    $("#cod_esp").append($('<option>', {
+                        value: item.id,
+                        text : item.nom_esp
+                    }));
+
+                    // Su el valor existe
+                    if( attr == item.id ){
+                        $('#cod_esp').val(attr).attr("value", attr).attr("selected", "selected");
+                    }
+
+                });
+            }
+
+
+        },
+        error:function(data)
+        {
+
+
+        }
+    });
+}
 
 function ListEspecializaciones(route){
   $.ajax({

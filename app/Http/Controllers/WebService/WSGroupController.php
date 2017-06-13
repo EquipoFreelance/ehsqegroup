@@ -48,7 +48,10 @@ class WSGroupController extends Controller
     {
         $find_teacher = Docente::where("cod_persona", $id_person)->first();
 
-        $rs = Horario::where("cod_grupo", $id_group)->where("cod_docente", $find_teacher->id)->with('modulo');
+        $rs = Horario::where("cod_grupo", $id_group)
+            ->where("cod_docente", $find_teacher->id)
+            ->where("activo", 1)
+            ->with('modulo');
 
         if($rs->count() > 0){
             return response()->json($rs->get(), 200);

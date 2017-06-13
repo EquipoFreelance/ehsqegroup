@@ -89,7 +89,6 @@ class GroupResource extends Controller
 
     }
 
-
     public function getGroupTeacher(Request $request){
 
         $id_group       = $request->get("id_group");
@@ -121,7 +120,7 @@ class GroupResource extends Controller
         $ids_enrollment = [];
         $ids_students   = [];
 
-        $items = $this->rgroup->getById($id_group)->first();
+        $items = $this->rgroup->getById($id_group);
 
         // Grupo de Identificadores de Matriculados
         if($items->group_enrollment){
@@ -197,6 +196,20 @@ class GroupResource extends Controller
 
         return response()->json(array("response" => $response), 200 );
 
+    }
+
+    public function getGroupGenerate(Request $request){
+
+        if( $request->get("id_mod") && $request->get("id_type_esp") && $request->get("id_esp") ) {
+
+            $id_mod      = $request->get("id_mod");
+            $id_type_esp = $request->get("id_type_esp");
+            $id_esp      = $request->get("id_esp");
+
+            $response = $this->rgroup->getByIdGenerateActa($id_mod, $id_type_esp, $id_esp);
+
+            return response()->json(["data" => $response], 200);
+        }
     }
 
     public function store( Request $request )

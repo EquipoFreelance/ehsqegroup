@@ -104,6 +104,15 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
         'as' => 'dashboard.academic.report-card', 'uses' => 'ReportCardController@getAcademicReportCard'
     ]);
 
+    // Generate of Actas of notes final
+    Route::get('/dashboard/generate-actas',[
+        'as' => 'dashboard.academic.generate-actas', 'uses' => 'GenerateActaController@index'
+    ]);
+
+    // Generate of Actas of notes final
+    Route::get('/dashboard/view-acta',[
+        'as' => 'dashboard.academic.view-acta', 'uses' => 'GenerateActaController@show'
+    ]);
 
 });
 
@@ -482,12 +491,51 @@ Route::resource('/api/groups',
         'only' => ['index']
     )
 );
+
+
 // Find Grupo by teachet
 Route::get('/api/groups/group-teacher',
     ['uses' => 'WebService\GroupResource@getGroupTeacher'
 ]);
 
-// Fin Enrollment by Group
-Route::get('/api/groups/group-enrollment',
-    ['uses' => 'WebService\GroupResource@getGroupEnrollment'
+// Find Grupo by generate acta
+Route::get('/api/groups/group-teacher',
+    ['uses' => 'WebService\GroupResource@getGroupTeacher'
 ]);
+
+// Find Enrollment by Group
+Route::get('/api/groups/group-generate-acta',
+    ['uses' => 'WebService\GroupResource@getGroupGenerate'
+]);
+
+// Actas
+Route::resource('/api/actas',
+    'WebService\ActaResource',
+    array(
+        'only' => ['index']
+    )
+);
+
+// Modalidad
+Route::resource('/api/modality',
+    'WebService\ModalityResource',
+    array(
+        'only' => ['index']
+    )
+);
+
+// Type especialization
+Route::resource('/api/type-especialization',
+    'WebService\TypeEspecializationResource',
+    array(
+        'only' => ['index']
+    )
+);
+
+// Especialization
+Route::resource('/api/especialization',
+    'WebService\EspecializationResource',
+    array(
+        'only' => ['index']
+    )
+);

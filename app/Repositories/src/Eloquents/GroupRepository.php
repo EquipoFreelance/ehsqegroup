@@ -30,6 +30,30 @@ class GroupRepository implements InterfaceRepository
         return $this->model->find($id);
     }
 
+    public function getByIdGenerateActa($id_mod, $id_type_esp, $id_esp){
+
+        $response = "";
+        $items = $this->model
+            ->where("cod_modalidad", $id_mod )
+            ->where("cod_esp_tipo", $id_type_esp )
+            ->where("cod_esp", $id_esp )
+            ->where("activo", 1 )
+            ->get();
+
+        foreach ($items as $item) {
+
+            $response[] = array(
+                "id"        => $item->id,
+                "nom_grupo" => $item->nom_grupo,
+                "action"    => '<a href="/dashboard/view-acta?id_group='.$item->id.'&cod_esp='.$id_esp.'" target="_blank">Ver</a>'
+            );
+
+        }
+
+        return $response;
+
+    }
+
 
     // Create Register
     public function create( array $attribute){

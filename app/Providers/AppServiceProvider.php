@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\WebService\ModalityResource;
 use App\Repositories\Contracts\InterfaceRepository;
 use App\Repositories\Eloquents\AcademicPeriodRepository;
+use App\Repositories\Eloquents\ActaRepository;
 use App\Repositories\Eloquents\EbcRepository;
 use App\Repositories\Eloquents\EImplementationNoteRepository;
 use App\Repositories\Eloquents\EnrollmentBillingClientRepository;
@@ -76,7 +78,11 @@ class AppServiceProvider extends ServiceProvider
             EnrollmentBillingClientRepository::class,
             CalificationRepository::class,
             GroupRepository::class,
-            EImplementationNoteRepository::class
+            EImplementationNoteRepository::class,
+            ActaRepository::class,
+            ModalityResource::class,
+            EspecializationTypeRepository::class,
+            EspecializationResource::class
         );
     }
 }

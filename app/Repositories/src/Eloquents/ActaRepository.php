@@ -8,17 +8,15 @@
 
 namespace App\Repositories\Eloquents;
 
-
-use App\Models\Especializacion;
 use App\Repositories\Contracts\InterfaceRepository;
 
-class EspecializationRepository implements InterfaceRepository
+class ActaRepository implements InterfaceRepository
 {
     private $model;
 
     public function __construct()
     {
-        $this->model  = new Especializacion();
+        $this->model  = "";
     }
 
     // Get All Register
@@ -31,15 +29,13 @@ class EspecializationRepository implements InterfaceRepository
         return $this->model->find($id);
     }
 
-    public function getByIdModAndIdTypeEsp($id_mod, $id_type_esp){
-        return $this->model->where("cod_mod", $id_mod)->where("cod_esp_tipo", $id_type_esp)->get();
-    }
+    public function getActaByIdGroup($id_group){
 
-    public function getNameById($id){
-        $find = $this->getById($id);
-        return $find->nom_esp;
-    }
+        $response = "";
 
+        return $response;
+
+    }
 
     // Create Register
     public function create( array $attribute){

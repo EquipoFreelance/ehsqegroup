@@ -110,6 +110,7 @@ class EnrollmentResource extends Controller
         $rs_en = $this->mod_repo->getModuleByIdEspecialization( $request->get("id_esp") );
 
         $x = 0;
+        $prom_total_module = 0;
 
         foreach ($rs_en as $r) {
 
@@ -145,9 +146,13 @@ class EnrollmentResource extends Controller
 
             if($num_nota_taller != 0){
 
-                $prom_taller = ($num_nota_taller / count($rs_calification));
-                $prom_module = (0.3 * $prom_taller) + (0.7 * $rs_exam['num_nota']);
-                $prom_final  = (0.5 * $prom_module) + (0.5 * $prom_susten_project);
+                $prom_taller = number_format(($num_nota_taller / count($rs_calification)), 2, '.', '');
+
+
+                $prom_module = number_format(( (0.3 * $prom_taller) + (0.7 * $rs_exam['num_nota']) ), 2, '.', '');
+
+
+                $prom_final  = number_format(( (0.5 * $prom_module) + (0.5 * $prom_susten_project) ), 2, '.', '');
 
                 $x = $x + 1;
                 $response[] = array(
@@ -160,6 +165,9 @@ class EnrollmentResource extends Controller
                     "prom_module"   => $prom_module,
                     "prom_final"    => $prom_final
                 );
+
+                $prom_total_module = $prom_total_module + $prom_module;
+
             }
 
 
@@ -167,7 +175,12 @@ class EnrollmentResource extends Controller
 
         return response()->json(
             [
-                "data"      => $response
+                "data"      => $response,
+                "data_2"    => array(
+                                    "prom_module_final"     => number_format(($prom_total_module / $x), 2, '.', ''),
+                                    "prom_project"          => $note_project,
+                                    "prom_sustent_project"   => $prom_susten_project
+                )
 
             ], 200 );
 

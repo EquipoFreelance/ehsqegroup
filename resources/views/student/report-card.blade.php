@@ -16,9 +16,6 @@
         <td rowspan="2" align="center" valign="middle" bgcolor="#f4f4f4">PROM<br>
           MODULO
         </td>
-        <td rowspan="2" align="center" valign="middle" bgcolor="#f4f4f4">PROM<br>
-          PROM FINAL
-        </td>
       </tr>
       <tr>
           <td align="center" valign="middle" bgcolor="#f4f4f4">1</td>
@@ -38,7 +35,6 @@
         @{{/each}}
         <td align="center" valign="middle"><strong>@{{ prom_taller }}</strong></td>
         <td align="center" valign="middle"><strong>@{{ prom_module }}</strong></td>
-        <td align="center" valign="middle"><strong>@{{ prom_final }}</strong></td>
       </tr>
 
     @{{/each}}
@@ -79,6 +75,23 @@
 
             </div>
             <br>
+
+            <table class="tablex table-bordered add_notes_" cellspacing="0" width="100%"  style="display:none">
+              <tbody><tr>
+                <td align="left" valign="middle" bgcolor="#f4f4f4">PROMEDIO MODULO</td>
+                <td align="center"><strong class="prom_module_final"></strong></td>
+              </tr>
+              <tr>
+                <td align="left" valign="middle" bgcolor="#f4f4f4">NOTA PROYECTO</td>
+                <td align="center"><strong class="prom_project"></strong></td>
+              </tr>
+              <tr>
+                <td align="left" valign="middle" bgcolor="#f4f4f4">PROMEDIO DIPLOMA</td>
+                <td align="center"><strong class="prom_sustent_project"></strong></td>
+              </tr>
+              </tbody>
+            </table>
+
             <!--<table class="tablex table-bordered" cellspacing="0" width="100%">
               <tr>
                 <td align="left" valign="middle"  bgcolor="#f4f4f4">PROMEDIO TOTAL</td>

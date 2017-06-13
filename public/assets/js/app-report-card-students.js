@@ -48,6 +48,24 @@ function listReportCard(id_esp, id_enrollment){
             var html    = template(items);
 
             $(".add_notes").html(html).hide().fadeIn();
+            $(".add_notes_").show().fadeIn();
+            console.log(items);
+
+
+
+            if(items.data_2.prom_module_final){
+                $(".prom_module_final").html(items.data_2.prom_module_final);
+            }
+
+            if(items.data_2.prom_project){
+                $(".prom_project").html(items.data_2.prom_project.num_nota);
+            }
+
+            if(items.data_2.prom_sustent_project){
+                $(".prom_sustent_project").html(items.data_2.prom_sustent_project);
+            }
+
+
 
         },
         error: function (xhr, ajaxOptions, thrownError) {
