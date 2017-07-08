@@ -34,6 +34,19 @@ class HoraryRepository implements InterfaceRepository
         return $this->model->where("cod_grupo", $id_group )->where("cod_docente", $id_teacher )->first();
     }
 
+    public function getIdByGroup($id_group){
+        return $this->model->where("cod_grupo", $id_group)->first();
+    }
+
+    public function getIdByModule($cod_module){
+        return $this->model->where("cod_mod", $cod_module)->first();
+    }
+
+    public function getDayWeek($index){
+        $week = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+        return $week[$index];
+    }
+
     // Create Register
     public function create( array $attribute){
 

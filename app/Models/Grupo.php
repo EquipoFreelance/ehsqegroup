@@ -56,7 +56,7 @@ class Grupo extends Model
     * Pertener a una Especialización
     */
     public function especializacion(){
-        return $this->belongsTo('App\Models\Especializacion', 'cod_esp');
+        return $this->belongsTo('App\Models\Especializacion', 'cod_esp', 'id');
     }
 
     /* Grupo - Matriculas */

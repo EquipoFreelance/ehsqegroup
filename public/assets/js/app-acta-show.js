@@ -2,12 +2,12 @@
  * Created by JUAN on 05/06/2017.
  */
 
-function showActa(id_group){
+function showActa(id_group, cod_esp){
     $.ajax({
         url:"/api/actas",
         type:'get',
         datatype: 'json',
-        data:{id_group:"15"},
+        data:{id_group:id_group, cod_esp:cod_esp},
         beforeSend: function(){
 
         },

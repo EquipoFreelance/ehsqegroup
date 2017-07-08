@@ -45,17 +45,19 @@
         <td colspan="2" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="20">@{{ code }}</td>
         <td colspan="9" align="left" style="border:1px solid #000000; font-weight: bold; font-size: 9px; padding-left: 5px;" height="20">@{{ firstname }}</td>
         <td colspan="9" align="left" style="border:1px solid #000000; font-weight: bold; font-size: 9px; padding-left: 5px;" height="20">@{{ lastname }}</td>
-        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="20">16.00</td>
-        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="20">16.00</td>
-        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="20">16.00</td>
-        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="20">16.00</td>
-        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="20">16.00</td>
-        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="20">16.00</td>
-        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="20">16.00</td>
-        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="20">16.00</td>
-        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="20">16.00</td>
-        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="20">16.00</td>
-        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px; border-right: 2px solid #000000;" height="20">16.00</td>
+        @{{#each notes}}
+            <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="20">@{{ prom_modulo }}</td>
+        @{{/each}}
+
+        @{{#with proms}}
+            <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="20">@{{ prom_modulos }}</td>
+            <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="20">@{{ prom_imple }}</td>
+            <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px; border-right: 2px solid #000000;" height="20">@{{ prom_final }}</td>
+        @{{/with}}
+
+
+
+
     </tr>
     @{{/each}}
 </script>
@@ -74,23 +76,23 @@
 
     <tr>
         <td height="20" colspan="4" bgcolor="#CCCCCC" style="border:1px solid #000000; font-weight: bold; border-left: 2px solid #000000; border-right: 1px solid #000000; border-top: 2px solid #000000; padding-left: 5px;">DIPLOMA</td>
-        <td height="20" colspan="30" align="left" valign="middle" style="border:1px solid #000000; font-weight: bold; border-left: 1px solid #000000; border-right: 2px solid #000000; border-top: 2px solid #000000; padding-left: 5px;" class="title_esp"></td>
+        <td height="20" colspan="33" align="left" valign="middle" style="border:1px solid #000000; font-weight: bold; border-left: 1px solid #000000; border-right: 2px solid #000000; border-top: 2px solid #000000; padding-left: 5px;" class="title_esp"></td>
     </tr>
     <tr>
         <td height="20" colspan="4" bgcolor="#CCCCCC" style="border:1px solid #000000; font-weight: bold; border-left: 2px solid #000000; border-right: 1px solid #000000; border-top: 1px solid #000000; padding-left: 5px;">SEDE</td>
-        <td height="20" colspan="30" align="left" valign="middle" style="border:1px solid #000000; font-weight: bold; border-left: 1px solid #000000; border-right: 2px solid #000000; border-top: 1px solid #000000; padding-left: 5px;" class="title_place"></td>
+        <td height="20" colspan="33" align="left" valign="middle" style="border:1px solid #000000; font-weight: bold; border-left: 1px solid #000000; border-right: 2px solid #000000; border-top: 1px solid #000000; padding-left: 5px;" class="title_place"></td>
     </tr>
     <tr>
         <td height="20" colspan="4" bgcolor="#CCCCCC" style="border:1px solid #000000; font-weight: bold; border-left: 2px solid #000000; border-right: 1px solid #000000; border-top: 1px solid #000000; padding-left: 5px;">HORARIO</td>
-        <td height="20" colspan="30" align="left" valign="middle" style="border:1px solid #000000; font-weight: bold; border-left: 1px solid #000000; border-right: 2px solid #000000; border-top: 1px solid #000000; padding-left: 5px;" class="title_schedule"></td>
+        <td height="20" colspan="33" align="left" valign="middle" style="border:1px solid #000000; font-weight: bold; border-left: 1px solid #000000; border-right: 2px solid #000000; border-top: 1px solid #000000; padding-left: 5px;" class="title_schedule"></td>
     </tr>
     <tr>
         <td height="20" colspan="4" bgcolor="#CCCCCC" style="border:1px solid #000000; font-weight: bold; border-left: 2px solid #000000; border-right: 1px solid #000000; border-top: 1px solid #000000; padding-left: 5px;">DURACIÓN</td>
-        <td height="20" colspan="30" align="left" valign="middle" style="border:1px solid #000000; font-weight: bold; border-left: 1px solid #000000; border-right: 2px solid #000000; border-top: 1px solid #000000; padding-left: 5px;" class="title_duration"></td>
+        <td height="20" colspan="33" align="left" valign="middle" style="border:1px solid #000000; font-weight: bold; border-left: 1px solid #000000; border-right: 2px solid #000000; border-top: 1px solid #000000; padding-left: 5px;" class="title_duration"></td>
     </tr>
     <tr>
         <td height="20" colspan="4" bgcolor="#CCCCCC" style="border:1px solid #000000; font-weight: bold; border-left: 2px solid #000000; border-right: 1px solid #000000; border-top: 1px solid #000000; border-bottom: 2px solid #000000; padding-left: 5px;">OBSERVACIÓN</td>
-        <td height="20" colspan="30" align="left" valign="middle" style="border:1px solid #000000; font-weight: bold; border-left: 1px solid #000000; border-right: 2px solid #000000; border-top: 1px solid #000000; border-bottom: 2px solid #000000; padding-left: 5px;" class="title_observation"></td>
+        <td height="20" colspan="33" align="left" valign="middle" style="border:1px solid #000000; font-weight: bold; border-left: 1px solid #000000; border-right: 2px solid #000000; border-top: 1px solid #000000; border-bottom: 2px solid #000000; padding-left: 5px;" class="title_observation"></td>
     </tr>
 
     <tr><td height="2" colspan="33">&nbsp;</td></tr>
@@ -106,6 +108,10 @@
         <td colspan="1" style="border:1px solid #000000; font-weight: bold; font-size: 9px; border-top: 2px solid #000000;" bgcolor="#CCCCCC" align="center" width="70" class="gp_5"></td>
         <td colspan="1" style="border:1px solid #000000; font-weight: bold; font-size: 9px; border-top: 2px solid #000000;" bgcolor="#CCCCCC" align="center" width="70" class="gp_6"></td>
         <td colspan="1" style="border:1px solid #000000; font-weight: bold; font-size: 9px; border-top: 2px solid #000000;" bgcolor="#CCCCCC" align="center" width="70" class="gp_7"></td>
+        <td colspan="1" style="border:1px solid #000000; font-weight: bold; font-size: 9px; border-top: 2px solid #000000;" bgcolor="#CCCCCC" align="center" width="70" class="gp_8"></td>
+        <td colspan="1" style="border:1px solid #000000; font-weight: bold; font-size: 9px; border-top: 2px solid #000000;" bgcolor="#CCCCCC" align="center" width="70" class="gp_9"></td>
+        <td colspan="1" style="border:1px solid #000000; font-weight: bold; font-size: 9px; border-top: 2px solid #000000;" bgcolor="#CCCCCC" align="center" width="70" class="gp_10"></td>
+        <td colspan="1" style="border:1px solid #000000; font-weight: bold; font-size: 9px; border-top: 2px solid #000000;" bgcolor="#CCCCCC" align="center" width="70" class="gp_11"></td>
         <td colspan="1" style="border:1px solid #000000; font-weight: bold; font-size: 9px; border-top: 2px solid #000000;" bgcolor="#CCCCCC" rowspan="4" class="vertical"  width="70"><div class="vertical">PROMEDIO MÓDULOS</div></td>
         <td colspan="1" style="border:1px solid #000000; font-weight: bold; font-size: 9px; border-top: 2px solid #000000;" bgcolor="#CCCCCC" rowspan="4" class="vertical" width="70"><div class="vertical" >PROMEDIO PROYECTO IMPLEMENTACIÓN</td>
         <td colspan="1" style="border:1px solid #000000; font-weight: bold; font-size: 9px; border-top: 2px solid #000000;border-right: 2px solid #000000;" bgcolor="#CCCCCC" rowspan="4" class="vertical" width="70"><div class="vertical" >PROMEDIO FINAL</td>
@@ -119,6 +125,10 @@
         <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="15" class="mod_5"></td>
         <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="15" class="mod_6"></td>
         <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="15" class="mod_7"></td>
+        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="15" class="mod_8"></td>
+        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="15" class="mod_9"></td>
+        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="15" class="mod_10"></td>
+        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="15" class="mod_11"></td>
     </tr>
     <tr>
         <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="20" class="t_0"></td>
@@ -129,9 +139,17 @@
         <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" class="t_5"></td>
         <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" class="t_6"></td>
         <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" class="t_7"></td>
+        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" class="t_8"></td>
+        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" class="t_9"></td>
+        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" class="t_10"></td>
+        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" class="t_11"></td>
     </tr>
     <tr class="space">
         <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;" height="20">&nbsp;</td>
+        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;">&nbsp;</td>
+        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;">&nbsp;</td>
+        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;">&nbsp;</td>
+        <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;">&nbsp;</td>
         <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;">&nbsp;</td>
         <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;">&nbsp;</td>
         <td colspan="1" align="center" style="border:1px solid #000000; font-weight: bold; font-size: 9px;">&nbsp;</td>
@@ -181,7 +199,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
 <script src="{{ URL::asset('assets/js/app-acta-show.js')}}"></script>
 <script>
-    showActa(15);
+    showActa('{{ $id_group }}', '{{ $cod_esp }}');
 </script>
 </body>
 </html>

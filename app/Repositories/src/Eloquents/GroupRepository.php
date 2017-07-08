@@ -29,7 +29,7 @@ class GroupRepository implements InterfaceRepository
     public function getById( $id ){
         return $this->model->find($id);
     }
-
+    
     public function getByIdGenerateActa($id_mod, $id_type_esp, $id_esp){
 
         $response = "";

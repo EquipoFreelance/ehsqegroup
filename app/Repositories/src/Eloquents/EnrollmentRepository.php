@@ -76,6 +76,8 @@ class EnrollmentRepository implements InterfaceRepository
         return $this->model->find($id);
     }
 
+
+
     public function getEnrollmentByStudent($id_student){
 
         $list = $this->model

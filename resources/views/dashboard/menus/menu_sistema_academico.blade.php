@@ -18,6 +18,7 @@
          <li><a href="{{ route('dashboard.grupo.index') }}"><i class="fa fa-tasks"></i> Grupos</a></li>
          <li><a href="{{ route('dashboard.academic_schedule.index') }}"><i class="fa fa-tasks"></i> Horarios</a></li>
          <li><a href="/dashboard/academic/report-card/"><i class="fa fa-tasks"></i> Nota de Sustentación</a></li>
+         <li><a href="/dashboard/generate-actas"><i class="fa fa-tasks"></i> Actas</a></li>
       </ul>
    </div>
 </div>

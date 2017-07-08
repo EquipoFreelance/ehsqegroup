@@ -37,7 +37,7 @@ $(function(){
         },
         submitHandler: function(form) {
 
-            if (! $.fn.dataTable.isDataTable( '#datatable-responsive' ) ) {
+            //if (! $.fn.dataTable.isDataTable( '#datatable-responsive' ) ) {
                 $('#datatable-responsive').DataTable({
                     destroy: true,
                     "ajax": '/api/groups/group-generate-acta?id_mod='+$("#id_mod").val()+'&id_type_esp='+$("#id_esp_tipo").val()+'&id_esp='+$("#id_esp").val(),
@@ -70,7 +70,7 @@ $(function(){
                             className: "btn btn-5 btn-5a icon-excel excel"
                         }]
                 });
-            }
+            //}
 
 
         }
