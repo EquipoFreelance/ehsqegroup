@@ -34,12 +34,21 @@ class HoraryRepository implements InterfaceRepository
         return $this->model->where("cod_grupo", $id_group )->where("cod_docente", $id_teacher )->first();
     }
 
+
     public function getIdByGroup($id_group){
         return $this->model->where("cod_grupo", $id_group)->first();
     }
 
+    public function getIdByGroupIdModules($id_group){
+        return $this->model->select('cod_mod')->where("cod_grupo", $id_group)->get(['cod_mod']);
+    }
+
     public function getIdByModule($cod_module){
         return $this->model->where("cod_mod", $cod_module)->first();
+    }
+
+    public function getIdByGroupAndIdByModule($id_group, $cod_module){
+        return $this->model->where("cod_grupo", $id_group )->where("cod_mod", $cod_module )->first();
     }
 
     public function getDayWeek($index){

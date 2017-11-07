@@ -29,6 +29,7 @@
                                 <th>Id</th>
                                 <th>Fecha de inicio</th>
                                 <th>Fecha de finalización</th>
+                                <th>Observacion</th>
                                 <th>Activo</th>
                                 <th></th>
                             </tr>
@@ -39,6 +40,7 @@
                                     <td>{{ $schedule->id }}</td>
                                     <td>{{ $schedule->start_date }}</td>
                                     <td>{{ $schedule->finish_date }}</td>
+                                     <td>{{ $schedule->observation }}</td>
                                     <td>
                                         <span class="label @if($schedule->active == '1') label-success @else label-danger @endif ">
                                             @if($schedule->active == '1') Activo @else No Activo @endif

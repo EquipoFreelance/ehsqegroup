@@ -114,6 +114,9 @@ Route::group(['middleware' => ['auth','role.academica']], function(){
         'as' => 'dashboard.academic.view-acta', 'uses' => 'GenerateActaController@show'
     ]);
 
+    Route::resource('/dashboard/students-notes/', 'StudentsNotesController');
+
+
 });
 
 // Ventas

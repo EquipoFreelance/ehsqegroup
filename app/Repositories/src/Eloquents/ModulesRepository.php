@@ -35,6 +35,10 @@ class ModuleRepository implements InterfaceRepository
         return $this->model->where("cod_esp", $id_esp )->get();
     }
 
+    public function getModuleByIdEspecializationWhereIn($ids_modules){
+        return $this->model->whereIn('id', $ids_modules)->get();
+    }
+
     public function getNameById($id){
         $find = $this->getById($id);
         return $find->nombre;

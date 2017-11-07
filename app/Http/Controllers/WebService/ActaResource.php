@@ -77,6 +77,17 @@ class ActaResource extends Controller
             /* Horaries */
             $horary = $this->r_horary->getIdByGroup($request->get("id_group"));
 
+            $ids_mod_horary = $this->r_horary->getIdByGroupIdModules($request->get("id_group"));
+            
+            $ids_modules = array();
+            
+            foreach ($ids_mod_horary as $id_mod_horary) {
+                $ids_modules[] = $id_mod_horary->cod_mod;
+            }
+            //exit();
+            /*print_r($ids_modules);
+            exit();*/
+
             if($horary->monday){
                 $day_week = $this->r_horary->getDayWeek(0);
             } else if($horary->sunday){
@@ -94,11 +105,16 @@ class ActaResource extends Controller
             }
 
             /* Modules */
-            $modules = $this->r_module->getModuleByIdEspecialization($group->especializacion->id);
-            $ar_modules = array();
-            foreach ($modules as $module) {
+            //$modules = $this->r_module->getModuleByIdEspecialization($group->especializacion->id);
 
-                $teacher = $this->r_teacher->getById($this->r_horary->getIdByModule($module->id)->cod_docente);
+            $modules = $this->r_module->getModuleByIdEspecializationWhereIn($ids_modules);
+            $ar_modules = array();
+            
+            foreach ($modules as $module) {
+                
+                $id_teacher = $this->r_horary->getIdByGroupAndIdByModule($request->get("id_group"), $module->id)->cod_docente;
+
+                $teacher = $this->r_teacher->getById($id_teacher);
 
                 $person = $this->r_person->getById($teacher->cod_persona);
 
@@ -119,15 +135,16 @@ class ActaResource extends Controller
             $g_enrollments  = $group->group_enrollment;
             $ar_enrollments = array();
             $proms = 0;
-
+            $order = 0;
             foreach ($g_enrollments as $g_e) {
 
+                $order += 1;
                 $find_enrollment = $this->r_enrollment->getById($g_e->id_enrollment);
 
                 $person = $this->r_person->getById($find_enrollment->student['cod_persona']);
 
                 $ar_enrollments[] = array(
-                    "order"     => $g_e->id,
+                    "order"     => $order,
                     "code"      => $g_e->id_enrollment,
                     "firstname" => trim($person->nombre),
                     "lastname"  => trim($person->ape_pat." ".$person->ape_mat),
@@ -142,7 +159,7 @@ class ActaResource extends Controller
                 [
                     "response" => array(
                         "header" => array(
-                            "especialization" => $group->especializacion->nom_esp,
+                            "especialization" => $group->nom_grupo." / ".$group->especializacion->nom_esp ,
                             "place"           => $group->sede->nom_local,
                             "schedule"        => $day_week." ".$horary->h_inicio." ".$horary->h_fin,
                             "duration"        => "Del ".$horary->fec_inicio." al ".$horary->fec_fin,
@@ -192,7 +209,7 @@ class ActaResource extends Controller
 
                 foreach ($report_card as $r_c) {
 
-                    // ValidaciÃ³n para solo talleres
+                    // Validaci¨®n para solo talleres
                     if( $r_c->cod_taller != 11){
 
                         $count_talleres    = $count_talleres + 1;
@@ -203,7 +220,7 @@ class ActaResource extends Controller
 
                         $final_nota_examen = $r_c->num_nota;
 
-                        break;
+                        //break;
 
                     }
 
@@ -215,7 +232,9 @@ class ActaResource extends Controller
                     $prom_talleres = ($sum_nota_talleres / $count_talleres);
                 }
 
+
             }
+
 
             // Calculando el promedio del modulo
             $prom_modulo = ($prom_talleres * 0.3) + ($final_nota_examen * 0.7);
@@ -226,7 +245,7 @@ class ActaResource extends Controller
 
             $ar_notes[] = array(
                 "id_module"     => $ar_module['id'],
-                "prom_modulo"   => $prom_modulo
+                "prom_modulo"   => round($prom_modulo, 2)
             );
 
         }
@@ -244,10 +263,13 @@ class ActaResource extends Controller
             $sum_prom_modulos = $sum_prom_modulos + $ar_note['prom_modulo'];
         }
 
-        $prom_modulos = ( $sum_prom_modulos / $count_ok_prom_modulo );
+        if($sum_prom_modulos > 0){
+            $prom_modulos = ( $sum_prom_modulos / $count_ok_prom_modulo );
+        }
 
 
-        // Calculando nota de proyecto y sustentaciÃ³n
+
+        // Calculando nota de proyecto y sustentaci¨®n
         $note_project = $this->rein->getByIdEnrollmentAndIdType($id_enrollment, 1);
         $note_sustent = $this->rein->getByIdEnrollmentAndIdType($id_enrollment, 2);
 
@@ -269,7 +291,7 @@ class ActaResource extends Controller
             }
         }
 
-        
+
         $proms = array("prom_modulos" => number_format($prom_modulos, 2, '.', '') , "prom_imple" => $prom_susten_project, 'prom_final' => $prom_final);
 
         return $ar_notes;
