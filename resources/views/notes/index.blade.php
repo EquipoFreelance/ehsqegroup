@@ -75,6 +75,7 @@
     </pre>
 </div>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.0/axios.min.js"></script>
     <script src="/assets/js/app/main.js"></script>
 </body>
 </html>

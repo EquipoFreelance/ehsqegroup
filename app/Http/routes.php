@@ -542,3 +542,5 @@ Route::resource('/api/especialization',
         'only' => ['index']
     )
 );
+
+Route::resource('/api/secretaria-academico/', 'WebService\SecretariaAcademicaResource');

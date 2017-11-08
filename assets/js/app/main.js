@@ -6,19 +6,10 @@ new Vue({
         filter_module: '',
         filter_dni: '',
         filter_fullname: '',
-        students: [
-            {
-                fullname: 'Juan Rodas', 
-                notes:[
-                    {id: 1, value: 20, edit: false},
-                    {id: 2, value: 12, edit: false},
-                    {id: 3, value: 14, edit: false},
-                    {id: 4, value: 15, edit: false}
-                ],
-                prom: 15,
-                edit: false
-            }
-        ],
+        students: [],
+    },
+    created: function(){
+        this.listEnrollments();
     },
     methods: {
         filterStudents: function(){
@@ -50,6 +41,17 @@ new Vue({
         },
         cancelEditNotes(index){
             this.students[index].edit = false;
+        }
+        ,
+        listEnrollments(){
+            var self = this;
+            axios.get('http://intranetehsq.ehsqgroup.app/api/secretaria-academico?id_group=14&id_academic_period=8&cod_modulo=26&cod_esp_tipo=11&cod_esp=16')
+            .then(function (response) {
+                self.students = response.data;
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
         }
         // Crud de notas,
 

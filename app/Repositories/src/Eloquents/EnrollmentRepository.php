@@ -76,8 +76,6 @@ class EnrollmentRepository implements InterfaceRepository
         return $this->model->find($id);
     }
 
-
-
     public function getEnrollmentByStudent($id_student){
 
         $list = $this->model
@@ -152,5 +150,37 @@ class EnrollmentRepository implements InterfaceRepository
 
     }
 
+    /***
+     * @param $id_group
+     * @param $id_academic_period
+     * @param $id_tipo_esp
+     * @param $id_esp
+     * @param $id_module
+     */
+    public function getFilterEnrollments($id_group, $id_academic_period, $id_tipo_esp, $id_esp, $id_module){
+
+        // Obtenemos el id del grupo
+        $group = $this->model
+            ->where('id', $id_group)->get();
+            //->where('id_academic_period', $id_academic_period)->first();
+
+        // Obtenemos la lista de matriculados
+
+        // Obtenemos el detalle de las matriculas
+
+        // Del detalle de matricula obtenemos
+            // Código del tipo de la especialización
+            // Código de la especialización
+
+        // Aqui debemos realizar un filtro de modulos
+
+        // Con los códigos realizamos un filtro para obtener el codigo el modulo para
+        // filtrar las matriculas
+
+
+
+        return $group;
+
+    }
 
 }

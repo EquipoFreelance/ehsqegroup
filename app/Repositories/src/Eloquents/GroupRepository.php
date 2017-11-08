@@ -10,6 +10,7 @@ namespace App\Repositories\Eloquents;
 
 use App\Models\Grupo;
 use App\Repositories\Contracts\InterfaceRepository;
+use Mockery\CountValidator\Exception;
 
 class GroupRepository implements InterfaceRepository
 {
@@ -67,6 +68,28 @@ class GroupRepository implements InterfaceRepository
 
     // Delete Register by Id
     public function delete( $id ){
+
+    }
+
+    /***
+     * @param $id_group
+     * @param $id_academic_period
+     * @return mixed
+     */
+    public function getByIdAndIdPeriod($id_group, $id_academic_period){
+
+        try {
+
+            $query = $this->model->where('id', $id_group)->where('id_academic_period', $id_academic_period)->first();
+
+        } catch(Exception $e){
+
+           return $e->getMessage();
+
+        }
+
+        return $query;
+
 
     }
 }
