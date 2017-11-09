@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
     <title>Document</title>
 </head>
 <body>
@@ -34,33 +35,30 @@
         <table>
         <tr>
             <td>Alumnos</td>
-            <td>Taller 1</td>
-            <td>Taller 2</td>
-            <td>Taller 3</td>
+            <template v-for="(taller, index) in talleres.num_taller">
+                <td>Taller @{ index + 1 }</td>
+            </template>
             <td>Examen</td>
             <td>Promedio</td>
             <td>Acciones</td>
         </tr>
         <tr v-for="(student, index) in students">
-            <td>@{ student.fullname }</td>
-            <template  v-for="note in student.notes">
+            <td>@{ student.enrollment + '-' +student.fullname }</td>
+            <template v-for="calification in student.califications">
                 <td>
-                    <input type="text" :value="note.value" v-model="note.value" v-if="student.edit == true" />
-                    <span v-else>@{ note.value }</span>    
+                    <input type="text" :value="calification.value" v-model="calification.value" v-if="student.edit == true" />
+                    @{ calification.value }
                 </td>
             </template>
-            <td>@{ student.prom }</td>
+            <td>@{ calculateProm(student.califications, student.enrollment) }</td>
             <td>
                 <span v-if="student.edit == true">
-                <a  href="#" @click="doneNotes(index)">Guardar</a>
-                    <a  href="#" @click="cancelEditNotes(index)">Cancelar</a>
-                    
+                    <a href="#" @click="doneNotes(index)">Guardar</a>
+                    <a href="#" @click="cancelEditNotes(index)">Cancelar</a> 
                 </span>
                 <span v-else>
-                <a  href="#" @click="editNotes(index)">Editar</a>
+                    <a href="#" @click="editNotes(index)">Editar</a>
                 </span>
-                
-                
             </td>
         </tr>
         </table>

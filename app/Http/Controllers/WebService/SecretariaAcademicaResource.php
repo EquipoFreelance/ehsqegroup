@@ -10,6 +10,8 @@ namespace App\Http\Controllers\WebService;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Eloquents\GroupRepository;
+use App\Repositories\Eloquents\HoraryRepository;
+use App\Repositories\Eloquents\ReportCardRepository;
 use App\Repositories\Eloquents\StudentRepository;
 use Illuminate\Http\Request;
 use App\Repositories\Eloquents\EnrollmentRepository;
@@ -20,12 +22,22 @@ class SecretariaAcademicaResource extends controller
     private $enrollment;
     private $group;
     private $student;
+    private $horary;
+    private $reportCard;
 
-    public function __construct(  EnrollmentRepository $enrollment, GroupRepository $group, StudentRepository $student ){
+    public function __construct(
+        EnrollmentRepository $enrollment,
+        GroupRepository $group,
+        StudentRepository $student,
+        HoraryRepository $horary,
+        ReportCardRepository $reportCard
+    ){
 
         $this->enrollment = $enrollment;
         $this->group      = $group;
         $this->student    = $student;
+        $this->horary     = $horary;
+        $this->reportCard = $reportCard;
 
     }
 
@@ -35,6 +47,9 @@ class SecretariaAcademicaResource extends controller
 
         // Obteniendo la lista de grupos
         $group = $this->group->getByIdAndIdPeriod($request->get('id_group'), $request->get('id_academic_period'));
+
+        $talleres = $this->horary->getIdByModuleAndByCodMod($request->get('id_group'), $request->get('cod_modulo'));
+
 
         // Obteniendo la lista de matriculados
         $group_enrollment = $group->group_enrollment;
@@ -53,31 +68,88 @@ class SecretariaAcademicaResource extends controller
 
                 $califications = $enrollments->report_card()->where('cod_modulo', $request->get('cod_modulo'))->get();
 
-                $ar_cal = array();
+                $ar_cal = [];
 
-                foreach ($califications as $c) {
+                if(count($califications) > 0){
+
+
+                    foreach ($califications as $c) {
+
+                        $ar_cal[] = array(
+                            'value'  => $c->num_nota,
+                            'id'     => $c->id,
+                            'taller' => $c->cod_taller,
+                            'edit'   => false
+                        );
+
+                    }
+
+                    for ($i = 0; $i <= ( $talleres->num_taller - count($califications) ); $i++){
+
+                        $ar_cal[] = array(
+                            'value'  => 0,
+                            'id'     => 0,
+                            'taller' => $i,
+                            'edit'   => false
+                        );
+
+                    }
+
+
+                } else {
+
+                    for ($i = 1; $i <= $talleres->num_taller; $i++){
+
+                        $ar_cal[] = array(
+                            'value'  => 0,
+                            'id'     => 0,
+                            'taller' => $i,
+                            'edit'   => false
+                        );
+                    }
 
                     $ar_cal[] = array(
-                        'value' => $c->num_nota,
-                        'id'    => $c->id
+                        'value'  => 0,
+                        'id'     => 0,
+                        'taller' => 11,
+                        'edit'   => false
                     );
 
                 }
 
                 $ar_mat[] = array(
-                    'enrollment'   => $g_e->id_enrollment,
-                    'fullname'     => trim($student->persona->ape_pat)." ".trim($student->persona->ape_mat)." ".trim($student->persona->nombre),
-                    'calification' => $ar_cal
+                    'enrollment'    => $g_e->id_enrollment,
+                    'fullname'      => trim($student->persona->ape_pat)." ".trim($student->persona->ape_mat)." ".trim($student->persona->nombre),
+                    'dni'           => '',
+                    'califications' => $ar_cal,
+                    'prom'          => 0,
+                    'edit'   => false
                 );
 
             }
 
         }
 
-        return response()->json($ar_mat);
+        return response()->json(array("data" => $ar_mat, "talleres" => $talleres));
 
     }
 
+    public function store(Request $request){
+
+        $califications = json_decode($request->get('data'), true);
+
+
+        foreach ($califications as $c) {
+
+            print $c['value'];
+
+        }
+
+        //$this->reportCard->update($request->get('id'), array('num_nota', $request->get('num_nota')) );
+
+        return response()->json($request->all());
+
+    }
 
 
 }

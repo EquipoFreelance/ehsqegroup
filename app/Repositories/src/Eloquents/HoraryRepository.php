@@ -39,6 +39,10 @@ class HoraryRepository implements InterfaceRepository
         return $this->model->where("cod_grupo", $id_group)->first();
     }
 
+    public function getIdByModuleAndByCodMod($id_group, $cod_mod){
+        return $this->model->where("cod_grupo", $id_group)->where("cod_mod", $cod_mod)->first();
+    }
+
     public function getIdByGroupIdModules($id_group){
         return $this->model->select('cod_mod')->where("cod_grupo", $id_group)->get(['cod_mod']);
     }
