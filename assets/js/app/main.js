@@ -2,17 +2,161 @@ new Vue({
     el: '#main',
     delimiters: ['@{', '}'],
     data: {
+        filter_academic_period: '',
         filter_group: '',
+        filter_esp: '',
+        filter_esp_tipo: '',
         filter_module: '',
         filter_dni: '',
         filter_fullname: '',
         students: [],
-        talleres: ''
+        talleres: '',
+        message: ''
     },
     created: function(){
-        this.listEnrollments();
+    
+        // Periodo Academico
+        /*axios.get('http://intranetehsq.ehsqgroup.app/hsqegroup/api/academic-period')
+        .then(function (response) {
+            
+            var period = response.data;
+            var select = document.getElementById('filter_academic_period');
+
+            var text = "";
+            var x;
+            for (x in period) {
+                var opt = document.createElement('option');
+                opt.value = period[x].id;
+                opt.innerHTML = period[x].name;
+                select.appendChild(opt);
+            }
+
+        });*/
+
+        // Grupos
+        axios.get('http://intranetehsq.ehsqgroup.app/hsqegroup/api/groups')
+        .then(function (response) {
+            
+            var period = response.data;
+            var select = document.getElementById('filter_group');
+
+            var text = "";
+            var x;
+            for (x in period) {
+                var opt = document.createElement('option');
+                opt.value = period[x].id;
+                opt.innerHTML = period[x].name;
+                select.appendChild(opt);
+            }
+
+        });
+
+        // Tipo de Especialización
+        /*axios.get('http://intranetehsq.ehsqgroup.app/dashboard/json/esp_tipos')
+        .then(function (response) {
+            
+            var period = response.data;
+            var select = document.getElementById('filter_esp_tipo');
+
+            var x;
+            for (x in period) {
+                var opt = document.createElement('option');
+                opt.value = period[x].id;
+                opt.innerHTML = period[x].name;
+                select.appendChild(opt);
+            }
+            
+        });*/
+        //http://intranetehsq.ehsqgroup.app/dashboard/json/especializaciones/12
+
     },
     methods: {
+        changeSpecializaciones: function(){
+            
+            var self = this;
+            
+            var select = document.getElementById('filter_esp');    
+
+            axios.get('http://intranetehsq.ehsqgroup.app/dashboard/json/especializaciones/'+self.filter_esp_tipo)
+            .then(function (response) {
+                            
+                var period = response.data;
+                var select = document.getElementById('filter_esp');
+    
+                var x;
+
+                if(select.options.length){
+                    while (select.options.length > 0) {                
+                        select.remove(0);
+                    } 
+                }
+
+                var opt = document.createElement('option');
+                opt.value = '';
+                opt.innerHTML = 'Especialización';
+                select.appendChild(opt);
+                
+                for (x in period) {
+                    var opt = document.createElement('option');
+                    opt.value = period[x].id;
+                    opt.innerHTML = period[x].name;
+                    select.appendChild(opt);
+                }
+                
+            });
+        },
+        changeModules(){
+
+            var self = this;
+
+            // Tipo de Especialización
+            //axios.get('http://intranetehsq.ehsqgroup.app/api/secretaria-academico/modules/')
+
+            axios.get('http://intranetehsq.ehsqgroup.app/api/secretaria-academico/modules/', {
+                params: {
+                    id_group: self.filter_group
+                }
+              })
+
+            .then(function (response) {
+                console.log(response);
+                var group = response.data.group;
+                var period = response.data.data;
+
+                console.log(group);
+
+                self.filter_academic_period = group.id_academic_period;
+                self.filter_esp_tipo          = group.cod_esp_tipo;
+                self.filter_esp          = group.cod_esp;
+
+                
+                var select = document.getElementById('filter_module');
+                
+                if(select.options.length){
+                    while (select.options.length > 0) {                
+                        select.remove(0);
+                    } 
+                }
+
+                var opt = document.createElement('option');
+                opt.value = '';
+                opt.innerHTML = 'Especialización';
+                select.appendChild(opt);
+
+                
+
+                var x;
+                for (x in period) {
+                    var opt = document.createElement('option');
+                    opt.value = period[x].id;
+                    opt.innerHTML = period[x].nombre;
+                    select.appendChild(opt);
+                }
+                
+            });
+            
+        },
+
         filterStudents: function(){
             console.log('parametros tomados en cuenta'+'\n');
             console.log(this.filter_group+'\n');
@@ -28,21 +172,24 @@ new Vue({
         
         // Crud de notas,
         doneNotes: function(index){
+
             var self = this;
-
-
             var csrf_token = document.head.querySelector('meta[name="csrf-token"]').content;
 
             var headers = {
                 'X-CSRF-TOKEN': csrf_token
             };
+            
+            var data = self.students[index].califications;
 
-            axios.post('http://intranetehsq.ehsqgroup.app/api/secretaria-academico/', {'data': self.students[index].califications}, headers)
+            axios.post('http://intranetehsq.ehsqgroup.app/api/secretaria-academico/', {data: data}, headers)
             .then(function (response) {
-               console.log(response);
+               self.students[index].edit = false;
+               self.message = 'Nota actualizada satisfactoriamente!';
             })
             .catch(function (error) {
-            });  
+            });
+
         },
         editNotes: function(index){
             this.students[index].edit = true;
@@ -62,19 +209,31 @@ new Vue({
             }, this);
                
             var prom = (calc / count);
-            
-            console.log(calc + ' ' +count+' '+enrollment);
-
-            return prom.toFixed(2);
+            return Math.round(prom);
         },
         listEnrollments(){
             var self = this;
-            axios.get('http://intranetehsq.ehsqgroup.app/api/secretaria-academico?id_group=26&id_academic_period=13&cod_modulo=38&cod_esp_tipo=12&cod_esp=60')
+
+            document.getElementById("buscar").disabled = true;
+            document.getElementById("buscar").innerHTML = 'Buscando!';
+
+            axios.get('http://intranetehsq.ehsqgroup.app/api/secretaria-academico', {
+                params: {
+                    id_academic_period: self.filter_academic_period,
+                    id_group: self.filter_group,
+                    cod_modulo: self.filter_module,
+                    cod_esp_tipo: self.filter_esp_tipo,
+                    cod_esp: self.filter_esp
+                }
+              })
             .then(function (response) {
                 self.students = response.data.data;
                 self.talleres = response.data.talleres;
+                document.getElementById("buscar").disabled = false;
+                document.getElementById("buscar").innerHTML = 'Buscar';
             })
             .catch(function (error) {
+                console.log(error);
             });
         }
         // Crud de notas,

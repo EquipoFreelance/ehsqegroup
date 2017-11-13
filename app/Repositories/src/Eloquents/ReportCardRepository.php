@@ -43,6 +43,11 @@ class ReportCardRepository implements InterfaceRepository
     // Update Register by Id
     public function update( $id, array $attribute){
 
+        $update = $this->model->find($id);
+
+        $update->update($attribute);
+
+        return $update->toArray();
 
     }
 

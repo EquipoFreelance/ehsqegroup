@@ -544,3 +544,7 @@ Route::resource('/api/especialization',
 );
 
 Route::resource('/api/secretaria-academico/', 'WebService\SecretariaAcademicaResource');
+
+Route::get('/api/secretaria-academico/modules/',
+    ['uses' => 'WebService\SecretariaAcademicaResource@getModules'
+    ]);

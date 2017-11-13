@@ -9,31 +9,52 @@
 </head>
 <body>
 <div id="main">
-
-
     <div>
+        <!--<label for="">Periodo académico: </label>
+        <select name="" id="filter_academic_period" v-model="filter_academic_period">
+            <option value="26"> 26</option>
+            <option value="" disabled="disabled"> Periodo academico </option>
+        </select>
+        <hr>-->
+        <!--<label for="">Tipo de Especialización: </label>
+        <select name="" id="filter_esp_tipo" v-model="filter_esp_tipo" @change="changeSpecializaciones">
+            <option value="" disabled="disabled">Tipo de especialización</option>
+            <option value="12"> 12 </option>
+        </select>
+        <hr>
+        <label for="">Especialización: </label>
+        <select name="" id="filter_esp" v-model="filter_esp" >
+            <option value="" disabled="disabled">Especialización</option>
+            <option value="60"> 60 </option>
+        </select>
+        <hr>
+        -->
         <label for="">Grupo: </label>
-        <select name="" id="" v-model="filter_group">
-            <option value="group1">Grupo  1</option>
+        <select name="" id="filter_group" v-model="filter_group" @change="changeModules">
+            <option value="" disabled="disabled"> Grupo </option>
+            <!--<option value="26"> 26</option>-->
         </select>
         <hr>
+
         <label for="">Modulo:</label>
-        <select name="" id="" v-model="filter_module">
-            <option value="module1">Modulo 1</option>
+        <select name="" id="filter_module" v-model="filter_module">
+            <option value="" disabled="disabled">Modulo</option>
+            <!--<option value="38"> 38 </option>-->
         </select>
-        <hr>
+        <!--<hr>
         <label for="">DNI:</label>
         <input type="text" v-model="filter_dni">
         <label for="">Apellidos</label>
-        <input type="text" v-model="filter_fullname">
+        <input type="text" v-model="filter_fullname">-->
 
-        <button type="button" @click="filterStudents">Buscar</button>
+        <button type="button" id="buscar" @click="listEnrollments">Buscar</button>
     </div>
 
     <div>
         <h2>Notas</h2>
+        <span v-if="message!= ''">@{ message }</span>
         <table>
-        <tr>
+        <tr v-if="students != ''">
             <td>Alumnos</td>
             <template v-for="(taller, index) in talleres.num_taller">
                 <td>Taller @{ index + 1 }</td>
@@ -43,11 +64,11 @@
             <td>Acciones</td>
         </tr>
         <tr v-for="(student, index) in students">
-            <td>@{ student.enrollment + '-' +student.fullname }</td>
+            <td>@{ student.dni + '-' +student.fullname }</td>
             <template v-for="calification in student.califications">
                 <td>
                     <input type="text" :value="calification.value" v-model="calification.value" v-if="student.edit == true" />
-                    @{ calification.value }
+                    <span v-else>@{ calification.value }</span>
                 </td>
             </template>
             <td>@{ calculateProm(student.califications, student.enrollment) }</td>
@@ -64,13 +85,9 @@
         </table>
     </div>
 
-    <div>
-        <button type="button">Guardar</button>
-    </div>
-
-    <pre>
+    <!--<pre>
     @{ $data | json }
-    </pre>
+    </pre>-->
 </div>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.0/axios.min.js"></script>
